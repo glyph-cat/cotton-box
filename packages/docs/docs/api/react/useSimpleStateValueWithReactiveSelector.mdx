@@ -1,0 +1,64 @@
+---
+sidebar_position: 6
+---
+
+import CODE_EXAMPLE_ACTIVE from '!!raw-loader!@site/src/examples/api/react/useSimpleStateValueWithReactiveSelector/active'
+import CODE_EXAMPLE_BASIC from '!!raw-loader!@site/src/examples/api/react/useSimpleStateValueWithReactiveSelector/basic'
+import { ApiLink } from '@site/src/components/api-link'
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { WarningUnstableAPI } from '@site/src/components/warning-unstable-api'
+import { DocConstants } from '@site/src/constants'
+
+# useSimpleStateValueWithReactiveSelector
+
+<WarningUnstableAPI>
+  This is provided as an escape hatch in special cases where <ApiLink href={`${DocConstants.DOCS_API_REACT_URL}/useSimpleStateValue`}>useSimpleStateValue</ApiLink> is not behaving as expected. For example, the selector depends on external values (props or data from other hooks) and the returned value does not change when those dependencies change. Under normal circumstances, the returned value will change when those external values change and this hook is not needed.
+</WarningUnstableAPI>
+
+## Overview
+
+<TypeDisplay>{DataType.Function}</TypeDisplay>
+
+React hook to consume a [`SimpleStateManager`](../core/SimpleStateManager.mdx) with a selector that is wrapped in <ApiLink href={DocConstants.API_REFERENCE_URL_USE_CALLBACK}>useCallback</ApiLink>.
+
+```js
+const selector = useCallback((state) => { ... }, [])
+const state = useStateValueWithReactiveSelector(stateManager, selector)
+```
+```js
+const selector = useCallback((state) => { ... }, [])
+const state = useStateValueWithReactiveSelector(stateManager, selector, active)
+```
+
+## Parameters
+
+<ObjectShapeDefinition data={[
+  {
+    name: 'stateManager',
+    type: DataType.SimpleStateManager,
+    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER,
+  },
+  {
+    name: 'selector',
+    type: DataType.StateSelector,
+    description: DocConstants.TSDOC_PARAM_DESC_REACTIVE_SELECTOR,
+  },
+  {
+    name: 'active',
+    type: DataType.boolean,
+    defaultValue: '`true`',
+    description: DocConstants.TSDOC_PARAM_DESC_ACTIVE,
+  },
+]} />
+
+## Examples
+
+### Basic
+
+<SimpleWebPlayground code={CODE_EXAMPLE_BASIC} />
+
+### Conditionally watch for changes
+
+<SimpleWebPlayground code={CODE_EXAMPLE_ACTIVE} />

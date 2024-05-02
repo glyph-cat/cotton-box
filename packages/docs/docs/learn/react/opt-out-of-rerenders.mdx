@@ -1,0 +1,31 @@
+---
+sidebar_position: 4
+---
+
+import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+
+# Opt Out of Re-renders Due To State Change
+
+Occasionally, we might want to opt out of watching the state. This can be done by passing a third parameter. If we do not need to use a selector, we can pass `null` as the second parameter.
+
+```jsx
+import { useState } from 'react'
+import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
+
+function App(): JSX.Element {
+  const [active, setActive] = useState(true)
+  const state = useStateValue(ExampleState, null, active)
+  return '...'
+}
+```
+
+The third parameter is a `boolean` flag that defaults to `true`. When set to `true`, the hook will observe state changes normally, when set to `false`, it will stop watching for state changes until it is set back to `true` again.
+
+:::note
+Setting the third parameter to `false` does not prevent the State Manager itself from changing state, but rather, it is just blocking the hook from watching for state changes.
+:::
+
+## Full Example
+
+<SimpleWebPlayground code={CODE_EXAMPLE} />

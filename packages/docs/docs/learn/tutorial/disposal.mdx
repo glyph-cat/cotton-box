@@ -1,0 +1,154 @@
+---
+sidebar_position: 5
+---
+
+import { ApiLink } from '@site/src/components/api-link'
+import { TSCodeBlock } from '@site/src/components/ts-code-block'
+import { DocConstants } from '@site/src/constants'
+
+# Disposal
+
+## General Usage
+
+To dispose a State Manager, we use the `.dispose` method. This is important when the State Manager is not created/used globally.
+
+For example, we can have a `GameRoom` class in which each instance has a state. Upon cleaning up the `GameRoom`, we should also dispose the State Manager.
+
+<TSCodeBlock>
+```tsx
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
+
+enum GameRoomState {
+  CREATED,
+  INITIALIZED,
+  STARTED,
+  STOPPED,
+  DISPOSED,
+}
+
+class GameRoom {
+
+  state = new StateManager<GameRoomState>(GameRoomState.CREATED)
+
+  async dispose(): Promise<void> {
+    await this.state.wait((state) => { return state >= GameRoomState.INITIALIZED })
+    // ^ Pro tip: Wait for initialization to complete before performing teardown
+    this.state.set(GameRoomState.DISPOSED)
+    this.state.dispose()
+  }
+
+}
+```
+```jsx
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
+
+const GameRoomState = Object.freeze({
+  CREATED: 0,
+  INITIALIZED: 1,
+  STARTED: 2,
+  STOPPED: 3,
+  DISPOSED: 4,
+})
+
+class GameRoom {
+
+  state = new StateManager(GameRoomState.CREATED)
+
+  async dispose() {
+    await this.state.wait((state) => { return state >= GameRoomState.INITIALIZED })
+    // ^ Pro tip: Wait for initialization to complete before performing teardown
+    this.state.set(GameRoomState.DISPOSED)
+    this.state.dispose()
+  }
+
+}
+```
+</TSCodeBlock>
+
+## Using with React
+
+To recap, State Managers are designed to be used globally most of the time, but there are niche cases where they need to be dynamically created (and disposed). One such example is to dynamically create them within React components. In React, we can ["lazily initialize"](https://react.dev/reference/react/useRef#avoiding-recreating-the-ref-contents) the variables for <ApiLink href={DocConstants.REACT_DOCS_SITE_USE_REF_URL}>useRef</ApiLink> and State Managers can be instantiated in a similar way too.
+
+<TSCodeBlock>
+```tsx
+function App(): JSX.Element {
+  const ExampleState = useRef<StateManager<string>>()
+  if (!ExampleState.current) {
+    ExampleState.current = new StateManager<string>('...')
+  }
+  useEffect(() => {
+    return () => {
+      ExampleState.current.dispose()
+    }
+  }, [])
+  console.log(ExampleState.current.get())
+  return '...'
+}
+```
+```jsx
+function App() {
+  const ExampleState = useRef()
+  if (!ExampleState.current) {
+    ExampleState.current = new StateManager('...')
+  }
+  useEffect(() => {
+    return () => {
+      ExampleState.current.dispose()
+    }
+  }, [])
+  console.log(ExampleState.current.get())
+  return '...'
+}
+```
+</TSCodeBlock>
+
+However, it can be tricky ([#14490](https://github.com/facebook/react/issues/14490), [#26315](https://github.com/facebook/react/issues/26315), [#27735](https://github.com/facebook/react/issues/27735)) to do this in <ApiLink href={DocConstants.REACT_DOCS_SITE_STRICT_MODE_URL}>StrictMode</ApiLink> due to how the effects are being fired:
+1. Setup effect is called for the first time.
+2. Setup effect is called for the second time.
+3. Cleanup effect is called for the first time.
+4. When component finally unmounts, cleanup effect is called for the second time.
+
+Which translates into:
+1. Variable is instantiated for the first time and assigned to `useRef`.
+2. Variable is instantiated for the _**second**_ time and _**overwrites**_ the _**first**_ value that is already assigned to `useRef`. (You would think `ExampleState.current` already has a value at this point, but for some reason, it is in fact still `null`).
+3. Cleanup effect is run for the _**first**_ time on the variable assigned to `useRef` (which is the _**second**_ instance).
+4. When component finally unmounts, the cleanup effect is run for the second time on whatever value that `useRef` may still be holding.
+
+There are a few workarounds for this problem, but at a higher level, this means that we are in some way still writing "unsafe" code — code that might lead to bugs in future versions of React or when we begin to adopt certain new features of React in the future. Instead of (1)setup -> (2)cleanup -> (3)setup -> (4)cleanup, `StrictMode` triggers (1)setup -> (2)setup -> (3)cleanup -> (4)cleanup. For now, we can think about it this way: it is possible for the same component to be rendered more than once before the first instance even has the chance to cleanup. Even if we intend for a component to only have one rendered instance at a time throughout the entire app, in reality, there is no guarantee that it would be rendered that way, and `StrictMode` helps to simulate such conditions which allows us to identify problems that may occur when components are rendered in such a way.
+
+It seems like the only safe and stable way so far is to perform both the instantiation and cleanup in the same effect. The downside to this is that the lazily initialized values will not be accessible in the first render and we will need to implement some sort of fallback UI or perform actions that are related to the lazily initialized value only when it becomes available.
+
+<TSCodeBlock>
+```tsx
+function App(): JSX.Element {
+  const [ExampleState, setExampleState] = useState<StateManager<string>>(null)
+  useEffect(() => {
+    const newExampleState = new StateManager<string>('...')
+    setExampleState(newExampleState)
+    return () => {
+      newExampleState.dispose()
+      setExampleState(null)
+    }
+  }, [])
+  if (!ExampleState) { return <>Loading...</> }
+  console.log(ExampleState.get())
+  return '...'
+}
+```
+```jsx
+function App() {
+  const [ExampleState, setExampleState] = useState(null)
+  useEffect(() => {
+    const newExampleState = new StateManager('...')
+    setExampleState(newExampleState)
+    return () => {
+      newExampleState.dispose()
+      setExampleState(null)
+    }
+  }, [])
+  if (!ExampleState) { return <>Loading...</> }
+  console.log(ExampleState.get())
+  return '...'
+}
+```
+</TSCodeBlock>

@@ -1,0 +1,27 @@
+---
+sidebar_position: 5
+---
+
+import { ApiLink } from '@site/src/components/api-link'
+import { Link } from '@site/src/components/custom-link'
+import { DevToolsPreview } from '@site/src/components/special/dev-tools-preview'
+import { DocConstants } from '@site/src/constants'
+
+# Hiding values from React Developer Tools
+
+By default, [`useStateValue`](../../api/react/useStateValue.mdx) and [`useStateValueWithReactiveSelector`](../../api/react/useStateValueWithReactiveSelector.mdx) only exposes the state value to the <Link href={DocConstants.REACT_DOCS_SITE_DEV_TOOLS_URL}>React Developer Tools</Link> in non-production environments and hides it in production environment.
+
+The state value is obscured by storing it inside a <ApiLink href={DocConstants.TYPE_REFERENCE_WEAK_MAP}>WeakMap</ApiLink> and conditionally exposed as "`InspectableValue`" instead.
+
+This behavior can be changed via the `visibility` option, which has three modes:
+* `ENVIRONMENT` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_ENVIRONMENT} This is the default behavior.
+* `EXPOSED` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_EXPOSED}
+* `HIDDEN` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_HIDDEN}
+
+<DevToolsPreview />
+
+<br/><br/>
+
+Related items:
+* [`StateManagerOptions`](../../api/core/StateManagerOptions.mdx)
+* [`StateManagerVisibility`](../../api/core/StateManagerVisibility.mdx)

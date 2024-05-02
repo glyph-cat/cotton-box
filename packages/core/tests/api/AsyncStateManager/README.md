@@ -1,0 +1,1 @@
+There is no test for nested `.set` because it is not advisable to do so for `AsyncStateManager`. This is because `AsyncStateManager.set` is supposed to be used with `await`, so it makes no sense to nest them. Besides, nesting `.set` calls is not a good idea to begin with.

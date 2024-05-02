@@ -1,0 +1,13 @@
+{
+  "TS expect error on purpose": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "@ts-expect-error",
+    "body": "// @ts-expect-error: Done on purpose to test the error.",
+    "description": "TS expect error to test error on purpose"
+  },
+  "Early exit": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "// Early exit",
+    "body": "// Early exit"
+  },
+}

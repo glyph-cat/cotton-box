@@ -1,0 +1,190 @@
+# Migration From `react-relink`
+{/* NOTE: sidebar position is not specified, this should be the last article in the sidebar. */}
+
+:::info
+The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
+:::
+
+## Setup
+```sh title="Before"
+yarn add react-relink
+```
+```sh title="Now"
+yarn add {:CORE_PACKAGE_NAME:} {:REACT_PACKAGE_NAME:}
+```
+
+## Instantiation
+```js title="Before"
+import { RelinkSource } from 'react-relink'
+
+const ExampleSource = new RelinkSource({
+  key: 'example-source',
+  default: 'defaultState',
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    didSet({ state }) {
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  options: {
+    suspense: true | false,
+    public: true | false,
+  },
+  scope: OtherSource,
+})
+```
+
+```js title="Now"
+// highlight-next-line
+import { AsyncStateManager, StateManagerVisibility } from '{:CORE_PACKAGE_NAME:}'
+
+// highlight-start
+// Default state is passed as first parameter,
+// remaining options are passed as the second.
+const ExampleState = new AsyncStateManager('defaultState', {
+  // `key` is no longer needed, but there is a `name` property,
+  // which is *optional* and only used for debugging.
+  // highlight-end
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    // highlight-start
+    // `defaultState` is exposed here:
+    didSet({ state, defaultState }) {
+      // highlight-end
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  // highlight-start
+  // New option:
+  clientOnly: true | false,
+  // `visibility` is a boolean type in react-relink:
+  visibility: StateManagerVisibility.ENVIRONMENT,
+  // highlight-end
+  suspense: true | false,
+  scope: OtherState,
+})
+```
+
+## Consuming the State
+
+```js title="Before"
+function App() {
+  import { useRelinkValue } from 'react-relink'
+
+  const state = useRelinkValue(ExampleSource)
+  return '...'
+}
+```
+
+```js title="Now"
+function App() {
+  // highlight-next-line
+  import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
+
+  // highlight-next-line
+  const state = useStateValue(ExampleState)
+  return '...'
+}
+```
+
+## Handling dependencies
+
+```js title="Before"
+const ExampleSourceA = new RelinkSource({
+  key: 'example-source-a',
+  default: '...',
+  lifecycle: { /* ... */ },
+})
+
+const ExampleSourceB = new RelinkSource({
+  key: 'example-source-b',
+  default: '...',
+  deps: [ExampleSourceA],
+  lifecycle: { /* ... */ },
+})
+```
+
+```js title="Now"
+const ExampleStateA = new StateManager('...')
+
+const ExampleStateB = new StateManager('...', {
+  lifecycle: {
+    init() {
+      await ExampleStateA.wait(() => true)
+      // do something
+      // This is because `wait` will not resolve until state
+      // finished initializing. We can pass `() => true` as a way to wait
+      // for it to initialize without waiting for any specific value.
+    },
+  },
+})
+```
+
+## Re-initialization
+
+```js title="Before"
+MySource.hydrate(...)
+```
+
+```js title="Now"
+ExampleState.init(...)
+```
+
+## Scope
+
+```jsx title="Before"
+const ExampleSourceA = new RelinkSource({
+  key: 'example-source-a',
+  default: '...',
+})
+
+const ExampleSourceB = new RelinkSource({
+  key: 'example-source-b',
+  default: '...',
+  scope: ExampleSourceA,
+})
+
+function App() {
+  return (
+    <RelinkScope with={[ExampleSourceB]}>
+      <MyComponent />
+    </RelinkScope>
+  )
+}
+
+function MyComponent() {
+  const [state, setState, resetState] = useRelinkState(ExampleSourceB)
+  return '...'
+}
+```
+
+```jsx title="Now"
+const ExampleStateA = new StateManager('...')
+
+const ExampleStateB = new StateManager('...', {
+  scope: ExampleStateA,
+})
+
+function App() {
+  return (
+    <StateManagerScopeProvider with={[ExampleStateB]}>
+      <MyComponent />
+    </StateManagerScopeProvider>
+  )
+}
+
+function MyComponent() {
+  const state = useStateValue(useScoped(ExampleStateB))
+  return '...'
+}
+```

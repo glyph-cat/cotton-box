@@ -1,0 +1,41 @@
+---
+sidebar_position: 4
+---
+
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { DocConstants } from '@site/src/constants'
+
+# SimpleStateManagerOptions
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_SIMPLE}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'name',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+    {
+      name: 'clientOnly',
+      type: DataType.boolean,
+      defaultValue: '`false`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_CLIENT_ONLY,
+    },
+    {
+      name: 'scope',
+      type: DataType.SimpleStateManager,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_SCOPE,
+    },
+  ]}
+/>

@@ -1,0 +1,27 @@
+---
+sidebar_position: 4
+---
+
+import { ApiLink } from '@site/src/components/api-link'
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { DocConstants } from '@site/src/constants'
+import CodeInline from '@theme/CodeInline'
+
+# BuildType
+
+<TypeDisplay>{DataType.enum}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE}</MarkdownWrapper>
+
+This enum is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.
+
+## Values
+
+| Key       |    Value    | Description                                       |
+| --------- | :---------: | ------------------------------------------------- |
+| `CJS`     |   `'CJS'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_CJS}     |
+| `ES`      |   `'ES'`    | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_ES}      |
+| `MJS`     |   `'MJS'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_MJS}     |
+| `UMD`     |   `'UMD'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_UMD}     |
+| `UMD_MIN` | `'UMD_MIN'` | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN} |

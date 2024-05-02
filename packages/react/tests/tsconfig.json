@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "strict": false,
+  },
+  "include": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+  ]
+}

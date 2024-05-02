@@ -1,0 +1,9 @@
+*.draft*
+*.old*
+dist
+lib
+node_modules
+temp/
+build/
+.docusaurus
+src/examples/

@@ -1,0 +1,42 @@
+{
+  "name": "cotton-box-examples-web",
+  "version": "0.0.0",
+  "description": "Web examples for CottonBox.",
+  "scripts": {
+    "start": "next dev -p 3001",
+    "build": "next build",
+    "serve": "next start -p 3001",
+    "lint": "yarn eslint .",
+    "rollback": "yarn remove cotton-box cotton-box-react",
+    "test": "# No tests to run",
+    "sync": "yarn --cwd ../.. sync-examples"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@hookstate/core": "^4.0.1",
+    "@reduxjs/toolkit": "^2.2.3",
+    "cotton-box": "./cb-qUBaPbYk.tgz",
+    "cotton-box-react": "./cbr-qUBaPbYk.tgz",
+    "next": "^14.1.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
+    "react-relink": "^4.3.0",
+    "recoil": "^0.7.7",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@glyph-cat/eslint-config": "^1.0.0-alpha.0",
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.75",
+    "@types/react-dom": "^18.2.24",
+    "@typescript-eslint/eslint-plugin": "^7.6.0",
+    "@typescript-eslint/parser": "^7.6.0",
+    "eslint": "^8.57.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.4.4"
+  }
+}

@@ -1,0 +1,19 @@
+---
+sidebar_position: 10
+---
+
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DocConstants } from '@site/src/constants'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+
+# SetStateFn
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION}</MarkdownWrapper>
+
+```ts
+type SetStateFn<State> = (currentState: State, defaultState: State) => State
+```

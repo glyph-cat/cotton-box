@@ -1,0 +1,89 @@
+---
+sidebar_position: 2
+---
+
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+import { TSCodeBlock } from '@site/src/components/ts-code-block'
+import { DocConstants } from '@site/src/constants'
+import CodeInline from '@theme/CodeInline'
+
+# Quick Start
+
+## Creating a new State Manager
+
+First, import [`StateManager`](../../api/core/StateManager.mdx) from <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline>:
+
+```js
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
+```
+<br/>
+
+The `StateManager` is a [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class). We can create a new `StateManager` like this:
+
+<TSCodeBlock>
+```ts
+interface IUserState {
+  firstName: string
+  lastName: string
+  luckyNumber: number
+}
+
+const UserState = new StateManager<IUserState>({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+```js
+const UserState = new StateManager({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+</TSCodeBlock>
+
+## Getting the state
+To get the current state, use the [`.get`](../../api/core/StateManager.mdx#get) method.
+```js
+const user = UserState.get()
+```
+
+To use the State Manager with React, we can import the [`useStateValue`](../../api/react/useStateValue.mdx) hook and use it like this:
+```js
+import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
+
+function App() {
+  const user = useStateValue(UserState)
+  // ...
+}
+```
+
+More on [using with React](../react/setup.mdx).
+
+## Setting the state
+
+With a value:
+```js
+UserState.set(64)
+```
+
+With a function:
+```js
+UserState.set((state) => ({
+  ...state, // <-- preserve other state properties
+  luckyNumber: Math.round(Math.random() * 100),
+  // ^ while only changing the value of `luckyNumber`
+}))
+```
+
+## Resetting the state
+```js
+UserState.reset()
+```
+
+<br/>
+
+:::tip
+It is safe to call all of the State Manager's methods (`.get`, `.set`, `.reset`, etc.) anywhere, both inside and outside of React components.
+:::

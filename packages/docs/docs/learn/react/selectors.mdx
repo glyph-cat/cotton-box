@@ -1,0 +1,42 @@
+---
+sidebar_position: 3
+---
+
+import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/selector'
+import { ApiLink } from '@site/src/components/api-link'
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+
+# Selectors
+
+Sometimes, our state might be an object and we only need to the value of certain properties from that object, but when any property is changed, the entire object changes, resulting in components to re-render. This is when selectors can help us overcome this problem.
+
+Take `IUserState` for example, we might have a component that is only responsible for showing `luckyNumber` and we do not want it to re-render when `firstName` changes.
+```ts
+interface IUserState {
+  firstName: string
+  lastName: string
+  luckyNumber: number
+}
+
+const UserState = new StateManager<IUserState>({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+<br/>
+
+We can pass `(state) => state.luckyNumber` as the second parameter to <ApiLink href='../../api/react/useStateValue'>useStateValue</ApiLink>.
+
+```tsx
+const luckyNumber = useStateValue(UserState, (state) => state.luckyNumber)
+```
+<br/>
+
+By doing so, only the previous and upcoming values of `state.luckyNumber` is compared when the state changes. Therefore, the component will only re-render when `luckyNumber` changes.
+
+## Example
+
+In this example, we can confirm that the component does not re-render by verifying that `console.log('Rendering...')` is not executed no matter how many times the value of `firstName` changes, but whenever `luckyNumber` changes, it will be executed.
+
+<SimpleWebPlayground code={CODE_EXAMPLE} options={{ showConsole: true }} />

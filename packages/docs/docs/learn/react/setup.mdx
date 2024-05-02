@@ -1,0 +1,44 @@
+---
+sidebar_position: 1
+---
+
+import { Link } from '@site/src/components/custom-link'
+import { YarnToNPM } from '@site/src/components/yarn-to-npm'
+import { DocConstants } from '@site/src/constants'
+
+# Setup
+
+:::info
+The minimum required version of React for {DocConstants.DISPLAY_PACKAGE_NAME} to work is 19.
+:::
+
+In order to use `cotton-box` with <Link href={DocConstants.REACT_DOCS_SITE}>React</Link>, we need to install `cotton-box-react`.
+
+## Installation
+
+### Using a dependency manager
+<YarnToNPM>
+yarn add {DocConstants.CORE_PACKAGE_NAME}
+// highlight-next-line
+yarn add {DocConstants.REACT_PACKAGE_NAME}
+</YarnToNPM>
+
+### With UNPKG
+
+#### For development
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+<!-- highlight-next-line -->
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+```
+
+#### For production
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+<!-- highlight-next-line -->
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+```
+
+<br/>
+
+Then replace `<VERSION>` with the version that you need.

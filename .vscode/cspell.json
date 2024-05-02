@@ -1,0 +1,27 @@
+{
+  // Reference: https://cspell.org/configuration
+  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+  "language": "en",
+  "words": [
+    "clsx",
+    "codesandbox",
+    "dispatchable",
+    "endregion",
+    "glyphcat",
+    "hookstate",
+    "inspectable",
+    "postlicense",
+    "postversion",
+    "reduxjs",
+    "sandpack",
+    "subpackage",
+    "tofix",
+    "tsdoc",
+    "unwatch",
+    "zustand"
+  ],
+  "flagWords": [],
+  "enableFiletypes": [
+    "mdx"
+  ]
+}

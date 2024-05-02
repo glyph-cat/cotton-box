@@ -1,0 +1,20 @@
+---
+sidebar_position: 12
+---
+
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DocConstants } from '@site/src/constants'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+
+# StateSelector
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_SELECTOR}</MarkdownWrapper>
+
+```ts
+type StateSelector<State, SelectedState> = (state: State) => SelectedState
+```
+

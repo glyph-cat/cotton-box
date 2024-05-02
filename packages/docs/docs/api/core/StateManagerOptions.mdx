@@ -1,0 +1,53 @@
+---
+sidebar_position: 5
+---
+
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { DocConstants } from '@site/src/constants'
+
+# StateManagerOptions
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_STANDARD}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'name',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+    {
+      name: 'clientOnly',
+      type: DataType.boolean,
+      defaultValue: '`false`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_CLIENT_ONLY,
+    },
+    {
+      name: 'scope',
+      type: [DataType.StateManager, DataType.AsyncStateManager],
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_SCOPE,
+    },
+    {
+      name: 'visibility',
+      type: DataType.StateManagerVisibility,
+      defaultValue: '`StateManagerVisibility.ENVIRONMENT`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_VISIBILITY,
+    },
+    {
+      name: 'suspense',
+      type: DataType.boolean,
+      defaultValue: '`false`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_SUSPENSE,
+    },
+  ]} 
+/>

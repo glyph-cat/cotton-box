@@ -1,0 +1,9 @@
+.codeBlockContainer {
+  background: var(--prism-background-color);
+  color: var(--prism-color);
+  margin-bottom: var(--ifm-leading);
+  box-shadow: 0px 10px 20px 0px #00000020;
+  border: solid 1px #80808030;
+  border-radius: 17px;
+  overflow: hidden;
+}
