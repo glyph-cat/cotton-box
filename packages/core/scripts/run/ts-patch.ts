@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { ENCODING_UTF_8 } from '../constants'
 
 const packageInfo = JSON.parse(readFileSync('./package.json', ENCODING_UTF_8))

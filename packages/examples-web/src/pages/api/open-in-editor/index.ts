@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { execSync } from 'node:child_process'
+import { execSync } from 'child_process'
 
 export default async function APICancelSwapTicketHandler(
   req: NextApiRequest,

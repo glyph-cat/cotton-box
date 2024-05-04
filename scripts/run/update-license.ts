@@ -1,4 +1,4 @@
-import * as fs from 'node:fs'
+import * as fs from 'fs'
 import { ENCODING_UTF_8 } from '../constants'
 
 // What this script does:

@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync, writeFileSync } from 'fs'
 import { version as ROOT_PACKAGE_VERSION } from '../../package.json'
 import { ENCODING_UTF_8 } from '../constants'
 

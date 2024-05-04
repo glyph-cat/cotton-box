@@ -1,5 +1,5 @@
 import { redBright } from 'chalk'
-import { readFileSync, writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { DocConstants } from '../../packages/docs/src/constants'
 import { stringMap } from '../../packages/docs/src/utils/string-map'
 import { ENCODING_UTF_8 } from '../constants'

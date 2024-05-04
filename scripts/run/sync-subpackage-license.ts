@@ -1,4 +1,4 @@
-import { copyFileSync } from 'node:fs'
+import { copyFileSync } from 'fs'
 
 // TODO: [very low priority] Convert to bash script?
 

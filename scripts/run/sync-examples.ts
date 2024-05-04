@@ -6,7 +6,7 @@ import {
   readdirSync,
   statSync,
   writeFileSync,
-} from 'node:fs'
+} from 'fs'
 import { ENCODING_UTF_8 } from '../constants'
 
 function crawl(
