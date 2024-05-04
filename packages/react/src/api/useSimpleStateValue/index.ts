@@ -4,6 +4,7 @@ import { $ } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import {
+  INVALID_STATE_MANAGER,
   getErrorMessageForNonReactiveHookIfIncorrectType,
   getErrorMessageForReactiveHookIfIncorrectType,
   isInvalidStateManagerType,
@@ -45,11 +46,12 @@ export function useSimpleStateValue<State, SelectedState>(
   active = true
 ): State | SelectedState {
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (isInvalidStateManagerType(stateManager as $)) {
+  if (isInvalidStateManagerType(stateManager as $)) {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.error(getErrorMessageForNonReactiveHookIfIncorrectType(stateManager as $))
     }
+    throw new Error(INVALID_STATE_MANAGER)
   }
 
   useDebugName(stateManager)
@@ -86,11 +88,12 @@ export function useSimpleStateValueWithReactiveSelector<State, SelectedState>(
   selector: StateSelector<State, SelectedState>,
   active = true
 ): SelectedState {
-  if (process.env.NODE_ENV !== 'production') {
-    if (isInvalidStateManagerType(stateManager as $)) {
+  if (isInvalidStateManagerType(stateManager as $)) {
+    if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line no-console
       console.error(getErrorMessageForReactiveHookIfIncorrectType(stateManager as $))
     }
+    throw new Error(INVALID_STATE_MANAGER)
   }
   useDebugName(stateManager)
   const getSnapshot = useCallback(() => {

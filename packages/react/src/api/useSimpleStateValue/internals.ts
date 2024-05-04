@@ -1,5 +1,7 @@
 import { $ } from '../../abstractions'
 
+export const INVALID_STATE_MANAGER = 'Invalid State Manager'
+
 /**
  * Error needs to be thrown, otherwise if `AsyncStateManager` is used, it will
  * return a `Promise` when useSyncExternalStore tries to get the state snapshot.

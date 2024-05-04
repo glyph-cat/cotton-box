@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { CleanupManager, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -5,7 +6,6 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
 
   const cleanupManager = new CleanupManager()
   afterEach(cleanupManager.performCleanup)
-  TestUtils.spyOnConsoleError()
 
   test('Main', () => {
     const TestState = new StateManager('a')
@@ -17,7 +17,6 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
     TestState.init(async ({ commitNoop }) => {
       commitNoop()
     })
-    // eslint-disable-next-line no-console
     expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
   })
 

@@ -24,15 +24,28 @@ export namespace TestUtils {
     return typeof value?.['then'] === 'function'
   }
 
-  export function spyOnConsoleError(): void {
-    /* eslint-disable no-console */
-    let consoleError: typeof console.error
-    beforeEach(() => {
-      consoleError = console.error
-      console.error = jest.fn(() => { /**/ })
-    })
-    afterEach(() => { console.error = consoleError })
-    /* eslint-enable no-console */
+}
+
+export class MockStorage {
+
+  private readonly store: Record<string, string> = {}
+
+  constructor() {
+    this.setItem = this.setItem.bind(this)
+    this.getItem = this.getItem.bind(this)
+    this.removeItem = this.removeItem.bind(this)
+  }
+
+  setItem(key: string, value: unknown): void {
+    this.store[key] = String(value)
+  }
+
+  getItem(key: string): string {
+    return this.store[key]
+  }
+
+  removeItem(key: string): void {
+    delete this.store[key]
   }
 
 }

@@ -10,7 +10,6 @@ enum ErrorType {
   NONE,
   CONSOLE_ONLY,
   THROWN,
-  INFINITE_RENDER,
 }
 
 wrapper(({
@@ -45,16 +44,16 @@ wrapper(({
       hook: useSimpleStateValue,
       expectErrors: {
         'SimpleStateManager': ErrorType.NONE,
-        'StateManager': ErrorType.INFINITE_RENDER,
-        'AsyncStateManager': ErrorType.INFINITE_RENDER,
+        'StateManager': ErrorType.THROWN,
+        'AsyncStateManager': ErrorType.THROWN,
       },
     },
     {
       hook: useSimpleStateValueWithReactiveSelector,
       expectErrors: {
         'SimpleStateManager': ErrorType.NONE,
-        'StateManager': ErrorType.INFINITE_RENDER,
-        'AsyncStateManager': ErrorType.INFINITE_RENDER,
+        'StateManager': ErrorType.THROWN,
+        'AsyncStateManager': ErrorType.THROWN,
       },
     },
     {
@@ -86,9 +85,6 @@ wrapper(({
   for (const { hook: useHook, expectErrors } of testCases) {
     describe(useHook.name, () => {
       for (const StateManagerTypeKey in stateManagersToTestWith) {
-        if (expectErrors[StateManagerTypeKey] === ErrorType.INFINITE_RENDER) {
-          continue // Skip test
-        }
         test(`${StateManagerTypeKey} (ErrorType: ${ErrorType[expectErrors[StateManagerTypeKey]]})`, () => {
           const StateManagerType = stateManagersToTestWith[StateManagerTypeKey]
           const TestState = new StateManagerType(null)
@@ -98,7 +94,6 @@ wrapper(({
           })
           const expectErrorToBeThrown = expectErrors[StateManagerTypeKey] === ErrorType.THROWN
           expect(hookInterface.capturedErrors.length).toBe(expectErrorToBeThrown ? 1 : 0)
-          // eslint-disable-next-line no-console
           expect(console.error).toHaveBeenCalledTimes(
             expectErrors[StateManagerTypeKey] > ErrorType.NONE
               ? buildEnv !== 'prod' ? 2 : 1

@@ -19,7 +19,7 @@ enum InternalQueueType {
  * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager
  * @public
  */
-export class AsyncStateManager<State> extends StateManager<State>  {
+export class AsyncStateManager<State> extends StateManager<State> {
 
   /**
    * @internal
@@ -61,12 +61,16 @@ export class AsyncStateManager<State> extends StateManager<State>  {
   /**
    * @internal
    */
-  protected M$internalQueue = async (
+  M$internalQueue = async (
     newStateOrFn: State | AsyncSetStateFn<State>,
     type: InternalQueueType
   ): Promise<void> => {
 
-    if (type !== InternalQueueType.I && this.isInitializing.get()) {
+    if (
+      type !== InternalQueueType.I &&
+      type !== InternalQueueType.X &&
+      this.isInitializing.get()
+    ) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForSetOrResetDuringInitialization(this.name))
@@ -94,7 +98,7 @@ export class AsyncStateManager<State> extends StateManager<State>  {
             previousState,
           })
         }
-      } else {
+      } else if (type === InternalQueueType.R) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }

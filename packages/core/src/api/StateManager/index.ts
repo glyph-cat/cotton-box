@@ -116,7 +116,7 @@ export interface StateManagerOptions<State> extends SimpleStateManagerOptions<St
 /**
  * @public
  */
-export class StateManager<State> extends SimpleStateManager<State>  {
+export class StateManager<State> extends SimpleStateManager<State> {
 
   /**
    * @internal
@@ -183,7 +183,7 @@ export class StateManager<State> extends SimpleStateManager<State>  {
   /**
    * @internal
    */
-  protected M$internalQueue = (
+  M$internalQueue = (
     newStateOrFn: State | SetStateFn<State>,
     type: InternalQueueType
   ): void => {
@@ -210,7 +210,7 @@ export class StateManager<State> extends SimpleStateManager<State>  {
             previousState,
           })
         }
-      } else {
+      } else if (type === InternalQueueType.R) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }

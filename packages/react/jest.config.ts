@@ -1,9 +1,9 @@
 import { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
-  // setupFilesAfterEnv: [
-  //   '<rootDir>/jest.setup.ts',
-  // ],
+  setupFilesAfterEnv: [
+    '<rootDir>/jest.setup.ts',
+  ],
   testPathIgnorePatterns: [
     '.draft',
     '.old',

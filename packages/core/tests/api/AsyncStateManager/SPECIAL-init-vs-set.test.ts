@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { CleanupManager, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -7,7 +8,6 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
 
   const cleanupManager = new CleanupManager()
   afterEach(cleanupManager.performCleanup)
-  TestUtils.spyOnConsoleError()
 
   describe('No pending changes', () => {
 
@@ -21,7 +21,6 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
       })
 
       TestState.set(41)
-      // eslint-disable-next-line no-console
       expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
       expect(TestState.getSync()).toBe(0)
 
@@ -43,7 +42,6 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
       })
 
       TestState.set(41)
-      // eslint-disable-next-line no-console
       expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
       expect(TestState.getSync()).toBe(0)
 
