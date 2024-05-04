@@ -1,6 +1,6 @@
 {
   "name": "cotton-box",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A flexible toolbox with different types of state managers catered to different scenarios.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
