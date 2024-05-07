@@ -3,8 +3,9 @@ import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   test('No additional options', async () => {
     const defaultState: IUserState = {

@@ -3,8 +3,9 @@ import { CleanupManager } from '../../../tests/test-helpers'
 import { getErrorMessageIfIncorrectType } from './internals'
 import { $ } from '../../abstractions'
 
-const cleanupManager = new CleanupManager()
-afterEach(cleanupManager.performCleanup)
+let cleanupManager: CleanupManager
+beforeEach(() => { cleanupManager = new CleanupManager() })
+afterEach(() => { cleanupManager.performCleanup() })
 
 describe(SimpleStateManager.name, () => {
 

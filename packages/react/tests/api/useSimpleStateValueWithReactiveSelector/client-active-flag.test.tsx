@@ -7,8 +7,9 @@ wrapper(({
   ReactLib: { useSimpleStateValueWithReactiveSelector },
 }: TestConfig) => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   describe('Only test initial value', () => {
 

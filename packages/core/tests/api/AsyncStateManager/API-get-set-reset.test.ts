@@ -4,8 +4,9 @@ import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   test('Main', async () => {
 

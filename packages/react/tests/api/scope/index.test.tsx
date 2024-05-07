@@ -11,8 +11,9 @@ wrapper(({
   ReactLib: { StateManagerScopeProvider, useScoped },
 }: TestConfig) => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   let root: ReactTestRenderer
   afterEach(() => { root?.unmount() })

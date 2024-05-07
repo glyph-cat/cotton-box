@@ -20,8 +20,9 @@ wrapper(({
     AsyncStateManager,
   } as const
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup })
 
   for (const hookName in hooksToTestWith) {
     describe(hookName, () => {

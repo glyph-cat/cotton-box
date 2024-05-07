@@ -6,8 +6,9 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
 
   jest.useRealTimers()
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   test('commit', async () => {
     const TestState = new AsyncStateManager(0)

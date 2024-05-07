@@ -8,8 +8,10 @@ wrapper(({ Lib: { StateManager, AsyncStateManager } }: TestConfig) => {
 
   jest.useRealTimers()
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
+
   let TestState: $
   afterEach(() => { TestState?.dispose() })
 

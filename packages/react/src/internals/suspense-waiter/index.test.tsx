@@ -41,8 +41,9 @@ describe(createSuspenseWaiter.name, () => {
 
 describe(useSuspenseWaiter.name, () => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   const stateManagersToTestWith = {
     SimpleStateManager,

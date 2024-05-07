@@ -1,3 +1,4 @@
+import { SimpleStateManager as $0 } from 'cotton-box'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { CleanupManager, HookInterface, IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
@@ -7,8 +8,9 @@ wrapper(({
   ReactLib: { useSimpleStateValue },
 }: TestConfig) => {
 
-  const cleanupManager = new CleanupManager()
-  afterEach(cleanupManager.performCleanup)
+  let cleanupManager: CleanupManager
+  beforeEach(() => { cleanupManager = new CleanupManager() })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   describe('Without selector', () => {
 
@@ -98,13 +100,12 @@ wrapper(({
 
     describe('Server-side', () => {
 
+      let TestState: $0<IUserState>
       const defaultState: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
         luckyNumber: 42,
       }
-      const TestState = new SimpleStateManager(defaultState)
-      cleanupManager.append(TestState.dispose)
 
       const flagScenarios = [
         ['active=(default)', (): JSX.Element => {
@@ -123,6 +124,8 @@ wrapper(({
 
       for (const [flagScenario, TestComponent] of flagScenarios) {
         test(flagScenario, () => {
+          TestState = new SimpleStateManager(defaultState)
+          cleanupManager.append(TestState.dispose)
           const output = renderToStaticMarkup(<TestComponent />)
           expect(output).toBe('<span>Hello, John Smith!</span>')
         })
@@ -210,14 +213,12 @@ wrapper(({
 
     describe('Server-side', () => {
 
+      let TestState: $0<IUserState>
       const defaultState: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
         luckyNumber: 42,
       }
-
-      const TestState = new SimpleStateManager(defaultState)
-      cleanupManager.append(TestState.dispose)
 
       const flagScenarios = [
         ['active=(default)', (): JSX.Element => {
@@ -236,6 +237,8 @@ wrapper(({
 
       for (const [flagScenario, TestComponent] of flagScenarios) {
         test(flagScenario, () => {
+          TestState = new SimpleStateManager(defaultState)
+          cleanupManager.append(TestState.dispose)
           const output = renderToStaticMarkup(<TestComponent />)
           expect(output).toBe('<span>Hello, John!</span>')
         })
