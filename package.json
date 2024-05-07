@@ -1,6 +1,6 @@
 {
   "name": "cotton-box-monorepo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A flexible toolbox with different types of state managers catered to different scenarios.",
   "author": "glyph-cat",
   "license": "MIT",
