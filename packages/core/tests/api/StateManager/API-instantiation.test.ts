@@ -15,7 +15,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     const TestState = new StateManager(defaultState)
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe(2)
+    expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe(undefined)
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
@@ -47,7 +47,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     })
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe(2)
+    expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({

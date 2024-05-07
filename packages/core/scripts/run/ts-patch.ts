@@ -6,10 +6,23 @@ const typeDefinitionPath = `./${packageInfo.types}`
 
 let typeDefinitionBody = readFileSync(typeDefinitionPath, ENCODING_UTF_8)
 
-const matchString = 'get(): Promise<State>;'
-typeDefinitionBody = typeDefinitionBody.replace(
-  matchString,
-  `//@ts-ignore\n    ${matchString}`
-)
+interface IReplacement {
+  source: string
+  replaceFn(source: string): string
+}
+
+const replacements: Array<IReplacement> = [
+  {
+    source: 'get(): Promise<State>;',
+    replaceFn: (source) => `//@ts-ignore\n    ${source}`,
+  },
+]
+
+for (const replacement of replacements) {
+  typeDefinitionBody = typeDefinitionBody.replace(
+    replacement.source,
+    replacement.replaceFn(replacement.source)
+  )
+}
 
 writeFileSync(typeDefinitionPath, typeDefinitionBody, ENCODING_UTF_8)

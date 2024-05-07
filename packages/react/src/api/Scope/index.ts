@@ -34,6 +34,7 @@ export function StateManagerScopeProvider({
   const currentContext = useContext(StateManagerScopeContext)
   const nextContext = { ...currentContext }
   for (const stateManager of stateManagers) {
+    // @ts-expect-error Because we forcefully overwritten the type property in the first place
     nextContext[(stateManager as $).scopeId] = stateManager
   }
   // TODO: Remove `.Provider` when React 19 is out

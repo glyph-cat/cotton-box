@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { AsyncStateManager, StateManager } from 'cotton-box'
+import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
 import { useSyncExternalStore } from 'react'
-import { $1, $2 } from '../../abstractions'
+import { $0, $1, $2 } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
 import { getErrorMessageIfIncorrectType } from './internals'
 
@@ -24,7 +24,7 @@ export function useInitStatus(
 ): boolean {
   useDebugName(stateManager)
   if (process.env.NODE_ENV !== 'production') {
-    if ((stateManager as $$).type === 1) {
+    if ((stateManager as unknown as $0).type === 'SimpleStateManager') {
       const errorMessage = getErrorMessageIfIncorrectType(stateManager as $$)
       // eslint-disable-next-line no-console
       if (errorMessage) { console.error(errorMessage) }

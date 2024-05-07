@@ -15,7 +15,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     const TestState = new AsyncStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe(3)
+    expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe(undefined)
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
     expect(await TestState.get()).toStrictEqual({
@@ -47,7 +47,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     })
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe(3)
+    expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
     expect(await TestState.get()).toStrictEqual({

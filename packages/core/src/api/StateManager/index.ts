@@ -1,4 +1,4 @@
-import { StateManagerType, SetStateFn, WaitEvaluator } from '../../abstractions'
+import { SetStateFn, WaitEvaluator } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
@@ -118,6 +118,11 @@ export interface StateManagerOptions<State> extends SimpleStateManagerOptions<St
  */
 export class StateManager<State> extends SimpleStateManager<State> {
 
+  // @ts-expect-error Forceful override
+  // This allows TS to show an error when `useSimpleStateValue` with any
+  // State Manager type other than `SimpleStateManager`.
+  readonly type = 'StateManager'
+
   /**
    * @internal
    */
@@ -127,11 +132,6 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @internal
    */
   protected readonly M$mutationQueue: Array<() => void> = []
-
-  /**
-   * @internal
-   */
-  readonly type: StateManagerType = 2
 
   /**
    * @internal
@@ -175,6 +175,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
     this.suspense = suspense ?? false
     this.visibility = visibility ?? StateManagerVisibility.ENVIRONMENT
     this.M$lifecycle = { ...lifecycle }
+    this.init = this.init.bind(this)
     if (this.M$lifecycle.init) {
       this.init(this.M$lifecycle.init)
     }

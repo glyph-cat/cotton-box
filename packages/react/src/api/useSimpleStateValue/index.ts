@@ -3,12 +3,6 @@ import { useCallback, useRef, useSyncExternalStore } from 'react'
 import { $ } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
-import {
-  INVALID_STATE_MANAGER,
-  getErrorMessageForNonReactiveHookIfIncorrectType,
-  getErrorMessageForReactiveHookIfIncorrectType,
-  isInvalidStateManagerType,
-} from './internals'
 
 /**
  * {:TSDOC_DESC_USE_SIMPLE_STATE_VALUE:}
@@ -46,14 +40,6 @@ export function useSimpleStateValue<State, SelectedState>(
   active = true
 ): State | SelectedState {
 
-  if (isInvalidStateManagerType(stateManager as $)) {
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(getErrorMessageForNonReactiveHookIfIncorrectType(stateManager as $))
-    }
-    throw new Error(INVALID_STATE_MANAGER)
-  }
-
   useDebugName(stateManager)
 
   const selectorRef = useRef<StateSelector<State, SelectedState>>()
@@ -88,13 +74,6 @@ export function useSimpleStateValueWithReactiveSelector<State, SelectedState>(
   selector: StateSelector<State, SelectedState>,
   active = true
 ): SelectedState {
-  if (isInvalidStateManagerType(stateManager as $)) {
-    if (process.env.NODE_ENV !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(getErrorMessageForReactiveHookIfIncorrectType(stateManager as $))
-    }
-    throw new Error(INVALID_STATE_MANAGER)
-  }
   useDebugName(stateManager)
   const getSnapshot = useCallback(() => {
     return selector(stateManager.get())

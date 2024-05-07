@@ -1,4 +1,4 @@
-import { StateManagerType, SetStateFn, WaitEvaluator } from '../../abstractions'
+import { SetStateFn, WaitEvaluator } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { Watcher } from '../../internals/watcher'
 
@@ -37,6 +37,8 @@ export interface SimpleStateManagerOptions<State> {
  */
 export class SimpleStateManager<State> {
 
+  readonly type = 'SimpleStateManager'
+
   /**
    * @internal
    */
@@ -46,11 +48,6 @@ export class SimpleStateManager<State> {
    * @internal
    */
   protected M$internalState: State
-
-  /**
-   * @internal
-   */
-  readonly type: StateManagerType = 1
 
   /**
    * @internal

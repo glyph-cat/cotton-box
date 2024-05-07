@@ -1,4 +1,4 @@
-import { AsyncSetStateFn, StateManagerType } from '../../abstractions'
+import { AsyncSetStateFn } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -21,10 +21,10 @@ enum InternalQueueType {
  */
 export class AsyncStateManager<State> extends StateManager<State> {
 
-  /**
-   * @internal
-   */
-  readonly type: StateManagerType = 3
+  // @ts-expect-error Forceful override
+  // This allows TS to show an error when `useSimpleStateValue` with any
+  // State Manager type other than `SimpleStateManager`.
+  readonly type = 'AsyncStateManager'
 
   /**
    * @internal
@@ -54,8 +54,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
     options: StateManagerOptions<State> = {},
   ) {
     super(defaultState, options)
-    // This is just so that TS docs show the information of this class
-    // instead of the inherited class... (eye roll)
+    this.getSync = this.getSync.bind(this)
   }
 
   /**
