@@ -42,7 +42,7 @@ export function useSimpleStateValue<State, SelectedState>(
 
   useDebugName(stateManager)
 
-  const selectorRef = useRef<StateSelector<State, SelectedState>>()
+  const selectorRef = useRef<StateSelector<State, SelectedState>>(null)
   selectorRef.current = selector
 
   const getSnapshot = useCallback(() => {

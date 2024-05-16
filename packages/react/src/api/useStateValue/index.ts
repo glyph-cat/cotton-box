@@ -110,9 +110,9 @@ export function useStateValue<State, SelectedState>(
     }
   }
 
-  const selectorRef = useRef<StateSelector<State, SelectedState>>()
+  const selectorRef = useRef<StateSelector<State, SelectedState>>(null)
   selectorRef.current = selector
-  const isEqualRef = useRef<EqualityFn<State | SelectedState>>()
+  const isEqualRef = useRef<EqualityFn<State | SelectedState>>(null)
   isEqualRef.current = isEqual
 
   const selectValue = useCallback(() => {
