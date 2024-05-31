@@ -2,9 +2,10 @@ import { StateManager } from 'cotton-box'
 import { useInitState, useStateValue } from 'cotton-box-react'
 
 export default function App(): JSX.Element {
-  const isInitializing = useInitState()
+  const isInitializing = useInitState(UserState)
   return (
     <>
+      <button onClick={UserState.reinitialize}>Reinitialize</button>
       {isInitializing
         ? <div>Loading...</div>
         : <SubComponent />
@@ -31,7 +32,7 @@ interface IUserState {
 const UserState = new StateManager<IUserState>(null, {
   lifecycle: {
     async init({ commit }) {
-      await delay(3000)
+      await delay(1000)
       commit({
         firstName: 'John',
         lastName: 'Smith',

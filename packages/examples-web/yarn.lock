@@ -527,13 +527,13 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-cotton-box-react@./cbr-qUBaPbYk.tgz:
-  version "1.0.0"
-  resolved "./cbr-qUBaPbYk.tgz#c03bf22b8d8608d13ae813134d13ebe21611bb17"
+cotton-box-react@./cbr-0u6giUdk.tgz:
+  version "0.0.2"
+  resolved "./cbr-0u6giUdk.tgz#c4cb7f9e67627e456766c94e7a29a4874135c596"
 
-cotton-box@./cb-qUBaPbYk.tgz:
-  version "1.0.0"
-  resolved "./cb-qUBaPbYk.tgz#b1039f06014881617aa425913e3c8c47d2845939"
+cotton-box@./cb-0u6giUdk.tgz:
+  version "0.0.2"
+  resolved "./cb-0u6giUdk.tgz#251f81c225798d0285d6d949910763d91293cacc"
 
 cross-spawn@^7.0.2:
   version "7.0.3"
