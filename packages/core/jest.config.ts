@@ -2,7 +2,7 @@ import { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
   setupFilesAfterEnv: [
-    '<rootDir>/jest.setup.ts',
+    '<rootDir>/jest.post-env-setup.ts',
   ],
   testPathIgnorePatterns: [
     '.draft',

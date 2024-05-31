@@ -29,6 +29,7 @@ export type HookInterfaceValueMapper<HookRType> = (arg: HookRType) => unknown
 
 /**
  * @public
+ * @deprecated Kept for reference purposes.
  */
 export class UNSAFE_HookInterface<
   HookParams extends unknown[],

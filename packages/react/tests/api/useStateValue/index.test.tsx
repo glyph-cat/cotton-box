@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from 'react-dom/server'
-import { CleanupManager, UNSAFE_HookInterface, IUserState } from '../../test-helpers'
+import { CleanupManager, HookInterface, IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -40,7 +40,7 @@ wrapper(({
             const TestState = new StateManagerType(defaultState)
             cleanupManager.append(TestState.dispose)
 
-            const hookInterface = new UNSAFE_HookInterface({
+            const hookInterface = new HookInterface({
               cleanupManager,
               useHook: () => useStateValue(TestState),
               values: {
@@ -140,7 +140,7 @@ wrapper(({
             const TestState = new StateManagerType(defaultState)
             cleanupManager.append(TestState.dispose)
 
-            const hookInterface = new UNSAFE_HookInterface({
+            const hookInterface = new HookInterface({
               cleanupManager,
               useHook: () => useStateValue(TestState, null, Equality.shallowCompareObject),
               values: {
@@ -264,7 +264,7 @@ wrapper(({
             const TestState = new StateManagerType(defaultState)
             cleanupManager.append(TestState.dispose)
 
-            const hookInterface = new UNSAFE_HookInterface({
+            const hookInterface = new HookInterface({
               cleanupManager: cleanupManager,
               useHook: () => useStateValue(TestState, (s) => s.luckyNumber),
               values: {
@@ -358,7 +358,7 @@ wrapper(({
             const TestState = new StateManagerType(defaultState)
             cleanupManager.append(TestState.dispose)
 
-            const hookInterface = new UNSAFE_HookInterface({
+            const hookInterface = new HookInterface({
               cleanupManager: cleanupManager,
               useHook: () => useStateValue(
                 TestState,
@@ -482,7 +482,7 @@ wrapper(({
           const TestState = new StateManagerType(defaultState)
           cleanupManager.append(TestState.dispose)
 
-          const hookInterface = new UNSAFE_HookInterface({
+          const hookInterface = new HookInterface({
             cleanupManager,
             useHook: () => useStateValue(TestState, null, null),
             values: {
