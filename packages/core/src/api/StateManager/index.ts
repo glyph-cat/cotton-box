@@ -277,9 +277,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
           return // Early exit
         }
         this._isInitializing.set(false)
-        if (process.env.NODE_ENV !== 'production') {
-          effectiveCommitStrategy = 'commitNoop'
-        }
+        effectiveCommitStrategy = 'commitNoop'
       },
       commit: (state: State) => {
         if (effectiveCommitStrategy) {
@@ -295,9 +293,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
         }
         this.M$internalQueue(state, InternalQueueType.I)
         this._isInitializing.set(false)
-        if (process.env.NODE_ENV !== 'production') {
-          effectiveCommitStrategy = 'commit'
-        }
+        effectiveCommitStrategy = 'commit'
       },
     })
     await this._isInitializing.wait(false)
