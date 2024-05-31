@@ -1,3 +1,4 @@
+import { act } from 'react'
 import { CleanupManager, HookInterface, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -18,6 +19,7 @@ wrapper(({
   } as const
 
   for (const StateManagerTypeKey in stateManagersToTestWith) {
+
     const StateManagerType = stateManagersToTestWith[StateManagerTypeKey]
     test(StateManagerTypeKey, async () => {
 
@@ -52,9 +54,9 @@ wrapper(({
       await hookInterface.action('completeFirstInit')
       expect(hookInterface.get('isInitializing')).toBe(false)
 
-      const initAgainPromise = hookInterface.action('initAgain')
+      hookInterface.actionSync('initAgain')
       expect(hookInterface.get('isInitializing')).toBe(true)
-      await initAgainPromise
+      await act(async () => { await TestUtils.delay(10) })
       expect(hookInterface.get('isInitializing')).toBe(false)
 
     })
