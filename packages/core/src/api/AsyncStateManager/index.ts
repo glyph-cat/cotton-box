@@ -1,4 +1,4 @@
-import { AsyncSetStateFn } from '../../abstractions'
+import { AsyncSetStateFn, CommitStrategy } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -68,7 +68,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
     if (
       type !== InternalQueueType.I &&
       type !== InternalQueueType.X &&
-      this.isInitializing.get()
+      this.isInitializing
     ) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
@@ -122,41 +122,54 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @returns -{:RETURN_DESC_INIT:}
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
-    if (this.isInitializing.get()) {
+    if (this.isInitializing) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let alreadyCommitted = false
-    this.isInitializing.set(true)
+    let effectiveCommitStrategy: CommitStrategy = null
+    this._isInitializing.set(true)
     await initFn({
+      currentState: this.M$internalState,
       defaultState: this.defaultState,
       commitNoop: () => {
-        if (alreadyCommitted) {
+        if (effectiveCommitStrategy) {
           if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
-            console.error(getErrorMessageForRepeatedInitCommits(this.name, 'commitNoop'))
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commitNoop',
+              effectiveCommitStrategy,
+            ))
           }
           return // Early exit
         }
-        this.isInitializing.set(false)
-        alreadyCommitted = true
+        this._isInitializing.set(false)
+        if (process.env.NODE_ENV !== 'production') {
+          effectiveCommitStrategy = 'commitNoop'
+        }
       },
       commit: async (state: State) => {
-        if (alreadyCommitted) {
+        if (effectiveCommitStrategy) {
           if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
-            console.error(getErrorMessageForRepeatedInitCommits(this.name, 'commit'))
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commit',
+              effectiveCommitStrategy,
+            ))
           }
           return // Early exit
         }
         await this.M$internalQueue(state, InternalQueueType.I)
-        this.isInitializing.set(false)
-        alreadyCommitted = true
+        this._isInitializing.set(false)
+        if (process.env.NODE_ENV !== 'production') {
+          effectiveCommitStrategy = 'commit'
+        }
       },
     })
-    await this.isInitializing.wait(false)
+    await this._isInitializing.wait(false)
   }
 
   /**
@@ -220,7 +233,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
     await this.M$internalQueue(this.defaultState, InternalQueueType.R)
   }
 
-  // KIV: [Low priority] `wait` method is not implemented here and it seems like TS docs will fallback to the one from parent class, but we really don't need that extra complexity of creating a wrapper function around the parent class method... :facepalm:
+  // NOTE: `wait` method is not implemented here but it seems like TS docs will
+  // fallback to the one from parent class, but we really don't need that extra
+  // layer of complexity of creating a wrapper function around the parent class
+  // method... :facepalm:
 
   /**
    * {:TSDOC_METHOD_DESC_DISPOSE:}

@@ -70,7 +70,7 @@ export const DocConstants = {
   COMMON_DESC_CURRENT_STATE: 'The current state.',
   COMMON_DESC_DEFAULT_STATE: 'The default state.',
   COMMON_DESC_PREVIOUS_STATE: 'The previous state.',
-  COMMON_DESC_NEXT_STATE: 'The new state',
+  COMMON_DESC_NEXT_STATE: 'The new state.',
   // #endregion Common descriptions
 
   TSDOC_MARKER_UNSTABLE_API: '# Caution: Unstable API\n',
@@ -79,6 +79,7 @@ export const DocConstants = {
   TSDOC_DESC_SIMPLE_STATE_MANAGER: 'A bare-bones state manager.',
   TSDOC_DESC_STATE_MANAGER: 'A state manager with lifecycle management and enforces set-state functions to be executed based on order of invocation.',
   TSDOC_DESC_ASYNC_STATE_MANAGER: 'A state manager with lifecycle management that supports asynchronous set-state functions and enforces them to be executed based on order of invocation.',
+  TSDOC_DESC_IS_INITIALIZING: 'A flag indicating whether the State Manager is currently under initialization.',
   TSDOC_DESC_OPTIONS_NAME: 'The display name. Only used for debugging.',
   TSDOC_DESC_OPTIONS_SIMPLE: `Additional options for [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager).`,
   TSDOC_DESC_OPTIONS_STANDARD: `Additional options for [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) and [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
@@ -87,6 +88,7 @@ export const DocConstants = {
   TSDOC_DESC_USE_STATE_VALUE: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
   TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager) with a selector that is wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
   TSDOC_DESC_USE_SCOPED: `A React hook to consume a scoped State Manager. To be used together with [\`StateManagerScopeProvider\`](${DOCS_API_REACT_URL}/StateManagerScopeProvider). However, if the component consuming this hook is not wrapped in one, then the returned State Manager will fall back to the "unscoped" one.`,
+  TSDOC_DESC_USE_INIT_STATE: `A React hook to access the initializing state of a [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
   TSDOC_DESC_STATE_MANAGER_SCOPE_PROVIDER: `Provider component to use scoped State Managers by using [React's Context API](${REACT_LEARN_CONTEXT_URL}) under the hood.`,
   TSDOC_DESC_STATE_MANAGER_SCOPE_PROVIDER_PROPS: `Props for [\`StateManagerScopeProvider\`](${DOCS_API_REACT_URL}/StateManagerScopeProvider).`,
   TSDOC_DESC_OPTIONS_SCOPE: `To be used with \`useScoped\` from '${REACT_PACKAGE_NAME}'.`,
@@ -119,6 +121,7 @@ export const DocConstants = {
   TSDOC_DESC_VERSION: 'The package\'s version number. It follows [Semantic Versioning](https://semver.org).',
 
   TSDOC_METHOD_DESC_INIT: 'Perform initialization independent of the `init` lifecycle hook.',
+  TSDOC_METHOD_DESC_REINITIALIZE: 'Explicitly trigger the `init` lifecycle hook using the same logic provided to the `lifecycle` option.',
   TSDOC_METHOD_DESC_GET: 'Retrieves the current state value.',
   TSDOC_METHOD_DESC_GET_ASYNC: 'Retrieves the current state value after all preceding and pending state changes have completed.',
   TSDOC_METHOD_DESC_GET_SYNC: 'Retrieves the current state value, even if there are still other pending state changes.',
@@ -129,6 +132,7 @@ export const DocConstants = {
   TSDOC_METHOD_DESC_UNWATCH_ALL: 'Removes all existing watchers referencing to this State Manager. Watchers that added after calling this method will not be affected.',
   TSDOC_METHOD_DESC_WAIT_BY_VALUE: 'Waits for the state to match the expected value. If the state already matches the `expectedValue`, the Promise will be resolved immediately.',
   TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR: 'Waits for the `evaluator` to evaluate to `true`. The `evaluator` will be called immediately to check if the condition is fulfilled. If not, it will be called again each time the state changes.',
+  TSDOC_METHOD_DESC_WAIT_FOR_INIT: 'Waits for the State Manager to complete initializing. If initializing is already completed, the Promise will be resolved immediately.',
   TSDOC_METHOD_DESC_DISPOSE: 'Disposes the State Manager when it is no longer in use. This will remove all watchers and prevent new ones from being added.',
 
   TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL: 'Additional options for the State Manager.',
@@ -139,6 +143,7 @@ export const DocConstants = {
   TSDOC_PARAM_DESC_WATCH_CALLBACK: 'The callback that will be invoked each time the state changes.',
   TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE: 'The value to wait for.',
   TSDOC_PARAM_DESC_WAIT_EVALUATOR: 'Determines whether the state fulfills a certain condition.',
+  TSDOC_PARAM_DESC_WAIT_FOR_INIT_STATE: 'Optional parameter that when `true`, results in the opposite the behavior, making it wait for the State Manager to begin initialization.',
   TSDOC_PARAM_DESC_STATE_MANAGER: 'The State Manager to watch for changes.',
   TSDOC_PARAM_DESC_SELECTOR: `${SELECTOR_BASE_DESC} This function does not need to be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
   TSDOC_PARAM_DESC_REACTIVE_SELECTOR: `${SELECTOR_BASE_DESC} This function _**must**_ be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
@@ -170,6 +175,7 @@ export const DocConstants = {
   // #region Return descriptions
   TYPE_UNDEFINED,
   RETURN_DESC_INIT: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into \`undefined\`.`,
+  RETURN_DESC_REINITIALIZE: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into \`undefined\`.`,
   RETURN_DESC_GET: 'The current state value.',
   RETURN_DESC_GET_ASYNC: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into the current state value.`,
   RETURN_DESC_SET: TYPE_UNDEFINED,
@@ -181,6 +187,7 @@ export const DocConstants = {
   RETURN_DESC_WAIT: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state value that matches the \`expectedValue\` or allows the \`evaluator\` to return \`true\`.`,
   RETURN_DESC_WAIT_BY_VALUE: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state when the state matches the \`expectedValue\`.`,
   RETURN_DESC_WAIT_BY_EVALUATOR: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state when the \`evaluator\` returns \`true\`.`,
+  RETURN_DESC_WAIT_FOR_INIT: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves when the State Manager has completed initializing (or to begin initializing, if the \`state\` parameter is \`true\`).`,
   RETURN_DESC_DISPOSE: TYPE_UNDEFINED,
   RETURN_DESC_DISPOSE_ASYNC: TYPE_PROMISE_UNDEFINED,
   RETURN_DESC_SHALLOW_COMPARE_ARRAY: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
@@ -189,6 +196,7 @@ export const DocConstants = {
   RETURN_DESC_STRINGIFY_COMPARE: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
 
   RETURN_DESC_USE_SCOPED: 'The scoped State Manager.',
+  RETURN_DESC_USE_INIT_STATE: '`true` if the State Manager is still initializing, otherwise `false`.',
   // #endregion Return descriptions
 
   // #region State Manager Visibility

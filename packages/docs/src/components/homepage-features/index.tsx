@@ -11,7 +11,7 @@ interface FeatureItem {
 const features: Array<FeatureItem> = [
   {
     title: 'Easy to Use',
-    // TODO
+    // TODO [High priority]
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
@@ -22,7 +22,7 @@ const features: Array<FeatureItem> = [
   },
   {
     title: 'Lightweight and Fast',
-    // TODO
+    // TODO [High priority]
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
@@ -33,7 +33,7 @@ const features: Array<FeatureItem> = [
   },
   {
     title: 'Compatible with React',
-    // TODO
+    // TODO [High priority]
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>

@@ -15,7 +15,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     }
     const TestState = new AsyncStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing).toBe(false)
     expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe(undefined)
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
@@ -47,7 +47,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
       visibility: StateManagerVisibility.EXPOSED,
     })
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing).toBe(false)
     expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
@@ -76,7 +76,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: unknown
+      let spiedDefaultState: IUserState
       const stateToCommit: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
@@ -92,7 +92,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         },
       })
       cleanupManager.append(TestState.dispose)
-      await TestState.wait(() => true) // Wait for init to complete
+      await TestState.waitForInit()
       expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
       expect(Object.is(await TestState.get(), stateToCommit)).toBe(true)
       expect(await TestState.get()).toStrictEqual({
@@ -101,6 +101,16 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 41,
       })
       expect(didSet).not.toHaveBeenCalled()
+      let spiedCurrentState: IUserState
+      await TestState.init(({ commit, currentState }) => {
+        spiedCurrentState = currentState
+        commit(null)
+      })
+      expect(spiedCurrentState).toStrictEqual({
+        firstName: 'John',
+        lastName: 'Smith',
+        luckyNumber: 41,
+      })
     })
 
     test('commitNoop', async () => {
@@ -110,7 +120,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: unknown
+      let spiedDefaultState: IUserState
       const TestState = new AsyncStateManager(defaultState, {
         lifecycle: {
           init({ defaultState: $defaultState, commitNoop }) {
@@ -121,7 +131,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         },
       })
       cleanupManager.append(TestState.dispose)
-      await TestState.wait(() => true) // Wait for init to complete
+      await TestState.waitForInit()
       expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
       expect(spiedDefaultState).toStrictEqual({
         firstName: 'John',
@@ -135,6 +145,8 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 42,
       })
       expect(didSet).not.toHaveBeenCalled()
+      // `currentState` is not tested here because it is the same for `commit`.
+      // Besides, `commitNoop` does not change the state, so it becomes pointless to test.
     })
 
   })

@@ -1,4 +1,4 @@
-import { SetStateFn, WaitEvaluator } from '../../abstractions'
+import { CommitStrategy, SetStateFn } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
@@ -19,6 +19,13 @@ enum InternalQueueType {
  * @public
  */
 export interface StateManagerInitArgs<State> {
+  /**
+   * {:COMMON_DESC_CURRENT_STATE:}
+   */
+  readonly currentState: State
+  /**
+   * {:COMMON_DESC_DEFAULT_STATE:}
+   */
   readonly defaultState: State
   /**
    * {:TSDOC_DESC_INIT_COMMIT:}
@@ -136,7 +143,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * @internal
    */
-  readonly isInitializing = new SimpleStateManager(false)
+  readonly _isInitializing = new SimpleStateManager(false)
 
   /**
    * @internal
@@ -161,6 +168,14 @@ export class StateManager<State> extends SimpleStateManager<State> {
   readonly name: string | undefined
 
   /**
+   * {:TSDOC_DESC_IS_INITIALIZING:}
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#isInitializing
+   */
+  get isInitializing(): boolean {
+    return this._isInitializing.get()
+  }
+
+  /**
    * {:TSDOC_DESC_STATE_MANAGER:}
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
@@ -176,6 +191,8 @@ export class StateManager<State> extends SimpleStateManager<State> {
     this.visibility = visibility ?? StateManagerVisibility.ENVIRONMENT
     this.M$lifecycle = { ...lifecycle }
     this.init = this.init.bind(this)
+    this.reinitialize = this.reinitialize.bind(this)
+    this.waitForInit = this.waitForInit.bind(this)
     if (this.M$lifecycle.init) {
       this.init(this.M$lifecycle.init)
     }
@@ -188,7 +205,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
     newStateOrFn: State | SetStateFn<State>,
     type: InternalQueueType
   ): void => {
-    if (type !== InternalQueueType.I && this.isInitializing.get()) {
+    if (type !== InternalQueueType.I && this.isInitializing) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForSetOrResetDuringInitialization(this.name))
@@ -232,51 +249,73 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * {:TSDOC_METHOD_DESC_INIT:}
    * @param initFn - {:TSDOC_PARAM_DESC_INIT_FN:}
-   * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#init
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#init
    * @returns -{:RETURN_DESC_INIT:}
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
-    if (this.isInitializing.get()) {
+    if (this.isInitializing) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let alreadyCommitted = false
-    this.isInitializing.set(true)
+    let effectiveCommitStrategy: CommitStrategy = null
+    this._isInitializing.set(true)
     await initFn({
+      currentState: this.M$internalState,
       defaultState: this.defaultState,
       commitNoop: () => {
-        if (alreadyCommitted) {
+        if (effectiveCommitStrategy) {
           if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
-            console.error(getErrorMessageForRepeatedInitCommits(this.name, 'commitNoop'))
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commitNoop',
+              effectiveCommitStrategy,
+            ))
           }
           return // Early exit
         }
-        this.isInitializing.set(false)
-        alreadyCommitted = true
+        this._isInitializing.set(false)
+        if (process.env.NODE_ENV !== 'production') {
+          effectiveCommitStrategy = 'commitNoop'
+        }
       },
       commit: (state: State) => {
-        if (alreadyCommitted) {
+        if (effectiveCommitStrategy) {
           if (process.env.NODE_ENV !== 'production') {
             // eslint-disable-next-line no-console
-            console.error(getErrorMessageForRepeatedInitCommits(this.name, 'commit'))
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commit',
+              effectiveCommitStrategy,
+            ))
           }
           return // Early exit
         }
         this.M$internalQueue(state, InternalQueueType.I)
-        this.isInitializing.set(false)
-        alreadyCommitted = true
+        this._isInitializing.set(false)
+        if (process.env.NODE_ENV !== 'production') {
+          effectiveCommitStrategy = 'commit'
+        }
       },
     })
-    await this.isInitializing.wait(false)
+    await this._isInitializing.wait(false)
+  }
+
+  /**
+   * {:TSDOC_METHOD_DESC_REINITIALIZE:}
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#reinitialize
+   * @returns -{:RETURN_DESC_REINITIALIZE:}
+   */
+  async reinitialize(): Promise<void> {
+    await this.init(this.M$lifecycle.init)
   }
 
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_VALUE:}
    * @param newState - {:TSDOC_PARAM_DESC_SET_NEW_STATE:}
-   * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#set
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#set
    * @returns -{:RETURN_DESC_SET:}
    */
   set(newState: State): void
@@ -284,7 +323,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_FUNCTION:}
    * @param setStateFn - {:TSDOC_PARAM_DESC_SET_FUNCTION:}
-   * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#set
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#set
    * @returns -{:RETURN_DESC_SET:}
    */
   set(setStateFn: SetStateFn<State>): void
@@ -295,43 +334,42 @@ export class StateManager<State> extends SimpleStateManager<State> {
 
   /**
    * {:TSDOC_METHOD_DESC_RESET:}
-   * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#reset
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#reset
    * @returns -{:RETURN_DESC_RESET:}
    */
   reset(): void {
     this.M$internalQueue(this.defaultState, InternalQueueType.R)
   }
 
-  /**
-   * {:TSDOC_METHOD_DESC_WAIT_BY_VALUE:}
-   * @param expectedValue - {:TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager#wait
-   * @returns -{:RETURN_DESC_WAIT_BY_VALUE:}
-   */
-  wait(expectedValue: State): Promise<State>
+  // NOTE: `wait` method is not implemented here but it seems like TS docs will
+  // fallback to the one from parent class, but we really don't need that extra
+  // layer of complexity of creating a wrapper function around the parent class
+  // method... :facepalm:
 
   /**
-   * {:TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR:}
-   * @param evaluator - {:TSDOC_PARAM_DESC_WAIT_EVALUATOR:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager#wait
-   * @returns -{:RETURN_DESC_WAIT_BY_EVALUATOR:}
+   * {:TSDOC_METHOD_DESC_WAIT_FOR_INIT:}
+   * @param state - {:TSDOC_PARAM_DESC_WAIT_FOR_INIT_STATE:}
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#waitForInit
+   * @returns -{:RETURN_DESC_WAIT_FOR_INIT:}
    */
-  wait(evaluator: WaitEvaluator<State>): Promise<State>
-
-  async wait(valueOrEvaluator: State | WaitEvaluator<State>): Promise<State> {
-    if (this.isInitializing.get()) {
-      await this.isInitializing.wait(false)
+  async waitForInit(state = false): Promise<void> {
+    if (this.isInitializing) {
+      await this._isInitializing.wait(state)
     }
-    return await super.wait(valueOrEvaluator)
   }
+
+  // TODO: [Medium priority]
+  // watchInit(callback: (isInitializing: boolean) => void): () => void {
+  //   return this._isInitializing.watch(callback)
+  // }
 
   /**
    * {:TSDOC_METHOD_DESC_DISPOSE:}
-   * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#dispose
+   * @see -{:DOCS_API_CORE_URL:}/StateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
-    this.isInitializing.dispose()
+    this._isInitializing.dispose()
     super.dispose()
   }
 

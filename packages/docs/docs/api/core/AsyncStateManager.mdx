@@ -2,7 +2,6 @@
 sidebar_position: 3
 ---
 
-import { DocConstants } from '@site/src/constants'
 import { ApiLink } from '@site/src/components/api-link'
 import { InheritedFrom } from '@site/src/components/inherited-from'
 import { LabeledItem } from '@site/src/components/labeled-item'
@@ -14,6 +13,7 @@ import {
   Returns,
 } from '@site/src/components/sentence-templates'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { DocConstants } from '@site/src/constants'
 import CodeInline from '@theme/CodeInline'
 
 # AsyncStateManager
@@ -84,6 +84,19 @@ readonly defaultState: State
 
 ```ts
 readonly name: string | undefined
+```
+
+### isInitializing
+
+<InheritedFrom
+  href={'./StateManager#isInitializing'}
+  name={'StateManager.isInitializing'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_IS_INITIALIZING}</MarkdownWrapper>
+
+```ts
+readonly isInitializing: boolean
 ```
 
 ## Methods
@@ -342,6 +355,37 @@ await ExampleState.wait(42)
 
 // Promise will resolve when the function returns `true`.
 await ExampleState.wait((state) => fulfillsSomeCondition(state))
+```
+
+### waitForInit
+
+<InheritedFrom
+  href={'./StateManager#waitForInit'}
+  name={'StateManager.waitForInit'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_FOR_INIT}</MarkdownWrapper>
+
+```ts
+waitForInit(state?: boolean): Promise<void>
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[{
+    name: 'state',
+    type: DataType.boolean,
+    description: DocConstants.TSDOC_PARAM_DESC_WAIT_FOR_INIT_STATE,
+    isOptional: true,
+  }]}
+/>
+
+#### Returns
+<Returns name='waitForInit'>{DocConstants.RETURN_DESC_WAIT_FOR_INIT}</Returns>
+
+#### Example
+```ts
+await ExampleState.waitForInit()
 ```
 
 ### dispose

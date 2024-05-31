@@ -20,30 +20,50 @@ describe(getErrorMessageForOverlappingInits.name, () => {
 
 describe(getErrorMessageForRepeatedInitCommits.name, () => {
 
-  describe('commit', () => {
+  describe('With name', () => {
 
-    test('Without name', () => {
-      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commit')
-      expect(output).toBe('Attempted to call `commit` multiple times for the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    test('commit -> commit', () => {
+      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commit', 'commit')
+      expect(output).toBe('Attempted to call `commit` for "TestState" multiple times in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
     })
 
-    test('With name', () => {
-      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commit')
-      expect(output).toBe('Attempted to call `commit` for "TestState" multiple times for the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    test('commit -> commitNoop', () => {
+      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commit', 'commitNoop')
+      expect(output).toBe('Attempted to call `commit` for "TestState" even though `commitNoop` has already been called in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    })
+
+    test('commitNoop -> commit', () => {
+      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commitNoop', 'commit')
+      expect(output).toBe('Attempted to call `commitNoop` for "TestState" even though `commit` has already been called in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    })
+
+    test('commitNoop -> commitNoop', () => {
+      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commitNoop', 'commitNoop')
+      expect(output).toBe('Attempted to call `commitNoop` for "TestState" multiple times in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
     })
 
   })
 
-  describe('commitNoop', () => {
+  describe('Without name', () => {
 
-    test('Without name', () => {
-      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commitNoop')
-      expect(output).toBe('Attempted to call `commitNoop` multiple times for the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    test('commit -> commit', () => {
+      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commit', 'commit')
+      expect(output).toBe('Attempted to call `commit` multiple times in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
     })
 
-    test('With name', () => {
-      const output = getErrorMessageForRepeatedInitCommits('TestState', 'commitNoop')
-      expect(output).toBe('Attempted to call `commitNoop` for "TestState" multiple times for the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    test('commit -> commitNoop', () => {
+      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commit', 'commitNoop')
+      expect(output).toBe('Attempted to call `commit` even though `commitNoop` has already been called in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    })
+
+    test('commitNoop -> commit', () => {
+      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commitNoop', 'commit')
+      expect(output).toBe('Attempted to call `commitNoop` even though `commit` has already been called in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
+    })
+
+    test('commitNoop -> commitNoop', () => {
+      const output = getErrorMessageForRepeatedInitCommits(undefined, 'commitNoop', 'commitNoop')
+      expect(output).toBe('Attempted to call `commitNoop` multiple times in the same `init` callback. Only the first commit will be effective while subsequent calls are ignored. If this was intentional, make separate `init` calls instead, otherwise it might indicate a memory leak in your application.')
     })
 
   })

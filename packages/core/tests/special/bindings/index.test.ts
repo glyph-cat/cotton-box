@@ -27,31 +27,39 @@ wrapper(({ Lib: {
   })
 
   test('StateManager', async () => {
-    const TestStateManager = new StateManager(42)
+    const TestStateManager = new StateManager(42, {
+      lifecycle: { init({ commitNoop }) { commitNoop() } }
+    })
     cleanupManager.append(TestStateManager.dispose)
     await performInvocations([
       [TestStateManager.init, ({ commitNoop }) => { commitNoop() }],
+      [TestStateManager.reinitialize],
       [TestStateManager.get],
       [TestStateManager.set, 37],
       [TestStateManager.reset],
       [TestStateManager.watch, () => { /* ... */ }],
       [TestStateManager.wait, () => true],
+      [TestStateManager.waitForInit],
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])
   })
 
   test('AsyncStateManager', async () => {
-    const TestStateManager = new AsyncStateManager(42)
+    const TestStateManager = new AsyncStateManager(42, {
+      lifecycle: { init({ commitNoop }) { commitNoop() } }
+    })
     cleanupManager.append(TestStateManager.dispose)
     await performInvocations([
       [TestStateManager.init, ({ commitNoop }) => { commitNoop() }],
+      [TestStateManager.reinitialize],
       [TestStateManager.get],
       [TestStateManager.getSync],
       [TestStateManager.set, 37],
       [TestStateManager.reset],
       [TestStateManager.watch, () => { /* ... */ }],
       [TestStateManager.wait, () => true],
+      [TestStateManager.waitForInit],
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])

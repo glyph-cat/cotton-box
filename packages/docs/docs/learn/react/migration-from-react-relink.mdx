@@ -120,11 +120,8 @@ const ExampleStateA = new StateManager('...')
 const ExampleStateB = new StateManager('...', {
   lifecycle: {
     init() {
-      await ExampleStateA.wait(() => true)
-      // do something
-      // This is because `wait` will not resolve until state
-      // finished initializing. We can pass `() => true` as a way to wait
-      // for it to initialize without waiting for any specific value.
+      await ExampleStateA.waitForInit()
+      // continue to do something
     },
   },
 })

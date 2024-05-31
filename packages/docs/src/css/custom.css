@@ -16,7 +16,7 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
-  /* TODO: Make code block BG dimmer and use #ffffff20 */
+  /* TODO: [Low priority] Make code block BG dimmer and use #ffffff20 */
   --docusaurus-highlighted-code-line-bg: #ffee0040;
   background-color: #ffffff;
   color: #4a4a4a;

@@ -33,7 +33,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.ts', '.tsx'],
+        extensions: ['.ts'],
         // Reference: https://stackoverflow.com/a/75368733/5810737
       },
     },

@@ -1,4 +1,4 @@
-import { CleanupManager, Nullable, TestUtils } from '../../test-helpers'
+import { CleanupManager, Nullable } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
@@ -71,56 +71,6 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
       TestState.set(41)
       await cbPromise
       expect(waitedValue).toBe(41)
-    })
-
-  })
-
-  describe('Wait should not resolve if state is initializing', () => {
-
-    jest.useRealTimers()
-
-    test('commit', async () => {
-
-      const TestState = new AsyncStateManager(42)
-      cleanupManager.append(TestState.dispose)
-
-      let isWaitPromiseResolved = false
-      TestState.init(async ({ commit }) => {
-        await TestUtils.delay(10)
-        commit(41)
-      })
-
-      const cb = async () => {
-        await TestState.wait(41)
-        isWaitPromiseResolved = true
-      }; cb()
-      expect(isWaitPromiseResolved).toBe(false)
-
-      await TestUtils.delay(10)
-      expect(isWaitPromiseResolved).toBe(true)
-
-    })
-
-    test('commitNoop', async () => {
-
-      const TestState = new AsyncStateManager(0)
-      cleanupManager.append(TestState.dispose)
-
-      let isWaitPromiseResolved = false
-      TestState.init(async ({ commitNoop }) => {
-        await TestUtils.delay(10)
-        commitNoop()
-      })
-
-      const cb = async () => {
-        await TestState.wait(0)
-        isWaitPromiseResolved = true
-      }; cb()
-      expect(isWaitPromiseResolved).toBe(false)
-
-      await TestUtils.delay(10)
-      expect(isWaitPromiseResolved).toBe(true)
-
     })
 
   })

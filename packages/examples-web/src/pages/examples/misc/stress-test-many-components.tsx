@@ -58,7 +58,7 @@ function ControlComponent(): JSX.Element {
           default: return ctx[key]
         }
       })()
-      if (!setState) { console.warn(`Skipped for now: ${key}`); continue } // TODO
+      if (!setState) { console.warn(`Skipped for now: ${key}`); continue } // TODO: [Low priority]
       const startTime = performance.now()
       const possiblyAPromise = setState((c: number) => c + 1)
       if (

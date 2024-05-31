@@ -15,7 +15,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     }
     const TestState = new StateManager(defaultState)
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing).toBe(false)
     expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe(undefined)
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
@@ -47,7 +47,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
       visibility: StateManagerVisibility.EXPOSED,
     })
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing).toBe(false)
     expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
@@ -69,7 +69,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
 
   describe('lifecycle.init', () => {
 
-    test('commit', () => {
+    test('commit', async () => {
       const defaultState: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
@@ -97,16 +97,26 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
         luckyNumber: 41,
       })
       expect(didSet).not.toHaveBeenCalled()
+      let spiedCurrentState: IUserState
+      await TestState.init(({ commit, currentState }) => {
+        spiedCurrentState = currentState
+        commit(null)
+      })
+      expect(spiedCurrentState).toStrictEqual({
+        firstName: 'John',
+        lastName: 'Smith',
+        luckyNumber: 41,
+      })
     })
 
-    test('commitNoop', () => {
+    test('commitNoop', async () => {
       const defaultState: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: unknown
+      let spiedDefaultState: IUserState
       const TestState = new StateManager(defaultState, {
         lifecycle: {
           init({ defaultState: $defaultState, commitNoop }) {
@@ -130,6 +140,8 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
         luckyNumber: 42,
       })
       expect(didSet).not.toHaveBeenCalled()
+      // `currentState` is not tested here because it is the same for `commit`.
+      // Besides, `commitNoop` does not change the state, so it becomes pointless to test.
     })
 
   })

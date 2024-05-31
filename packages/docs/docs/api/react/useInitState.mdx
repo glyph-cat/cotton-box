@@ -1,24 +1,24 @@
 ---
-sidebar_position: 4
+sidebar_position: 3
 ---
 
-import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/Scope'
+import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useInitState'
 import { SimpleWebPlayground } from '@site/src/components/live-playground'
 import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
 import { DocConstants } from '@site/src/constants'
 
-# useScoped
+# useInitState
 
 ## Overview
 
 <TypeDisplay>{DataType.Function}</TypeDisplay>
 
-<MarkdownWrapper>{DocConstants.TSDOC_DESC_USE_SCOPED}</MarkdownWrapper>
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_USE_INIT_STATE}</MarkdownWrapper>
 
 ```js
-const scopedStateManager = useScoped(stateManager)
+const state = useInitState(stateManager)
 ```
 
 ## Parameters
@@ -26,15 +26,11 @@ const scopedStateManager = useScoped(stateManager)
 <ObjectShapeDefinition data={[
   {
     name: 'stateManager',
-    type: [
-      DataType.SimpleStateManager,
-      DataType.StateManager,
-      DataType.AsyncStateManager,
-    ],
-    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_FOR_USE_SCOPE,
+    type: DataType.SimpleStateManager,
+    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER,
   },
 ]} />
 
-## Example
+## Examples
 
 <SimpleWebPlayground code={CODE_EXAMPLE} />

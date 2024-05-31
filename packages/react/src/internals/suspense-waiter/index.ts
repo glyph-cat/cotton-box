@@ -13,7 +13,7 @@ export function useSuspenseWaiter(
   // SimpleStateManager does not have this property.
   // NOTE: Unable to use `instanceof` to check because for UMD builds somehow,
   // it will always be `false`.
-  const isInitializingState = ((stateManager as $1 | $2).isInitializing ?? MockInitState) as SimpleStateManager<boolean>
+  const isInitializingState = ((stateManager as $1 | $2)._isInitializing ?? MockInitState) as SimpleStateManager<boolean>
 
   const isInitializing = useSyncExternalStore(
     isInitializingState.watch,

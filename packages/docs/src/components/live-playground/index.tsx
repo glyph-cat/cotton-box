@@ -32,7 +32,7 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
     '',
   ].join('\n'),
   [STYLES_CSS]: [
-    // TODO: raw import from examples-web, probably need script instead of raw loader
+    // TODO: [high priority] raw import from examples-web, probably need script instead of raw loader
     'body {',
     '  font-family: sans-serif;',
     '  -webkit-font-smoothing: auto;',
