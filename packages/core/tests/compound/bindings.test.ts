@@ -1,6 +1,6 @@
 /* eslint-disable jest/expect-expect */
-import { CleanupManager } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { CleanupManager } from '../test-helpers'
+import { TestConfig, wrapper } from '../test-wrapper'
 
 let cleanupManager: CleanupManager
 beforeEach(() => { cleanupManager = new CleanupManager() })

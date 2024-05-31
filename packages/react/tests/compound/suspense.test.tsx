@@ -1,6 +1,6 @@
 import { act } from 'react'
-import { CleanupManager, SuspenseTester, TestUtils } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { CleanupManager, SuspenseTester, TestUtils } from '../test-helpers'
+import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({
   Lib: { StateManager, AsyncStateManager },
