@@ -1,10 +1,10 @@
+import { RenderResult, render } from '@testing-library/react'
 import { ComponentType, Suspense, act, createElement, useEffect } from 'react'
-import { ReactTestRenderer, create } from 'react-test-renderer'
 import { CleanupManager } from './test-helpers'
 
 export class SuspenseTester {
 
-  private root: ReactTestRenderer = null
+  private renderResult: RenderResult = null
   private _componentIsUnderSuspense = false
 
   get componentIsUnderSuspense(): boolean {
@@ -28,7 +28,7 @@ export class SuspenseTester {
     }
 
     act(() => {
-      this.root = create(
+      this.renderResult = render(
         createElement(Suspense, {
           fallback: createElement(FallbackComponent),
         }, createElement(TestComponent))
@@ -38,7 +38,7 @@ export class SuspenseTester {
   }
 
   dispose(): void {
-    this.root.unmount()
+    this.renderResult?.unmount()
   }
 
 }

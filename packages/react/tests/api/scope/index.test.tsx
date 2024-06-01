@@ -1,5 +1,5 @@
+import { render, RenderResult } from '@testing-library/react'
 import { act } from 'react'
-import { ReactTestRenderer, create } from 'react-test-renderer'
 import { $ } from '../../../src/abstractions'
 import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
@@ -15,8 +15,8 @@ wrapper(({
   beforeEach(() => { cleanupManager = new CleanupManager() })
   afterEach(() => { cleanupManager.performCleanup() })
 
-  let root: ReactTestRenderer
-  afterEach(() => { root?.unmount() })
+  let renderResult: RenderResult
+  afterEach(() => { renderResult?.unmount() })
 
   const stateManagersToTestWith = {
     SimpleStateManager,
@@ -55,7 +55,7 @@ wrapper(({
       }
 
       act(() => {
-        root = create(
+        renderResult = render(
           <>
             <TestComponent id='a' />
             <StateManagerScopeProvider with={[testStates[0]]}>

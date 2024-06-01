@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CleanupManager, HookInterface } from '../../test-helpers'
+import { CleanupManager, HookTester } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -38,7 +38,7 @@ wrapper(({
           test(flagScenario, () => {
             const TestState = new StateManagerType(42)
             cleanupManager.append(TestState.dispose)
-            const hookInterface = new HookInterface({
+            const hookInterface = new HookTester({
               cleanupManager,
               useHook: () => useHook(TestState),
               values: {
@@ -58,7 +58,7 @@ wrapper(({
           const TestState = new StateManagerType(42)
           cleanupManager.append(TestState.dispose)
 
-          const hookInterface = new HookInterface({
+          const hookInterface = new HookTester({
             cleanupManager,
             useHook: () => {
               const [active, setActiveState] = useState(true)
@@ -119,7 +119,7 @@ wrapper(({
           const TestState = new StateManagerType(42)
           cleanupManager.append(TestState.dispose)
 
-          const hookInterface = new HookInterface({
+          const hookInterface = new HookTester({
             cleanupManager,
             useHook: () => {
               const [active, setActiveState] = useState(false)

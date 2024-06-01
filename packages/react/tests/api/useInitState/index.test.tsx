@@ -1,5 +1,5 @@
 import { act } from 'react'
-import { CleanupManager, HookInterface, TestUtils } from '../../test-helpers'
+import { CleanupManager, HookTester, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -33,7 +33,7 @@ wrapper(({
       })
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookInterface({
+      const hookInterface = new HookTester({
         cleanupManager,
         useHook: () => useInitState(TestState),
         values: {

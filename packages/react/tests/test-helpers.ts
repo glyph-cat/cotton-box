@@ -64,5 +64,5 @@ export class CleanupManager {
 
 }
 
-export * from './hook-interface'
+export * from './hook-tester'
 export * from './suspense-tester'

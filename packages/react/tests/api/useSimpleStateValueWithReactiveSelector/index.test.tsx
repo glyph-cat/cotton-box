@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { CleanupManager, HookInterface, IUserState } from '../../test-helpers'
+import { CleanupManager, HookTester, IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -24,7 +24,7 @@ wrapper(({
       const TestState = new SimpleStateManager(defaultState)
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookInterface({
+      const hookInterface = new HookTester({
         cleanupManager: cleanupManager,
         useHook: () => useSimpleStateValueWithReactiveSelector(TestState, (s) => s.luckyNumber),
         values: {
@@ -116,7 +116,7 @@ wrapper(({
     const TestState = new SimpleStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
 
-    const hookInterface = new HookInterface({
+    const hookInterface = new HookTester({
       cleanupManager: cleanupManager,
       useHook: () => {
         const [key, setKey] = useState<keyof IUserState>('luckyNumber')
