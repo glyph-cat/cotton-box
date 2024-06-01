@@ -3,12 +3,15 @@ import React, {useCallback, useState, useRef, useEffect} from 'react';
 import clsx from 'clsx';
 import copy from 'copy-text-to-clipboard';
 import {translate} from '@docusaurus/Translate';
+import type {Props} from '@theme/CodeBlock/CopyButton';
 import IconCopy from '@theme/Icon/Copy';
 import IconSuccess from '@theme/Icon/Success';
+
 import styles from './styles.module.css';
-export default function CopyButton({code, className}) {
+
+export default function CopyButton({code, className}: Props): JSX.Element {
   const [isCopied, setIsCopied] = useState(false);
-  const copyTimeout = useRef(undefined);
+  const copyTimeout = useRef<number | undefined>(undefined);
   const handleCopyCode = useCallback(() => {
     copy(code);
     setIsCopied(true);
@@ -16,7 +19,9 @@ export default function CopyButton({code, className}) {
       setIsCopied(false);
     }, 1000);
   }, [code]);
+
   useEffect(() => () => window.clearTimeout(copyTimeout.current), []);
+
   return (
     <button
       type="button"

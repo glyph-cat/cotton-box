@@ -4,7 +4,7 @@ import { stringMap } from '@site/src/utils/string-map'
 import type { Props as CodeBlockProps } from '@theme/CodeBlock'
 import ElementContent from '@theme/CodeBlock/Content/Element'
 import StringContent from '@theme/CodeBlock/Content/String'
-import React, { isValidElement } from 'react'
+import React, { isValidElement, type ReactNode } from 'react'
 
 /**
  * Best attempt to make the children a plain string so it is copyable. If there
@@ -12,12 +12,12 @@ import React, { isValidElement } from 'react'
  * return `children` as-is; otherwise, it concatenates the string children
  * together.
  */
-function maybeStringifyChildren(children) {
+function maybeStringifyChildren(children: ReactNode): ReactNode {
   if (React.Children.toArray(children).some((el) => isValidElement(el))) {
     return children
   }
   // The children is now guaranteed to be one/more plain strings
-  return Array.isArray(children) ? children.join('') : children
+  return Array.isArray(children) ? children.join('') : (children as string)
 }
 
 export default function CodeBlock({
@@ -29,14 +29,18 @@ export default function CodeBlock({
   // from SSR. Hence force a re-render after mounting to apply the current
   // relevant styles.
   const isBrowser = useIsBrowser()
-  const children = stringMap(maybeStringifyChildren(rawChildren), {
-    CORE_PACKAGE_NAME: DocConstants.CORE_PACKAGE_NAME,
-    REACT_PACKAGE_NAME: DocConstants.REACT_PACKAGE_NAME,
-  }, false).data
-  const CodeBlockComp = typeof children === 'string' ? StringContent : ElementContent
+  const maybeStringifiedChildren = maybeStringifyChildren(rawChildren)
+  const children = typeof maybeStringifiedChildren === 'string'
+    ? stringMap(maybeStringifiedChildren, {
+      CORE_PACKAGE_NAME: DocConstants.CORE_PACKAGE_NAME,
+      REACT_PACKAGE_NAME: DocConstants.REACT_PACKAGE_NAME,
+    }, false).data
+    : maybeStringifiedChildren
+  const CodeBlockComp =
+    typeof children === 'string' ? StringContent : ElementContent
   return (
     <CodeBlockComp key={String(isBrowser)} {...props}>
-      {children}
+      {children as string}
     </CodeBlockComp>
   )
 }
