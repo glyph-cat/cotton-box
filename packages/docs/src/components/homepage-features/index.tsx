@@ -15,11 +15,29 @@ interface FeatureItem {
 // - Official bindings for React is available
 const features: Array<FeatureItem> = [
   {
-    title: '...',
+    title: 'Lightweight & fast',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Lorem ipsum dolor sit amet.
+        lorem ipsum dolor sit amet
+      </>
+    ),
+  },
+  {
+    title: 'Supports async set-state functions',
+    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    description: (
+      <>
+        lorem ipsum dolor sit amet
+      </>
+    ),
+  },
+  {
+    title: 'Declarative lifecycle management',
+    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    description: (
+      <>
+        lorem ipsum dolor sit amet
       </>
     ),
   },
