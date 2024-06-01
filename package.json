@@ -13,6 +13,7 @@
     "sync-version": "yarn ts-node ./scripts/run/sync-subpackage-versions",
     "insert-doc-variables": "NODE_ENV=production yarn ts-node ./scripts/run/insert-doc-variables",
     "sync-subpackage-license": "yarn ts-node ./scripts/run/sync-subpackage-license",
+    "sync-subpackage-readme": "yarn ts-node ./scripts/run/sync-subpackage-readme",
     "sync-examples": "yarn ts-node ./scripts/run/sync-examples"
   },
   "devDependencies": {

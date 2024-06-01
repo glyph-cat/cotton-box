@@ -8,37 +8,18 @@ interface FeatureItem {
   description: JSX.Element
 }
 
+// TODO [High priority] build content from README.md
+// - Lightweight & fast
+// - Supports asynchronous set-state functions
+// - Declarative lifecycle management
+// - Official bindings for React is available
 const features: Array<FeatureItem> = [
   {
-    title: 'Easy to Use',
-    // TODO [High priority]
+    title: '...',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
-      </>
-    ),
-  },
-  {
-    title: 'Lightweight and Fast',
-    // TODO [High priority]
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
-    description: (
-      <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
-      </>
-    ),
-  },
-  {
-    title: 'Compatible with React',
-    // TODO [High priority]
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
-    description: (
-      <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Lorem ipsum dolor sit amet.
       </>
     ),
   },
