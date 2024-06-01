@@ -16,6 +16,14 @@ const replacements: Array<IReplacement> = [
     source: 'get(): Promise<State>;',
     replaceFn: (source) => `//@ts-ignore\n    ${source}`,
   },
+  {
+    source: 'readonly type = "StateManager";',
+    replaceFn: (source) => `//@ts-ignore\n    ${source}`,
+  },
+  {
+    source: 'readonly type = "AsyncStateManager";',
+    replaceFn: (source) => `//@ts-ignore\n    ${source}`,
+  },
 ]
 
 for (const replacement of replacements) {
