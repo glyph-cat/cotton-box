@@ -1,7 +1,7 @@
 {
   "name": "cotton-box-examples-web",
   "version": "0.1.0",
-  "description": "Web examples for CottonBox.",
+  "description": "Web examples for Cotton Box.",
   "scripts": {
     "start": "next dev -p 3001",
     "build": "next build",
@@ -15,8 +15,8 @@
   "dependencies": {
     "@hookstate/core": "^4.0.1",
     "@reduxjs/toolkit": "^2.2.3",
-    "cotton-box": "./cb-0u6giUdk.tgz",
-    "cotton-box-react": "./cbr-0u6giUdk.tgz",
+    "cotton-box": "^0.1.0",
+    "cotton-box-react": "^0.1.0",
     "next": "^14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

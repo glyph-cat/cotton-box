@@ -527,13 +527,15 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-cotton-box-react@./cbr-0u6giUdk.tgz:
-  version "0.0.2"
-  resolved "./cbr-0u6giUdk.tgz#c4cb7f9e67627e456766c94e7a29a4874135c596"
+cotton-box-react@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cotton-box-react/-/cotton-box-react-0.1.0.tgz#1b344edbdb807669e14e9347394e906e8e9cd211"
+  integrity sha512-rEPH6+/lpEVA7Q8OIZ3aAuN+svGMCK8MA+1sRBYzLeDyOh/kNbwmAeRBqf9cHyulzv5a5oJe+2rsvm5tPuQjEA==
 
-cotton-box@./cb-0u6giUdk.tgz:
-  version "0.0.2"
-  resolved "./cb-0u6giUdk.tgz#251f81c225798d0285d6d949910763d91293cacc"
+cotton-box@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cotton-box/-/cotton-box-0.1.0.tgz#0505d723f715dbfc70353eceea0f5939cd5d80a0"
+  integrity sha512-Rap0QQK6x0U9IqQlcNIYYTfY2ADPW8jfnasBHDxP1Gp8DqlrDo8zzsXDzPf98HJHYOjRIDy1cjgI9MmGV9kb1g==
 
 cross-spawn@^7.0.2:
   version "7.0.3"

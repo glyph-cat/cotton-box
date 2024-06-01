@@ -22,7 +22,7 @@
 * Lightweight & fast
 * Supports asynchronous set-state functions
 * Declarative lifecycle management
-* Works with React
+* Official bindings for React is available
 
 <br/>
 

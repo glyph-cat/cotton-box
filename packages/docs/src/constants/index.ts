@@ -50,7 +50,7 @@ export const DocConstants = {
   PACKAGE_DESCRIPTION: 'A flexible toolbox with different types of state managers catered to different scenarios.', // TODO: [Low priority] Should we get this from root package.json?
 
   // #region Package names
-  DISPLAY_PACKAGE_NAME: 'CottonBox',
+  DISPLAY_PACKAGE_NAME: 'Cotton Box',
   CORE_PACKAGE_NAME,
   REACT_PACKAGE_NAME,
   // #endregion Package names

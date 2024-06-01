@@ -1,7 +1,7 @@
 {
   "name": "cotton-box-react",
   "version": "0.1.0",
-  "description": "React bindings for CottonBox.",
+  "description": "The official React bindings for Cotton Box.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "unpkg": "lib/umd/index.js",
