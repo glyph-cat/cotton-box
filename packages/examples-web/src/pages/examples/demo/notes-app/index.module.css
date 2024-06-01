@@ -61,7 +61,7 @@
 
 .editorContainer {
   display: grid;
-  background-color: #222222;
+  background-color: #80808020;
   grid-auto-rows: auto 1fr;
 }
 
