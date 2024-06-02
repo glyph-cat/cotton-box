@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Cotton Box Blog</title>
+        <link>https://glyph-cat.github.io/cotton-box/blog</link>
+        <description>Cotton Box Blog</description>
+        <lastBuildDate>Sun, 31 Mar 2024 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Reincarnation of an old package]]></title>
+            <link>https://glyph-cat.github.io/cotton-box/blog/reincarnation-of-an-old-package</link>
+            <guid>https://glyph-cat.github.io/cotton-box/blog/reincarnation-of-an-old-package</guid>
+            <pubDate>Sun, 31 Mar 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[In 2020, react-relink was released. It was heavily inspired by recoil and had a similar API design.]]></description>
+            <content:encoded><![CDATA[<p>In 2020, <a href="https://github.com/glyph-cat/react-relink" target="_blank" rel="noreferrer"><code>react-relink</code></a> was released. It was heavily inspired by <a href="https://github.com/facebookexperimental/Recoil" target="_blank" rel="noreferrer"><code>recoil</code></a> and had a similar API design.</p>
+<br>
+<p><code>react-relink</code> was created with the goals of:</p>
+<ol>
+<li>not needing to wrap components in <a href="https://react.dev/reference/react/createContext#provider" target="_blank" rel="noreferrer">Providers</a> while still allowing states to be shared across different React components trees, and</li>
+<li>make it easy to transition from <code>recoil</code> by introducing similar concepts and APIs.</li>
+</ol>
+<br>
+<p>As time goes on, the concepts of <code>recoil</code> were slowly disregarded, new features were added, and <code>react-relink</code> began to evolve into a state management library of it's own.</p>
+<br>
+<p>At that point, there were three main problems...</p>
+<ul>
+<li>The codebase became bloated and difficult to maintain</li>
+<li>It became so slow, that in some scenarios, it results in very noticeable lagging</li>
+<li>There was no easy way to use <code>react-relink</code> as a state management tool outside of React because the dependencies are tied together.</li>
+</ul>
+<br>
+<p>Eventually, the better solution was to create <del>a new package</del> two new packages —
+a core package and another one for its React bindings. This allows non-React projects to use this new state management library without needing to install <a href="https://www.npmjs.com/package/react" target="_blank" rel="noreferrer"><code>react</code></a> as a dependency, and the core package is called <code>cotton-box</code>.</p>
+<p><code>cotton-box</code> exposes three different types of State Managers that are built on top of one another for different needs:</p>
+<ul>
+<li><code>SimpleStateManager</code> —&nbsp;the most lightweight state manager</li>
+<li><code>StateManager</code> - generic state manager with lifecycle hooks for persisting data</li>
+<li><code>AsyncStateManager</code> - similar to <code>StateManager</code> but supports async set-state functions</li>
+</ul>
+<p>More information on the differences between these State Managers are available <a href="https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/which-state-manager-should-i-use">here</a>.</p>
+<p>If you're migrating from <code>react-relink</code>, it is highly recommended to check out the <a href="https://glyph-cat.github.io/cotton-box/docs/learn/react/migration-from-react-relink">migration guide</a>.</p>]]></content:encoded>
+            <category>react</category>
+            <category>react-relink</category>
+        </item>
+    </channel>
+</rss>

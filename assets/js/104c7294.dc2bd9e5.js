@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[1391],{3681:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Core","slug":"api/core","permalink":"/cotton-box/docs/api/core","sidebar":"apiSidebar","navigation":{"next":{"title":"SimpleStateManager","permalink":"/cotton-box/docs/api/core/SimpleStateManager"}}}}')}}]);
