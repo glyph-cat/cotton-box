@@ -1,6 +1,6 @@
-<div style="text-align: center">
+<div align="center" style="text-align: center">
 
-<!-- [![Banner](https://raw.githubusercontent.com/glyph-cat/cotton-box/main/assets/readme-banner.svg)](https://github.com/glyph-cat/cotton-box) -->
+[![Banner](https://raw.githubusercontent.com/glyph-cat/cotton-box/main/assets/icon-with-text.svg)](https://github.com/glyph-cat/cotton-box)
 
 *A flexible toolbox with different types of state managers catered to different scenarios.*
 
@@ -14,9 +14,9 @@
 
 <div style="background-color: #2b80ff20; border-inline-start: solid 5px #2b80ff; padding-inline-start: 10px; padding-block: 5px; margin-block: 20px">This is the core package of cotton-box.</div>
 
-| | |
-|---|---|
-| `cotton-box` | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box) |
+| Packages           | Stats                                                                                                                                                                                     |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `cotton-box`       | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box)             |
 | `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) |
 
 <br/>
@@ -31,9 +31,7 @@
 
 # Documentation
 
-*(Still a work-in-progress.)*
-<!-- TODO -->
-<!-- Check out the documentations [here](https://glyph-cat.github.io/cotton-box). -->
+[View documentations (still a work-in-progress)](https://glyph-cat.github.io/cotton-box)
 
 <br/>
 

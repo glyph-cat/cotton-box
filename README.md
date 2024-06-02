@@ -1,6 +1,6 @@
-<div style="text-align: center">
+<div align="center" style="text-align: center">
 
-<!-- [![Banner](https://raw.githubusercontent.com/glyph-cat/cotton-box/main/assets/readme-banner.svg)](https://github.com/glyph-cat/cotton-box) -->
+[![Banner](https://raw.githubusercontent.com/glyph-cat/cotton-box/main/assets/icon-with-text.svg)](https://github.com/glyph-cat/cotton-box)
 
 *A flexible toolbox with different types of state managers catered to different scenarios.*
 

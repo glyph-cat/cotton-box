@@ -14,9 +14,9 @@
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
-    "sync": "yarn --cwd ../.. sync-examples",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
+    "sync": "yarn --cwd ../.. sync-examples",
     "typecheck": "tsc",
     "test": "# No tests to run"
   },
