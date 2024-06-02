@@ -6,11 +6,13 @@ import {
   SandpackProps,
   SandpackProvider,
   SandpackStack,
+  SandpackTheme,
   useActiveCode,
   useSandpack,
   useSandpackConsole,
 } from '@codesandbox/sandpack-react'
-import { freeCodeCampDark } from '@codesandbox/sandpack-themes'
+import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes'
+import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
 import { useCallback } from 'react'
 
@@ -70,8 +72,12 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
   ].join('\n'),
 }
 
+function useCodeEditorTheme(): SandpackTheme {
+  const { colorMode } = useColorMode()
+  return colorMode === 'light' ? aquaBlue : freeCodeCampDark
+}
+
 const sharedProps: SandpackProps = {
-  theme: freeCodeCampDark,
   customSetup: {
     dependencies: {
       // KIV: [Low priority] versioning support?
@@ -102,10 +108,10 @@ export function SimpleWebPlayground({
   extraDependencies,
   options,
 }: SimpleWebPlaygroundProps): JSX.Element {
+  const codeEditorTheme = useCodeEditorTheme()
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
-
         ? (
           <SandpackProvider
             files={{
@@ -114,6 +120,7 @@ export function SimpleWebPlayground({
               ...(css ? { [CSS]: css } : {}),
             }}
             {...sharedProps}
+            theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,
@@ -143,6 +150,7 @@ export function SimpleWebPlayground({
               ...(css ? { [CSS]: css } : {}),
             }}
             {...sharedProps}
+            theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,
@@ -171,6 +179,7 @@ export interface SimpleConsolePlaygroundProps {
 export function SimpleConsolePlayground({
   code,
 }: SimpleConsolePlaygroundProps): JSX.Element {
+  const codeEditorTheme = useCodeEditorTheme()
   // const { sandpack } = useSandpack()
   // const { logs } = useSandpackConsole()
   return (
@@ -180,6 +189,7 @@ export function SimpleConsolePlayground({
           <SandpackProvider
             files={{ [INDEX_TS]: code }}
             {...sharedProps}
+            theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,
@@ -199,6 +209,7 @@ export function SimpleConsolePlayground({
           <Sandpack
             files={{ [INDEX_TS]: code }}
             {...sharedProps}
+            theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,

@@ -23,7 +23,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className='button button--secondary button--lg'
-            href='cotton-box/docs/learn/tutorial/setup'>
+            href='/cotton-box/docs/learn/tutorial/setup'>
             Get started
           </Link>
         </div>
