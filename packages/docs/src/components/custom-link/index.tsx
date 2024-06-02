@@ -1,7 +1,6 @@
 import { useHistory } from '@docusaurus/router'
+import { DocConstants } from '@site/src/constants'
 import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, useCallback } from 'react'
-
-const URL_REGEX = /^http:\/\/localhost:3000\/?/ // TODO: [critical] Change URL
 
 // Reference: https://docusaurus.io/docs/markdown-features/links
 // "Markdown file references only work when the source and target files are
@@ -21,6 +20,8 @@ export function Link({
 
   const { push } = useHistory()
 
+  const URL_REGEX = new RegExp(`^${typeof window !== 'undefined' ? window.location.origin.replace(/\//g, '\\/') : DocConstants.GLYPH_CAT_GITHUB_IO}\\/?`)
+  // Original reference: /^http:\/\/localhost:3000\/?/
   const containsOrigin = URL_REGEX.test(href)
   const isSameOrigin = containsOrigin || /^(\.|\/)/.test(href)
 

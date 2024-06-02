@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
 import styles from './styles.module.css'
@@ -8,36 +9,31 @@ interface FeatureItem {
   description: JSX.Element
 }
 
-// TODO [High priority] build content from README.md
-// - Lightweight & fast
-// - Supports asynchronous set-state functions
-// - Declarative lifecycle management
-// - Official bindings for React is available
 const features: Array<FeatureItem> = [
   {
     title: 'Lightweight & fast',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/electric_bolt.svg').default,
     description: (
       <>
-        lorem ipsum dolor sit amet
-      </>
-    ),
-  },
-  {
-    title: 'Supports async set-state functions',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
-    description: (
-      <>
-        lorem ipsum dolor sit amet
+        Suitable for various projects. From simple PWAs to complex applications and even time-critical games.
       </>
     ),
   },
   {
     title: 'Declarative lifecycle management',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/cycle.svg').default,
     description: (
       <>
-        lorem ipsum dolor sit amet
+        Persist and retrieve data with lifecycle hooks such as <code>init</code>, <code>didSet</code> & <code>didReset</code>.
+      </>
+    ),
+  },
+  {
+    title: 'Supports async set-state functions',
+    Svg: require('@site/static/img/acute.svg').default,
+    description: (
+      <>
+        An escape hatch for when you need to handle complicated data-fetching logic.
       </>
     ),
   },

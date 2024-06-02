@@ -20,7 +20,7 @@
     "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
     "build": "sh ./scripts/run/build.sh",
     "test": "jest -c ./jest.config.ts",
-    "prepack": "yarn --cwd ../.. sync-subpackage-license react && yarn --cwd ../.. sync-subpackage-readme react",
+    "prepack": "yarn --cwd ../.. sync-subpackage-license react",
     "all": "yarn lint && yarn build && yarn test && yarn pack"
   },
   "keywords": [

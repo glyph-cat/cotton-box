@@ -23,8 +23,8 @@
 
 # Key Features
 * Lightweight & fast
-* Supports asynchronous set-state functions
 * Declarative lifecycle management
+* Supports asynchronous set-state functions
 * Official bindings for React is available
 
 <br/>

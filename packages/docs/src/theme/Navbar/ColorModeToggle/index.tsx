@@ -15,9 +15,9 @@ export default function NavbarColorModeToggle({
     return null
   }
 
-  // TODO: `useMediaQuery` to find out if system prefers dark theme (when set to `system`)
+  // TODO: [Low priority] `useMediaQuery` to find out if system prefers dark theme (when set to `system`)
 
-  // TODO: Dropdown menu
+  // TODO: [Low priority] Dropdown menu
   // - System
   // - Light
   // - Dark
