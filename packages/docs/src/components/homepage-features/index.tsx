@@ -33,7 +33,7 @@ const features: Array<FeatureItem> = [
     Svg: require('@site/static/img/acute.svg').default,
     description: (
       <>
-        An escape hatch for when you need to handle complicated data-fetching logic.
+        An escape hatch for when you need to set state in conjunction with complicated data-fetching logic.
       </>
     ),
   },

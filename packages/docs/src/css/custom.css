@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
 /**
  * Any CSS included here will be global. The classic template
@@ -9,6 +9,7 @@
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #2b80ff;
+  /* TODO: [High priority] Set all other css variables based on the main/primary color */
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
   --ifm-color-primary-darkest: #205d3b;

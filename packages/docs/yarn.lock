@@ -4584,6 +4584,16 @@ cosmiconfig@^8.1.3, cosmiconfig@^8.3.5:
     parse-json "^5.2.0"
     path-type "^4.0.0"
 
+cotton-box-react@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cotton-box-react/-/cotton-box-react-0.1.0.tgz#1b344edbdb807669e14e9347394e906e8e9cd211"
+  integrity sha512-rEPH6+/lpEVA7Q8OIZ3aAuN+svGMCK8MA+1sRBYzLeDyOh/kNbwmAeRBqf9cHyulzv5a5oJe+2rsvm5tPuQjEA==
+
+cotton-box@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cotton-box/-/cotton-box-0.1.0.tgz#0505d723f715dbfc70353eceea0f5939cd5d80a0"
+  integrity sha512-Rap0QQK6x0U9IqQlcNIYYTfY2ADPW8jfnasBHDxP1Gp8DqlrDo8zzsXDzPf98HJHYOjRIDy1cjgI9MmGV9kb1g==
+
 crelt@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/crelt/-/crelt-1.0.6.tgz#7cc898ea74e190fb6ef9dae57f8f81cf7302df72"
