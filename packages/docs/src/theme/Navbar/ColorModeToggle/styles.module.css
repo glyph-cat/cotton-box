@@ -44,6 +44,7 @@
   align-items: center;
   cursor: pointer;
   display: grid;
+  grid-template-columns: var(--menuItemSize) 1fr;
   grid-auto-columns: max-content;
   grid-auto-flow: column;
   user-select: none;
@@ -60,5 +61,4 @@
 .checkIconContainer {
   display: grid;
   place-items: center;
-  width: var(--menuItemSize);
 }

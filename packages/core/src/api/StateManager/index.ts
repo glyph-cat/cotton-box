@@ -354,7 +354,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
     }
   }
 
-  // TODO: [Medium priority]
+  // TODO: [Low priority] only add if needed in the future
   // watchInit(callback: (isInitializing: boolean) => void): () => void {
   //   return this._isInitializing.watch(callback)
   // }
