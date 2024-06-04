@@ -54,6 +54,24 @@ const config: Config = {
   ],
 
   themeConfig: {
+    algolia: {
+      appId: 'I8EAQVNXNC',
+      apiKey: '766b0a459e06e2faaabc86ce8215e9fa',
+      indexName: 'glyph-catio',
+      contextualSearch: true,
+
+      // KIV: [Low priority] Still not sure what this does
+      // but take note that the docs site is hosted at '.../cotton-box/'
+      // // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+      // replaceSearchResultPathname: {
+      //   from: '/docs/', // or as RegExp: /\/docs\//
+      //   to: '/',
+      // },
+
+      searchParameters: {},
+      searchPagePath: 'search',
+      insights: false,
+    },
     colorMode: {
       respectPrefersColorScheme: true,
     },
