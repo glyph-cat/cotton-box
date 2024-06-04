@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { useColorMode } from '@docusaurus/theme-common'
+import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
 import { ThemeInterception } from '@site/src/hooks/theming'
 import { SiteSettingsState, UIAppearance } from '@site/src/services/site-settings'
 import { useStateValue } from 'cotton-box-react'
-import { JSX, useCallback, useEffect, useReducer, useRef, useState } from 'react'
+import { JSX, useCallback, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.css'
 
 const AppearanceIcon = require('@site/static/img/brightness_4.svg').default
@@ -116,9 +117,7 @@ function NavbarColorModeToggleBase(): JSX.Element {
 // render this component in the client only.
 // https://github.com/facebook/docusaurus/issues/7986#issuecomment-2147546283
 
-const visibilityReducer = () => true
 export default function NavbarColorModeToggle(): JSX.Element {
-  const [visible, setVisibilityTrue] = useReducer(visibilityReducer, false)
-  useEffect(setVisibilityTrue, [setVisibilityTrue])
+  const visible = useDelayedVisibility()
   return visible ? <NavbarColorModeToggleBase /> : null
 }

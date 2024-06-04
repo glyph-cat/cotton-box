@@ -14,7 +14,8 @@ import {
 import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes'
 import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
-import { useCallback } from 'react'
+import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
+import { JSX, useCallback } from 'react'
 
 const INDEX_TS = 'index.js'
 const APP_TSX = 'App.tsx'
@@ -102,7 +103,12 @@ export interface SimpleWebPlaygroundProps {
   options?: SandpackProps['options']
 }
 
-export function SimpleWebPlayground({
+export function SimpleWebPlayground(props: SimpleWebPlaygroundProps): JSX.Element {
+  const visibility = useDelayedVisibility()
+  return visibility ? <SimpleWebPlaygroundBase {...props} /> : null
+}
+
+function SimpleWebPlaygroundBase({
   code,
   css,
   extraDependencies,
@@ -176,7 +182,12 @@ export interface SimpleConsolePlaygroundProps {
   code: string
 }
 
-export function SimpleConsolePlayground({
+export function SimpleConsolePlayground(props: SimpleConsolePlaygroundProps): JSX.Element {
+  const visibility = useDelayedVisibility()
+  return visibility ? <SimpleConsolePlaygroundBase {...props} /> : null
+}
+
+export function SimpleConsolePlaygroundBase({
   code,
 }: SimpleConsolePlaygroundProps): JSX.Element {
   const codeEditorTheme = useCodeEditorTheme()
