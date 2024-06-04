@@ -11,8 +11,6 @@
   width: 96px;
 }
 
-[data-theme="dark"] {
-  .featureSvg {
-    fill: #4b90ff;
-  }
+[data-theme="dark"] .featureSvg {
+  fill: #4b90ff;
 }

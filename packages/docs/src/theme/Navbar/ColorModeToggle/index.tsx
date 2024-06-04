@@ -3,7 +3,7 @@ import { useColorMode } from '@docusaurus/theme-common'
 import { ThemeInterception } from '@site/src/hooks/theming'
 import { SiteSettingsState, UIAppearance } from '@site/src/services/site-settings'
 import { useStateValue } from 'cotton-box-react'
-import { JSX, useCallback, useEffect, useRef, useState } from 'react'
+import { JSX, useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import styles from './styles.module.css'
 
 const AppearanceIcon = require('@site/static/img/brightness_4.svg').default
@@ -40,13 +40,14 @@ function pointerIsInBound(event: MouseEvent, div: HTMLDivElement): boolean {
   )
 }
 
-export default function NavbarColorModeToggle(): JSX.Element {
+function NavbarColorModeToggleBase(): JSX.Element {
   const { colorMode } = useColorMode()
   const { appearance } = useStateValue(SiteSettingsState)
   const [showMenu, setMenuVisibility] = useState(false)
   const toggleMenuVisibility = useCallback(() => {
     setMenuVisibility(v => !v)
   }, [])
+
   const iconColor = colorMode === 'light' ? '#000000' : '#ffffff'
 
   const buttonRef = useRef<HTMLDivElement>(null)
@@ -107,4 +108,17 @@ export default function NavbarColorModeToggle(): JSX.Element {
       <ThemeInterception />
     </>
   )
+}
+
+// ColorMode defaults to 'light' at compile time When page loads,
+// the svg icon's `fill` props value will be based on that assumption
+// as well but never get hydrated after that. Solution for now is to
+// render this component in the client only.
+// https://github.com/facebook/docusaurus/issues/7986#issuecomment-2147546283
+
+const visibilityReducer = () => true
+export default function NavbarColorModeToggle(): JSX.Element {
+  const [visible, setVisibilityTrue] = useReducer(visibilityReducer, false)
+  useEffect(setVisibilityTrue, [setVisibilityTrue])
+  return visible ? <NavbarColorModeToggleBase /> : null
 }
