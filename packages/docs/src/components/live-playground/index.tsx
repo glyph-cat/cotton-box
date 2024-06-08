@@ -104,6 +104,7 @@ export interface SimpleWebPlaygroundProps {
 }
 
 export function SimpleWebPlayground(props: SimpleWebPlaygroundProps): JSX.Element {
+  // TOFIX: we should still render the code somehow for crawlers to be able to read it
   const visibility = useDelayedVisibility()
   return visibility ? <SimpleWebPlaygroundBase {...props} /> : null
 }

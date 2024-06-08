@@ -37,7 +37,6 @@ export function StateManagerScopeProvider({
     // @ts-expect-error Because we forcefully overwritten the type property in the first place
     nextContext[(stateManager as $).scopeId] = stateManager
   }
-  // TODO: [Medium priority] Remove `.Provider` when React 19 is out
   return createElement(StateManagerScopeContext.Provider, {
     value: nextContext,
   }, children)
