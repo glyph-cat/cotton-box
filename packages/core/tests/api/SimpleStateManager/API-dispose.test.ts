@@ -20,7 +20,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     TestState.dispose()
 
     // Make sure `unwatch` callback has the same type/signature even after dispose.
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const unwatch2 = TestState.watch((num) => { numbers.push(num) })
     expect(typeof unwatch2).toBe('function')
 

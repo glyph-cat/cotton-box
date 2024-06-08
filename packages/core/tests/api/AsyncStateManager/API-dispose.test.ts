@@ -21,7 +21,6 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
     await TestState.dispose()
 
     // Make sure `unwatch` callback has the same type/signature even after dispose.
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     const unwatch2 = TestState.watch((num) => { numbers2.push(num) })
     expect(typeof unwatch2).toBe('function')
 
