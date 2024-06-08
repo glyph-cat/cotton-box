@@ -87,7 +87,7 @@ function App(): JSX.Element {
 ```
 ```jsx
 function App() {
-  const ExampleState = useRef()
+  const ExampleState = useRef(null)
   if (!ExampleState.current) {
     ExampleState.current = new StateManager('...')
   }
