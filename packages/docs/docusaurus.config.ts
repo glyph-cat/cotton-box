@@ -56,7 +56,7 @@ const config: Config = {
       appId: 'I8EAQVNXNC',
       apiKey: '766b0a459e06e2faaabc86ce8215e9fa',
       indexName: 'glyph-catio',
-      contextualSearch: true,
+      contextualSearch: false, // TOFIX: 'docusaurus_tag' does not appear in crawled index
 
       // KIV: [Low priority] Still not sure what this does
       // but take note that the docs site is hosted at '.../cotton-box/'
