@@ -1,10 +1,10 @@
 import { act } from 'react'
-import { CleanupManager, HookTester, TestUtils } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { CleanupManager, HookTester, TestUtils } from '../test-helpers'
+import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({
   Lib: { StateManager, AsyncStateManager },
-  ReactLib: { useInitState },
+  ReactLib: { useSimpleStateValue },
 }: TestConfig) => {
 
   jest.useRealTimers()
@@ -35,7 +35,7 @@ wrapper(({
 
       const hookInterface = new HookTester({
         cleanupManager,
-        useHook: () => useInitState(TestState),
+        useHook: () => useSimpleStateValue(TestState.isInitializing),
         values: {
           isInitializing(state) { return state },
         },

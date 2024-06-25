@@ -1,6 +1,5 @@
 export * from './abstractions/public'
 export * from './api/Scope'
-export * from './api/useInitStatus'
 export * from './api/useSimpleStateValue'
 export * from './api/useStateValue'
 export * from './constants/public'

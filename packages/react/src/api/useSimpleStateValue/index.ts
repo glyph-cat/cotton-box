@@ -1,4 +1,4 @@
-import { SimpleStateManager, StateSelector } from 'cotton-box'
+import { ReadOnlyStateManager, SimpleStateManager, StateSelector } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
 import { $ } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
@@ -14,7 +14,7 @@ import { emptyWatcher } from '../../internals/empty-watcher'
  * @public
  */
 export function useSimpleStateValue<State>(
-  stateManager: SimpleStateManager<State>,
+  stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
   active?: boolean
 ): State
@@ -29,13 +29,13 @@ export function useSimpleStateValue<State>(
  * @public
  */
 export function useSimpleStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State>,
+  stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   active?: boolean
 ): SelectedState
 
 export function useSimpleStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State>,
+  stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   active = true
 ): State | SelectedState {

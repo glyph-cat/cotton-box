@@ -15,9 +15,9 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     }
     const TestState = new AsyncStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing).toBe(false)
+    expect(TestState.isInitializing.get()).toBe(false)
     expect(TestState.type).toBe('AsyncStateManager')
-    expect(TestState.name).toBe(undefined)
+    expect(TestState.name).toBe('UnnamedStateManager_001')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
     expect(await TestState.get()).toStrictEqual({
       firstName: 'John',
@@ -47,7 +47,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
       visibility: StateManagerVisibility.EXPOSED,
     })
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing).toBe(false)
+    expect(TestState.isInitializing.get()).toBe(false)
     expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
@@ -92,7 +92,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         },
       })
       cleanupManager.append(TestState.dispose)
-      await TestState.waitForInit()
+      await TestState.isInitializing.wait(false)
       expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
       expect(Object.is(await TestState.get(), stateToCommit)).toBe(true)
       expect(await TestState.get()).toStrictEqual({
@@ -131,7 +131,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         },
       })
       cleanupManager.append(TestState.dispose)
-      await TestState.waitForInit()
+      await TestState.isInitializing.wait(false)
       expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
       expect(spiedDefaultState).toStrictEqual({
         firstName: 'John',

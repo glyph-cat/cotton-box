@@ -49,8 +49,6 @@ export function ThemeInterception(): JSX.Element {
   const { colorMode: currentColorMode, setColorMode } = useColorMode()
   const derivedColorMode = useDerivedColorMode()
   useEffect(() => {
-    console.log('derivedColorMode', derivedColorMode)
-    console.log('currentColorMode', currentColorMode)
     if (derivedColorMode !== currentColorMode) {
       setColorMode(derivedColorMode)
     }

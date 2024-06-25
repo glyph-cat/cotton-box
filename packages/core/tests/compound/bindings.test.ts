@@ -39,7 +39,6 @@ wrapper(({ Lib: {
       [TestStateManager.reset],
       [TestStateManager.watch, () => { /* ... */ }],
       [TestStateManager.wait, () => true],
-      [TestStateManager.waitForInit],
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])
@@ -59,7 +58,6 @@ wrapper(({ Lib: {
       [TestStateManager.reset],
       [TestStateManager.watch, () => { /* ... */ }],
       [TestStateManager.wait, () => true],
-      [TestStateManager.waitForInit],
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])

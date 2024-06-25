@@ -25,7 +25,7 @@
 * Lightweight & fast
 * Declarative lifecycle management
 * Supports asynchronous set-state functions
-* Official bindings for React is available
+* Official bindings for React available
 
 <br/>
 

@@ -1,4 +1,4 @@
-import { CommitStrategy, SetStateFn } from '../../abstractions'
+import { CommitStrategy, ReadOnlyStateManager, SetStateFn } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
@@ -143,11 +143,6 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * @internal
    */
-  readonly _isInitializing = new SimpleStateManager(false)
-
-  /**
-   * @internal
-   */
   readonly visibility: StateManagerOptions<State>['visibility']
 
   /**
@@ -171,9 +166,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * {:TSDOC_DESC_IS_INITIALIZING:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#isInitializing
    */
-  get isInitializing(): boolean {
-    return this._isInitializing.get()
-  }
+  readonly isInitializing: ReadOnlyStateManager<boolean>
 
   /**
    * {:TSDOC_DESC_STATE_MANAGER:}
@@ -187,12 +180,14 @@ export class StateManager<State> extends SimpleStateManager<State> {
   ) {
     const { lifecycle, suspense, visibility, ...otherOptions } = options
     super(defaultState, otherOptions)
+    this.isInitializing = new SimpleStateManager(false, {
+      name: `${this.name} (isInitializing)`,
+    }) as unknown as ReadOnlyStateManager<boolean>
     this.suspense = suspense ?? false
     this.visibility = visibility ?? StateManagerVisibility.ENVIRONMENT
     this.M$lifecycle = { ...lifecycle }
     this.init = this.init.bind(this)
     this.reinitialize = this.reinitialize.bind(this)
-    this.waitForInit = this.waitForInit.bind(this)
     if (this.M$lifecycle.init) {
       this.init(this.M$lifecycle.init)
     }
@@ -205,7 +200,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
     newStateOrFn: State | SetStateFn<State>,
     type: InternalQueueType
   ): void => {
-    if (type !== InternalQueueType.I && this.isInitializing) {
+    if (type !== InternalQueueType.I && this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForSetOrResetDuringInitialization(this.name))
@@ -253,14 +248,14 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_INIT:}
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
-    if (this.isInitializing) {
+    if (this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let effectiveCommitStrategy: CommitStrategy = null
-    this._isInitializing.set(true)
+    let effectiveCommitStrategy: CommitStrategy = null;
+    (this.isInitializing as SimpleStateManager<boolean>).set(true)
     await initFn({
       currentState: this.M$internalState,
       defaultState: this.defaultState,
@@ -276,7 +271,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
           }
           return // Early exit
         }
-        this._isInitializing.set(false)
+        (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commitNoop'
       },
       commit: (state: State) => {
@@ -291,12 +286,12 @@ export class StateManager<State> extends SimpleStateManager<State> {
           }
           return // Early exit
         }
-        this.M$internalQueue(state, InternalQueueType.I)
-        this._isInitializing.set(false)
+        this.M$internalQueue(state, InternalQueueType.I);
+        (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commit'
       },
     })
-    await this._isInitializing.wait(false)
+    await this.isInitializing.wait(false)
   }
 
   /**
@@ -343,29 +338,12 @@ export class StateManager<State> extends SimpleStateManager<State> {
   // method... :facepalm:
 
   /**
-   * {:TSDOC_METHOD_DESC_WAIT_FOR_INIT:}
-   * @param state - {:TSDOC_PARAM_DESC_WAIT_FOR_INIT_STATE:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager#waitForInit
-   * @returns -{:RETURN_DESC_WAIT_FOR_INIT:}
-   */
-  async waitForInit(state = false): Promise<void> {
-    if (this.isInitializing) {
-      await this._isInitializing.wait(state)
-    }
-  }
-
-  // TODO: [Low priority] only add if needed in the future
-  // watchInit(callback: (isInitializing: boolean) => void): () => void {
-  //   return this._isInitializing.watch(callback)
-  // }
-
-  /**
    * {:TSDOC_METHOD_DESC_DISPOSE:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
-    this._isInitializing.dispose()
+    (this.isInitializing as SimpleStateManager<boolean>).dispose()
     super.dispose()
   }
 

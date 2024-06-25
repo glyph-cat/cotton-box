@@ -2,7 +2,6 @@ import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
 import { themes as prismThemes } from 'prism-react-renderer'
 
-// eslint-disable-next-line import/no-unresolved
 import { DocConstants } from './src/constants'
 
 const config: Config = {
@@ -40,7 +39,6 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           sidebarCollapsed: false,
-          // KIV: [after first publish] Check if link is correct
           editUrl: `${DocConstants.GITHUB_REPO_URL}/tree/main/packages/docs`,
         },
         blog: {

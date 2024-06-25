@@ -1,8 +1,8 @@
 import { StateManager } from 'cotton-box'
-import { useInitState, useStateValue } from 'cotton-box-react'
+import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
 
 export default function App(): JSX.Element {
-  const isInitializing = useInitState(UserState)
+  const isInitializing = useSimpleStateValue(UserState.isInitializing)
   return (
     <>
       <button onClick={UserState.reinitialize}>Reinitialize</button>

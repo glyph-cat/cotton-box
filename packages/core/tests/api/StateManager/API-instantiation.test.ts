@@ -15,9 +15,9 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     }
     const TestState = new StateManager(defaultState)
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing).toBe(false)
+    expect(TestState.isInitializing.get()).toBe(false)
     expect(TestState.type).toBe('StateManager')
-    expect(TestState.name).toBe(undefined)
+    expect(TestState.name).toBe('UnnamedStateManager_001')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
       firstName: 'John',
@@ -47,7 +47,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
       visibility: StateManagerVisibility.EXPOSED,
     })
     cleanupManager.append(TestState.dispose)
-    expect(TestState.isInitializing).toBe(false)
+    expect(TestState.isInitializing.get()).toBe(false)
     expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)

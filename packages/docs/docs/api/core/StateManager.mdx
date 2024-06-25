@@ -92,7 +92,7 @@ readonly name: string | undefined
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_IS_INITIALIZING}</MarkdownWrapper>
 
 ```ts
-readonly isInitializing: boolean
+readonly isInitializing: SimpleStateManager<boolean>
 ```
 
 ## Methods
@@ -327,32 +327,6 @@ await ExampleState.wait(42)
 
 // Promise will resolve when the function returns `true`.
 await ExampleState.wait((state) => fulfillsSomeCondition(state))
-```
-
-### waitForInit
-
-<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_FOR_INIT}</MarkdownWrapper>
-
-```ts
-waitForInit(state?: boolean): Promise<void>
-```
-
-#### Parameters
-<ObjectShapeDefinition
-  data={[{
-    name: 'state',
-    type: DataType.boolean,
-    description: DocConstants.TSDOC_PARAM_DESC_WAIT_FOR_INIT_STATE,
-    isOptional: true,
-  }]}
-/>
-
-#### Returns
-<Returns name='waitForInit'>{DocConstants.RETURN_DESC_WAIT_FOR_INIT}</Returns>
-
-#### Example
-```ts
-await ExampleState.waitForInit()
 ```
 
 ### dispose

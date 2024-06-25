@@ -1,3 +1,5 @@
+import type { SimpleStateManager } from '../api/SimpleStateManager'
+
 /**
  * {:TSDOC_PARAM_DESC_SET_FUNCTION:}
  * @see -{:DOCS_API_CORE_URL:}/SetStateFn
@@ -32,3 +34,10 @@ export type StateSelector<State, SelectedState> = (state: State) => SelectedStat
  * @public
  */
 export type EqualityFn<State> = (previousState: State, nextState: State) => boolean
+
+/**
+ * {:TSDOC_TYPE_DESC_READONLY_STATE_MANAGER:}
+ * @see -{:DOCS_API_CORE_URL:}/ReadOnlyStateManager
+ * @public
+ */
+export type ReadOnlyStateManager<State> = Pick<SimpleStateManager<State>, 'get' | 'watch' | 'wait'>

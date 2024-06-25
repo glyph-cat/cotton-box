@@ -1,4 +1,5 @@
 import { SetStateFn, WaitEvaluator } from '../../abstractions'
+import { getAutomaticName } from '../../internals/name-generator'
 import { isFunction } from '../../internals/type-checker'
 import { Watcher } from '../../internals/watcher'
 
@@ -91,7 +92,7 @@ export class SimpleStateManager<State> {
     this.dispose = this.dispose.bind(this)
     this.defaultState = defaultState
     this.M$internalState = this.defaultState
-    this.name = name
+    this.name = (name && name !== '') ? name : getAutomaticName()
     this.clientOnly = clientOnly ?? false
     this.scopeId = scope?.scopeId ?? ++scopeIdCounter
   }

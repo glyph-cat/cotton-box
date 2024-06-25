@@ -120,7 +120,7 @@ const ExampleStateA = new StateManager('...')
 const ExampleStateB = new StateManager('...', {
   lifecycle: {
     init() {
-      await ExampleStateA.waitForInit()
+      await ExampleStateA.isInitializing.wait(false)
       // continue to do something
     },
   },

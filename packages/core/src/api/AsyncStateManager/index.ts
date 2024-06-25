@@ -1,5 +1,6 @@
 import { AsyncSetStateFn, CommitStrategy } from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
+import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
   getErrorMessageForOverlappingInits,
@@ -68,7 +69,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
     if (
       type !== InternalQueueType.I &&
       type !== InternalQueueType.X &&
-      this.isInitializing
+      this.isInitializing.get()
     ) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
@@ -122,14 +123,14 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @returns -{:RETURN_DESC_INIT:}
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
-    if (this.isInitializing) {
+    if (this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let effectiveCommitStrategy: CommitStrategy = null
-    this._isInitializing.set(true)
+    let effectiveCommitStrategy: CommitStrategy = null;
+    (this.isInitializing as SimpleStateManager<boolean>).set(true)
     await initFn({
       currentState: this.M$internalState,
       defaultState: this.defaultState,
@@ -145,7 +146,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
           }
           return // Early exit
         }
-        this._isInitializing.set(false)
+        (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commitNoop'
       },
       commit: async (state: State) => {
@@ -160,12 +161,12 @@ export class AsyncStateManager<State> extends StateManager<State> {
           }
           return // Early exit
         }
-        await this.M$internalQueue(state, InternalQueueType.I)
-        this._isInitializing.set(false)
+        await this.M$internalQueue(state, InternalQueueType.I);
+        (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commit'
       },
     })
-    await this._isInitializing.wait(false)
+    await this.isInitializing.wait(false)
   }
 
   /**
