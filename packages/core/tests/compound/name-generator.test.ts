@@ -10,7 +10,7 @@ type $ = $0<unknown> | $1<unknown> | $2<unknown>
 
 let cleanupManager: CleanupManager
 beforeEach(() => { cleanupManager = new CleanupManager() })
-afterEach(() => { cleanupManager.performCleanup })
+afterEach(() => { cleanupManager.performCleanup() })
 
 wrapper(({ Lib: {
   SimpleStateManager,

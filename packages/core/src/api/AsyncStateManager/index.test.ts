@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { AsyncStateManager } from '.'
-import { IUserState, MockStorage } from '../../../tests/test-helpers'
+import { IUserState, MockStorage, TestUtils } from '../../../tests/test-helpers'
 import { StateManagerLifecycle } from '../StateManager'
 
 const mockStorage = new MockStorage()
@@ -15,11 +15,11 @@ function initTestState(): StateManagerLifecycle<IUserState> {
     init({ commit, commitNoop }) {
       const rawState = mockStorage.getItem(storageKey)
       if (rawState) {
-        try {
+        TestUtils.tryOnly(() => {
           const parsedState = JSON.parse(rawState)
           commit(parsedState)
           return // Early exit
-        } catch (e) { /* ... */ }
+        })
       }
       commitNoop()
     },

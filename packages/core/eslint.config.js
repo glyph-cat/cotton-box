@@ -8,6 +8,7 @@ module.exports = [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': Severity.OFF,
+      '@typescript-eslint/no-require-imports': Severity.OFF, // TEMP
     },
   },
 ]

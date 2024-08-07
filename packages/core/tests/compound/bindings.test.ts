@@ -4,7 +4,7 @@ import { TestConfig, wrapper } from '../test-wrapper'
 
 let cleanupManager: CleanupManager
 beforeEach(() => { cleanupManager = new CleanupManager() })
-afterEach(() => { cleanupManager.performCleanup })
+afterEach(() => { cleanupManager.performCleanup() })
 
 wrapper(({ Lib: {
   SimpleStateManager,
