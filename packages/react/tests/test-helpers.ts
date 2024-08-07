@@ -42,7 +42,7 @@ export class CleanupManager {
   /**
    * @internal
    */
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   private readonly cleanupFns: Array<Function> = []
 
   constructor() {
@@ -50,7 +50,7 @@ export class CleanupManager {
     this.performCleanup = this.performCleanup.bind(this)
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   append(cleanupFn: Function): void {
     this.cleanupFns.push(cleanupFn)
   }

@@ -22,7 +22,7 @@ wrapper(({
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup })
+  afterEach(() => { cleanupManager.performCleanup() })
 
   for (const hookName in hooksToTestWith) {
     describe(hookName, () => {
