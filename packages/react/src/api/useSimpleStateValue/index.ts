@@ -1,6 +1,6 @@
 import { ReadOnlyStateManager, SimpleStateManager, StateSelector } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { $ } from '../../abstractions'
+import { $0 } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 
@@ -55,7 +55,7 @@ export function useSimpleStateValue<State, SelectedState>(
   return useSyncExternalStore(
     active ? stateManager.watch : emptyWatcher,
     getSnapshot,
-    (stateManager as $).clientOnly ? undefined : getSnapshot
+    (stateManager as $0).clientOnly ? undefined : getSnapshot
   )
 }
 
@@ -81,6 +81,6 @@ export function useSimpleStateValueWithReactiveSelector<State, SelectedState>(
   return useSyncExternalStore(
     active ? stateManager.watch : emptyWatcher,
     getSnapshot,
-    (stateManager as $).clientOnly ? undefined : getSnapshot,
+    (stateManager as $0).clientOnly ? undefined : getSnapshot,
   )
 }
