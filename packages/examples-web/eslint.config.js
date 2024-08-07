@@ -7,6 +7,7 @@ module.exports = [
   {
     ignores: [
       'src/pages/examples/',
+      'eslint.config.js',
     ],
   },
 ]
