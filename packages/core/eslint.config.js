@@ -8,7 +8,12 @@ module.exports = [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': Severity.OFF,
-      '@typescript-eslint/no-require-imports': Severity.OFF, // TEMP
     },
+  },
+  {
+    ignores: [
+      'eslint.config.js',
+      'config/rollup.config.js',
+    ],
   },
 ]
