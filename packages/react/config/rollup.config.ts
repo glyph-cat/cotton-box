@@ -10,7 +10,7 @@ import { BuildType } from '../src/constants'
 
 const INPUT_FILE = 'src/index.ts'
 
-const UMD_NAME = 'GCReactStateManager'
+const UMD_NAME = 'CottonBoxReact'
 
 const UMD_GLOBALS = {
   react: 'React',

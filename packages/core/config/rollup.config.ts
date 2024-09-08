@@ -10,7 +10,7 @@ import { BuildType } from '../src/constants'
 
 const INPUT_FILE = 'src/index.ts'
 
-const UMD_NAME = 'GCStateManager'
+const UMD_NAME = 'CottonBox'
 
 interface IPluginConfig {
   overrides?: Record<string, unknown>
