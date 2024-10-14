@@ -1,4 +1,3 @@
-/* eslint-disable import/no-unresolved */
 import * as __debugLib__ from 'cotton-box'
 import * as __cjsLib__ from 'cotton-box/lib/cjs/index.js'
 import * as __cjsReactLib__ from '../lib/cjs/index.js'
@@ -9,8 +8,6 @@ import * as __umdLib__ from 'cotton-box/lib/umd/index.js'
 import * as __umdMinLib__ from 'cotton-box/lib/umd/index.min.js'
 import * as __umdReactLib__ from '../lib/umd/index.js'
 import * as __umdMinReactLib__ from '../lib/umd/index.min.js'
-import { currentTestConfigRef } from './test-helpers'
-/* eslint-enable import/no-unresolved */
 
 export interface TestConfig {
   buildType: 'cjs' | 'es' | 'umd'
@@ -83,7 +80,6 @@ export function wrapper(
 ): void {
   for (const testConfig of testConfigStack) {
     describe(testConfig.description, (): void => {
-      currentTestConfigRef.current = testConfig
       executor(testConfig)
     })
   }

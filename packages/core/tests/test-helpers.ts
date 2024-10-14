@@ -1,7 +1,3 @@
-import { TestConfig } from './test-wrapper'
-
-export const currentTestConfigRef: { current: TestConfig } = { current: null }
-
 export interface IUserState {
   firstName: string
   lastName: string

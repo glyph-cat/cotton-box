@@ -1,6 +1,7 @@
 import { act } from 'react'
 import { AsyncStateManager, SimpleStateManager, StateManager } from '../../../../core/src'
-import { CleanupManager, SuspenseTester, TestUtils } from '../../../tests/test-helpers'
+import { SuspenseTester } from '../../../tests/suspense-tester'
+import { CleanupManager, TestUtils } from '../../../tests/test-helpers'
 import {
   createSuspenseWaiter,
   useSuspenseWaiter,

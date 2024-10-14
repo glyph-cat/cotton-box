@@ -1,12 +1,9 @@
-/* eslint-disable import/no-unresolved */
-import * as debugLib from '../src'
 import * as cjsLib from '../lib/cjs/index.js'
 import * as esLib from '../lib/es/index.js'
-import * as esMinLib from '../temp/test-builds/es-min.js'
 import * as umdLib from '../lib/umd/index.js'
 import * as umdMinLib from '../lib/umd/index.min.js'
-import { currentTestConfigRef } from './test-helpers'
-/* eslint-enable import/no-unresolved */
+import * as debugLib from '../src'
+import * as esMinLib from '../temp/test-builds/es-min.js'
 
 // import * as esMinLib from '../lib/es/index.mjs'
 // KIV: [Low priority] Not sure why, but if '.mjs' extension is used, we will get:
@@ -80,7 +77,6 @@ export function wrapper(
 ): void {
   for (const testConfig of testConfigStack) {
     describe(testConfig.description, (): void => {
-      currentTestConfigRef.current = testConfig
       executor(testConfig)
     })
   }

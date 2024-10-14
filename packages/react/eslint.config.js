@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { Severity } = require('@glyph-cat/eslint-config')
 const { libraryAuthoring: baseLibraryAuthoring } = require('@glyph-cat/eslint-config/base')
 const { libraryAuthoring: reactLibraryAuthoring } = require('@glyph-cat/eslint-config/react')
@@ -14,7 +15,7 @@ module.exports = [
   },
   {
     ignores: [
-      'eslint.config.js',
+      '*/eslint.config.js',
       'config/rollup.config.js',
     ],
   },

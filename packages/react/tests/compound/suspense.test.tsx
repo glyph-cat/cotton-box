@@ -1,5 +1,6 @@
 import { act } from 'react'
-import { CleanupManager, SuspenseTester, TestUtils } from '../test-helpers'
+import { SuspenseTester } from '../suspense-tester'
+import { CleanupManager, TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({

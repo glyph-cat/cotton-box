@@ -11,6 +11,7 @@ baseRecommended[baseIndexToModify] = {
   ...baseRecommended[baseIndexToModify],
   rules: {
     ...baseRecommended[baseIndexToModify].rules,
+    '@typescript-eslint/no-require-imports': Severity.OFF,
     'import/no-unresolved': [Severity.ERROR, {
       // Reference: https://stackoverflow.com/a/70089592/5810737
       ignore: [
@@ -59,6 +60,7 @@ module.exports = [
   },
   {
     ignores: [
+      '*/eslint.config.js',
       '.docusaurus',
       'src/examples/',
     ],
