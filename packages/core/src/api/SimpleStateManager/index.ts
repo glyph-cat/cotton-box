@@ -70,7 +70,7 @@ export class SimpleStateManager<State> {
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#name
    */
-  readonly name: string | undefined
+  readonly name: string
 
   /**
    * {:TSDOC_DESC_SIMPLE_STATE_MANAGER:}

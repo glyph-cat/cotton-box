@@ -42,7 +42,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#name
    */
-  readonly name: string | undefined
+  readonly name: string
 
   /**
    * {:TSDOC_DESC_ASYNC_STATE_MANAGER:}
@@ -62,7 +62,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @internal
    */
   M$internalQueue = async (
-    newStateOrFn: State | AsyncSetStateFn<State>,
+    newStateOrFn: State | AsyncSetStateFn<State> | null,
     type: InternalQueueType
   ): Promise<void> => {
 
@@ -87,7 +87,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       const previousState = this.M$internalState
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
-        : newStateOrFn
+        : newStateOrFn as State
       this.M$watcher.M$refresh(this.M$internalState)
       // #region Post-handling: lifecycle hooks
       if (type === InternalQueueType.S) {
@@ -129,7 +129,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let effectiveCommitStrategy: CommitStrategy = null;
+    let effectiveCommitStrategy: CommitStrategy;
     (this.isInitializing as SimpleStateManager<boolean>).set(true)
     await initFn({
       currentState: this.M$internalState,

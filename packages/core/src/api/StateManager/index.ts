@@ -160,7 +160,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#name
    */
-  readonly name: string | undefined
+  readonly name: string
 
   /**
    * {:TSDOC_DESC_IS_INITIALIZING:}
@@ -254,7 +254,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
         console.error(getErrorMessageForOverlappingInits(this.name))
       }
     }
-    let effectiveCommitStrategy: CommitStrategy = null;
+    let effectiveCommitStrategy: CommitStrategy;
     (this.isInitializing as SimpleStateManager<boolean>).set(true)
     await initFn({
       currentState: this.M$internalState,
@@ -300,7 +300,9 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_REINITIALIZE:}
    */
   async reinitialize(): Promise<void> {
-    await this.init(this.M$lifecycle.init)
+    if (this.M$lifecycle.init) {
+      await this.init(this.M$lifecycle.init)
+    }
   }
 
   /**

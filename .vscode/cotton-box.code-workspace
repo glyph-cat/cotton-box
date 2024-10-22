@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "root",
-      "path": "..",
+      "path": ".."
     },
     {
       "name": "core",
@@ -19,7 +19,7 @@
     {
       "name": "Examples (web)",
       "path": "../packages/examples-web"
-    },
+    }
   ],
   "settings": {
     "files.associations": {
