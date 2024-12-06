@@ -236,7 +236,7 @@ ExampleState.reset()
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
 
 ```ts
-watch(callback: (state: State) => void): () => void
+watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void
 ```
 
 #### Parameters

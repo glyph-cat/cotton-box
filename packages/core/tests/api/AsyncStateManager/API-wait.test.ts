@@ -1,3 +1,4 @@
+import { StateChangeEventType } from '../../../src'
 import { CleanupManager, Nullable } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -25,15 +26,18 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
       cleanupManager.append(TestState.dispose)
       let waitedValue = Nullable<number>()
       let spiedDefaultState = Nullable<number>()
+      let spiedEventType = Nullable<StateChangeEventType>()
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState) => {
+        waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState
+          spiedEventType = eventType
           return state % 2 === 0
         })
       }
       await cb()
       expect(waitedValue).toBe(42)
       expect(spiedDefaultState).toBe(42)
+      expect(spiedEventType).toBeNull()
     })
 
   })
@@ -59,9 +63,11 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
       cleanupManager.append(TestState.dispose)
       let waitedValue = Nullable<number>()
       let spiedDefaultState = Nullable<number>()
+      let spiedEventType = Nullable<StateChangeEventType>()
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState) => {
+        waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState
+          spiedEventType = eventType
           return state % 2 !== 0
         })
       }
@@ -71,6 +77,7 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
       TestState.set(41)
       await cbPromise
       expect(waitedValue).toBe(41)
+      expect(spiedEventType).toBe(StateChangeEventType.SET)
     })
 
   })

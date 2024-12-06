@@ -1,4 +1,4 @@
-import { SetStateFn, WaitEvaluator } from '../../abstractions'
+import { SetStateFn, StateChangeEventType, WaitEvaluator } from '../../abstractions'
 import { getAutomaticName } from '../../internals/name-generator'
 import { isFunction } from '../../internals/type-checker'
 import { Watcher } from '../../internals/watcher'
@@ -43,7 +43,7 @@ export class SimpleStateManager<State> {
   /**
    * @internal
    */
-  protected readonly M$watcher = new Watcher<State>()
+  protected readonly M$watcher = new Watcher<[State, StateChangeEventType]>()
 
   /**
    * @internal
@@ -126,7 +126,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.M$refresh(this.M$internalState)
+    this.M$watcher.M$refresh(this.M$internalState, StateChangeEventType.SET)
   }
 
   /**
@@ -136,7 +136,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.M$refresh(this.M$internalState)
+    this.M$watcher.M$refresh(this.M$internalState, StateChangeEventType.RESET)
   }
 
   /**
@@ -145,7 +145,7 @@ export class SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#watch
    * @returns -{:RETURN_DESC_WATCH:}
    */
-  watch(callback: (state: State) => void): () => void {
+  watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void {
     return this.M$watcher.M$watch(callback)
   }
 
@@ -183,15 +183,15 @@ export class SimpleStateManager<State> {
   wait(valueOrEvaluator: State | WaitEvaluator<State>): Promise<State>
 
   wait(valueOrEvaluator: State | WaitEvaluator<State>): Promise<State> {
-    const fulfillsCondition = ($state: State) => isFunction(valueOrEvaluator)
-      ? valueOrEvaluator($state, this.defaultState)
+    const fulfillsCondition = ($state: State, $eventType: StateChangeEventType | null) => isFunction(valueOrEvaluator)
+      ? valueOrEvaluator($state, this.defaultState, $eventType)
       : Object.is(valueOrEvaluator, $state)
-    if (fulfillsCondition(this.M$internalState)) {
+    if (fulfillsCondition(this.M$internalState, null)) {
       return Promise.resolve(this.M$internalState)
     } else {
       return new Promise((resolve) => {
-        const unwatch = this.M$watcher.M$watch((state) => {
-          if (fulfillsCondition(state)) {
+        const unwatch = this.M$watcher.M$watch((state, eventType) => {
+          if (fulfillsCondition(state, eventType)) {
             unwatch()
             resolve(state)
           }

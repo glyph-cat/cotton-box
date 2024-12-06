@@ -31,7 +31,7 @@ function initTestState(): StateManagerLifecycle<IUserState> {
   TestState = new StateManager({
     firstName: '',
     lastName: '',
-    luckyNumber: null,
+    luckyNumber: 0,
   }, { lifecycle })
   return lifecycle
 }

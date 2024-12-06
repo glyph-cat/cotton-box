@@ -1,0 +1,40 @@
+---
+sidebar_position: 15
+---
+
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DocConstants } from '@site/src/constants'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+
+# StateChangeEventType
+
+## Overview
+
+<TypeDisplay>{DataType.enum}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE}</MarkdownWrapper>
+
+<br/>
+
+This value is provided in the `.watch` callback to indicate which event triggered it.
+
+```js
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
+
+const ExampleState = new StateManager(0)
+
+ExampleState.set(42)
+
+ExampleState.watch((state, eventType) => {
+  console.log(state)     // 42
+  console.log(eventType) // 1 (StateChangeEventType.SET)
+})
+```
+
+## Values
+
+| Key     | Value | Description                                              |
+| ------- | :---: | -------------------------------------------------------- |
+| `SET`   |  `1`  | {DocConstants.DESC_STATE_CHANGE_EVENT_TYPE_SET} |
+| `RESET` |  `2`  | {DocConstants.DESC_STATE_CHANGE_EVENT_TYPE_RESET}     |
+| `INIT`  |  `3`  | {DocConstants.DESC_STATE_CHANGE_EVENT_TYPE_INIT}      |

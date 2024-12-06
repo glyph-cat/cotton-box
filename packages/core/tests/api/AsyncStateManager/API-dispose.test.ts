@@ -1,3 +1,4 @@
+import { StateChangeEventType } from '../../../src'
 import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -12,16 +13,16 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
     const TestState = new AsyncStateManager(42)
     cleanupManager.append(TestState.dispose)
 
-    const numbers1: Array<number> = []
-    const numbers2: Array<number> = []
-    const unwatch1 = TestState.watch((num) => { numbers1.push(num) })
+    const numbers1: Array<[number, StateChangeEventType]> = []
+    const numbers2: Array<[number, StateChangeEventType]> = []
+    const unwatch1 = TestState.watch((...args) => { numbers1.push(args) })
 
     // Make sure there are no issues when calling `dispose` multiple times.
     await TestState.dispose()
     await TestState.dispose()
 
     // Make sure `unwatch` callback has the same type/signature even after dispose.
-    const unwatch2 = TestState.watch((num) => { numbers2.push(num) })
+    const unwatch2 = TestState.watch((...args) => { numbers2.push(args) })
     expect(typeof unwatch2).toBe('function')
 
     // Expect no state changes after disposal

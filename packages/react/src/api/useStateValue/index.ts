@@ -99,7 +99,7 @@ export function useStateValue<State, SelectedState>(
   let isEqual: EqualityFn<State | SelectedState>
   if (optionalArgs.length >= 2) {
     isEqual = optionalArgs[0] as EqualityFn<State | SelectedState> ?? Object.is
-    active = optionalArgs[1]
+    active = optionalArgs[1] ?? false
   } else {
     if (isFunction(optionalArgs[0])) {
       isEqual = optionalArgs[0]
@@ -110,9 +110,11 @@ export function useStateValue<State, SelectedState>(
     }
   }
 
-  const selectorRef = useRef<StateSelector<State, SelectedState>>(null)
+  // TOFIX: Remove `| null` After React 19 - Cannot assign to 'current' because it is a read-only property.ts(2540)
+  const selectorRef = useRef<StateSelector<State, SelectedState> | null>(null)
   selectorRef.current = selector
-  const isEqualRef = useRef<EqualityFn<State | SelectedState>>(null)
+  // TOFIX: Remove `| null` After React 19 - Cannot assign to 'current' because it is a read-only property.ts(2540)
+  const isEqualRef = useRef<EqualityFn<State | SelectedState> | null>(null)
   isEqualRef.current = isEqual
 
   const selectValue = useCallback(() => {
@@ -124,7 +126,8 @@ export function useStateValue<State, SelectedState>(
     }
   }, [stateManager])
 
-  const cachedSyncValue = useRef<SyncValue<State | SelectedState>>(null)
+  // TOFIX: Remove `| null` After React 19 - Cannot assign to 'current' because it is a read-only property.ts(2540)
+  const cachedSyncValue = useRef<SyncValue<State | SelectedState> | null>(null)
   const getSnapshot = useCallback((): SyncValue<State | SelectedState> => {
     if (
       Object.is(cachedSyncValue.current, null) ||
@@ -224,7 +227,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
   let isEqual: EqualityFn<State | SelectedState>
   if (optionalArgs.length >= 2) {
     isEqual = optionalArgs[0] as EqualityFn<State | SelectedState> ?? Object.is
-    active = optionalArgs[1]
+    active = optionalArgs[1] ?? false
   } else {
     if (isFunction(optionalArgs[0])) {
       isEqual = optionalArgs[0]
@@ -235,7 +238,8 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
     }
   }
 
-  const cachedSyncValue = useRef<SyncValue<SelectedState>>(null)
+  // TOFIX: Remove `| null` After React 19 - Cannot assign to 'current' because it is a read-only property.ts(2540)
+  const cachedSyncValue = useRef<SyncValue<SelectedState> | null>(null)
   const getSnapshot = useCallback((): SyncValue<SelectedState> => {
     const selectedState = selector((stateManager as $$).get(1))
     if (

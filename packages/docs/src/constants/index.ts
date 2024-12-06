@@ -159,6 +159,7 @@ export const DocConstants = {
   TSDOC_TYPE_DESC_STATE_SELECTOR: `Type definition of the selector function that is used in the hooks provided by \`${REACT_PACKAGE_NAME}\`. \n\nIt is a function that accepts the state as an argument and returns a derived value.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,
   TSDOC_TYPE_DESC_EQUALITY_FN: `Type definition of an equality checking function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).\n\nSome presets are available in the [\`Equality\`](${DOCS_API_CORE_URL}/Equality) object.`,
   TSDOC_TYPE_DESC_READONLY_STATE_MANAGER: 'A utility type for State Managers that allows [TypeScript](https://www.typescriptlang.org) to treat it as read-only.',
+  TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE: 'The type of state change event that was triggered.',
   // #endregion tsdoc
 
   // #region Default value definitions
@@ -201,6 +202,12 @@ export const DocConstants = {
   DESC_STATE_MANAGER_VISIBILITY_EXPOSED: 'State values will be always exposed regardless of the environment.',
   DESC_STATE_MANAGER_VISIBILITY_HIDDEN: 'State values will be always hidden regardless of the environment.',
   // #endregion State Manager Visibility
+
+  // #region StateChangeEventType
+  DESC_STATE_CHANGE_EVENT_TYPE_SET: 'Indicates that the change was triggered by calling `.set`.',
+  DESC_STATE_CHANGE_EVENT_TYPE_RESET: 'Indicates that the change was triggered by calling `.reset`.',
+  DESC_STATE_CHANGE_EVENT_TYPE_INIT: 'Indicates that the change was triggered by calling `.init`.',
+  // #endregion StateChangeEventType
 
   // #region Type references
   TYPE_REFERENCE_URL_STRING: 'https://www.w3schools.com/jsref/jsref_obj_string.asp',

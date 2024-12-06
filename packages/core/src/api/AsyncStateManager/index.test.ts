@@ -33,7 +33,7 @@ function initTestState(): StateManagerLifecycle<IUserState> {
   TestState = new AsyncStateManager({
     firstName: '',
     lastName: '',
-    luckyNumber: null,
+    luckyNumber: 0,
   }, { lifecycle })
   return lifecycle
 }

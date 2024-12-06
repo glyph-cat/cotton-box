@@ -1,4 +1,9 @@
-import { CommitStrategy, ReadOnlyStateManager, SetStateFn } from '../../abstractions'
+import {
+  CommitStrategy,
+  ReadOnlyStateManager,
+  SetStateFn,
+  StateChangeEventType,
+} from '../../abstractions'
 import { isFunction } from '../../internals/type-checker'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
@@ -6,12 +11,6 @@ import {
   getErrorMessageForRepeatedInitCommits,
   getErrorMessageForSetOrResetDuringInitialization,
 } from './internals'
-
-enum InternalQueueType {
-  /**  Init */ I,
-  /**   Set */ S,
-  /** Reset */ R,
-}
 
 /**
  * {:TSDOC_DESC_STATE_MANAGER_INIT_ARGS:}
@@ -151,18 +150,6 @@ export class StateManager<State> extends SimpleStateManager<State> {
   readonly suspense: StateManagerOptions<State>['suspense']
 
   /**
-   * {:COMMON_DESC_DEFAULT_STATE:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager#defaultState
-   */
-  readonly defaultState: State
-
-  /**
-   * {:TSDOC_DESC_OPTIONS_NAME:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager#name
-   */
-  readonly name: string
-
-  /**
    * {:TSDOC_DESC_IS_INITIALIZING:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#isInitializing
    */
@@ -198,9 +185,9 @@ export class StateManager<State> extends SimpleStateManager<State> {
    */
   M$internalQueue = (
     newStateOrFn: State | SetStateFn<State>,
-    type: InternalQueueType
+    eventType: StateChangeEventType
   ): void => {
-    if (type !== InternalQueueType.I && this.isInitializing.get()) {
+    if (eventType !== StateChangeEventType.INIT && this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForSetOrResetDuringInitialization(this.name))
@@ -213,9 +200,9 @@ export class StateManager<State> extends SimpleStateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn
-      this.M$watcher.M$refresh(this.M$internalState)
+      this.M$watcher.M$refresh(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
-      if (type === InternalQueueType.S) {
+      if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {
           this.M$lifecycle.didSet({
             state: this.M$internalState,
@@ -223,7 +210,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
             previousState,
           })
         }
-      } else if (type === InternalQueueType.R) {
+      } else if (eventType === StateChangeEventType.RESET) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }
@@ -286,7 +273,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
           }
           return // Early exit
         }
-        this.M$internalQueue(state, InternalQueueType.I);
+        this.M$internalQueue(state, StateChangeEventType.INIT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commit'
       },
@@ -322,7 +309,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   set(setStateFn: SetStateFn<State>): void
 
   set(newStateOrFn: State | SetStateFn<State>): void {
-    this.M$internalQueue(newStateOrFn, InternalQueueType.S)
+    this.M$internalQueue(newStateOrFn, StateChangeEventType.SET)
   }
 
   /**
@@ -331,7 +318,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_RESET:}
    */
   reset(): void {
-    this.M$internalQueue(this.defaultState, InternalQueueType.R)
+    this.M$internalQueue(this.defaultState, StateChangeEventType.RESET)
   }
 
   // NOTE: `wait` method is not implemented here but it seems like TS docs will

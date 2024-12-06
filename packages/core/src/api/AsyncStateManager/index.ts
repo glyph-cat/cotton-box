@@ -1,5 +1,5 @@
-import { AsyncSetStateFn, CommitStrategy } from '../../abstractions'
-import { isFunction } from '../../internals/type-checker'
+import { AsyncSetStateFn, CommitStrategy, StateChangeEventType } from '../../abstractions'
+import { isFunction, isNull } from '../../internals/type-checker'
 import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -8,12 +8,7 @@ import {
   getErrorMessageForSetOrResetDuringInitialization,
 } from '../StateManager/internals'
 
-enum InternalQueueType {
-  /**  Init */ I,
-  /**   Set */ S,
-  /** Reset */ R,
-  /**  None */ X,
-}
+const FILLER_STATE_CHANGE_EVENT_TYPE = null
 
 /**
  * {:TSDOC_DESC_ASYNC_STATE_MANAGER:}
@@ -31,18 +26,6 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @internal
    */
   protected readonly M$mutationQueue: Array<() => void | Promise<void>> = []
-
-  /**
-   * {:COMMON_DESC_DEFAULT_STATE:}
-   * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#defaultState
-   */
-  readonly defaultState: State
-
-  /**
-   * {:TSDOC_DESC_OPTIONS_NAME:}
-   * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#name
-   */
-  readonly name: string
 
   /**
    * {:TSDOC_DESC_ASYNC_STATE_MANAGER:}
@@ -63,12 +46,12 @@ export class AsyncStateManager<State> extends StateManager<State> {
    */
   M$internalQueue = async (
     newStateOrFn: State | AsyncSetStateFn<State> | null,
-    type: InternalQueueType
+    eventType: StateChangeEventType | typeof FILLER_STATE_CHANGE_EVENT_TYPE
   ): Promise<void> => {
 
     if (
-      type !== InternalQueueType.I &&
-      type !== InternalQueueType.X &&
+      eventType !== StateChangeEventType.INIT &&
+      !Object.is(eventType, FILLER_STATE_CHANGE_EVENT_TYPE) &&
       this.isInitializing.get()
     ) {
       if (process.env.NODE_ENV !== 'production') {
@@ -79,7 +62,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
     }
     const mutationQueueIsEmptyAtInvocationTime = this.M$mutationQueue.length <= 0
     this.M$mutationQueue.push(async () => {
-      if (type === InternalQueueType.X) {
+      if (isNull(eventType)) {
         // We don't want to do anything if the type is `X`, think of this as
         // taking a number for queue only.
         return // Early exit
@@ -88,9 +71,9 @@ export class AsyncStateManager<State> extends StateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn as State
-      this.M$watcher.M$refresh(this.M$internalState)
+      this.M$watcher.M$refresh(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
-      if (type === InternalQueueType.S) {
+      if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {
           this.M$lifecycle.didSet({
             state: this.M$internalState,
@@ -98,7 +81,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
             previousState,
           })
         }
-      } else if (type === InternalQueueType.R) {
+      } else if (eventType === StateChangeEventType.RESET) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }
@@ -161,7 +144,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
           }
           return // Early exit
         }
-        await this.M$internalQueue(state, InternalQueueType.I);
+        await this.M$internalQueue(state, StateChangeEventType.INIT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = 'commit'
       },
@@ -187,7 +170,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       return this.M$internalState
     } else {
       return new Promise<State>((resolve, reject) => {
-        this.M$internalQueue(null, InternalQueueType.X).then(() => {
+        this.M$internalQueue(null, FILLER_STATE_CHANGE_EVENT_TYPE).then(() => {
           resolve(this.M$internalState)
         }).catch(reject)
       })
@@ -218,7 +201,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   set(setStateFn: AsyncSetStateFn<State>): Promise<void>
 
   async set(newStateOrFn: State | AsyncSetStateFn<State>): Promise<void> {
-    await this.M$internalQueue(newStateOrFn, InternalQueueType.S)
+    await this.M$internalQueue(newStateOrFn, StateChangeEventType.SET)
   }
 
   /**
@@ -227,7 +210,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @returns -{:RETURN_DESC_RESET_ASYNC:}
    */
   async reset(): Promise<void> {
-    await this.M$internalQueue(this.defaultState, InternalQueueType.R)
+    await this.M$internalQueue(this.defaultState, StateChangeEventType.RESET)
   }
 
   // NOTE: `wait` method is not implemented here but it seems like TS docs will
@@ -241,7 +224,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @returns -{:RETURN_DESC_DISPOSE_ASYNC:}
    */
   async dispose(): Promise<void> {
-    await this.M$internalQueue(null, InternalQueueType.X)
+    await this.M$internalQueue(null, FILLER_STATE_CHANGE_EVENT_TYPE)
     super.dispose()
   }
 

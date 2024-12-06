@@ -2,13 +2,13 @@ import { Watcher } from '.'
 
 describe(Watcher.name, () => {
 
-  let watcher: Watcher<number>
+  let watcher: Watcher<[number]>
 
   afterEach(() => { watcher.M$dispose() })
 
   test('Main', () => {
 
-    watcher = new Watcher<number>()
+    watcher = new Watcher<[number]>()
 
     let counter = 0
     const stopWatching = watcher.M$watch((num: number) => { counter += num })
@@ -32,7 +32,7 @@ describe(Watcher.name, () => {
 
   test('Unwatch All & Dispose', () => {
 
-    watcher = new Watcher<number>()
+    watcher = new Watcher<[number]>()
 
     let counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0
     const stopWatching1 = watcher.M$watch((num: number) => { counter1 += num })

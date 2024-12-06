@@ -6,7 +6,7 @@
  * watcher.M$refresh(...) // Arguments can be passed
  * unwatch()
  */
-export class Watcher<A> {
+export class Watcher<Args extends any[]> {
 
   private M$isDisposed = false
   private M$watcherCollection: Record<number, CallableFunction> = {}
@@ -16,7 +16,7 @@ export class Watcher<A> {
    * Accepts a callback and start watching for changes. The callback will be
    * invoked whenever a refresh is triggered.
    */
-  M$watch = (callback: ((arg: A) => void)): (() => void) => {
+  M$watch = (callback: ((...args: Args) => void)): (() => void) => {
     const newId = ++this.M$incrementalWatchId
     this.M$watcherCollection[newId] = callback
     return () => { delete this.M$watcherCollection[newId] }
@@ -25,11 +25,11 @@ export class Watcher<A> {
   /**
    * Triggers a refresh.
    */
-  M$refresh = (arg: A): void => {
+  M$refresh = (...args: Args): void => {
     if (this.M$isDisposed) { return } // Early exit
     const callbackStack = Object.values(this.M$watcherCollection)
     for (let i = 0; i < callbackStack.length; i++) {
-      callbackStack[i](arg)
+      callbackStack[i](...args)
     }
   }
 

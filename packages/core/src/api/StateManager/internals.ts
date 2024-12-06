@@ -1,9 +1,9 @@
-export function getErrorMessageForOverlappingInits(name: string): string {
+export function getErrorMessageForOverlappingInits(name: string | undefined): string {
   return `Cannot initialize ${name ? `"${name}"` : 'state'}` + ' because the previous initialization is not yet complete.'
 }
 
 export function getErrorMessageForRepeatedInitCommits(
-  name: string,
+  name: string | undefined,
   commitStrategy: 'commit' | 'commitNoop',
   alreadyEffectiveCommitStrategy: 'commit' | 'commitNoop',
 ): string {
@@ -16,6 +16,6 @@ export function getErrorMessageForRepeatedInitCommits(
   ].join(' ')
 }
 
-export function getErrorMessageForSetOrResetDuringInitialization(name: string): string {
+export function getErrorMessageForSetOrResetDuringInitialization(name: string | undefined): string {
   return `Cannot set/reset while ${name ? `"${name}"` : 'state'} is still initializing.`
 }
