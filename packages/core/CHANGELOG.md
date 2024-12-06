@@ -1,5 +1,7 @@
 # Changelog
 
-* The `isInitializing` property of `StateManager` and `AsyncStateManager` is now exposed as a `ReadOnlyStateManager`.
-* Removed method `.waitForInit` in favor of calling `….isInitializing.wait(false)` directly.
-* State Managers without names will be assigned automatic names (`UnnamedStateManager_001`, `UnnamedStateManager_002`, and so on).
+* Fixed incorrect export name for UMD builds.
+* Events captured by `.watch` now includes `StateChangeEventType` as the second parameter.
+* Events captured by `.wait` now includes `StateChangeEventType` as the third parameter.
+* Type safety enhancements.
+* Internal optimizations.
