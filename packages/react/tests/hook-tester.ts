@@ -42,7 +42,7 @@ export class HookTester<
   private readonly actions: Actions
   private readonly values: Values
   private _renderCount = 0
-  private renderResult: RenderResult
+  private renderResult!: RenderResult
   private dispatchableActions: Partial<Record<keyof Actions, (() => void | Promise<void>)>> = {}
   private retrievableValues: Partial<Record<keyof Values, ReturnType<Values[keyof Values]>>> = {}
 
@@ -100,7 +100,7 @@ export class HookTester<
       this.retrievableValues[valueKey] = mappedValue
     }
 
-    return null
+    return null!
 
   }
 
