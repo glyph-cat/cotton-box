@@ -2,6 +2,7 @@ import { RenderResult, render } from '@testing-library/react'
 import {
   ErrorInfo,
   Fragment,
+  JSX,
   Component as ReactComponent,
   ReactNode,
   StrictMode,

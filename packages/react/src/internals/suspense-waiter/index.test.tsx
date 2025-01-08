@@ -1,4 +1,4 @@
-import { act } from 'react'
+import { act, JSX } from 'react'
 import { AsyncStateManager, SimpleStateManager, StateManager } from '../../../../core/src'
 import { SuspenseTester } from '../../../tests/suspense-tester'
 import { CleanupManager, TestUtils } from '../../../tests/test-helpers'

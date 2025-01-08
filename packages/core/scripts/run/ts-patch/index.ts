@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { ENCODING_UTF_8 } from '../constants'
+import { ENCODING_UTF_8 } from '../../constants'
 
 const packageInfo = JSON.parse(readFileSync('./package.json', ENCODING_UTF_8))
 const typeDefinitionPath = `./${packageInfo.types}`

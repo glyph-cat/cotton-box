@@ -1,5 +1,5 @@
 import { RenderResult, render } from '@testing-library/react'
-import { ComponentType, Suspense, act, createElement, useEffect } from 'react'
+import { ComponentType, JSX, Suspense, act, createElement, useEffect } from 'react'
 import { CleanupManager } from './test-helpers'
 
 export class SuspenseTester {

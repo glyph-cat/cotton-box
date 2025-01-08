@@ -10,7 +10,7 @@ yarn bundle && yarn types && yarn api && yarn --cwd ../.. insert-doc-variables c
 # TS error occurs only in bundled type definitions because the some internals
 # have been stripped off so TS is not aware that there is actually no problem
 # with the code.
-yarn ts-node ./scripts/run/ts-patch.ts
+yarn tsx ./scripts/run/ts-patch
 
 # Copy index.mjs to 'temp/' and change extension to '.js'
 mkdir -p ./temp/test-builds

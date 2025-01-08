@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { JSX, useCallback, useState } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { CleanupManager, HookTester, IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'

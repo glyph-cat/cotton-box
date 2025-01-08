@@ -1,4 +1,4 @@
-import { act } from 'react'
+import { act, JSX } from 'react'
 import { SuspenseTester } from '../suspense-tester'
 import { CleanupManager, TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'

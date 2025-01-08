@@ -1,5 +1,5 @@
 import { render, RenderResult } from '@testing-library/react'
-import { act } from 'react'
+import { act, JSX } from 'react'
 import { $ } from '../../../src/abstractions'
 import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'

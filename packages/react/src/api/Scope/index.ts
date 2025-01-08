@@ -1,5 +1,5 @@
 import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
-import { ReactNode, createContext, createElement, useContext } from 'react'
+import { JSX, ReactNode, createContext, createElement, useContext } from 'react'
 import { $ } from '../../abstractions'
 
 type IStateManagerScopeContext = Record<number, SimpleStateManager<any> | StateManager<any>>
