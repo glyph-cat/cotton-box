@@ -42,8 +42,7 @@ export function useSimpleStateValue<State, SelectedState>(
 
   useDebugName(stateManager)
 
-  // TOFIX: Remove `| null` After React 19 - Cannot assign to 'current' because it is a read-only property.ts(2540)
-  const selectorRef = useRef<StateSelector<State, SelectedState> | null>(null)
+  const selectorRef = useRef<StateSelector<State, SelectedState>>(null)
   selectorRef.current = selector
 
   const getSnapshot = useCallback(() => {
