@@ -5,7 +5,7 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup() })
+  afterEach(() => { cleanupManager.run() })
 
   test('No additional options', () => {
     const defaultState: IUserState = {

@@ -60,7 +60,7 @@ export class CleanupManager {
 
   constructor() {
     this.append = this.append.bind(this)
-    this.performCleanup = this.performCleanup.bind(this)
+    this.run = this.run.bind(this)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -68,7 +68,7 @@ export class CleanupManager {
     this.cleanupFns.push(cleanupFn)
   }
 
-  performCleanup(): void {
+  run(): void {
     while (this.cleanupFns.length > 0) {
       this.cleanupFns[0]()
       this.cleanupFns.shift()

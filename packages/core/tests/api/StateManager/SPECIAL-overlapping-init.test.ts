@@ -5,7 +5,7 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup() })
+  afterEach(() => { cleanupManager.run() })
 
   test('Main', () => {
     const TestState = new StateManager('a')

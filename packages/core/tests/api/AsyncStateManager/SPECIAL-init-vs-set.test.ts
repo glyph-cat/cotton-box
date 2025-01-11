@@ -7,7 +7,7 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup() })
+  afterEach(() => { cleanupManager.run() })
 
   describe('No pending changes', () => {
 

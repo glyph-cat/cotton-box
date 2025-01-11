@@ -10,7 +10,7 @@ wrapper(({ Lib: { StateManager, AsyncStateManager } }: TestConfig) => {
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup() })
+  afterEach(() => { cleanupManager.run() })
 
   let TestState: $
   afterEach(() => { TestState?.dispose() })
