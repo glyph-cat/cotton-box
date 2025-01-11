@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 type IConsole = typeof console
 type ConsoleKey = keyof IConsole
 

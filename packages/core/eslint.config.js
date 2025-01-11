@@ -9,7 +9,6 @@ module.exports = [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': Severity.OFF,
-      'no-console': Severity.OFF,
     },
   },
   {
@@ -17,5 +16,5 @@ module.exports = [
       '*/eslint.config.js',
       'config/rollup.config.js',
     ],
-  },
+  }
 ]

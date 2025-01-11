@@ -70,7 +70,7 @@ const ExampleState = new AsyncStateManager('...')
 <MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
 
 ```ts
-readonly defaultState: State
+readonly defaultState: Readonly<State>
 ```
 
 ### name
@@ -152,7 +152,7 @@ await ExampleState.init(({ commit }) => {
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET_ASYNC}</MarkdownWrapper>
 
 ```ts
-get(): Promise<State>
+get(): Promise<Readonly<State>>
 ```
 
 #### Parameters
@@ -171,7 +171,7 @@ const state = await ExampleState.get()
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET_SYNC}</MarkdownWrapper>
 
 ```ts
-getSync(): State
+getSync(): Readonly<State>
 ```
 
 #### Parameters
@@ -264,7 +264,7 @@ await ExampleState.reset()
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
 
 ```ts
-watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void
+watch(callback: (state: Readonly<State>, eventType: StateChangeEventType) => void): () => void
 ```
 
 #### Parameters
@@ -320,11 +320,11 @@ ExampleState.unwatchAll()
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
 
 ```ts
-wait(expectedValue: State): Promise<State>
+wait(expectedValue: State): Promise<Readonly<State>>
 ```
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
 ```ts
-wait(evaluator: WaitEvaluator<State>): Promise<State>
+wait(evaluator: WaitEvaluator<State>): Promise<Readonly<State>>
 ```
 
 #### Parameters

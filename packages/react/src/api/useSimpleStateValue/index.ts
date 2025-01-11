@@ -17,7 +17,7 @@ export function useSimpleStateValue<State>(
   stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
   active?: boolean
-): State
+): Readonly<State>
 
 /**
  * {:TSDOC_DESC_USE_SIMPLE_STATE_VALUE:}
@@ -32,13 +32,13 @@ export function useSimpleStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   active?: boolean
-): SelectedState
+): Readonly<SelectedState>
 
 export function useSimpleStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   active = true
-): State | SelectedState {
+): Readonly<State | SelectedState> {
 
   useDebugName(stateManager)
 
@@ -73,7 +73,7 @@ export function useSimpleStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   active = true
-): SelectedState {
+): Readonly<SelectedState> {
   useDebugName(stateManager)
   const getSnapshot = useCallback(() => {
     return selector(stateManager.get())

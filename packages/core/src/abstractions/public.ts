@@ -5,28 +5,28 @@ import type { SimpleStateManager } from '../api/SimpleStateManager'
  * @see -{:DOCS_API_CORE_URL:}/SetStateFn
  * @public
  */
-export type SetStateFn<State> = (currentState: State, defaultState: State) => State
+export type SetStateFn<State> = (currentState: Readonly<State>, defaultState: Readonly<State>) => State
 
 /**
  * {:TSDOC_PARAM_DESC_SET_FUNCTION_ASYNC:}
  * @see -{:DOCS_API_CORE_URL:}/AsyncSetStateFn
  * @public
  */
-export type AsyncSetStateFn<State> = (currentState: State, defaultState: State) => State | Promise<State>
+export type AsyncSetStateFn<State> = (currentState: Readonly<State>, defaultState: Readonly<State>) => State | Promise<State>
 
 /**
  * {:TSDOC_TYPE_DESC_WAIT_EVALUATOR:}
  * @see -{:DOCS_API_CORE_URL:}/WaitEvaluator
  * @public
  */
-export type WaitEvaluator<State> = (currentState: State, defaultState: State, eventType: StateChangeEventType | null) => boolean
+export type WaitEvaluator<State> = (currentState: Readonly<State>, defaultState: Readonly<State>, eventType: StateChangeEventType | null) => boolean
 
 /**
  * {:TSDOC_TYPE_DESC_STATE_SELECTOR:}
  * @see -{:DOCS_API_CORE_URL:}/StateSelector
  * @public
  */
-export type StateSelector<State, SelectedState> = (state: State) => SelectedState
+export type StateSelector<State, SelectedState> = (state: Readonly<State>) => Readonly<SelectedState>
 
 /**
  * {:TSDOC_TYPE_DESC_EQUALITY_FN:}

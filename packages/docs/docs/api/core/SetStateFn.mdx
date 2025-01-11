@@ -15,5 +15,5 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 <MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION}</MarkdownWrapper>
 
 ```ts
-type SetStateFn<State> = (currentState: State, defaultState: State) => State
+type SetStateFn<State> = (currentState: Readonly<State>, defaultState: Readonly<State>) => State
 ```

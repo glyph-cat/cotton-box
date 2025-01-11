@@ -59,7 +59,7 @@ const ExampleState = new SimpleStateManager('...')
 ### defaultState
 <MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
 ```ts
-readonly defaultState: State
+readonly defaultState: Readonly<State>
 ```
 
 ### name
@@ -73,7 +73,7 @@ readonly name: string
 ### get
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET}</MarkdownWrapper>
 ```ts
-get(): State
+get(): Readonly<State>
 ```
 
 #### Parameters
@@ -145,7 +145,7 @@ ExampleState.reset()
 ### watch
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
 ```ts
-watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void
+watch(callback: (state: Readonly<State>, eventType: StateChangeEventType) => void): () => void
 ```
 
 #### Parameters
@@ -187,11 +187,11 @@ ExampleState.unwatchAll()
 ### wait
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
 ```ts
-wait(expectedValue: State): Promise<State>
+wait(expectedValue: State): Promise<Readonly<State>>
 ```
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
 ```ts
-wait(evaluator: WaitEvaluator<State>): Promise<State>
+wait(evaluator: WaitEvaluator<State>): Promise<Readonly<State>>
 ```
 
 #### Parameters

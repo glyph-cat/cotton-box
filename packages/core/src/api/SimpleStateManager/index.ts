@@ -32,7 +32,6 @@ export interface SimpleStateManagerOptions<State> {
   readonly scope?: SimpleStateManager<State>
 }
 
-
 /**
  * @public
  */
@@ -64,7 +63,7 @@ export class SimpleStateManager<State> {
    * {:COMMON_DESC_DEFAULT_STATE:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#defaultState
    */
-  readonly defaultState: State
+  readonly defaultState: Readonly<State>
 
   /**
    * {:TSDOC_DESC_OPTIONS_NAME:}
@@ -102,7 +101,7 @@ export class SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#get
    * @returns -{:RETURN_DESC_GET:}
    */
-  get(): State {
+  get(): Readonly<State> {
     return this.M$internalState
   }
 
@@ -145,7 +144,7 @@ export class SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#watch
    * @returns -{:RETURN_DESC_WATCH:}
    */
-  watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void {
+  watch(callback: (state: Readonly<State>, eventType: StateChangeEventType) => void): () => void {
     return this.M$watcher.watch(callback)
   }
 
