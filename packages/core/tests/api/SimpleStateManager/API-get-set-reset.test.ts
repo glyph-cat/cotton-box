@@ -1,4 +1,4 @@
-import { CleanupManager, IUserState, Nullable } from '../../test-helpers'
+import { CleanupManager, IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
@@ -31,8 +31,8 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       luckyNumber: 101,
     })
 
-    let spiedDefaultState = Nullable<IUserState>()
-    let stateToSet2 = Nullable<IUserState>()
+    let spiedDefaultState: IUserState = null
+    let stateToSet2: IUserState = null
     TestState.set((currentState, defaultStateFromFn) => {
       spiedDefaultState = defaultStateFromFn
       const nextState: IUserState = {

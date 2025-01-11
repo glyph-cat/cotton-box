@@ -1,5 +1,5 @@
 import { AsyncSetStateFn, CommitStrategy, StateChangeEventType } from '../../abstractions'
-import { isFunction, isNull } from '../../internals/type-checker'
+import { isFunction, isNull } from '../../internals/type-checking'
 import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -71,7 +71,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn as State
-      this.M$watcher.M$refresh(this.M$internalState, eventType)
+      this.M$watcher.refresh(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {

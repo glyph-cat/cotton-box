@@ -1,5 +1,5 @@
 import { StateChangeEventType } from '../../../src'
-import { CleanupManager, Nullable } from '../../test-helpers'
+import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { StateManager } }: TestConfig) => {
@@ -13,7 +13,7 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue = Nullable<number>()
+      let waitedValue: number = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -24,9 +24,9 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue = Nullable<number>()
-      let spiedDefaultState = Nullable<number>()
-      let spiedEventType = Nullable<StateChangeEventType>()
+      let waitedValue: number = null
+      let spiedDefaultState: number = null
+      let spiedEventType: StateChangeEventType = null
       const cb = async () => {
         waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState
@@ -47,7 +47,7 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new StateManager(41)
       cleanupManager.append(TestState.dispose)
-      let waitedValue = Nullable<number>()
+      let waitedValue: number = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -61,9 +61,9 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue = Nullable<number>()
-      let spiedDefaultState = Nullable<number>()
-      let spiedEventType = Nullable<StateChangeEventType>()
+      let waitedValue: number = null
+      let spiedDefaultState: number = null
+      let spiedEventType: StateChangeEventType = null
       const cb = async () => {
         waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState

@@ -4,9 +4,6 @@ export interface IUserState {
   luckyNumber: number
 }
 
-export type Nullable<T> = T | null
-export function Nullable<T>(): Nullable<T> { return null }
-
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {
 
@@ -17,7 +14,6 @@ export namespace TestUtils {
   }
 
   export function spyOnConsoleError(): void {
-    /* eslint-disable no-console */
     let consoleError: typeof console.error
     beforeEach(() => {
       consoleError = console.error
@@ -26,7 +22,6 @@ export namespace TestUtils {
       // ^ for ease of debug only, commented out when not in use
     })
     afterEach(() => { console.error = consoleError })
-    /* eslint-enable no-console */
   }
 
   export function mockSelector<S>(s: S): S { return s }
@@ -43,7 +38,7 @@ export class CleanupManager {
 
   constructor() {
     this.append = this.append.bind(this)
-    this.performCleanup = this.performCleanup.bind(this)
+    this.run = this.run.bind(this)
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
@@ -51,7 +46,7 @@ export class CleanupManager {
     this.cleanupFns.push(cleanupFn)
   }
 
-  performCleanup(): void {
+  run(): void {
     while (this.cleanupFns.length > 0) {
       this.cleanupFns[0]()
       this.cleanupFns.shift()

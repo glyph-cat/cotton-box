@@ -1,7 +1,7 @@
 import { SetStateFn, StateChangeEventType, WaitEvaluator } from '../../abstractions'
 import { getAutomaticName } from '../../internals/name-generator'
-import { isFunction } from '../../internals/type-checker'
-import { Watcher } from '../../internals/watcher'
+import { isFunction } from '../../internals/type-checking'
+import { Watcher } from '../Watcher'
 
 /**
  * Unique runtime identifier for scoped State Managers.
@@ -126,7 +126,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.M$refresh(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.refresh(this.M$internalState, StateChangeEventType.SET)
   }
 
   /**
@@ -136,7 +136,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.M$refresh(this.M$internalState, StateChangeEventType.RESET)
+    this.M$watcher.refresh(this.M$internalState, StateChangeEventType.RESET)
   }
 
   /**
@@ -146,7 +146,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_WATCH:}
    */
   watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void {
-    return this.M$watcher.M$watch(callback)
+    return this.M$watcher.watch(callback)
   }
 
   /**
@@ -155,7 +155,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_UNWATCH_ALL:}
    */
   unwatchAll(): void {
-    this.M$watcher.M$unwatchAll()
+    this.M$watcher.unwatchAll()
   }
 
   /**
@@ -190,7 +190,7 @@ export class SimpleStateManager<State> {
       return Promise.resolve(this.M$internalState)
     } else {
       return new Promise((resolve) => {
-        const unwatch = this.M$watcher.M$watch((state, eventType) => {
+        const unwatch = this.M$watcher.watch((state, eventType) => {
           if (fulfillsCondition(state, eventType)) {
             unwatch()
             resolve(state)
@@ -206,7 +206,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
-    this.M$watcher.M$dispose()
+    this.M$watcher.dispose()
   }
 
 }

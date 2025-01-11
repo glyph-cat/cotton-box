@@ -7,6 +7,6 @@ module.exports = {
       // not sure why it is not able to resolve this package
       ignore: ['react-dom/server'],
     }],
-    'no-console': Severity.WARN,
+    'no-console': Severity.OFF,
   }
 }

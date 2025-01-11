@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { CleanupManager, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 

@@ -4,9 +4,6 @@ export interface IUserState {
   luckyNumber: number
 }
 
-export type Nullable<T> = T | null
-export function Nullable<T>(): Nullable<T> { return null }
-
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {
 

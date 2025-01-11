@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { AsyncStateManager } from '.'
 import { IUserState, MockStorage, TestUtils } from '../../../tests/test-helpers'
 import { StateManagerLifecycle } from '../StateManager'

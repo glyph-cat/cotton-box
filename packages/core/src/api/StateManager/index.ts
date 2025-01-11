@@ -4,7 +4,7 @@ import {
   SetStateFn,
   StateChangeEventType,
 } from '../../abstractions'
-import { isFunction } from '../../internals/type-checker'
+import { isFunction } from '../../internals/type-checking'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
   getErrorMessageForOverlappingInits,
@@ -200,7 +200,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn
-      this.M$watcher.M$refresh(this.M$internalState, eventType)
+      this.M$watcher.refresh(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {

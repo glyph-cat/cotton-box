@@ -1,5 +1,5 @@
 import type { StateManagerDidSetArgs } from '../../../../core/src'
-import { CleanupManager, IUserState, Nullable, TestUtils } from '../../test-helpers'
+import { CleanupManager, IUserState, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
@@ -54,8 +54,8 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
     })
     expect(didReset).not.toHaveBeenCalled()
 
-    let spiedDefaultState = Nullable<IUserState>()
-    let stateToSet2 = Nullable<IUserState>()
+    let spiedDefaultState: IUserState = null
+    let stateToSet2: IUserState = null
     await TestState.set((currentState, defaultStateFromFn) => {
       spiedDefaultState = defaultStateFromFn
       const nextState: IUserState = {

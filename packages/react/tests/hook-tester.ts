@@ -15,7 +15,7 @@ import type { CleanupManager } from './test-helpers'
 /**
  * @public
  */
-export type Fn<Params extends unknown[] = [], RType = void> = (...args: Params) => RType
+export type HookFn<Params extends unknown[] = [], RType = void> = (...args: Params) => RType
 
 /**
  * @public
@@ -37,7 +37,7 @@ export class HookTester<
   Values extends Record<string, HookInterfaceValueMapper<HookRType>>
 > {
 
-  private readonly useHook: Fn<HookParams, HookRType>
+  private readonly useHook: HookFn<HookParams, HookRType>
   private readonly hookParameters: HookParams
   private readonly actions: Actions
   private readonly values: Values
@@ -49,7 +49,7 @@ export class HookTester<
   readonly capturedErrors: Array<{ error: Error, errorInfo: ErrorInfo }> = []
 
   constructor(config: {
-    useHook: Fn<HookParams, HookRType>,
+    useHook: HookFn<HookParams, HookRType>,
     hookParameters?: HookParams,
     actions?: Actions,
     values?: Values,

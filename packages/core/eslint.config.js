@@ -9,6 +9,7 @@ module.exports = [
   {
     rules: {
       '@typescript-eslint/no-explicit-any': Severity.OFF,
+      'no-console': Severity.OFF,
     },
   },
   {

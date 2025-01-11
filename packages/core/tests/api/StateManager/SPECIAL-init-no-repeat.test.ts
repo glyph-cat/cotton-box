@@ -1,5 +1,4 @@
-/* eslint-disable no-console */
-import { CleanupManager, Nullable } from '../../test-helpers'
+import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
@@ -13,7 +12,7 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
   test('commit', async () => {
     const TestState = new StateManager(0)
     cleanupManager.append(TestState.dispose)
-    let commitRef = Nullable<(state: number) => void>()
+    let commitRef: (state: number) => void = null
     TestState.init(({ commit }) => {
       commitRef = commit
       commit(1)
@@ -28,7 +27,7 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
   test('commitNoop', async () => {
     const TestState = new StateManager(0)
     cleanupManager.append(TestState.dispose)
-    let commitRef = Nullable<() => void>()
+    let commitRef: () => void = null
     TestState.init(({ commitNoop }) => {
       commitRef = commitNoop
       commitNoop()

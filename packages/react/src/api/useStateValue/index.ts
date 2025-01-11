@@ -6,7 +6,7 @@ import {
   StateSelector,
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { isFunction } from '../../../../core/src/internals/type-checker'
+import { isFunction } from '../../../../core/src/internals/type-checking'
 import { $1, $2, SyncValue } from '../../abstractions'
 import { $$INTERNALS } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'

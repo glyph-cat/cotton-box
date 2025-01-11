@@ -13,7 +13,7 @@ wrapper(({
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.performCleanup() })
+  afterEach(() => { cleanupManager.run() })
 
   let renderResult: RenderResult
   afterEach(() => { renderResult?.unmount() })

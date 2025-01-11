@@ -9,7 +9,8 @@
     "lint": "yarn eslint .",
     "rollback": "yarn remove cotton-box cotton-box-react",
     "test": "# No tests to run",
-    "sync": "yarn --cwd ../.. sync-examples"
+    "sync": "yarn --cwd ../.. sync-examples",
+    "sync-experimental": "sh ./scripts/run/sync-experimental.sh"
   },
   "license": "MIT",
   "dependencies": {

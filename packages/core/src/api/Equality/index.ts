@@ -1,4 +1,4 @@
-import { isObject } from '../../internals/type-checker'
+import { isObject } from '../../internals/type-checking'
 
 /**
  * {:TSDOC_DESC_EQUALITY:}
