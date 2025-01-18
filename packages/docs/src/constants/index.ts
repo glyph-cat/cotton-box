@@ -108,6 +108,7 @@ export const DocConstants = {
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_ARRAY_OR_OBJECT: 'A wrapper around `shallowCompareArray` and `shallowCompareObject`. Only use this when you cannot determine whether your selected state will return an array or an object as it exhausts additional computing resources that could otherwise be prevented.',
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_OBJECT: `Compares each item in the object using [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}). Use this when your selector returns a plain object.`,
   TSDOC_DESC_EQUALITY_STRINGIFY_COMPARE: `Compares the previous and next states after serializing them with [\`JSON.stringify\`](${API_REFERENCE_URL_JSON_STRINGIFY}).`,
+  TSDOC_DESC_WATCHER: 'An event manager that can be subscribed to and unsubscribed from, and the events can be fired to actively listening handlers.',
 
   TSDOC_DESC_ENUM_BUILD_TYPE: 'The available build types of the package.',
   TSDOC_DESC_ENUM_BUILD_TYPE_CJS: 'Common JS',
@@ -131,7 +132,12 @@ export const DocConstants = {
   TSDOC_METHOD_DESC_UNWATCH_ALL: 'Removes all existing watchers referencing to this State Manager. Watchers that added after calling this method will not be affected.',
   TSDOC_METHOD_DESC_WAIT_BY_VALUE: 'Waits for the state to match the expected value. If the state already matches the `expectedValue`, the Promise will be resolved immediately.',
   TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR: 'Waits for the `evaluator` to evaluate to `true`. The `evaluator` will be called immediately to check if the condition is fulfilled. If not, it will be called again each time the state changes.',
-  TSDOC_METHOD_DESC_DISPOSE: 'Disposes the State Manager when it is no longer in use. This will remove all watchers and prevent new ones from being added.',
+  TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER: 'Disposes the State Manager when it is no longer in use. This will remove all watchers and prevent new ones from being added.',
+
+  TSDOC_METHOD_DESC_WATCHER_WATCH: 'Accepts a callback that serves as a handler and start watching for changes. The callback will be invoked whenever a refresh is triggered.',
+  TSDOC_METHOD_DESC_WATCHER_REFRESH: 'Triggers a refresh to all handlers subscribed to the watcher.',
+  TSDOC_METHOD_DESC_WATCHER_UNWATCH_ALL: 'Forcefully removes all active handlers.',
+  TSDOC_METHOD_DESC_WATCHER_DISPOSE: 'Removes all active handlers and prevent new ones from being added.',
 
   TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL: 'Additional options for the State Manager.',
   TSDOC_PARAM_DESC_INIT_FN: 'The initialization callback, similar to the `init` lifecycle hook.',
@@ -183,6 +189,7 @@ export const DocConstants = {
   RETURN_DESC_RESET_ASYNC: TYPE_PROMISE_UNDEFINED,
   RETURN_DESC_WATCH: 'An "unwatch" function that when called, will remove the watcher. The "unwatch" function does not take any parameters and does not return anything.',
   RETURN_DESC_UNWATCH_ALL: TYPE_UNDEFINED,
+  RETURN_DESC_REFRESH: TYPE_UNDEFINED,
   RETURN_DESC_WAIT: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state value that matches the \`expectedValue\` or allows the \`evaluator\` to return \`true\`.`,
   RETURN_DESC_WAIT_BY_VALUE: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state when the state matches the \`expectedValue\`.`,
   RETURN_DESC_WAIT_BY_EVALUATOR: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into a snapshot of the state when the \`evaluator\` returns \`true\`.`,
@@ -192,7 +199,6 @@ export const DocConstants = {
   RETURN_DESC_SHALLOW_COMPARE_ARRAY_OR_OBJECT: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
   RETURN_DESC_SHALLOW_COMPARE_OBJECT: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
   RETURN_DESC_STRINGIFY_COMPARE: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
-
   RETURN_DESC_USE_SCOPED: 'The scoped State Manager.',
   RETURN_DESC_USE_INIT_STATE: '`true` if the State Manager is still initializing, otherwise `false`.',
   // #endregion Return descriptions

@@ -1,12 +1,6 @@
-// TODO: Doc variables
-
 /**
- * Creates a Watcher.
- * @example
- * const watcher = new Watcher()
- * const unwatch = watcher.watch(() => { ... })
- * watcher.refresh(...) // Arguments can be passed
- * unwatch()
+ * {:TSDOC_DESC_WATCHER:}
+ * @version
  * @public
  */
 export class Watcher<Args extends any[]> {
@@ -34,8 +28,9 @@ export class Watcher<Args extends any[]> {
   }
 
   /**
-   * Accepts a callback and start watching for changes. The callback will be
-   * invoked whenever a refresh is triggered.
+   * {:TSDOC_METHOD_DESC_WATCHER_WATCH:}
+   * @see -{:DOCS_API_CORE_URL:}/Watcher#watch
+   * @returns -{:RETURN_DESC_WATCH:}
    */
   watch(callback: ((...args: Args) => void)): (() => void) {
     const newId = ++this.M$incrementalWatchId
@@ -44,7 +39,9 @@ export class Watcher<Args extends any[]> {
   }
 
   /**
-   * Triggers a refresh.
+   * {:TSDOC_METHOD_DESC_WATCHER_REFRESH:}
+   * @see -{:DOCS_API_CORE_URL:}/Watcher#refresh
+   * @returns -{:RETURN_DESC_REFRESH:}
    */
   refresh(...args: Args): void {
     if (this.M$isDisposed) { return } // Early exit
@@ -55,14 +52,18 @@ export class Watcher<Args extends any[]> {
   }
 
   /**
-   * Forcefully remove all watchers.
+   * {:TSDOC_METHOD_DESC_WATCHER_UNWATCH_ALL:}
+   * @see -{:DOCS_API_CORE_URL:}/Watcher#unwatchAll
+   * @returns -{:RETURN_DESC_UNWATCH_ALL:}
    */
   unwatchAll(): void {
     this.M$watcherCollection = {}
   }
 
   /**
-   * Removes all watchers and prevent new ones from being added.
+   * {:TSDOC_METHOD_DESC_WATCHER_DISPOSE:}
+   * @see -{:DOCS_API_CORE_URL:}/Watcher#dispose
+   * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
     this.M$isDisposed = true

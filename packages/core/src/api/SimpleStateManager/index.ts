@@ -200,7 +200,7 @@ export class SimpleStateManager<State> {
   }
 
   /**
-   * {:TSDOC_METHOD_DESC_DISPOSE:}
+   * {:TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE:}
    */

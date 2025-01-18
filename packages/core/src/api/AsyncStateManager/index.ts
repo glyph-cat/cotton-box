@@ -219,7 +219,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   // method... :facepalm:
 
   /**
-   * {:TSDOC_METHOD_DESC_DISPOSE:}
+   * {:TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE_ASYNC:}
    */
