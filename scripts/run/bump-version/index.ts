@@ -53,7 +53,7 @@ function run(version: string): void {
 
   execSync([
     `git add ${gitPathsToAdd.join(' ')}`,
-    `git commit -m '${version}'`,
+    `git commit -m 'v${version}'`,
     `git tag 'v${version}'`,
   ].join(' && '))
 
