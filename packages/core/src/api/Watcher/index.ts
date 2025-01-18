@@ -1,6 +1,5 @@
 /**
  * {:TSDOC_DESC_WATCHER:}
- * @version
  * @public
  */
 export class Watcher<Args extends any[]> {
