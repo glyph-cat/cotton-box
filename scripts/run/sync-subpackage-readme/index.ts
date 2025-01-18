@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs'
-import { ENCODING_UTF_8 } from '../constants'
+import { ENCODING_UTF_8 } from '../../constants'
 
 const contentValues = {
   core: 'This is the core package of cotton-box.',

@@ -7,7 +7,7 @@ import {
   statSync,
   writeFileSync,
 } from 'fs'
-import { ENCODING_UTF_8 } from '../constants'
+import { ENCODING_UTF_8 } from '../../constants'
 
 function crawl(
   directoryPath: string,
