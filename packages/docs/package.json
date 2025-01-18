@@ -1,6 +1,6 @@
 {
   "name": "cotton-box-docs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Docs site for Cotton Box.",
   "scripts": {
     "postinstall": "yarn sync",
