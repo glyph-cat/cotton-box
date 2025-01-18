@@ -9,6 +9,11 @@ import { ENCODING_UTF_8 } from '../../constants'
 function run(version: string): void {
 
   if (!version) {
+    console.log(chalk.redBright(`Missing argument "${version}"`))
+    process.exit(1)
+  }
+
+  if (!/^\d+\.\d+\.\d+$/.test(version)) {
     console.log(chalk.redBright(`Invalid version "${version}"`))
     process.exit(1)
   }
@@ -46,27 +51,11 @@ function run(version: string): void {
     gitPathsToAdd.push(subPackageJsonPath)
   }
 
-  // const corePackageJsonPath = `${PACKAGES_PATH}/core/${PACKAGE_JSON}`
-  // const corePackageJson = readJson(corePackageJsonPath)
-  // corePackageJson[PROPERTY_KEY_VERSION] = version
-  // writeJson(corePackageJsonPath, corePackageJson)
-
-  // const reactPackageJsonPath = `${PACKAGES_PATH}/react/${PACKAGE_JSON}`
-  // const reactPackageJson = readJson(reactPackageJsonPath)
-  // reactPackageJson[PROPERTY_KEY_VERSION] = version
-  // writeJson(reactPackageJsonPath, reactPackageJson)
-
-  // execSync(`git add ${[
-  //   rootPackageJsonPath,
-  //   corePackageJsonPath,
-  //   reactPackageJsonPath,
-  // ].join(' ')}`)
-  console.log('gitPathsToAdd', gitPathsToAdd)
-  // execSync([
-  //   `git add ${gitPathsToAdd.join(' ')}`,
-  //   `git commit -m '${version}'`,
-  //   `git tag '${version}'`,
-  // ].join(' && '))
+  execSync([
+    `git add ${gitPathsToAdd.join(' ')}`,
+    `git commit -m '${version}'`,
+    `git tag 'v${version}'`,
+  ].join(' && '))
 
 }
 
