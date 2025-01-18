@@ -10,7 +10,7 @@
     "build": "sh ./scripts/run/build.sh",
     "test": "sh ./scripts/run/test.sh",
     "license": "yarn tsx ./scripts/run/update-license",
-    "sync-version": "yarn tsx ./scripts/run/sync-subpackage-versions",
+    "bump-version": "yarn tsx ./scripts/run/bump-version",
     "insert-doc-variables": "NODE_ENV=production yarn tsx ./scripts/run/insert-doc-variables",
     "sync-subpackage-license": "yarn tsx ./scripts/run/sync-subpackage-license",
     "sync-readme": "yarn tsx ./scripts/run/sync-subpackage-readme",
