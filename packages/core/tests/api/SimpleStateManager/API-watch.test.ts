@@ -1,5 +1,5 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { StateChangeEventType } from '../../../src'
-import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {

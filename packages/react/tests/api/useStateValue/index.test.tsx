@@ -1,6 +1,8 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { HookTester } from '@glyph-cat/react-test-utils'
 import { JSX } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { CleanupManager, HookTester, IUserState } from '../../test-helpers'
+import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -42,7 +44,6 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              cleanupManager,
               useHook: () => useStateValue(TestState),
               values: {
                 main(state) { return state },
@@ -66,7 +67,7 @@ wrapper(({
                 },
                 reset: TestState.reset,
               },
-            })
+            }, cleanupManager)
 
             // Check initial state
             expect(Object.is(hookInterface.get('main'), defaultState)).toBe(true)
@@ -79,9 +80,9 @@ wrapper(({
 
             // Set value normally
             if (isAsyncStateManager) {
-              await hookInterface.action('setValue')
+              await hookInterface.actionAsync('setValue')
             } else {
-              hookInterface.actionSync('setValue')
+              hookInterface.action('setValue')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -92,9 +93,9 @@ wrapper(({
 
             // Set value again and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setSameValue')
+              await hookInterface.actionAsync('setSameValue')
             } else {
-              hookInterface.actionSync('setSameValue')
+              hookInterface.action('setSameValue')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -105,9 +106,9 @@ wrapper(({
 
             // Set value by function
             if (isAsyncStateManager) {
-              await hookInterface.action('setValueByFunction')
+              await hookInterface.actionAsync('setValueByFunction')
             } else {
-              hookInterface.actionSync('setValueByFunction')
+              hookInterface.action('setValueByFunction')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -118,9 +119,9 @@ wrapper(({
 
             // Reset
             if (isAsyncStateManager) {
-              await hookInterface.action('reset')
+              await hookInterface.actionAsync('reset')
             } else {
-              hookInterface.actionSync('reset')
+              hookInterface.action('reset')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'John',
@@ -142,7 +143,6 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              cleanupManager,
               useHook: () => useStateValue(TestState, null, Equality.shallowCompareObject),
               values: {
                 main(state) { return state },
@@ -166,7 +166,7 @@ wrapper(({
                 },
                 reset: TestState.reset,
               },
-            })
+            }, cleanupManager)
 
             // Check initial state
             expect(Object.is(hookInterface.get('main'), defaultState)).toBe(true)
@@ -179,9 +179,9 @@ wrapper(({
 
             // Set value normally
             if (isAsyncStateManager) {
-              await hookInterface.action('setValue')
+              await hookInterface.actionAsync('setValue')
             } else {
-              hookInterface.actionSync('setValue')
+              hookInterface.action('setValue')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -192,9 +192,9 @@ wrapper(({
 
             // Set value again and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setSameValue')
+              await hookInterface.actionAsync('setSameValue')
             } else {
-              hookInterface.actionSync('setSameValue')
+              hookInterface.action('setSameValue')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -205,9 +205,9 @@ wrapper(({
 
             // Set value by function
             if (isAsyncStateManager) {
-              await hookInterface.action('setValueByFunction')
+              await hookInterface.actionAsync('setValueByFunction')
             } else {
-              hookInterface.actionSync('setValueByFunction')
+              hookInterface.action('setValueByFunction')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'Jane',
@@ -218,9 +218,9 @@ wrapper(({
 
             // Reset
             if (isAsyncStateManager) {
-              await hookInterface.action('reset')
+              await hookInterface.actionAsync('reset')
             } else {
-              hookInterface.actionSync('reset')
+              hookInterface.action('reset')
             }
             expect(hookInterface.get('main')).toStrictEqual({
               firstName: 'John',
@@ -266,7 +266,6 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              cleanupManager: cleanupManager,
               useHook: () => useStateValue(TestState, (s) => s.luckyNumber),
               values: {
                 main(state) { return state },
@@ -296,7 +295,7 @@ wrapper(({
                 },
                 reset: TestState.reset,
               },
-            })
+            }, cleanupManager)
 
             // Check initial state
             expect(hookInterface.get('main')).toBe(42)
@@ -304,45 +303,45 @@ wrapper(({
 
             // Set value normally
             if (isAsyncStateManager) {
-              await hookInterface.action('setValue')
+              await hookInterface.actionAsync('setValue')
             } else {
-              hookInterface.actionSync('setValue')
+              hookInterface.action('setValue')
             }
             expect(hookInterface.get('main')).toBe(101)
             expect(hookInterface.renderCount).toBe(2)
 
             // Set value again and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setSameValue')
+              await hookInterface.actionAsync('setSameValue')
             } else {
-              hookInterface.actionSync('setSameValue')
+              hookInterface.action('setSameValue')
             }
             expect(hookInterface.get('main')).toBe(101)
             expect(hookInterface.renderCount).toBe(2)
 
             // Set value by function
             if (isAsyncStateManager) {
-              await hookInterface.action('setValueByFunction')
+              await hookInterface.actionAsync('setValueByFunction')
             } else {
-              hookInterface.actionSync('setValueByFunction')
+              hookInterface.action('setValueByFunction')
             }
             expect(hookInterface.get('main')).toBe(102)
             expect(hookInterface.renderCount).toBe(3)
 
             // Set value for property not included by selector and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setFirstName')
+              await hookInterface.actionAsync('setFirstName')
             } else {
-              hookInterface.actionSync('setFirstName')
+              hookInterface.action('setFirstName')
             }
             expect(hookInterface.get('main')).toBe(102)
             expect(hookInterface.renderCount).toBe(3)
 
             // Reset
             if (isAsyncStateManager) {
-              await hookInterface.action('reset')
+              await hookInterface.actionAsync('reset')
             } else {
-              hookInterface.actionSync('reset')
+              hookInterface.action('reset')
             }
             expect(hookInterface.get('main')).toBe(42)
             expect(hookInterface.renderCount).toBe(4)
@@ -360,7 +359,6 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              cleanupManager: cleanupManager,
               useHook: () => useStateValue(
                 TestState,
                 (s) => s.luckyNumber,
@@ -394,7 +392,7 @@ wrapper(({
                 },
                 reset: TestState.reset,
               },
-            })
+            }, cleanupManager)
 
             // Check initial state
             expect(hookInterface.get('main')).toBe(42)
@@ -402,45 +400,45 @@ wrapper(({
 
             // Set value normally
             if (isAsyncStateManager) {
-              await hookInterface.action('setValue')
+              await hookInterface.actionAsync('setValue')
             } else {
-              hookInterface.actionSync('setValue')
+              hookInterface.action('setValue')
             }
             expect(hookInterface.get('main')).toBe(101)
             expect(hookInterface.renderCount).toBe(2)
 
             // Set value again and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setSameValue')
+              await hookInterface.actionAsync('setSameValue')
             } else {
-              hookInterface.actionSync('setSameValue')
+              hookInterface.action('setSameValue')
             }
             expect(hookInterface.get('main')).toBe(101)
             expect(hookInterface.renderCount).toBe(2)
 
             // Set value by function
             if (isAsyncStateManager) {
-              await hookInterface.action('setValueByFunction')
+              await hookInterface.actionAsync('setValueByFunction')
             } else {
-              hookInterface.actionSync('setValueByFunction')
+              hookInterface.action('setValueByFunction')
             }
             expect(hookInterface.get('main')).toBe(102)
             expect(hookInterface.renderCount).toBe(3)
 
             // Set value for property not included by selector and expect no re-renders
             if (isAsyncStateManager) {
-              await hookInterface.action('setFirstName')
+              await hookInterface.actionAsync('setFirstName')
             } else {
-              hookInterface.actionSync('setFirstName')
+              hookInterface.action('setFirstName')
             }
             expect(hookInterface.get('main')).toBe(102)
             expect(hookInterface.renderCount).toBe(3)
 
             // Reset
             if (isAsyncStateManager) {
-              await hookInterface.action('reset')
+              await hookInterface.actionAsync('reset')
             } else {
-              hookInterface.actionSync('reset')
+              hookInterface.action('reset')
             }
             expect(hookInterface.get('main')).toBe(42)
             expect(hookInterface.renderCount).toBe(4)
@@ -484,7 +482,6 @@ wrapper(({
           cleanupManager.append(TestState.dispose)
 
           const hookInterface = new HookTester({
-            cleanupManager,
             useHook: () => useStateValue(TestState, null, null),
             values: {
               main(state) { return state },
@@ -494,12 +491,12 @@ wrapper(({
                 TestState.set(defaultState)
               },
             },
-          })
+          }, cleanupManager)
 
           if (isAsyncStateManager) {
-            await hookInterface.action('setValue')
+            await hookInterface.actionAsync('setValue')
           } else {
-            hookInterface.actionSync('setValue')
+            hookInterface.action('setValue')
           }
           expect(hookInterface.renderCount).toBe(1)
           expect(Object.is).toHaveBeenCalledWith(defaultState, defaultState)

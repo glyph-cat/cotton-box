@@ -1,7 +1,8 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { SuspenseTester } from '@glyph-cat/react-test-utils'
 import { act, JSX } from 'react'
 import { AsyncStateManager, SimpleStateManager, StateManager } from '../../../../core/src'
-import { SuspenseTester } from '../../../tests/suspense-tester'
-import { CleanupManager, TestUtils } from '../../../tests/test-helpers'
+import { TestUtils } from '../../../tests/test-helpers'
 import {
   createSuspenseWaiter,
   useSuspenseWaiter,

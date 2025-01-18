@@ -35,7 +35,7 @@ export function useStateValue<State>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector?: null,
   active?: boolean,
-): Readonly<State>
+): State
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
@@ -52,7 +52,7 @@ export function useStateValue<State>(
   selector?: null,
   equalityFn?: EqualityFn<any>,
   active?: boolean,
-): Readonly<State>
+): State
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
@@ -67,7 +67,7 @@ export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   active?: boolean,
-): Readonly<SelectedState>
+): SelectedState
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
@@ -84,13 +84,13 @@ export function useStateValue<State, SelectedState>(
   selector?: StateSelector<State, SelectedState>,
   equalityFn?: EqualityFn<any>,
   active?: boolean,
-): Readonly<SelectedState>
+): SelectedState
 
 export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
-): Readonly<State | SelectedState> {
+): State | SelectedState {
 
   useSuspenseWaiter(stateManager)
   useDebugName(stateManager)
@@ -159,7 +159,7 @@ export function useStateValue<State, SelectedState>(
 export function useStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector: StateSelector<State, SelectedState>
-): Readonly<SelectedState>
+): SelectedState
 
 /**
  * {:TSDOC_MARKER_UNSTABLE_API:}
@@ -175,7 +175,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   active?: boolean,
-): Readonly<SelectedState>
+): SelectedState
 
 /**
  * {:TSDOC_MARKER_UNSTABLE_API:}
@@ -191,7 +191,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   equalityFn?: EqualityFn<State | SelectedState>,
-): Readonly<SelectedState>
+): SelectedState
 
 /**
  * {:TSDOC_MARKER_UNSTABLE_API:}
@@ -209,7 +209,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
   selector: StateSelector<State, SelectedState>,
   equalityFn: EqualityFn<State | SelectedState>,
   active?: boolean,
-): Readonly<SelectedState>
+): SelectedState
 
 export function useStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,

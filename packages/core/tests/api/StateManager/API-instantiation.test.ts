@@ -1,4 +1,5 @@
-import { CleanupManager, IUserState } from '../../test-helpers'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {

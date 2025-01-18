@@ -1,6 +1,7 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { SuspenseTester } from '@glyph-cat/react-test-utils'
 import { act, JSX } from 'react'
-import { SuspenseTester } from '../suspense-tester'
-import { CleanupManager, TestUtils } from '../test-helpers'
+import { TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({

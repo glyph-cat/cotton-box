@@ -1,9 +1,9 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import type {
   SimpleStateManager as $0,
   StateManager as $1,
   AsyncStateManager as $2,
 } from '../../src'
-import { CleanupManager } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 type $ = $0<unknown> | $1<unknown> | $2<unknown>

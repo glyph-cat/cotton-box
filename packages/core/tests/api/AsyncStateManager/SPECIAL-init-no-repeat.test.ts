@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { CleanupManager } from '../../test-helpers'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {

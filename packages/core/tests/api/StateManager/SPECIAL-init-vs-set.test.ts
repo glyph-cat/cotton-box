@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { CleanupManager, TestUtils } from '../../test-helpers'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {

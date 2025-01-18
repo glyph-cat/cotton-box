@@ -157,15 +157,15 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#get
    * @returns -{:RETURN_DESC_GET_ASYNC:}
    */
-  get(): Promise<Readonly<State>>
+  get(): Promise<State>
 
   /**
    * @param flag - Use this flag to force-return the state synchronously.
    * @internal
    */
-  get(flag?: 1): Readonly<State>
+  get(flag?: 1): State
 
-  get(flag?: 1): Readonly<State> | Promise<Readonly<State>> {
+  get(flag?: 1): State | Promise<State> {
     if (flag) {
       return this.M$internalState
     } else {
@@ -182,7 +182,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#getSync
    * @returns -{:RETURN_DESC_GET:}
    */
-  getSync(): Readonly<State> {
+  getSync(): State {
     return this.M$internalState
   }
 

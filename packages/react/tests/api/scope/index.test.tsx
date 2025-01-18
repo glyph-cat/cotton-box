@@ -1,7 +1,7 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { render, RenderResult } from '@testing-library/react'
 import { act, JSX } from 'react'
 import { $ } from '../../../src/abstractions'
-import { CleanupManager } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 type $$ = $<number>

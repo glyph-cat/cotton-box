@@ -1,7 +1,9 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { HookTester } from '@glyph-cat/react-test-utils'
 import { SimpleStateManager as $0 } from 'cotton-box'
 import { JSX } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { CleanupManager, HookTester, IUserState } from '../../test-helpers'
+import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
@@ -26,7 +28,6 @@ wrapper(({
       cleanupManager.append(TestState.dispose)
 
       const hookInterface = new HookTester({
-        cleanupManager,
         useHook: () => useSimpleStateValue(TestState),
         values: {
           main(state) { return state },
@@ -50,7 +51,7 @@ wrapper(({
           },
           reset: TestState.reset,
         },
-      })
+      }, cleanupManager)
 
       // Check initial state
       expect(Object.is(hookInterface.get('main'), defaultState)).toBe(true)
@@ -62,7 +63,7 @@ wrapper(({
       expect(hookInterface.renderCount).toBe(1)
 
       // Set value normally
-      hookInterface.actionSync('setValue')
+      hookInterface.action('setValue')
       expect(hookInterface.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
@@ -71,7 +72,7 @@ wrapper(({
       expect(hookInterface.renderCount).toBe(2)
 
       // Set value again and expect no re-renders
-      hookInterface.actionSync('setSameValue')
+      hookInterface.action('setSameValue')
       expect(hookInterface.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
@@ -80,7 +81,7 @@ wrapper(({
       expect(hookInterface.renderCount).toBe(2)
 
       // Set value by function
-      hookInterface.actionSync('setValueByFunction')
+      hookInterface.action('setValueByFunction')
       expect(hookInterface.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
@@ -89,7 +90,7 @@ wrapper(({
       expect(hookInterface.renderCount).toBe(3)
 
       // Reset
-      hookInterface.actionSync('reset')
+      hookInterface.action('reset')
       expect(hookInterface.get('main')).toStrictEqual({
         firstName: 'John',
         lastName: 'Smith',
@@ -149,7 +150,6 @@ wrapper(({
       cleanupManager.append(TestState.dispose)
 
       const hookInterface = new HookTester({
-        cleanupManager: cleanupManager,
         useHook: () => useSimpleStateValue(TestState, (s) => s.luckyNumber),
         values: {
           main(state) { return state },
@@ -179,34 +179,34 @@ wrapper(({
           },
           reset: TestState.reset,
         },
-      })
+      }, cleanupManager)
 
       // Check initial state
       expect(hookInterface.get('main')).toBe(42)
       expect(hookInterface.renderCount).toBe(1)
 
       // Set value normally
-      hookInterface.actionSync('setValue')
+      hookInterface.action('setValue')
       expect(hookInterface.get('main')).toBe(101)
       expect(hookInterface.renderCount).toBe(2)
 
       // Set value again and expect no re-renders
-      hookInterface.actionSync('setSameValue')
+      hookInterface.action('setSameValue')
       expect(hookInterface.get('main')).toBe(101)
       expect(hookInterface.renderCount).toBe(2)
 
       // Set value by function
-      hookInterface.actionSync('setValueByFunction')
+      hookInterface.action('setValueByFunction')
       expect(hookInterface.get('main')).toBe(102)
       expect(hookInterface.renderCount).toBe(3)
 
       // Set value for property not included by selector and expect no re-renders
-      hookInterface.actionSync('setFirstName')
+      hookInterface.action('setFirstName')
       expect(hookInterface.get('main')).toBe(102)
       expect(hookInterface.renderCount).toBe(3)
 
       // Reset
-      hookInterface.actionSync('reset')
+      hookInterface.action('reset')
       expect(hookInterface.get('main')).toBe(42)
       expect(hookInterface.renderCount).toBe(4)
 

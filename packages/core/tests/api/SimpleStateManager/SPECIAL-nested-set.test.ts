@@ -1,4 +1,4 @@
-import { CleanupManager } from '../../test-helpers'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {

@@ -15,5 +15,5 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 <MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION_ASYNC}</MarkdownWrapper>
 
 ```ts
-type AsyncSetStateFn<State> = (currentState: Readonly<State>, defaultState: Readonly<State>) => State | Promise<State>
+type AsyncSetStateFn<State> = (currentState: State, defaultState: State) => State | Promise<State>
 ```

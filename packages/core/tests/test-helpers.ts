@@ -49,30 +49,3 @@ export class MockStorage {
   }
 
 }
-
-export class CleanupManager {
-
-  /**
-   * @internal
-   */
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  private readonly cleanupFns: Array<Function> = []
-
-  constructor() {
-    this.append = this.append.bind(this)
-    this.run = this.run.bind(this)
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  append(cleanupFn: Function): void {
-    this.cleanupFns.push(cleanupFn)
-  }
-
-  run(): void {
-    while (this.cleanupFns.length > 0) {
-      this.cleanupFns[0]()
-      this.cleanupFns.shift()
-    }
-  }
-
-}

@@ -1,5 +1,6 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import type { StateManagerDidSetArgs } from '../../../../core/src'
-import { CleanupManager, IUserState, TestUtils } from '../../test-helpers'
+import { IUserState, TestUtils } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {

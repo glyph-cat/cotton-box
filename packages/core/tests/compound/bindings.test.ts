@@ -1,5 +1,5 @@
 /* eslint-disable jest/expect-expect */
-import { CleanupManager } from '../test-helpers'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 let cleanupManager: CleanupManager

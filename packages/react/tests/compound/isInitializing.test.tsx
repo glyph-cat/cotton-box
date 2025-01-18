@@ -1,5 +1,7 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { HookTester } from '@glyph-cat/react-test-utils'
 import { act } from 'react'
-import { CleanupManager, HookTester, TestUtils } from '../test-helpers'
+import { TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({
@@ -34,7 +36,6 @@ wrapper(({
       cleanupManager.append(TestState.dispose)
 
       const hookInterface = new HookTester({
-        cleanupManager,
         useHook: () => useSimpleStateValue(TestState.isInitializing),
         values: {
           isInitializing(state) { return state },
@@ -48,13 +49,13 @@ wrapper(({
             })
           }
         },
-      })
+      }, cleanupManager)
 
       expect(hookInterface.get('isInitializing')).toBe(true)
-      await hookInterface.action('completeFirstInit')
+      await hookInterface.actionAsync('completeFirstInit')
       expect(hookInterface.get('isInitializing')).toBe(false)
 
-      hookInterface.actionSync('initAgain')
+      hookInterface.action('initAgain')
       expect(hookInterface.get('isInitializing')).toBe(true)
       await act(async () => { await TestUtils.delay(10) })
       expect(hookInterface.get('isInitializing')).toBe(false)

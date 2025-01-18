@@ -21,11 +21,11 @@ export interface StateManagerInitArgs<State> {
   /**
    * {:COMMON_DESC_CURRENT_STATE:}
    */
-  readonly currentState: Readonly<State>
+  readonly currentState: State
   /**
    * {:COMMON_DESC_DEFAULT_STATE:}
    */
-  readonly defaultState: Readonly<State>
+  readonly defaultState: State
   /**
    * {:TSDOC_DESC_INIT_COMMIT:}
    */
@@ -45,15 +45,15 @@ export interface StateManagerDidSetArgs<State> {
   /**
    * {:COMMON_DESC_CURRENT_STATE:}
    */
-  readonly state: Readonly<State>
+  readonly state: State
   /**
    * {:COMMON_DESC_DEFAULT_STATE:}
    */
-  readonly defaultState: Readonly<State>
+  readonly defaultState: State
   /**
    * {:COMMON_DESC_PREVIOUS_STATE:}
    */
-  readonly previousState: Readonly<State>
+  readonly previousState: State
 }
 
 /**

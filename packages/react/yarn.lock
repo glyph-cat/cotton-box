@@ -603,6 +603,11 @@
   dependencies:
     levn "^0.4.1"
 
+"@glyph-cat/cleanup-manager@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@glyph-cat/cleanup-manager/-/cleanup-manager-1.0.0.tgz#5d12d3f3aacdc1ea2631d92635934fd3b6841f3b"
+  integrity sha512-k2rL1VALk+KQ8/48UJ0iPOCREh7T3ouxc36HaMTM3K8iDDjK43U1ek5x4zvMPhfIfRSHdCaS01QEZ0NQr2RG9Q==
+
 "@glyph-cat/eslint-config@^1.0.1-alpha.12":
   version "1.0.1-alpha.12"
   resolved "https://registry.yarnpkg.com/@glyph-cat/eslint-config/-/eslint-config-1.0.1-alpha.12.tgz#296ebcbbcf6585d2337052f3b3f5fe45ac317529"
@@ -615,6 +620,14 @@
     eslint-import-resolver-typescript "^3.6.1"
     eslint-plugin-import "^2.29.1"
     typescript-eslint "^8.0.1"
+
+"@glyph-cat/react-test-utils@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@glyph-cat/react-test-utils/-/react-test-utils-0.4.0.tgz#fc3be0bd6d9b9f6e5b4316003dde5fc6ba1409f1"
+  integrity sha512-JjwLHFX0VvJL5sXBGebrzA8JuohCLbMZPo+HoQAEozJSPanvepZZVYdTm/c5wwksE+DvYTRnzE1B/r9/hC+4ug==
+  dependencies:
+    "@testing-library/dom" "^10.4.0"
+    "@testing-library/react" "^16.1.0"
 
 "@humanfs/core@^0.19.0":
   version "0.19.0"

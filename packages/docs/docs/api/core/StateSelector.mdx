@@ -15,6 +15,6 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 <MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_SELECTOR}</MarkdownWrapper>
 
 ```ts
-type StateSelector<State, SelectedState> = (state: Readonly<State>) => Readonly<SelectedState>
+type StateSelector<State, SelectedState> = (state: State) => SelectedState
 ```
 

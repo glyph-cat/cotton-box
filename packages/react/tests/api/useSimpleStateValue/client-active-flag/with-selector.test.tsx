@@ -1,5 +1,6 @@
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { HookTester } from '@glyph-cat/react-test-utils'
 import { useState } from 'react'
-import { CleanupManager, HookTester } from '../../../test-helpers'
 import { TestConfig, wrapper } from '../../../test-wrapper'
 
 wrapper(({
@@ -24,12 +25,11 @@ wrapper(({
         const TestState = new SimpleStateManager(42)
         cleanupManager.append(TestState.dispose)
         const hookInterface = new HookTester({
-          cleanupManager,
           useHook: () => useHook(TestState),
           values: {
             main(state) { return state },
           },
-        })
+        }, cleanupManager)
         expect(hookInterface.get('main')).toBe('42')
       })
     }
@@ -44,7 +44,6 @@ wrapper(({
       cleanupManager.append(TestState.dispose)
 
       const hookInterface = new HookTester({
-        cleanupManager,
         useHook: () => {
           const [active, setActiveState] = useState(true)
           const state = useSimpleStateValue(TestState, s => s.toString(), active)
@@ -64,24 +63,24 @@ wrapper(({
             setActiveState(false)
           },
         }
-      })
+      }, cleanupManager)
 
       // Check initial state
       expect(hookInterface.get('main')).toBe('42')
       expect(hookInterface.renderCount).toBe(1)
 
       // Set active=false
-      hookInterface.actionSync('setActiveFalse')
+      hookInterface.action('setActiveFalse')
       expect(hookInterface.get('main')).toBe('42')
       expect(hookInterface.renderCount).toBe(2)
 
       // Perform state change
-      hookInterface.actionSync('increment')
+      hookInterface.action('increment')
       expect(hookInterface.get('main')).toBe('42')
       expect(hookInterface.renderCount).toBe(2)
 
       // Set active=true
-      hookInterface.actionSync('setActiveTrue')
+      hookInterface.action('setActiveTrue')
       expect(hookInterface.get('main')).toBe('43')
       expect(hookInterface.renderCount).toBe(3)
 
@@ -93,7 +92,6 @@ wrapper(({
       cleanupManager.append(TestState.dispose)
 
       const hookInterface = new HookTester({
-        cleanupManager,
         useHook: () => {
           const [active, setActiveState] = useState(false)
           const state = useSimpleStateValue(TestState, s => s.toString(), active)
@@ -113,29 +111,29 @@ wrapper(({
             setActiveState(false)
           },
         }
-      })
+      }, cleanupManager)
 
       // Check initial state
       expect(hookInterface.get('main')).toBe('42')
       expect(hookInterface.renderCount).toBe(1)
 
       // Perform state change
-      hookInterface.actionSync('increment')
+      hookInterface.action('increment')
       expect(hookInterface.get('main')).toBe('42')
       expect(hookInterface.renderCount).toBe(1)
 
       // Set active=true
-      hookInterface.actionSync('setActiveTrue')
+      hookInterface.action('setActiveTrue')
       expect(hookInterface.get('main')).toBe('43')
       expect(hookInterface.renderCount).toBe(2)
 
       // Set active=false
-      hookInterface.actionSync('setActiveFalse')
+      hookInterface.action('setActiveFalse')
       expect(hookInterface.get('main')).toBe('43')
       expect(hookInterface.renderCount).toBe(3)
 
       // Perform state change again
-      hookInterface.actionSync('increment')
+      hookInterface.action('increment')
       expect(hookInterface.get('main')).toBe('43')
       expect(hookInterface.renderCount).toBe(3)
 
