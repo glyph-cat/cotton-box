@@ -10,7 +10,7 @@
   ],
   "types": "lib/types/index.d.ts",
   "scripts": {
-    "postinstall": "if [ -e \"./scripts/run/post-install.sh\" ]; then sh ./scripts/run/post-install.sh; fi",
+    "patch-install": "sh ./scripts/run/post-install.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:path": "eslint",

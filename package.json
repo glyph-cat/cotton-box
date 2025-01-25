@@ -5,7 +5,7 @@
   "author": "glyph-cat",
   "license": "MIT",
   "scripts": {
-    "postinstall": "sh ./scripts/run/post-install.sh",
+    "patch-install": "sh ./scripts/run/post-install.sh",
     "lint": "sh ./scripts/run/lint.sh",
     "build": "sh ./scripts/run/build.sh",
     "test": "sh ./scripts/run/test.sh",
