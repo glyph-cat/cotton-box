@@ -71,7 +71,9 @@ const ExampleState = new AsyncStateManager('defaultState', {
   visibility: StateManagerVisibility.ENVIRONMENT,
   // highlight-end
   suspense: true | false,
-  scope: OtherState,
+  // highlight-start
+  // Scope is not supported by Cotton Box
+  // highlight-end
 })
 ```
 
@@ -139,49 +141,4 @@ ExampleState.init(...)
 
 ## Scope
 
-```jsx title="Before"
-const ExampleSourceA = new RelinkSource({
-  key: 'example-source-a',
-  default: '...',
-})
-
-const ExampleSourceB = new RelinkSource({
-  key: 'example-source-b',
-  default: '...',
-  scope: ExampleSourceA,
-})
-
-function App() {
-  return (
-    <RelinkScope with={[ExampleSourceB]}>
-      <MyComponent />
-    </RelinkScope>
-  )
-}
-
-function MyComponent() {
-  const [state, setState, resetState] = useRelinkState(ExampleSourceB)
-  return '...'
-}
-```
-
-```jsx title="Now"
-const ExampleStateA = new StateManager('...')
-
-const ExampleStateB = new StateManager('...', {
-  scope: ExampleStateA,
-})
-
-function App() {
-  return (
-    <StateManagerScopeProvider with={[ExampleStateB]}>
-      <MyComponent />
-    </StateManagerScopeProvider>
-  )
-}
-
-function MyComponent() {
-  const state = useStateValue(useScoped(ExampleStateB))
-  return '...'
-}
-```
+Cotton Box does not have Scope-related APIs to reduce complexity. Instead, we recommend using [React's Context API](https://react.dev/learn/passing-data-deeply-with-context) as a substitute as it allows more fine-grained control at the same time.

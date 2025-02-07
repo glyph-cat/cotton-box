@@ -101,7 +101,7 @@ export enum StateManagerVisibility {
  * @see -{:DOCS_API_CORE_URL:}/StateManagerOptions
  * @public
  */
-export interface StateManagerOptions<State> extends SimpleStateManagerOptions<State> {
+export interface StateManagerOptions<State> extends SimpleStateManagerOptions {
   /**
    * {:TSDOC_DESC_OPTIONS_LIFECYCLE:}
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_LIFECYCLE:}

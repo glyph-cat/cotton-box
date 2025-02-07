@@ -4,16 +4,11 @@ import { isFunction } from '../../internals/type-checking'
 import { Watcher } from '../Watcher'
 
 /**
- * Unique runtime identifier for scoped State Managers.
- */
-let scopeIdCounter = 0
-
-/**
  * {:TSDOC_DESC_OPTIONS_SIMPLE:}
  * @see -{:DOCS_API_CORE_URL:}/SimpleStateManagerOptions
  * @public
  */
-export interface SimpleStateManagerOptions<State> {
+export interface SimpleStateManagerOptions {
   /**
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_NAME:}
@@ -24,12 +19,6 @@ export interface SimpleStateManagerOptions<State> {
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_CLIENT_ONLY:}
    */
   readonly clientOnly?: boolean
-  /**
-   * {:TSDOC_DESC_OPTIONS_SCOPE:}
-   * @defaultValue {:DEFAULT_VALUE_OPTIONS_SCOPE:}
-   * @see -{:DOCS_LEARN_REACT_URL:}/scope
-   */
-  readonly scope?: SimpleStateManager<State>
 }
 
 /**
@@ -48,11 +37,6 @@ export class SimpleStateManager<State> {
    * @internal
    */
   protected M$internalState: State
-
-  /**
-   * @internal
-   */
-  readonly scopeId: number
 
   /**
    * @internal
@@ -79,9 +63,9 @@ export class SimpleStateManager<State> {
    */
   constructor(
     defaultState: State,
-    options: SimpleStateManagerOptions<State> = {},
+    options: SimpleStateManagerOptions = {},
   ) {
-    const { clientOnly, name, scope } = options
+    const { clientOnly, name } = options
     this.get = this.get.bind(this)
     this.set = this.set.bind(this)
     this.reset = this.reset.bind(this)
@@ -93,7 +77,6 @@ export class SimpleStateManager<State> {
     this.M$internalState = this.defaultState
     this.name = (name && name !== '') ? name : getAutomaticName()
     this.clientOnly = clientOnly ?? false
-    this.scopeId = scope?.scopeId ?? ++scopeIdCounter
   }
 
   /**

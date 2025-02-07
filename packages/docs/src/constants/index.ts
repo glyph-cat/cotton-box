@@ -87,10 +87,6 @@ export const DocConstants = {
   TSDOC_DESC_USE_SIMPLE_STATE_VALUE_WITH_REACTIVE_SELECTOR: `A React hook to consume a \`SimpleStateManager\` with a selector that is wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
   TSDOC_DESC_USE_STATE_VALUE: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
   TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager) with a selector that is wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
-  TSDOC_DESC_USE_SCOPED: `A React hook to consume a scoped State Manager. To be used together with [\`StateManagerScopeProvider\`](${DOCS_API_REACT_URL}/StateManagerScopeProvider). However, if the component consuming this hook is not wrapped in one, then the returned State Manager will fall back to the "unscoped" one.`,
-  TSDOC_DESC_STATE_MANAGER_SCOPE_PROVIDER: `Provider component to use scoped State Managers by using [React's Context API](${REACT_LEARN_CONTEXT_URL}) under the hood.`,
-  TSDOC_DESC_STATE_MANAGER_SCOPE_PROVIDER_PROPS: `Props for [\`StateManagerScopeProvider\`](${DOCS_API_REACT_URL}/StateManagerScopeProvider).`,
-  TSDOC_DESC_OPTIONS_SCOPE: `To be used with \`useScoped\` from '${REACT_PACKAGE_NAME}'.`,
   TSDOC_DESC_OPTIONS_LIFECYCLE: 'Lifecycle hooks for the State Manager.',
   TSDOC_DESC_OPTIONS_LIFECYCLE_INIT: `Will be invoked upon instantiation of the State Manager. Also see [\`StateManagerInitArgs\`](${DOCS_API_CORE_URL}/StateManagerInitArgs).`,
   TSDOC_DESC_OPTIONS_LIFECYCLE_DID_SET: `Will be invoked each time the \`.set\` method is called, even if the actual value remains the same.\n\nAlso see [\`StateManagerDidSetArgs\`](${DOCS_API_CORE_URL}/StateManagerDidSetArgs).`,
@@ -156,10 +152,6 @@ export const DocConstants = {
   TSDOC_PARAM_DESC_FULL_EQUALITY_FN: `${TSDOC_PARAM_DESC_EQUALITY_FN} Defaults to [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}).`,
   TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN,
   TSDOC_PARAM_DESC_FULL_REACTIVE_EQUALITY_FN: `${TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN} Defaults to [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}).`,
-  TSDOC_PARAM_DESC_STATE_MANAGER_FOR_USE_SCOPE: 'The State Manager that will be scoped.',
-
-  TSDOC_PROP_STATE_MANAGER_SCOPE_CHILDREN: 'The [`children`](https://react.dev/learn/passing-props-to-a-component#passing-jsx-as-children) prop.',
-  TSDOC_PROP_STATE_MANAGER_SCOPE_STATES: 'The State Managers to use.',
 
   TSDOC_TYPE_DESC_WAIT_EVALUATOR: `Type definition of the evaluator function that is used in the \`.wait\` method of all State Managers.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,
   TSDOC_TYPE_DESC_STATE_SELECTOR: `Type definition of the selector function that is used in the hooks provided by \`${REACT_PACKAGE_NAME}\`. \n\nIt is a function that accepts the state as an argument and returns a derived value.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,
@@ -170,7 +162,6 @@ export const DocConstants = {
 
   // #region Default value definitions
   DEFAULT_VALUE_OPTIONS_NAME: TYPE_UNDEFINED,
-  DEFAULT_VALUE_OPTIONS_SCOPE: TYPE_UNDEFINED,
   DEFAULT_VALUE_OPTIONS_LIFECYCLE: TYPE_UNDEFINED,
   DEFAULT_VALUE_OPTIONS_CLIENT_ONLY: '`false`',
   DEFAULT_VALUE_OPTIONS_VISIBILITY: '`StateManagerVisibility.ENVIRONMENT`',
@@ -199,7 +190,6 @@ export const DocConstants = {
   RETURN_DESC_SHALLOW_COMPARE_ARRAY_OR_OBJECT: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
   RETURN_DESC_SHALLOW_COMPARE_OBJECT: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
   RETURN_DESC_STRINGIFY_COMPARE: RETURN_DESC_BUILT_IN_EQUALITY_PRESETS,
-  RETURN_DESC_USE_SCOPED: 'The scoped State Manager.',
   RETURN_DESC_USE_INIT_STATE: '`true` if the State Manager is still initializing, otherwise `false`.',
   // #endregion Return descriptions
 
