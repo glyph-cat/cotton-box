@@ -73,9 +73,13 @@ export class Watcher<Args extends any[]> {
 
 }
 
-// TODO
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class BatchedWatcher<Value> {
+// TODO: Define 'TSDOC_DESC_BATCHED_WATCHER'
+
+/**
+ * {:TSDOC_DESC_BATCHED_WATCHER:}
+ * @alpha
+ */
+export class BatchedWatcher<Value> {
 
   /**
    * @internal
