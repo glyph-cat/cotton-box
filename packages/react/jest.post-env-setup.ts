@@ -12,19 +12,6 @@ const consoleMethodNames: Array<ConsoleKey> = [
 
 const originalMethods: Partial<Record<ConsoleKey, IConsole[ConsoleKey]>> = {}
 
-// https://github.com/jsdom/jsdom/issues/2448#issuecomment-1581009331
-window.MessageChannel = jest.fn().mockImplementation(() => {
-  return {
-    port1: {
-      postMessage: jest.fn(),
-    },
-    port2: {
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    },
-  }
-})
-
 beforeEach(() => {
   for (const consoleMethodName of consoleMethodNames) {
     originalMethods[consoleMethodName] = console[consoleMethodName]
@@ -37,5 +24,18 @@ beforeEach(() => {
 afterEach(() => {
   for (const consoleMethodName of consoleMethodNames) {
     console[consoleMethodName] = originalMethods[consoleMethodName] as any
+  }
+})
+
+// https://github.com/jsdom/jsdom/issues/2448#issuecomment-1581009331
+window.MessageChannel = jest.fn().mockImplementation(() => {
+  return {
+    port1: {
+      postMessage: jest.fn(),
+    },
+    port2: {
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    },
   }
 })
