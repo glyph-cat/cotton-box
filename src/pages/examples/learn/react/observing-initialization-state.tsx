@@ -1,5 +1,6 @@
 import { StateManager } from 'cotton-box'
 import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
+import { JSX } from 'react'
 
 export default function App(): JSX.Element {
   const isInitializing = useSimpleStateValue(UserState.isInitializing)

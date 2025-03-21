@@ -1,6 +1,6 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { useCallback, useState } from 'react'
+import { JSX, useCallback, useState } from 'react'
 
 export default function App(): JSX.Element {
   const [active, setActive] = useState(true)

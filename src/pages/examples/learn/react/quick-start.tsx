@@ -1,5 +1,6 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
+import { JSX } from 'react'
 
 function App(): JSX.Element {
   const counter = useStateValue(CounterState)

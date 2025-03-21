@@ -1,6 +1,6 @@
 import { SimpleStateManager } from 'cotton-box'
 import { useSimpleStateValueWithReactiveSelector } from 'cotton-box-react'
-import { useCallback, useState } from 'react'
+import { JSX, useCallback, useState } from 'react'
 
 const selector = (state: IUserState) => state.luckyNumber
 

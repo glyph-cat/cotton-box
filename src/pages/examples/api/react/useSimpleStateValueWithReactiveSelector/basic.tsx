@@ -1,5 +1,6 @@
 import { SimpleStateManager } from 'cotton-box'
 import { useSimpleStateValueWithReactiveSelector } from 'cotton-box-react'
+import { JSX } from 'react'
 
 const selector = (state: IUserState) => state.luckyNumber
 

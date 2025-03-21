@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { JSX, useEffect } from 'react'
 
 function PageNotFoundResolver(): JSX.Element {
   const { asPath, replace } = useRouter()

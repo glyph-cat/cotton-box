@@ -1,5 +1,6 @@
 import { SimpleStateManager } from 'cotton-box'
 import { useSimpleStateValue } from 'cotton-box-react'
+import { JSX } from 'react'
 
 export default function App(): JSX.Element {
   const firstName = useSimpleStateValue(UserState, (state) => state.firstName)

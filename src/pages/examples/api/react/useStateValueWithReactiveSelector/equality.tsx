@@ -1,6 +1,6 @@
 import { Equality, StateManager } from 'cotton-box'
 import { useStateValueWithReactiveSelector } from 'cotton-box-react'
-import { useCallback, useState } from 'react'
+import { JSX, useCallback, useState } from 'react'
 
 const selector = (state: IUserState) => [state.firstName, state.lastName]
 

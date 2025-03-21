@@ -1,6 +1,6 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { ChangeEvent, MouseEvent, memo, useCallback, useDeferredValue, useEffect } from 'react'
+import { ChangeEvent, JSX, MouseEvent, memo, useCallback, useDeferredValue, useEffect } from 'react'
 import styles from './index.module.css'
 
 interface IAppState {

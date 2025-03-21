@@ -1,8 +1,8 @@
-import '@/styles/globals.css'
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useCallback } from 'react'
+import { JSX, useCallback } from 'react'
+import '../styles/globals.css'
 
 export default function App({
   Component,
