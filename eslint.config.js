@@ -9,6 +9,7 @@ module.exports = [
   ...reactLibraryAuthoring,
   {
     rules: {
+      'no-console': Severity.WARN, // temp
       '@typescript-eslint/no-require-imports': Severity.OFF,
       '@typescript-eslint/no-explicit-any': Severity.OFF,
     },
