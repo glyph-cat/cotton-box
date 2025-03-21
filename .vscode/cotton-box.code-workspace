@@ -6,19 +6,19 @@
     },
     {
       "name": "core",
-      "path": "../packages/core"
+      "path": "../src/packages/core"
     },
     {
       "name": "react",
-      "path": "../packages/react"
+      "path": "../src/packages/react"
     },
     {
       "name": "docs",
-      "path": "../packages/docs"
+      "path": "../src/packages/docs"
     },
     {
       "name": "Examples (web)",
-      "path": "../packages/examples-web"
+      "path": "../src/pages/examples"
     }
   ],
   "settings": {
