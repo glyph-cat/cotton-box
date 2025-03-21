@@ -8,6 +8,7 @@ const variablePool = DocConstants // temp
 
 export function insertDocVariables(): void {
 
+  console.log('x')
   const packageInfo = JSON.parse(readFileSync('./package.json', ENCODING_UTF_8))
   const typeDefinitionPath = `./${packageInfo.types}`
 
@@ -16,6 +17,8 @@ export function insertDocVariables(): void {
   typeDefinitionBody = data
 
   if (/localhost:3000/.test(typeDefinitionBody)) {
+    // Some values in DocConstants contains values that are determined by `process.env.NODE_ENV`.
+    // This issue can most likely be fixed by adding `NODE_ENV=production` to the shell script.
     console.log(chalk.redBright('Parsed type definition body contains "localhost"'))
     process.exit(1)
   }

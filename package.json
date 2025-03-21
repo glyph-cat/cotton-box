@@ -13,11 +13,7 @@
     "build": "sh ./scripts/run/build.sh",
     "test": "sh ./scripts/run/test.sh",
     "license": "yarn tsx ./scripts/run/update-license",
-    "bump-version": "yarn tsx ./scripts/run/bump-version",
-    "insert-doc-variables": "NODE_ENV=production yarn tsx ./scripts/run/insert-doc-variables",
-    "sync-subpackage-license": "yarn tsx ./scripts/run/sync-subpackage-license",
-    "sync-readme": "yarn tsx ./scripts/run/sync-subpackage-readme",
-    "sync-examples": "yarn tsx ./scripts/run/sync-examples"
+    "bump-version": "yarn tsx ./scripts/run/bump-version"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.26.3",
