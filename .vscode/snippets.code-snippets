@@ -10,4 +10,22 @@
     "prefix": "// Early exit",
     "body": "// Early exit"
   },
+  "Create new example": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "export default function App",
+    "body": [
+      "import {  } from 'cotton-box'",
+      "import {  } from 'cotton-box-react'",
+      "",
+      "export default function App(): JSX.Element {",
+      "  return (",
+      "    <div>",
+      "      {/* ... */}",
+      "    </div>",
+      "  )",
+      "}",
+      "",
+    ],
+    "description": "Create new example"
+  },
 }
