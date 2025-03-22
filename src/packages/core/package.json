@@ -1,7 +1,7 @@
 {
   "name": "cotton-box",
   "version": "0.5.0",
-  "description": "A flexible toolbox with different types of state managers catered to different scenarios.",
+  "description": "Flexible toolbox for state management and event handling.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "unpkg": "lib/umd/index.js",
@@ -18,7 +18,7 @@
     "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
     "build": "sh ./scripts/run/build.sh",
     "test": "jest -c ./jest.config.ts",
-    "prepack": "# yarn --cwd ../.. sync-subpackage-license core",
+    "prepack": "tsx ./scripts/run/sync-package",
     "all": "sh ./scripts/run/all.sh"
   },
   "keywords": [
