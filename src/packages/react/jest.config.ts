@@ -1,6 +1,9 @@
 import { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
+  moduleNameMapper: {
+    'cotton-box': '<rootDir>/../core/src',
+  },
   setupFiles: [
     '<rootDir>/jest.pre-env-setup.ts',
   ],

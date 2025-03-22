@@ -1,6 +1,17 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
   "mainEntryPointFilePath": "<projectFolder>/temp/tsc/types/react/src/index.d.ts",
+  "compiler": {
+    "overrideTsconfig": {
+      "compilerOptions": {
+        "paths": {
+          "cotton-box": [
+            "./temp/types/core/src"
+          ]
+        }
+      }
+    }
+  },
   "apiReport": {
     "enabled": false
   },
