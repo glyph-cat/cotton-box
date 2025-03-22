@@ -8,8 +8,19 @@
     "esModuleInterop": true,
     "importHelpers": false,
     "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "ESNext",
     "moduleResolution": "Node",
+    "paths": {
+      "cotton-box": [
+        "../core/src",
+      ],
+    },
     "outDir": "./temp/tsc/js",
     "skipLibCheck": true,
     "sourceMap": true,

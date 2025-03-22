@@ -9,7 +9,6 @@ module.exports = [
   ...reactLibraryAuthoring,
   {
     rules: {
-      'no-console': Severity.WARN, // temp
       '@typescript-eslint/no-require-imports': Severity.OFF,
       '@typescript-eslint/no-explicit-any': Severity.OFF,
     },
@@ -18,17 +17,7 @@ module.exports = [
     ignores: [
       '*/eslint.config.js',
       'config/rollup.config.js',
+      'src/pages/examples/',
     ],
   },
 ]
-
-// module.exports = [
-//   ...baseRecommended,
-//   ...reactRecommended,
-//   {
-//     ignores: [
-//       'src/pages/examples/',
-//       'eslint.config.js',
-//     ],
-//   },
-// ]

@@ -8,7 +8,6 @@ const variablePool = DocConstants // temp
 
 export function insertDocVariables(): void {
 
-  console.log('x')
   const packageInfo = JSON.parse(readFileSync('./package.json', ENCODING_UTF_8))
   const typeDefinitionPath = `./${packageInfo.types}`
 
