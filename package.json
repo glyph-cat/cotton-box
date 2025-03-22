@@ -7,6 +7,7 @@
   "license": "MIT",
   "readme": "README.md",
   "scripts": {
+    "setup": "yarn tsx ./scripts/run/setup",
     "start": "next dev",
     "serve": "next start",
     "lint": "eslint .",

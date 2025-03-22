@@ -6,7 +6,7 @@ import { ENCODING_UTF_8 } from '../../constants'
 // What this script does:
 // Bumps the versions of the root package along with its sub-packages.
 
-function run(version: string): void {
+function main(version: string): void {
 
   if (!version) {
     console.log(chalk.redBright(`Missing argument "${version}"`))
@@ -59,7 +59,7 @@ function run(version: string): void {
 
 }
 
-run(process.argv[2])
+main(process.argv[2])
 
 function readJson(path: string): Record<string, unknown> {
   return JSON.parse(readFileSync(path, ENCODING_UTF_8))

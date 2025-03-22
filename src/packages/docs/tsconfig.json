@@ -1,22 +1,12 @@
 {
+  // This file is not used in compilation. It is here just for a nice editor experience.
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "cotton-box": [
-        "../core/src",
-      ],
-      "cotton-box-react": [
-        "../react/src",
-      ],
-      "@site/src/examples": [
-        "../../pages/examples",
-      ],
-    },
+    "baseUrl": "."
   },
   "exclude": [
     "**/*.draft*",
     "**/*.old*",
     "**/*.scripted*",
-  ],
+  ]
 }
