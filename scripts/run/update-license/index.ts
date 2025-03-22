@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { ENCODING_UTF_8 } from '../constants'
+import { ENCODING_UTF_8 } from '../../constants'
 
 // What this script does:
 // Updates the year in the `LICENSE` file.

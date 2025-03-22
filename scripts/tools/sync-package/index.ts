@@ -9,7 +9,7 @@ export function syncPackage(): void {
     core: 'This is the core package of cotton-box.',
     react: 'This is the official React bindings for cotton-box.',
   } as const
-  const rootReadme = readFileSync('../../../README', ENCODING_UTF_8)
+  const rootReadme = readFileSync('../../../README.md', ENCODING_UTF_8)
 
   for (const packageName in contentValues) {
     const contentValue = contentValues[packageName]
