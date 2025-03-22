@@ -1,8 +1,11 @@
 set -e
 
-# Loop through each subpackage and do `yarn build`
-for item in ./packages/*; do
-  if [ -d "$item" ]; then
-    yarn --cwd $item test
-  fi
-done
+ECHO "Testing core package..."
+yarn --cwd ./packages/core test
+
+ECHO "Testing react package..."
+yarn --cwd ./packages/react test
+
+ECHO "Testing docs..."
+yarn --cwd ./packages/docs test
+

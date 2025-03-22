@@ -1,12 +1,10 @@
 set -e
 
-# Run `yarn build` on the packages with a specific sequence.
-
-ECHO "Building './packages/core'..."
+ECHO "Building core package..."
 yarn --cwd ./packages/core build
 
-ECHO "Building './packages/react'..."
+ECHO "Building react package..."
 yarn --cwd ./packages/react build
 
-ECHO "Building './packages/docs'..."
+ECHO "Building docs..."
 yarn --cwd ./packages/docs build
