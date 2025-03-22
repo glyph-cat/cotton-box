@@ -12,7 +12,9 @@ function main(): void {
 
 main()
 
-function linkNodeModules(cwd: string, packageName: 'core' | 'react'): void {
+type PackageName = 'core' | 'react'
+
+function linkNodeModules(cwd: string, packageName: PackageName): void {
   const node_modules = 'node_modules'
   try {
     symlinkSync(`${cwd}/${node_modules}`, `${cwd}/src/packages/${packageName}/node_modules`)
