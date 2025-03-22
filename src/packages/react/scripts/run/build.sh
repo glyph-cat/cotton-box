@@ -5,7 +5,6 @@ yarn bundle
 yarn types
 yarn api
 
-NODE_ENV=production
 yarn tsx ./scripts/run/insert-doc-variables
 
 rm -r ./temp/tsc

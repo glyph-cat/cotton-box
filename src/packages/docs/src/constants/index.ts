@@ -5,9 +5,9 @@ const REACT_PACKAGE_NAME = `${CORE_PACKAGE_NAME}-react`
 
 // #region Docs site URLs
 const GLYPH_CAT_GITHUB_IO = 'https://glyph-cat.github.io'
-const DOCS_SITE_URL = process.env.NODE_ENV === 'production'
-  ? `${GLYPH_CAT_GITHUB_IO}/${CORE_PACKAGE_NAME}`
-  : `http://localhost:3000/${CORE_PACKAGE_NAME}`
+const DOCS_SITE_URL = process.env.NODE_ENV === 'development'
+  ? `http://localhost:3000/${CORE_PACKAGE_NAME}`
+  : `${GLYPH_CAT_GITHUB_IO}/${CORE_PACKAGE_NAME}`
 const DOCS_API_DOCS_URL = `${DOCS_SITE_URL}/docs`
 const DOCS_LEARN_URL = `${DOCS_API_DOCS_URL}/learn`
 const DOCS_API_URL = `${DOCS_API_DOCS_URL}/api`
