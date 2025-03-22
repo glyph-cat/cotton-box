@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { JSX, ReactNode } from 'react'
 import styles from './index.module.css'
 
 export interface LabeledItemProps {

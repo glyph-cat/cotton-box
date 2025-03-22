@@ -16,7 +16,6 @@ import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
 import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
 import { JSX, useCallback } from 'react'
-
 const INDEX_TS = 'index.js'
 const APP_TSX = 'App.tsx'
 const STYLES_CSS = 'styles.css'

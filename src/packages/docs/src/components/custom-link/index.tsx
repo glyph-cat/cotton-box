@@ -1,6 +1,6 @@
 import { useHistory } from '@docusaurus/router'
 import { DocConstants } from '@site/src/constants'
-import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, useCallback } from 'react'
+import { AnchorHTMLAttributes, DetailedHTMLProps, JSX, MouseEvent, useCallback } from 'react'
 
 // Reference: https://docusaurus.io/docs/markdown-features/links
 // "Markdown file references only work when the source and target files are

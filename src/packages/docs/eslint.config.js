@@ -62,7 +62,6 @@ module.exports = [
     ignores: [
       '*/eslint.config.js',
       '.docusaurus',
-      'src/examples/',
     ],
   },
 ]

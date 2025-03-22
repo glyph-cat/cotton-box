@@ -1,6 +1,7 @@
 import useBaseUrl from '@docusaurus/useBaseUrl'
 import CodeInline from '@theme/CodeInline'
 import ThemedImage from '@theme/ThemedImage'
+import { JSX } from 'react'
 import styles from './index.module.css'
 
 export function DevToolsPreview(): JSX.Element {

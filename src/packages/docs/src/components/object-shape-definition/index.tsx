@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, JSX } from 'react'
 import { LabeledItem } from '../labeled-item'
 import labeledItemStyles from '../labeled-item/index.module.css'
 import { MarkdownWrapper } from '../markdown-wrapper'

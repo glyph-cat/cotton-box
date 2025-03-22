@@ -1,3 +1,4 @@
+import { JSX } from 'react'
 import Markdown, { Options } from 'react-markdown'
 import { Link } from '../custom-link'
 

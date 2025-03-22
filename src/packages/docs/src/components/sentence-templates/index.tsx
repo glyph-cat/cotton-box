@@ -1,6 +1,7 @@
-import CodeInline from '@theme/CodeInline'
-import { MarkdownWrapper } from '../markdown-wrapper'
 import { DocConstants } from '@site/src/constants'
+import CodeInline from '@theme/CodeInline'
+import { JSX } from 'react'
+import { MarkdownWrapper } from '../markdown-wrapper'
 
 export interface DoesNotTakeAnyParametersProps {
   name: string

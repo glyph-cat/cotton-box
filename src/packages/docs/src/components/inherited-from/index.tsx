@@ -1,4 +1,5 @@
 import CodeInline from '@theme/CodeInline'
+import { JSX } from 'react'
 import { Link } from '../custom-link'
 import { LabeledItem } from '../labeled-item'
 

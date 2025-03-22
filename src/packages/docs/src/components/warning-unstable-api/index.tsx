@@ -1,4 +1,5 @@
 import Admonition from '@theme/Admonition'
+import { JSX } from 'react'
 
 export interface WarningUnstableAPIProps {
   /**

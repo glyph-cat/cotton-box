@@ -1,5 +1,5 @@
 import { DocConstants } from '@site/src/constants'
-import { ElementType } from 'react'
+import { ElementType, JSX } from 'react'
 import { ApiLink } from '../api-link'
 import { LabeledItem } from '../labeled-item'
 import labeledItemStyles from '../labeled-item/index.module.css'
