@@ -5,6 +5,7 @@
   "description": "Flexible toolbox for state management and event handling.",
   "author": "glyph-cat",
   "license": "MIT",
+  "readme": "README.md",
   "scripts": {
     "start": "next dev",
     "serve": "next start",
@@ -13,7 +14,8 @@
     "build": "sh ./scripts/run/build.sh",
     "test": "sh ./scripts/run/test.sh",
     "license": "yarn tsx ./scripts/run/update-license",
-    "bump-version": "yarn tsx ./scripts/run/bump-version"
+    "bump-version": "yarn tsx ./scripts/run/bump-version",
+    "all": "sh ./scripts/run/all.sh"
   },
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.26.3",
