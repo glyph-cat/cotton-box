@@ -10,7 +10,7 @@
     "setup": "yarn tsx ./scripts/run/setup",
     "start": "next dev",
     "serve": "next start",
-    "lint": "eslint .",
+    "lint": "sh ./scripts/run/lint.sh",
     "patch-install": "sh ./scripts/run/post-install.sh",
     "build": "sh ./scripts/run/build.sh",
     "test": "sh ./scripts/run/test.sh",

@@ -1,4 +1,4 @@
-import { BatchedWatcher, Watcher } from '.'
+import { Watcher } from '.'
 
 describe(Watcher.name, () => {
 
@@ -67,11 +67,5 @@ describe(Watcher.name, () => {
     expect(counter4).toBe(0)
 
   })
-
-})
-
-describe.skip(BatchedWatcher.name, () => {
-
-  // ...
 
 })
