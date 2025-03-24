@@ -29,7 +29,7 @@ function main(version: string): void {
 
   const PROPERTY_KEY_VERSION = 'version'
   const PACKAGE_JSON = 'package.json'
-  const PACKAGES_PATH = './packages'
+  const PACKAGES_PATH = './src/packages'
 
   const gitPathsToAdd: Array<string> = []
 
@@ -39,8 +39,8 @@ function main(version: string): void {
   writeJson(rootPackageJsonPath, rootPackageJson)
   gitPathsToAdd.push(rootPackageJsonPath)
 
-  const subPackages = readdirSync('./packages', ENCODING_UTF_8).filter((p) => {
-    return statSync(`./packages/${p}`).isDirectory()
+  const subPackages = readdirSync(PACKAGES_PATH, ENCODING_UTF_8).filter((p) => {
+    return statSync(`${PACKAGES_PATH}/${p}`).isDirectory()
   })
 
   for (const subPackage of subPackages) {
