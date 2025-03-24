@@ -1,4 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { shallowCompareObject } from '@glyph-cat/equality'
 import { HookTester } from '@glyph-cat/react-test-utils'
 import { JSX } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -6,7 +7,7 @@ import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({
-  Lib: { AsyncStateManager, SimpleStateManager, StateManager, Equality },
+  Lib: { AsyncStateManager, SimpleStateManager, StateManager },
   ReactLib: { useStateValue },
 }: TestConfig) => {
 
@@ -143,7 +144,7 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              useHook: () => useStateValue(TestState, null, Equality.shallowCompareObject),
+              useHook: () => useStateValue(TestState, null, shallowCompareObject),
               values: {
                 main(state) { return state },
               },
@@ -362,7 +363,7 @@ wrapper(({
               useHook: () => useStateValue(
                 TestState,
                 (s) => s.luckyNumber,
-                Equality.shallowCompareObject,
+                shallowCompareObject,
               ),
               values: {
                 main(state) { return state },

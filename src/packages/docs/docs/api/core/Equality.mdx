@@ -34,7 +34,8 @@ shallowCompareArray(
 
 #### React Example
 ```js
-import { Equality, StateManager } from '{:CORE_PACKAGE_NAME:}'
+import { shallowCompareArray } from '@glyph-cat/equality'
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
 import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
 
 const ExampleState = new StateManager({
@@ -46,7 +47,7 @@ function App(): JSX.Element {
   const state = useStateValue(
     ExampleState,
     (state) => [state.foo, state.bar],
-    Equality.shallowCompareArray
+    shallowCompareArray
   )
   return '...'
 }
@@ -68,7 +69,8 @@ shallowCompareObject(previousState: any, nextState: any): boolean
 
 #### React Example
 ```js
-import { Equality, StateManager } from '{:CORE_PACKAGE_NAME:}'
+import { shallowCompareArray } from '@glyph-cat/equality'
+import { StateManager } from '{:CORE_PACKAGE_NAME:}'
 import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
 
 const ExampleState = new StateManager({
@@ -80,7 +82,7 @@ function App(): JSX.Element {
   const state = useStateValue(
     ExampleState,
     (state) => ({ foo: state.foo, bar: state.bar }),
-    Equality.shallowCompareObject
+    shallowCompareObject
   )
   return '...'
 }
@@ -106,6 +108,7 @@ shallowCompareArrayOrObject(
 
 #### React Example
 ```js
+import { shallowCompareArray } from '@glyph-cat/equality'
 import { Equality, StateManager } from '{:CORE_PACKAGE_NAME:}'
 import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
 
@@ -135,7 +138,7 @@ function App(): JSX.Element {
   const state = useStateValue(
     ExampleState,
     complexSelector,
-    Equality.shallowCompareArrayOrObject
+    shallowCompareArrayOrObject
   )
   return '...'
 }
@@ -153,6 +156,7 @@ stringifyCompare(previousState: any, nextState: any): boolean
 
 #### React Example
 ```js
+import { shallowCompareArray } from '@glyph-cat/equality'
 import { Equality, StateManager } from '{:CORE_PACKAGE_NAME:}'
 import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
 
@@ -165,7 +169,7 @@ function App(): JSX.Element {
   const state = useStateValue(
     ExampleState,
     (state) => state.foo,
-    Equality.stringifyCompare
+    stringifyCompare
   )
   return '...'
 }

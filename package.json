@@ -31,6 +31,7 @@
     "@docusaurus/tsconfig": "^3.7.0",
     "@docusaurus/types": "^3.7.0",
     "@glyph-cat/cleanup-manager": "^1.0.0",
+    "@glyph-cat/equality": "^1.0.0",
     "@glyph-cat/eslint-config": "^1.0.1-alpha.13",
     "@glyph-cat/react-test-utils": "^0.6.0",
     "@hookstate/core": "^4.0.2",

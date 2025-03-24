@@ -1,4 +1,5 @@
-import { Equality, StateManager } from 'cotton-box'
+import { shallowCompareObject } from '@glyph-cat/equality'
+import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
 import { JSX, useCallback, useState } from 'react'
 
@@ -7,7 +8,7 @@ export default function App(): JSX.Element {
   const user = useStateValue(
     UserState,
     null,
-    shouldUseObjectIs ? Object.is : Equality.shallowCompareObject
+    shouldUseObjectIs ? Object.is : shallowCompareObject
   )
   // KIV: note - this one is not causing infinite render because it does not have a selector
   const setEqualityObjectIs = useCallback(() => {
@@ -26,7 +27,7 @@ export default function App(): JSX.Element {
         Use <code>Object.is</code>
       </button>
       <button onClick={setEqualityShallowCompareObject} disabled={!shouldUseObjectIs}>
-        Use <code>Equality.shallowCompareObject</code>
+        Use <code>shallowCompareObject</code>
       </button>
     </div>
   )

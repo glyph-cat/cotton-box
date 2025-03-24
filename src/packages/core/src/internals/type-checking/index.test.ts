@@ -1,4 +1,4 @@
-import { isFunction, isNull, isObject } from '.'
+import { isFunction, isNull } from '.'
 
 describe(isFunction.name, () => {
 
@@ -33,25 +33,6 @@ describe(isNull.name, () => {
 
   test('With an object', () => {
     const output = isNull(42)
-    expect(output).toBe(false)
-  })
-
-})
-
-describe(isObject.name, () => {
-
-  test('Plain object', () => {
-    const output = isObject({ hello: 'world' })
-    expect(output).toBe(true)
-  })
-
-  test('Class instance', () => {
-    const output = isObject(new Date())
-    expect(output).toBe(true)
-  })
-
-  test('Something else', () => {
-    const output = isObject(42)
     expect(output).toBe(false)
   })
 

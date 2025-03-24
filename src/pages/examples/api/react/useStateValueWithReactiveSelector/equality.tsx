@@ -1,4 +1,5 @@
-import { Equality, StateManager } from 'cotton-box'
+import { shallowCompareArray } from '@glyph-cat/equality'
+import { StateManager } from 'cotton-box'
 import { useStateValueWithReactiveSelector } from 'cotton-box-react'
 import { JSX, useCallback, useState } from 'react'
 
@@ -11,7 +12,7 @@ export default function App(): JSX.Element {
   const name = useStateValueWithReactiveSelector(
     UserState,
     selector,
-    shouldUseObjectIs ? Object.is : Equality.shallowCompareArray,
+    shouldUseObjectIs ? Object.is : shallowCompareArray,
   )
   const setEqualityObjectIs = useCallback(() => {
     setUseObjectIs(true)
@@ -28,7 +29,7 @@ export default function App(): JSX.Element {
         Use <code>Object.is</code>
       </button>
       <button onClick={setEqualityShallowCompareArray} disabled={!shouldUseObjectIs}>
-        Use <code>Equality.shallowCompareArray</code>
+        Use <code>shallowCompareArray</code>
       </button>
     </div>
   )
