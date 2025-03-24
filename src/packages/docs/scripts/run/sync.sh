@@ -1,3 +1,3 @@
 set -e
 
-cp -rf ../../pages/examples ./src/examples
+cp -rf ../../pages/examples ./src

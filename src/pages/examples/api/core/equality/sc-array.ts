@@ -13,4 +13,4 @@ if (typeof window !== 'undefined') {
   // #endregion example
 }
 
-export { default } from '~components/none'
+export default () => null
