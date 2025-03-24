@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import { execSync } from 'child_process'
 import { readdirSync, readFileSync, statSync, writeFileSync } from 'fs'
+import path from 'path'
 import { ENCODING_UTF_8 } from '../../constants'
 
 // What this script does:
@@ -29,22 +30,26 @@ function main(version: string): void {
 
   const PROPERTY_KEY_VERSION = 'version'
   const PACKAGE_JSON = 'package.json'
-  const PACKAGES_PATH = './src/packages'
+  const PACKAGES_PATH = path.join('.', 'src', 'packages')
 
   const gitPathsToAdd: Array<string> = []
 
-  const rootPackageJsonPath = `./${PACKAGE_JSON}`
+  const rootPackageJsonPath = path.join('.', PACKAGE_JSON)
   const rootPackageJson = readJson(rootPackageJsonPath)
   rootPackageJson[PROPERTY_KEY_VERSION] = version
   writeJson(rootPackageJsonPath, rootPackageJson)
   gitPathsToAdd.push(rootPackageJsonPath)
 
   const subPackages = readdirSync(PACKAGES_PATH, ENCODING_UTF_8).filter((p) => {
-    return statSync(`${PACKAGES_PATH}/${p}`).isDirectory()
+    return statSync(path.join(PACKAGES_PATH, p)).isDirectory()
   })
 
   for (const subPackage of subPackages) {
-    const subPackageJsonPath = `${PACKAGES_PATH}/${subPackage}/${PACKAGE_JSON}`
+    // Check package name for safety
+    if (/^[a-z0-9_-]+$/.test(subPackage)) {
+      throw new Error(`Invalid package name "${subPackage}"`)
+    }
+    const subPackageJsonPath = path.join(PACKAGES_PATH, subPackage, PACKAGE_JSON)
     const subPackageJson = readJson(subPackageJsonPath)
     subPackageJson[PROPERTY_KEY_VERSION] = version
     writeJson(subPackageJsonPath, subPackageJson)
