@@ -1,6 +1,6 @@
 {
   "name": "cotton-box",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Flexible toolbox for state management and event handling.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
