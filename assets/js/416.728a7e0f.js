@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[416],{416:(o,c,s)=>{s.r(c)}}]);
