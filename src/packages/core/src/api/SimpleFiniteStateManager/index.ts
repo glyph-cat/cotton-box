@@ -1,4 +1,4 @@
-import { SetStateFn, StateChangeEventType } from '../../abstractions'
+import { SetStateFn, StateChangeEventType, StateTransition } from '../../abstractions'
 import { isFunction } from '../../internals/type-checking'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 
@@ -32,7 +32,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    */
   constructor(
     defaultState: State,
-    allowedStateTransitions: Array<[fromState: State, toState: State]>,
+    allowedStateTransitions: Array<StateTransition<State>>,
     readonly options: SimpleFiniteStateManagerOptions<State> = {},
   ) {
     super(defaultState, options)

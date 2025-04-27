@@ -1,5 +1,5 @@
 ---
-sidebar_position: 15
+sidebar_position: 21
 ---
 
 import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
@@ -12,9 +12,9 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 
 <TypeDisplay>{DataType.type}</TypeDisplay>
 
-<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_SELECTOR}</MarkdownWrapper>
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_TRANSITION}</MarkdownWrapper>
 
 ```ts
-type StateSelector<State, SelectedState> = (state: State) => SelectedState
+type StateTransition<State> = [fromState: State, toState: State]
 ```
 

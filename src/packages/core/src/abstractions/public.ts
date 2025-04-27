@@ -61,3 +61,10 @@ export enum StateChangeEventType {
    */
   INIT,
 }
+
+/**
+ * {:TSDOC_TYPE_DESC_STATE_TRANSITION:}
+ * @see -{:DOCS_API_CORE_URL:}/StateTransition
+ * @public
+ */
+export type StateTransition<State> = [fromState: State, toState: State]

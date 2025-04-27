@@ -1,6 +1,8 @@
 import {
   AsyncStateManager,
   EqualityFn,
+  ReadOnlyStateManager,
+  SimpleFiniteStateManager,
   SimpleStateManager,
   StateManager,
   StateSelector,
@@ -32,7 +34,7 @@ type UseStateValueOptionalArgs<State, SelectedState> = [
  * @public
  */
 export function useStateValue<State>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
   active?: boolean,
 ): State
@@ -48,7 +50,7 @@ export function useStateValue<State>(
  * @public
  */
 export function useStateValue<State>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
   equalityFn?: EqualityFn<any>,
   active?: boolean,
@@ -64,7 +66,7 @@ export function useStateValue<State>(
  * @public
  */
 export function useStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   active?: boolean,
 ): SelectedState
@@ -80,14 +82,14 @@ export function useStateValue<State, SelectedState>(
  * @public
  */
 export function useStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   equalityFn?: EqualityFn<any>,
   active?: boolean,
 ): SelectedState
 
 export function useStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
@@ -157,7 +159,7 @@ export function useStateValue<State, SelectedState>(
  * @public
  */
 export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState>
 ): SelectedState
 
@@ -172,7 +174,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
  * @public
  */
 export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   active?: boolean,
 ): SelectedState
@@ -188,7 +190,7 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
  * @public
  */
 export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   equalityFn?: EqualityFn<State | SelectedState>,
 ): SelectedState
@@ -205,14 +207,14 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
  * @public
  */
 export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   equalityFn: EqualityFn<State | SelectedState>,
   active?: boolean,
 ): SelectedState
 
 export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState>,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): SelectedState {

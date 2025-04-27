@@ -161,6 +161,7 @@ export const DocConstants = {
   TSDOC_TYPE_DESC_EQUALITY_FN: `Type definition of an equality checking function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).\n\nSome presets are available in the [\`Equality\`](${DOCS_API_CORE_URL}/Equality) object.`,
   TSDOC_TYPE_DESC_READONLY_STATE_MANAGER: 'A utility type for State Managers that allows [TypeScript](https://www.typescriptlang.org) to treat it as read-only.',
   TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE: 'The type of state change event that was triggered.',
+  TSDOC_TYPE_DESC_STATE_TRANSITION: 'The definition of a state change from one to another.',
   // #endregion tsdoc
 
   // #region Default value definitions
