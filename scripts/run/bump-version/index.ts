@@ -46,7 +46,7 @@ function main(version: string): void {
 
   for (const subPackage of subPackages) {
     // Check package name for safety
-    if (/^[a-z0-9_-]+$/.test(subPackage)) {
+    if (!/^[a-z0-9_-]+$/.test(subPackage)) {
       throw new Error(`Invalid package name "${subPackage}"`)
     }
     const subPackageJsonPath = path.join(PACKAGES_PATH, subPackage, PACKAGE_JSON)
