@@ -1,10 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 4
 ---
 
-import { ApiLink } from '@site/src/components/api-link'
 import { InheritedFrom } from '@site/src/components/inherited-from'
-import { LabeledItem } from '@site/src/components/labeled-item'
 import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
 import {
@@ -16,23 +14,27 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 import { DocConstants } from '@site/src/constants'
 import CodeInline from '@theme/CodeInline'
 
-# StateManager
+{/* Construction formula for this article: Copy everything from SimpleStateManager, then add <InheritedFrom> based on StateManager. */}
 
-{/* Construction formula for this article: Copy everything from SimpleStateManager, change signature, change `options` param for constructor, then add a section for `init` and mention which properties and methods are inherited */}
+# SimpleFiniteStateManager
 
 ## Overview
 
 <TypeDisplay>{DataType.class}</TypeDisplay>
 
-<MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER}</MarkdownWrapper>
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_SIMPLE_FINITE_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class StateManager<State> extends SimpleStateManager<State> { }
+class SimpleFiniteStateManager<State> extends SimpleStateManager<State> { }
 ```
 
 ### Constructor
 ```ts
-constructor(defaultState: State, options: StateManagerOptions)
+constructor(
+  defaultState: State,
+  allowedStateTransitions: Array<[fromState: State, toState: State]>,
+  options: SimpleStateManagerOptions
+)
 ```
 
 #### Parameters
@@ -44,8 +46,14 @@ constructor(defaultState: State, options: StateManagerOptions)
       description: DocConstants.COMMON_DESC_DEFAULT_STATE,
     },
     {
+      name: 'allowedStateTransitions',
+      type: DataType.any,
+      typeIsArrayOf: true,
+      description: DocConstants.TSDOC_PARAM_DESC_ALLOWED_STATE_TRANSITIONS,
+    },
+    {
       name: 'options',
-      type: DataType.StateManagerOptions,
+      type: DataType.SimpleStateManagerOptions,
       defaultValue: '`{}`',
       description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL,
     },
@@ -54,9 +62,9 @@ constructor(defaultState: State, options: StateManagerOptions)
 
 #### Example
 ```js
-import { StateManager } from '{:CORE_PACKAGE_NAME:}'
+import { SimpleStateManager } from '{:CORE_PACKAGE_NAME:}'
 
-const ExampleState = new StateManager('...')
+const ExampleState = new SimpleStateManager('...')
 ```
 
 ## Properties
@@ -69,7 +77,6 @@ const ExampleState = new StateManager('...')
 />
 
 <MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
-
 ```ts
 readonly defaultState: State
 ```
@@ -82,56 +89,11 @@ readonly defaultState: State
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
-
 ```ts
 readonly name: string
 ```
 
-### isInitializing
-
-<MarkdownWrapper>{DocConstants.TSDOC_DESC_IS_INITIALIZING}</MarkdownWrapper>
-
-```ts
-readonly isInitializing: SimpleStateManager<boolean>
-```
-
 ## Methods
-
-### init
-
-<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_INIT}</MarkdownWrapper>
-<p>
-  <LabeledItem label='Also see'>
-    <ApiLink href='./StateManagerInitArgs'>StateManagerInitArgs</ApiLink>
-  </LabeledItem>
-</p>
-
-```ts
-init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void>
-```
-
-#### Parameters
-
-<ObjectShapeDefinition
-  data={[
-    {
-      name: 'initFn',
-      type: DataType.Function,
-      description: DocConstants.TSDOC_PARAM_DESC_INIT_FN,
-    },
-  ]}
-/>
-
-#### Returns
-<Returns name='init'>{DocConstants.RETURN_DESC_INIT}</Returns>
-
-#### Example
-```js
-await ExampleState.init(({ commit }) => {
-  const someValue = localStorage.get('some-value')
-  commit(someValue)
-})
-```
 
 ### get
 
@@ -141,7 +103,6 @@ await ExampleState.init(({ commit }) => {
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET}</MarkdownWrapper>
-
 ```ts
 get(): State
 ```
@@ -165,7 +126,6 @@ const state = ExampleState.get()
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_VALUE}</MarkdownWrapper>
-
 ```ts
 set(newState: State): void
 ```
@@ -210,7 +170,6 @@ ExampleState.set((previousState) => previousState + 1)
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_RESET}</MarkdownWrapper>
-
 ```ts
 reset(): void
 ```
@@ -234,7 +193,6 @@ ExampleState.reset()
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
-
 ```ts
 watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void
 ```
@@ -266,7 +224,6 @@ unwatch()
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_UNWATCH_ALL}</MarkdownWrapper>
-
 ```ts
 unwatchAll(): void
 ```
@@ -283,14 +240,7 @@ ExampleState.unwatchAll()
 ```
 
 ### wait
-
-<InheritedFrom
-  href={'./SimpleStateManager#wait'}
-  name={'SimpleStateManager.wait'}
-/>
-
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
-
 ```ts
 wait(expectedValue: State): Promise<State>
 ```
@@ -337,7 +287,6 @@ await ExampleState.wait((state) => fulfillsSomeCondition(state))
 />
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER}</MarkdownWrapper>
-
 ```ts
 dispose(): void
 ```
