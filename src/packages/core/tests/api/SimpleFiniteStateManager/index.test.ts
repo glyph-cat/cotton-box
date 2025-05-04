@@ -71,6 +71,25 @@ wrapper(({ Lib: {
     }).toThrow(new InvalidStateTransitionError(
       DummyState[DummyState.CREATED],
       DummyState[DummyState.STOPPED],
+      TestState.name,
+    ))
+
+  })
+
+  test('No state transitions defined', () => {
+
+    const TestState = new SimpleFiniteStateManager(DummyState.CREATED, [], {
+      serializeState(state) {
+        return DummyState[state] ?? String(state)
+      },
+    })
+    cleanupManager.append(TestState.dispose)
+    expect(() => {
+      TestState.set(DummyState.STARTED)
+    }).toThrow(new InvalidStateTransitionError(
+      DummyState[DummyState.CREATED],
+      DummyState[DummyState.STARTED],
+      TestState.name,
     ))
 
   })

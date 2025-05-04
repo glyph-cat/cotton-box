@@ -69,7 +69,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
     const currentStateAllowedTransitions = this.M$allowedStateTransitions.get(this.M$internalState)
-    if (!currentStateAllowedTransitions.has(newState)) {
+    if (!currentStateAllowedTransitions?.has(newState)) {
       const serializeState = this.options?.serializeState ?? String
       throw new InvalidStateTransitionError(
         serializeState(this.M$internalState),
