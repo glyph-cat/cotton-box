@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[7472],{55513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Reincarnation of an old package","permalink":"/cotton-box/blog/reincarnation-of-an-old-package","unlisted":false,"date":"2024-03-31T00:00:00.000Z"}]}')}}]);

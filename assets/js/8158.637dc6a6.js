@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[8158],{8158:(o,c,s)=>{s.r(c),s.d(c,{DocSearchModal:()=>a.a1});var a=s(5600)}}]);
