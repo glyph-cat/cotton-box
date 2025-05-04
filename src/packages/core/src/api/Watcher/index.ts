@@ -22,6 +22,7 @@ export class Watcher<Args extends any[]> {
   constructor() {
     this.watch = this.watch.bind(this)
     this.refresh = this.refresh.bind(this)
+    this.post = this.post.bind(this)
     this.unwatchAll = this.unwatchAll.bind(this)
     this.dispose = this.dispose.bind(this)
   }
@@ -38,11 +39,18 @@ export class Watcher<Args extends any[]> {
   }
 
   /**
-   * {:TSDOC_METHOD_DESC_WATCHER_REFRESH:}
-   * @see -{:DOCS_API_CORE_URL:}/Watcher#refresh
-   * @returns -{:RETURN_DESC_REFRESH:}
+   * @deprecated Please use `.post` instead.
    */
   refresh(...args: Args): void {
+    this.post(...args)
+  }
+
+  /**
+   * {:TSDOC_METHOD_DESC_WATCHER_POST:}
+   * @see -{:DOCS_API_CORE_URL:}/Watcher#post
+   * @returns -{:RETURN_DESC_POST:}
+   */
+  post(...args: Args): void {
     if (this.M$isDisposed) { return } // Early exit
     const callbackStack = Object.values(this.M$watcherCollection)
     for (let i = 0; i < callbackStack.length; i++) {

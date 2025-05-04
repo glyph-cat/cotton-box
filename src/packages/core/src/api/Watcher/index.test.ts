@@ -13,19 +13,19 @@ describe(Watcher.name, () => {
     let counter = 0
     const stopWatching = watcher.watch((num: number) => { counter += num })
 
-    // Refresh and expect value to be updated
-    watcher.refresh(1)
+    // Post and expect value to be updated
+    watcher.post(1)
     expect(counter).toBe(1)
 
-    // Refresh again and expect value to also be updated
-    watcher.refresh(2)
+    // Post again and expect value to also be updated
+    watcher.post(2)
     expect(counter).toBe(3)
 
     // Stop watching and expect value to stay the same as previous checkpoint
     stopWatching()
     // Make sure there are no issues when calling `unwatch` multiple times.
     stopWatching()
-    watcher.refresh(3)
+    watcher.post(3)
     expect(counter).toBe(3)
 
   })
@@ -58,9 +58,9 @@ describe(Watcher.name, () => {
     const unwatch4 = watcher.watch((num: number) => { counter4 += num })
     expect(typeof unwatch4).toBe('function')
 
-    watcher.refresh(1)
-    watcher.refresh(2)
-    watcher.refresh(3)
+    watcher.post(1)
+    watcher.post(2)
+    watcher.post(3)
     expect(counter1).toBe(0)
     expect(counter2).toBe(0)
     expect(counter3).toBe(0)

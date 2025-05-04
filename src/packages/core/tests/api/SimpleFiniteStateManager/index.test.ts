@@ -1,5 +1,4 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { InvalidStateTransitionError } from '../../../src'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 enum DummyState {
@@ -10,7 +9,10 @@ enum DummyState {
   DISPOSED,
 }
 
-wrapper(({ Lib: { SimpleFiniteStateManager } }: TestConfig) => {
+wrapper(({ Lib: {
+  SimpleFiniteStateManager,
+  InvalidStateTransitionError,
+} }: TestConfig) => {
 
   let cleanupManager: CleanupManager
   beforeEach(() => { cleanupManager = new CleanupManager() })

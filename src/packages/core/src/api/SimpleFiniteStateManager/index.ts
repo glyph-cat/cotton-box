@@ -77,7 +77,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       )
     }
     this.M$internalState = newState
-    this.M$watcher.refresh(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
   }
 
 }

@@ -200,7 +200,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn
-      this.M$watcher.refresh(this.M$internalState, eventType)
+      this.M$watcher.post(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {

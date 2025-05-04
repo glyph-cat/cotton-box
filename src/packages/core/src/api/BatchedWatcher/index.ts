@@ -65,7 +65,7 @@ export class BatchedWatcher<Args extends any[]> {
     }
     this.M$flush = this.M$flush.bind(this)
     this.watch = this.watch.bind(this)
-    this.refresh = this.refresh.bind(this)
+    this.post = this.post.bind(this)
     this.unwatchAll = this.unwatchAll.bind(this)
     this.dispose = this.dispose.bind(this)
   }
@@ -98,7 +98,7 @@ export class BatchedWatcher<Args extends any[]> {
     }
   }
 
-  refresh(...value: Args): void {
+  post(...value: Args): void {
     if (this.M$isDisposed) { return } // Early exit
     this.M$accumulatedValues.push(value)
     this.M$stopTimeout()

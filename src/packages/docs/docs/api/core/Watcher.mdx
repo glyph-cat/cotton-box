@@ -35,7 +35,7 @@ import { Watcher } from '{:CORE_PACKAGE_NAME:}'
 
 const watcher = new Watcher()
 const unwatch = watcher.watch(() => { ... })
-watcher.refresh(...) // Arguments can be passed
+watcher.post(...) // Arguments can be passed
 unwatch()
 ```
 
@@ -51,10 +51,10 @@ There are no publicly available properties.
 watch(callback: ((...args: Args) => void)): (() => void)
 ```
 
-### refresh
-<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCHER_REFRESH}</MarkdownWrapper>
+### post
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCHER_POST}</MarkdownWrapper>
 ```ts
-refresh(...args: Args): void
+post(...args: Args): void
 ```
 
 ### unwatchAll

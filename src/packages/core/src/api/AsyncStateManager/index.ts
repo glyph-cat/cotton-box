@@ -71,7 +71,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn as State
-      this.M$watcher.refresh(this.M$internalState, eventType)
+      this.M$watcher.post(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {

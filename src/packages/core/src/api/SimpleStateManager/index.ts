@@ -108,7 +108,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.refresh(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
   }
 
   /**
@@ -118,7 +118,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.refresh(this.M$internalState, StateChangeEventType.RESET)
+    this.M$watcher.post(this.M$internalState, StateChangeEventType.RESET)
   }
 
   /**
