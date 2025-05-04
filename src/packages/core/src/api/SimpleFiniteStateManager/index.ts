@@ -1,4 +1,5 @@
 import { SetStateFn, StateChangeEventType, StateTransition } from '../../abstractions'
+import { InvalidStateTransitionError } from '../../errors'
 import { isFunction } from '../../internals/type-checking'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 
@@ -77,17 +78,6 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
     }
     this.M$internalState = newState
     this.M$watcher.refresh(this.M$internalState, StateChangeEventType.SET)
-  }
-
-}
-
-/**
- * @public
- */
-export class InvalidStateTransitionError extends Error {
-
-  constructor(fromState: string, toState: string) {
-    super(`Invalid state transition from ${fromState} to ${toState}`)
   }
 
 }
