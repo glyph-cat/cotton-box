@@ -73,7 +73,8 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       const serializeState = this.options?.serializeState ?? String
       throw new InvalidStateTransitionError(
         serializeState(this.M$internalState),
-        serializeState(newState)
+        serializeState(newState),
+        this.name,
       )
     }
     this.M$internalState = newState
