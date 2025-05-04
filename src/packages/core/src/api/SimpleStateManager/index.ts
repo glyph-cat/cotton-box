@@ -75,7 +75,7 @@ export class SimpleStateManager<State> {
     this.dispose = this.dispose.bind(this)
     this.defaultState = defaultState
     this.M$internalState = this.defaultState
-    this.name = (name && name !== '') ? name : getAutomaticName()
+    this.name = name || getAutomaticName()
     this.clientOnly = clientOnly ?? false
   }
 
