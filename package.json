@@ -1,7 +1,7 @@
 {
   "name": "cotton-box-monorepo",
   "private": true,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Flexible toolbox for state management and event handling.",
   "author": "glyph-cat",
   "license": "MIT",
