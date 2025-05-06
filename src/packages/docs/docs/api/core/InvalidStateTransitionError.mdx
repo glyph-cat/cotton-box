@@ -2,6 +2,8 @@
 sidebar_position: 6
 ---
 
+import { ApiLink } from '@site/src/components/api-link'
+import { LabeledItem } from '@site/src/components/labeled-item'
 import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
 import { DocConstants } from '@site/src/constants'
@@ -19,9 +21,15 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 export class InvalidStateTransitionError extends Error {}
 ```
 
+<p>
+  <LabeledItem label='Also see'>
+    <ApiLink href='./SimpleFiniteStateManager'>SimpleFiniteStateManager</ApiLink>
+  </LabeledItem>
+</p>
+
 ### Constructor
 ```ts
-constructor(fromState: string, toState: string, stateManagerName?: string)
+constructor(fromState: string, toState: string, stateManager?: string)
 ```
 
 #### Parameters
@@ -30,15 +38,15 @@ constructor(fromState: string, toState: string, stateManagerName?: string)
     {
       name: 'fromState',
       type: DataType.string,
-      description: 'TODO', // DocConstants.COMMON_DESC_DEFAULT_STATE,
+      description: DocConstants.TSDOC_PARAM_DESC_FROM_STATE,
     },
     {
       name: 'toState',
       type: DataType.string,
-      description: 'TODO', // DocConstants.COMMON_DESC_DEFAULT_STATE,
+      description: DocConstants.TSDOC_PARAM_DESC_TO_STATE,
     },
     {
-      name: 'stateManagerName',
+      name: 'stateManager',
       type: DataType.string,
       defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
       description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
@@ -48,8 +56,28 @@ constructor(fromState: string, toState: string, stateManagerName?: string)
 
 ### Message Format
 
-> _from "`fromState`" to "`toState`" in `stateManagerName`_
+> _from "`fromState`" to "`toState`" in `stateManager`_
 
 #### Example
 
 > _from "A" to "B" in ExampleState_
+
+## Properties
+
+### fromState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_FROM_STATE}</MarkdownWrapper>
+```ts
+readonly fromState: string
+```
+
+### toState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_TO_STATE}</MarkdownWrapper>
+```ts
+readonly toState: string
+```
+
+### stateManager
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+```ts
+readonly stateManager: string
+```

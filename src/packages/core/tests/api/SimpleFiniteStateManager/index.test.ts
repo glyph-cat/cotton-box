@@ -94,4 +94,25 @@ wrapper(({ Lib: {
 
   })
 
+  test('trySet', () => {
+
+    const TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
+      [DummyState.CREATED, DummyState.STARTING],
+      [DummyState.CREATED, DummyState.DISPOSED],
+      [DummyState.STARTING, DummyState.STARTED],
+      [DummyState.STARTED, DummyState.STOPPED],
+      [DummyState.STOPPED, DummyState.STARTED],
+      [DummyState.STOPPED, DummyState.DISPOSED],
+    ], {
+      serializeState(state) {
+        return DummyState[state] ?? String(state)
+      },
+    })
+    cleanupManager.append(TestState.dispose)
+
+    expect(TestState.trySet(DummyState.STARTED)).toBe(false)
+    expect(TestState.trySet(DummyState.STARTING)).toBe(true)
+
+  })
+
 })

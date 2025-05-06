@@ -203,9 +203,46 @@ set(setStateFn: SetStateFn<State>): void
 
 #### Example
 ```js
-// Assuming that state is of type `number`
-ExampleState.set(42)
-ExampleState.set((previousState) => previousState + 1)
+ExampleState.set('A')
+ExampleState.set((previousState) => previousState === 'A' ? 'B' : 'C')
+```
+
+### trySet
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_VALUE}</MarkdownWrapper>
+```ts
+set(newState: State): void
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+set(setStateFn: SetStateFn<State>): void
+```
+
+#### Parameters
+`trySet` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='trySet'>{DocConstants.RETURN_DESC_TRY_SET}</Returns>
+
+#### Example
+```js
+ExampleState.trySet('A')
+ExampleState.trySet((previousState) => previousState === 'A' ? 'B' : 'C')
 ```
 
 ### reset

@@ -22,6 +22,7 @@ const REACT_DOCS_SITE_DEV_TOOLS_URL = `${REACT_DOCS_SITE}/learn/react-developer-
 const API_REFERENCE_URL_USE_CALLBACK = `${REACT_DOCS_SITE}/reference/react/useCallback`
 const REACT_LEARN_CONTEXT_URL = `${REACT_DOCS_SITE}/learn/passing-data-deeply-with-context`
 const TYPE_REFERENCE_URL_PROMISE = 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise'
+// const TYPE_REFERENCE_URL_BOOLEAN = 'https://www.w3schools.com/js/js_booleans.asp'
 const TYPE_REFERENCE_URL_UNDEFINED = 'https://www.w3schools.com/jsref/jsref_undefined.asp'
 const API_REFERENCE_URL_LOCAL_STORAGE = 'https://developer.mozilla.org/docs/Web/API/Window/localStorage'
 const API_REFERENCE_URL_OBJECT_IS = 'https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object/is'
@@ -39,6 +40,7 @@ const TSDOC_PARAM_DESC_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN_BASE} This 
 
 const TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN_BASE} This function _**must**_ be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`
 
+// const TYPE_BOOLEAN = `[\`boolean\`](${TYPE_REFERENCE_URL_BOOLEAN})`
 const TYPE_UNDEFINED = `[\`undefined\`](${TYPE_REFERENCE_URL_UNDEFINED})`
 const TYPE_PROMISE_UNDEFINED = `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into ${TYPE_UNDEFINED}.`
 
@@ -126,6 +128,8 @@ export const DocConstants = {
   TSDOC_METHOD_DESC_GET_SYNC: 'Retrieves the current state value, even if there are still other pending state changes.',
   TSDOC_METHOD_DESC_SET_BY_VALUE: 'Sets the state with a value.',
   TSDOC_METHOD_DESC_SET_BY_FUNCTION: 'Sets the state with a function.',
+  TSDOC_METHOD_DESC_TRY_SET_BY_VALUE: 'Tries to set the state with a value. If the new state does not conform to the defined state transitions, the state will not change and no error will be thrown.',
+  TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION: 'Tries to set the state with a function. If the new state does not conform to the defined state transitions, the state will not change and no error will be thrown.',
   TSDOC_METHOD_DESC_RESET: 'Resets the State Manager back to it\'s default value.',
   TSDOC_METHOD_DESC_WATCH: 'Watch for state changes.',
   TSDOC_METHOD_DESC_UNWATCH_ALL: 'Removes all existing watchers referencing to this State Manager. Watchers that added after calling this method will not be affected.',
@@ -182,6 +186,7 @@ export const DocConstants = {
   RETURN_DESC_GET: 'The current state value.',
   RETURN_DESC_GET_ASYNC: `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into the current state value.`,
   RETURN_DESC_SET: TYPE_UNDEFINED,
+  RETURN_DESC_TRY_SET: '`true` if the state change conforms to the predefined state transitions, otherwise `false`.',
   RETURN_DESC_SET_ASYNC: TYPE_PROMISE_UNDEFINED,
   RETURN_DESC_RESET: TYPE_UNDEFINED,
   RETURN_DESC_RESET_ASYNC: TYPE_PROMISE_UNDEFINED,

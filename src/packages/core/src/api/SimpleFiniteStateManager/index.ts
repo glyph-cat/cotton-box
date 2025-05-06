@@ -81,4 +81,33 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
     this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
   }
 
+  /**
+   * {:TSDOC_METHOD_DESC_TRY_SET_BY_VALUE:}
+   * @param newState - {:TSDOC_PARAM_DESC_SET_NEW_STATE:}
+   * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#trySet
+   * @returns -{:RETURN_DESC_SET:}
+   */
+  trySet(newState: State): void
+
+  /**
+   * {:TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION:}
+   * @param setStateFn - {:TSDOC_PARAM_DESC_SET_FUNCTION:}
+   * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#trySet
+   * @returns -{:RETURN_DESC_SET:}
+   */
+  trySet(setStateFn: SetStateFn<State>): void
+
+  trySet(newStateOrFn: State | SetStateFn<State>): boolean {
+    const newState = isFunction(newStateOrFn)
+      ? newStateOrFn(this.M$internalState, this.defaultState)
+      : newStateOrFn
+    const currentStateAllowedTransitions = this.M$allowedStateTransitions.get(this.M$internalState)
+    if (!currentStateAllowedTransitions?.has(newState)) {
+      return false
+    }
+    this.M$internalState = newState
+    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
+    return true
+  }
+
 }
