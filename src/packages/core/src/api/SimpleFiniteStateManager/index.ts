@@ -87,7 +87,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#trySet
    * @returns -{:RETURN_DESC_SET:}
    */
-  trySet(newState: State): void
+  trySet(newState: State): boolean
 
   /**
    * {:TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION:}
@@ -95,7 +95,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#trySet
    * @returns -{:RETURN_DESC_SET:}
    */
-  trySet(setStateFn: SetStateFn<State>): void
+  trySet(setStateFn: SetStateFn<State>): boolean
 
   trySet(newStateOrFn: State | SetStateFn<State>): boolean {
     const newState = isFunction(newStateOrFn)
