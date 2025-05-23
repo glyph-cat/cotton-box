@@ -1,6 +1,6 @@
 {
   "name": "cotton-box-docs",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "Docs site for Cotton Box.",
   "scripts": {
     "sync": "sh ./scripts/run/sync.sh",
