@@ -8,7 +8,7 @@
   "readme": "README.md",
   "scripts": {
     "setup": "yarn tsx ./scripts/run/setup",
-    "start": "next dev",
+    "start": "next dev --experimental-https",
     "serve": "next start",
     "lint": "sh ./scripts/run/lint.sh",
     "patch-install": "sh ./scripts/run/post-install.sh",

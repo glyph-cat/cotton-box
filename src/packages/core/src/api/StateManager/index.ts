@@ -5,6 +5,7 @@ import {
   StateChangeEventType,
 } from '../../abstractions'
 import { isFunction } from '../../internals/type-checking'
+import { type AsyncStateManager } from '../AsyncStateManager'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
   getErrorMessageForOverlappingInits,
@@ -175,6 +176,8 @@ export class StateManager<State> extends SimpleStateManager<State> {
     this.M$lifecycle = { ...lifecycle }
     this.init = this.init.bind(this)
     this.reinitialize = this.reinitialize.bind(this)
+    this.M$internalQueue = this.M$internalQueue.bind(this)
+    this.internalClone = this.internalClone.bind(this)
     if (this.M$lifecycle.init) {
       this.init(this.M$lifecycle.init)
     }
@@ -183,10 +186,10 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * @internal
    */
-  M$internalQueue = (
+  private M$internalQueue(
     newStateOrFn: State | SetStateFn<State>,
     eventType: StateChangeEventType
-  ): void => {
+  ): void {
     if (eventType !== StateChangeEventType.INIT && this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
@@ -226,6 +229,66 @@ export class StateManager<State> extends SimpleStateManager<State> {
         this.M$mutationQueue.shift()
       }
     }
+  }
+
+  /**
+   * @internal
+   */
+  internalClone(): StateManager<State> | AsyncStateManager<State> {
+    return new StateManager<State>(this.defaultState, {
+      lifecycle: this.M$lifecycle,
+      visibility: this.visibility,
+      suspense: this.suspense,
+      clientOnly: this.clientOnly,
+      name: `${this.name}_clone`,
+    })
+  }
+
+  /**
+   * @internal
+   */
+  isInternalHydrated = false
+
+  /**
+   * @internal
+   */
+  internalHydrate(initFn: (args: StateManagerInitArgs<State>) => void): void {
+    let effectiveCommitStrategy: CommitStrategy
+    initFn({
+      currentState: this.M$internalState,
+      defaultState: this.defaultState,
+      commitNoop: () => {
+        if (effectiveCommitStrategy) {
+          if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commitNoop',
+              effectiveCommitStrategy,
+            ))
+          }
+          return // Early exit
+        }
+        effectiveCommitStrategy = 'commitNoop'
+        this.isInternalHydrated = true
+      },
+      commit: (state: State) => {
+        if (effectiveCommitStrategy) {
+          if (process.env.NODE_ENV !== 'production') {
+            // eslint-disable-next-line no-console
+            console.error(getErrorMessageForRepeatedInitCommits(
+              this.name,
+              'commit',
+              effectiveCommitStrategy,
+            ))
+          }
+          return // Early exit
+        }
+        this.M$internalState = state
+        effectiveCommitStrategy = 'commit'
+        this.isInternalHydrated = true
+      },
+    })
   }
 
   /**

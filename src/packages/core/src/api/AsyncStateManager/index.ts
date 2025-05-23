@@ -39,15 +39,16 @@ export class AsyncStateManager<State> extends StateManager<State> {
   ) {
     super(defaultState, options)
     this.getSync = this.getSync.bind(this)
+    this.internalClone = this.internalClone.bind(this)
   }
 
   /**
    * @internal
    */
-  M$internalQueue = async (
+  private async M$internalQueue(
     newStateOrFn: State | AsyncSetStateFn<State> | null,
     eventType: StateChangeEventType | typeof FILLER_STATE_CHANGE_EVENT_TYPE
-  ): Promise<void> => {
+  ): Promise<void> {
 
     if (
       eventType !== StateChangeEventType.INIT &&
@@ -97,6 +98,19 @@ export class AsyncStateManager<State> extends StateManager<State> {
         this.M$mutationQueue.shift()
       }
     }
+  }
+
+  /**
+   * @internal
+   */
+  internalClone(): StateManager<State> | AsyncStateManager<State> {
+    return new AsyncStateManager<State>(this.defaultState, {
+      lifecycle: this.M$lifecycle,
+      visibility: this.visibility,
+      suspense: this.suspense,
+      clientOnly: this.clientOnly,
+      name: `${this.name}_clone`,
+    })
   }
 
   /**

@@ -66,3 +66,5 @@ temp/
 # Automatically generated
 src/packages/**/LICENSE
 src/packages/**/README.md
+
+certificates

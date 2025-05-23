@@ -3,6 +3,8 @@ import { getAutomaticName } from '../../internals/name-generator'
 import { isFunction } from '../../internals/type-checking'
 import { Watcher } from '../Watcher'
 
+let internalIdCounter = 0
+
 /**
  * {:TSDOC_DESC_OPTIONS_SIMPLE:}
  * @see -{:DOCS_API_CORE_URL:}/SimpleStateManagerOptions
@@ -37,6 +39,11 @@ export class SimpleStateManager<State> {
    * @internal
    */
   protected M$internalState: State
+
+  /**
+   * @internal
+   */
+  readonly internalId: number = ++internalIdCounter
 
   /**
    * @internal

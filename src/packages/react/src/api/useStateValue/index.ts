@@ -14,6 +14,7 @@ import { $$INTERNALS } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
+import { useResolveHydrationStateManager } from '../hydration/internal'
 
 type $$ = $1 | $2
 
@@ -93,6 +94,10 @@ export function useStateValue<State, SelectedState>(
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
+
+  stateManager = useResolveHydrationStateManager(
+    stateManager as unknown as StateManager<State> | AsyncStateManager<State>
+  )
 
   useSuspenseWaiter(stateManager)
   useDebugName(stateManager)

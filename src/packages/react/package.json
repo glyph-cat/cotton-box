@@ -36,6 +36,9 @@
   "bugs": {
     "url": "https://github.com/glyph-cat/cotton-box/issues"
   },
+  "dependencies": {
+    "@glyph-cat/equality": "^1.0.0"
+  },
   "peerDependencies": {
     "cotton-box": "*"
   },
