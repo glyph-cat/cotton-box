@@ -43,7 +43,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       if (!$allowedStateTransitions.has(fromState)) {
         $allowedStateTransitions.set(fromState, new Set<State>())
       }
-      $allowedStateTransitions.get(fromState).add(toState)
+      $allowedStateTransitions.get(fromState)!.add(toState)
     }
     this.M$allowedStateTransitions = $allowedStateTransitions
   }

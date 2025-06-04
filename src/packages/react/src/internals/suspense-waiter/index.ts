@@ -1,4 +1,10 @@
-import { AsyncStateManager, ReadOnlyStateManager, SimpleFiniteStateManager, SimpleStateManager, StateManager } from 'cotton-box'
+import {
+  AsyncStateManager,
+  ReadOnlyStateManager,
+  SimpleFiniteStateManager,
+  SimpleStateManager,
+  StateManager,
+} from 'cotton-box'
 import { useSyncExternalStore } from 'react'
 import { $1, $2 } from '../../abstractions'
 
@@ -6,8 +12,8 @@ type $$ = $1 | $2
 
 const MockInitState = new SimpleStateManager<boolean>(false)
 
-export function useSuspenseWaiter(
-  stateManager: SimpleStateManager<unknown> | StateManager<unknown> | AsyncStateManager<unknown> | SimpleFiniteStateManager<unknown> | ReadOnlyStateManager<unknown>
+export function useSuspenseWaiter<T>(
+  stateManager: SimpleStateManager<T> | StateManager<T> | AsyncStateManager<T> | SimpleFiniteStateManager<T> | ReadOnlyStateManager<T>
 ): void {
 
   // SimpleStateManager does not have this property.

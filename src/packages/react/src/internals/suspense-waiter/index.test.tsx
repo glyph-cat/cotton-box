@@ -1,6 +1,6 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { SuspenseTester } from '@glyph-cat/react-test-utils'
-import { act, JSX } from 'react'
+import { act } from 'react'
 import { AsyncStateManager, SimpleStateManager, StateManager } from '../../../../core/src'
 import { TestUtils } from '../../../tests/test-helpers'
 import {
@@ -54,7 +54,7 @@ describe(useSuspenseWaiter.name, () => {
   } as const
 
   for (const StateManagerTypeKey in stateManagersToTestWith) {
-    const StateManagerType = stateManagersToTestWith[StateManagerTypeKey]
+    const StateManagerType = stateManagersToTestWith[StateManagerTypeKey as keyof typeof stateManagersToTestWith]
     describe(StateManagerTypeKey, () => {
 
       test('Not initializing', () => {
@@ -64,7 +64,7 @@ describe(useSuspenseWaiter.name, () => {
         })
         cleanupManager.append(TestState.dispose)
 
-        const suspenseTester = new SuspenseTester((): JSX.Element => {
+        const suspenseTester = new SuspenseTester((): null => {
           useSuspenseWaiter(TestState)
           return null
         }, cleanupManager)
@@ -86,7 +86,7 @@ describe(useSuspenseWaiter.name, () => {
         })
         cleanupManager.append(TestState.dispose)
 
-        const suspenseTester = new SuspenseTester((): JSX.Element => {
+        const suspenseTester = new SuspenseTester((): null => {
           useSuspenseWaiter(TestState)
           return null
         }, cleanupManager)

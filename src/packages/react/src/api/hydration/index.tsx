@@ -9,7 +9,7 @@ export interface HydrateStateManagerProps<State> {
   children?: ReactNode
   values: Array<[
     stateManager: StateManager<State> | AsyncStateManager<State>,
-    hydrate: StateManagerLifecycle<State>['init'],
+    hydrate: Required<StateManagerLifecycle<State>>['init'],
   ]>
 }
 

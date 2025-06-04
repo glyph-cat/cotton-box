@@ -1,3 +1,4 @@
+import { Nullable } from '../../abstractions'
 import { isNull, isNullOrUndefined, isNumber } from '../../internals/type-checking'
 
 // TODO: Define 'TSDOC_DESC_BATCHED_WATCHER'
@@ -32,12 +33,12 @@ export class BatchedWatcher<Args extends any[]> {
   /**
    * @internal
    */
-  private M$timeoutRef: ReturnType<typeof setTimeout> = null
+  private M$timeoutRef: Nullable<ReturnType<typeof setTimeout>> = null
 
   /**
    * @internal
    */
-  private M$intervalRef: ReturnType<typeof setInterval> = null
+  private M$intervalRef: Nullable<ReturnType<typeof setInterval>> = null
 
   constructor(
     public readonly minimumTimeout?: number,
@@ -74,7 +75,7 @@ export class BatchedWatcher<Args extends any[]> {
    * @internal
    */
   private M$stopTimeout(): void {
-    clearTimeout(this.M$timeoutRef)
+    clearTimeout(this.M$timeoutRef!)
     this.M$timeoutRef = null
   }
 
@@ -82,7 +83,7 @@ export class BatchedWatcher<Args extends any[]> {
    * @internal
    */
   private M$stopInterval(): void {
-    clearInterval(this.M$intervalRef)
+    clearInterval(this.M$intervalRef!)
     this.M$intervalRef = null
   }
 

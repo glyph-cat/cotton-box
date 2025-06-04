@@ -17,11 +17,11 @@ import { $$INTERNALS } from '../../constants'
 export function useDebugName(
   stateManager: SimpleStateManager<any> | StateManager<any> | AsyncStateManager<any> | ReadOnlyStateManager<any>
 ): void {
-  useDebugValue(stateManager?.['name'])
+  useDebugValue('name' in stateManager ? stateManager.name : null)
 }
 
 export function useInspectableValue(
-  visibility: StateManagerVisibility,
+  visibility: StateManagerVisibility | undefined,
   valueToShow: SyncValue<unknown>
 ): void {
   useDebugValue(evaluateDebugValueVisibility(visibility)
@@ -34,7 +34,7 @@ export function useInspectableValue(
  * @returns `true` if visible, otherwise `false`.
  */
 export function evaluateDebugValueVisibility(
-  visibility: StateManagerVisibility,
+  visibility: StateManagerVisibility | undefined,
 ): boolean {
   if (visibility) {
     return visibility === StateManagerVisibility.EXPOSED

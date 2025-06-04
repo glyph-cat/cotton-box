@@ -13,7 +13,8 @@ export namespace TestUtils {
     })
   }
 
-  export function isThenable(value: unknown): value is Promise<unknown> {
+  export function isThenable<T>(value: unknown): value is Promise<T> {
+    // @ts-expect-error because we are forcefully probing at the property.
     return typeof value?.['then'] === 'function'
   }
 

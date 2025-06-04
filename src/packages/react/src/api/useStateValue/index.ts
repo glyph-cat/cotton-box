@@ -8,7 +8,7 @@ import {
   StateSelector,
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { isFunction } from '../../../../core/src/internals/type-checking'
+import { isFunction, isNull } from '../../../../core/src/internals/type-checking'
 import { $1, $2, SyncValue } from '../../abstractions'
 import { $$INTERNALS } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'
@@ -119,7 +119,7 @@ export function useStateValue<State, SelectedState>(
 
   const selectorRef = useRef<StateSelector<State, SelectedState>>(null)
   selectorRef.current = selector
-  const isEqualRef = useRef<EqualityFn<State | SelectedState>>(null)
+  const isEqualRef = useRef<EqualityFn<State | SelectedState>>(null!)
   isEqualRef.current = isEqual
 
   const selectValue = useCallback(() => {
@@ -134,14 +134,14 @@ export function useStateValue<State, SelectedState>(
   const cachedSyncValue = useRef<SyncValue<State | SelectedState>>(null)
   const getSnapshot = useCallback((): SyncValue<State | SelectedState> => {
     if (
-      Object.is(cachedSyncValue.current, null) ||
-      !isEqualRef.current(cachedSyncValue.current.get($$INTERNALS), selectValue())
+      isNull(cachedSyncValue.current) ||
+      !isEqualRef.current(cachedSyncValue.current.get($$INTERNALS)!, selectValue())
     ) {
       cachedSyncValue.current = new WeakMap([
         [$$INTERNALS, selectValue()],
       ]) as SyncValue<State | SelectedState>
     }
-    return cachedSyncValue.current
+    return cachedSyncValue.current!
   }, [selectValue])
 
   const stateValue = useSyncExternalStore(
@@ -150,7 +150,7 @@ export function useStateValue<State, SelectedState>(
     (stateManager as $$).clientOnly ? undefined : getSnapshot,
   )
   useInspectableValue((stateManager as $$).visibility, stateValue)
-  return stateValue.get($$INTERNALS)
+  return stateValue.get($$INTERNALS)!
 
 }
 
@@ -246,14 +246,14 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
   const getSnapshot = useCallback((): SyncValue<SelectedState> => {
     const selectedState = selector((stateManager as $$).get(1))
     if (
-      Object.is(cachedSyncValue.current, null) ||
-      !isEqual(cachedSyncValue.current.get($$INTERNALS), selectedState)
+      isNull(cachedSyncValue.current) ||
+      !isEqual(cachedSyncValue.current.get($$INTERNALS)!, selectedState)
     ) {
       cachedSyncValue.current = new WeakMap([
         [$$INTERNALS, selectedState],
       ]) as SyncValue<SelectedState>
     }
-    return cachedSyncValue.current
+    return cachedSyncValue.current!
   }, [isEqual, selector, stateManager])
 
   const stateValue = useSyncExternalStore(
@@ -262,6 +262,6 @@ export function useStateValueWithReactiveSelector<State, SelectedState>(
     (stateManager as $$).clientOnly ? undefined : getSnapshot,
   )
   useInspectableValue((stateManager as $$).visibility, stateValue)
-  return stateValue.get($$INTERNALS)
+  return stateValue.get($$INTERNALS)!
 
 }

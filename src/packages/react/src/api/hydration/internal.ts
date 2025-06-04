@@ -1,10 +1,11 @@
 import type { AsyncStateManager, StateManager } from 'cotton-box'
 import { createContext, useContext } from 'react'
+import { Nullable } from '../../abstractions'
 
 // Key = original state manager, Value = isolated/static state manager on server-side
 export class HydrationMap<State> extends Map<StateManager<State> | AsyncStateManager<State>, StateManager<State> | AsyncStateManager<State>> { }
 
-export const HydrationMapContext = createContext<HydrationMap<any>>(null)
+export const HydrationMapContext = createContext<Nullable<HydrationMap<any>>>(null)
 
 export function useResolveHydrationStateManager<State>(
   stateManager: StateManager<State> | AsyncStateManager<State>,

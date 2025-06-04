@@ -20,18 +20,18 @@ const UMD_GLOBALS = {
 const REACT_EXTERNAL_LIBS = Object.keys(UMD_GLOBALS)
 
 interface IPluginConfig {
-  overrides?: Record<string, unknown>
   mode?: 'development' | 'production'
   buildType: BuildType
 }
 
 function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
-  const { overrides = {}, mode, buildType } = config
-  const basePlugins = {
-    nodeResolve: nodeResolve({
+  const { mode, buildType } = config
+
+  const pluginStack: Array<RollupPlugin> = [
+    nodeResolve({
       extensions: ['.ts'],
     }),
-    typescript: typescript({
+    typescript({
       tsconfigOverride: {
         compilerOptions: {
           declaration: false,
@@ -43,25 +43,11 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
         ],
       },
     }),
-    commonjs: commonjs(),
-  }
-
-  // Override plugins
-  for (const overrideKey in overrides) {
-    basePlugins[overrideKey] = overrides[overrideKey]
-  }
-
-  // Convert plugins object to array
-  const pluginStack: Array<RollupPlugin> = []
-  for (const i in basePlugins) {
-    // Allows plugins to be excluded by replacing them with falsy values
-    if (basePlugins[i]) {
-      pluginStack.push(basePlugins[i])
-    }
-  }
+    commonjs(),
+  ]
 
   // Replace values
-  const replaceValues = {
+  const replaceValues: Record<string, string> = {
     'process.env.BUILD_HASH': JSON.stringify(
       execSync('git rev-parse HEAD').toString().trim()
     ),
