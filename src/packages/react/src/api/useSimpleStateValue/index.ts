@@ -73,6 +73,11 @@ export function useSimpleStateValue<State, SelectedState>(
  * @see -{:DOCS_API_REACT_URL:}/useSimpleStateValueWithReactiveSelector
  * @returns -{:COMMON_DESC_CURRENT_STATE:}
  * @public
+ * @deprecated This hook does not seem to have a valid use case so far and will
+ * most likely be removed when in the next major version (v0 -> v1).
+ * If you use this hook and find a valid use case, please
+ * [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose)
+ * to explain your use case.
  */
 export function useSimpleStateValueWithReactiveSelector<State, SelectedState>(
   stateManager: SimpleStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
