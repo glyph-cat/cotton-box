@@ -1,4 +1,9 @@
-import { ReadOnlyStateManager, SimpleFiniteStateManager, SimpleStateManager, StateSelector } from 'cotton-box'
+import {
+  ReadOnlyStateManager,
+  SimpleFiniteStateManager,
+  SimpleStateManager,
+  StateSelector,
+} from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
 import { $0 } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
