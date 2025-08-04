@@ -40,7 +40,7 @@ export type EqualityFn<State> = (previousState: State, nextState: State) => bool
  * @see -{:DOCS_API_CORE_URL:}/ReadOnlyStateManager
  * @public
  */
-export type ReadOnlyStateManager<State> = Pick<SimpleStateManager<State>, 'get' | 'watch' | 'wait'>
+export type ReadOnlyStateManager<State> = Pick<SimpleStateManager<State>, 'name' | 'get' | 'watch' | 'wait'>
 
 /**
  * {:TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE:}

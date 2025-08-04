@@ -17,7 +17,7 @@ import { $$INTERNALS } from '../../constants'
 export function useDebugName(
   stateManager: SimpleStateManager<any> | StateManager<any> | AsyncStateManager<any> | ReadOnlyStateManager<any>
 ): void {
-  useDebugValue('name' in stateManager ? stateManager.name : null)
+  useDebugValue(stateManager?.name ?? null)
 }
 
 export function useInspectableValue(
