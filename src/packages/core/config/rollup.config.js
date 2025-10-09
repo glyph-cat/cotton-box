@@ -1,10 +1,2 @@
-// Reference: https://stackoverflow.com/a/61532563/5810737
-
-require('ts-node').register({
-  compilerOptions: {
-    module: 'CommonJS',
-    resolveJsonModule: true,
-  },
-})
-
+require('tsx/cjs')
 module.exports = require('./rollup.config.ts')
