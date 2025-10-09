@@ -1,3 +1,4 @@
+import { JSX } from 'react'
 import styles from './index.module.css'
 
 export default function NoComponent(): JSX.Element {

@@ -1,26 +1,18 @@
-import chalk from 'chalk'
-import { symlinkSync } from 'fs'
+import { setup } from '../../tools/setup'
 
 function main(): void {
 
   const cwd = process.cwd()
 
-  linkNodeModules(cwd, 'core')
-  linkNodeModules(cwd, 'react')
+  const packages = [
+    'core',
+    'react',
+  ] as const
+
+  for (const packageName in packages) {
+    setup(cwd, packageName)
+  }
 
 }
 
 main()
-
-type PackageName = 'core' | 'react'
-
-function linkNodeModules(cwd: string, packageName: PackageName): void {
-  const node_modules = 'node_modules'
-  try {
-    symlinkSync(`${cwd}/${node_modules}`, `${cwd}/src/packages/${packageName}/node_modules`)
-    console.log(chalk.green(' ✓ ') + `Linked ${node_modules} to ${packageName} package`)
-  } catch (e) {
-    console.log(chalk.red(' × ') + `Failed to link ${node_modules} to ${packageName} package`)
-    console.error(e)
-  }
-}
