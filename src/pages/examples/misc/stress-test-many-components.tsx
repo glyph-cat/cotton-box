@@ -4,9 +4,9 @@ import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
 import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
 import { ComponentType, createContext, JSX, useCallback, useContext, useMemo, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
-import { RelinkSource, useRelinkValue } from 'react-relink'
-import { atom, RecoilRoot, useRecoilState } from 'recoil'
 import { create } from 'zustand'
+// import { RelinkSource, useRelinkValue } from 'react-relink'
+// import { atom, RecoilRoot, useRecoilState } from 'recoil'
 
 export default function App(): JSX.Element {
   return (
@@ -18,11 +18,11 @@ export default function App(): JSX.Element {
       <MultiRender component={StateManagerTestComponent} />
       <MultiRender component={AsyncStateManagerTestComponent} />
       <MultiRender component={ReactTestComponent} />
-      <MultiRender component={RecoilTestComponent} />
+      {/* <MultiRender component={RecoilTestComponent} /> */}
       <MultiRender component={ReduxTestComponent} />
       <MultiRender component={ZustandTestComponent} />
       <MultiRender component={HookstateTestComponent} />
-      <MultiRender component={ReactRelinkTestComponent} />
+      {/* <MultiRender component={ReactRelinkTestComponent} /> */}
     </SetStateContext.Provider>
   )
 }
@@ -54,7 +54,7 @@ function ControlComponent(): JSX.Element {
           case 'AsyncStateManager': return TestAsyncStateManager.set
           case 'Zustand': return useZustandState.setState
           case 'HookState': return TestHookState.set
-          case 'ReactRelink': return TestRelinkState.set
+          // case 'ReactRelink': return TestRelinkState.set
           default: return ctx[key]
         }
       })()
@@ -122,20 +122,20 @@ function ReactTestComponent(): JSX.Element {
   return null
 }
 
-const RecoilAtom = atom({ key: 'test', default: 0 })
-function RecoilTestComponentBase(): JSX.Element {
-  const [state, setState] = useRecoilState(RecoilAtom)
-  useContext(SetStateContext).Recoil = setState
-  // return <h2>Recoil: {state}</h2>
-  return null
-}
-function RecoilTestComponent(): JSX.Element {
-  return (
-    <RecoilRoot>
-      <RecoilTestComponentBase />
-    </RecoilRoot>
-  )
-}
+// const RecoilAtom = atom({ key: 'test', default: 0 })
+// function RecoilTestComponentBase(): JSX.Element {
+//   const [state, setState] = useRecoilState(RecoilAtom)
+//   useContext(SetStateContext).Recoil = setState
+//   // return <h2>Recoil: {state}</h2>
+//   return null
+// }
+// function RecoilTestComponent(): JSX.Element {
+//   return (
+//     <RecoilRoot>
+//       <RecoilTestComponentBase />
+//     </RecoilRoot>
+//   )
+// }
 
 const TestSlice = createSlice({
   name: 'test',
@@ -180,9 +180,9 @@ function HookstateTestComponent(): JSX.Element {
   return null
 }
 
-const TestRelinkState = new RelinkSource({ key: 'test', default: 0 })
-function ReactRelinkTestComponent(): JSX.Element {
-  const state = useRelinkValue(TestRelinkState)
-  // return <h2><code>react-relink</code>: {state}</h2>
-  return null
-}
+// const TestRelinkState = new RelinkSource({ key: 'test', default: 0 })
+// function ReactRelinkTestComponent(): JSX.Element {
+//   const state = useRelinkValue(TestRelinkState)
+//   // return <h2><code>react-relink</code>: {state}</h2>
+//   return null
+// }

@@ -2,17 +2,87 @@ import { hookstate, useHookstate } from '@hookstate/core'
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
 import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
-import { createContext, JSX, useContext, useMemo, useState } from 'react'
+import { createContext, Fragment, JSX, useContext, useMemo, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { create } from 'zustand'
 // import { RelinkSource, useRelinkValue } from 'react-relink'
 // import { atom, RecoilRoot, useRecoilState } from 'recoil'
+
+const TD_WIDTH = 48 // px
+
+const iterationChoices = [100000, 200000, 300000] as const
+const requiredSamples = ['i', 'ii', 'iii']
+const testSubjects = [
+  'Zustand',
+  'SimpleStateManager',
+  'StateManager',
+  'useState',
+  'HookState',
+  'Redux',
+]
 
 export default function App(): JSX.Element {
   return (
     <SetStateContext.Provider value={useMemo(() => ({
       ...DEFAULT_SET_STATE_CONTEXT,
     }), [])}>
+      <table border={1}>
+        <thead>
+          <tr>
+            <td rowSpan={2} />
+            {iterationChoices.map((iterationChoice) => {
+              return (
+                <td
+                  key={iterationChoice}
+                  colSpan={requiredSamples.length + 1}
+                  style={{ textAlign: 'center' }}
+                >
+                  {iterationChoice}
+                </td>
+              )
+            })}
+          </tr>
+          <tr>
+            {iterationChoices.map((iterationChoice) => {
+              return (
+                <Fragment key={iterationChoice}>
+                  {requiredSamples.map((label, i) => {
+                    return (
+                      <td key={i} style={{ textAlign: 'center', width: TD_WIDTH }}>
+                        {label}
+                      </td>
+                    )
+                  })}
+                  <td style={{ textAlign: 'center', width: TD_WIDTH }}>{'Avg'}</td>
+                </Fragment>
+              )
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {testSubjects.map((name) => {
+            return (
+              <tr key={name}>
+                <td>{name}</td>
+                {iterationChoices.map((iterationChoice) => {
+                  return (
+                    <Fragment key={iterationChoice}>
+                      {requiredSamples.map((_label, i) => {
+                        return (
+                          <td key={i} style={{ textAlign: 'end', width: TD_WIDTH }}>
+                            {'0'}
+                          </td>
+                        )
+                      })}
+                      <td style={{ textAlign: 'end', width: TD_WIDTH }}>{'0'}</td>
+                    </Fragment>
+                  )
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
       <ControlComponent />
       <SimpleStateManagerTestComponent />
       <StateManagerTestComponent />
