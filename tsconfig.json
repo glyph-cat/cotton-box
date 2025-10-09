@@ -35,6 +35,7 @@
     "**/*.draft*",
     "**/*.old*",
     "**/*.scripted*",
+    "./src/packages/docs/",
   ],
   "include": [
     "next-env.d.ts",
