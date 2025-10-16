@@ -1,4 +1,13 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "paths": {
+      "cotton-box": [
+        "../core/src",
+      ],
+      "cotton-box-react": [
+        "../react/src",
+      ],
+    },
+  },
   "extends": "expo/tsconfig.base"
 }
