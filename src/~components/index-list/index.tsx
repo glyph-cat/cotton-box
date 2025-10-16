@@ -18,8 +18,7 @@ export function IndexList({
     const subPath = dataKeys[i]
     const name = subPath.replace(fileExtensionPattern, '')
     const items = data[name]
-    const fileType = fileExtensionPattern.test(subPath) ? subPath.split('.').at(-1) : null
-    const href = `${parentHref ?? ''}/${name}${fileType ? `?${fileType}` : ''}`
+    const href = `${parentHref ?? ''}/${name}`
     if (items) {
       renderStack.push(
         <li key={i}>

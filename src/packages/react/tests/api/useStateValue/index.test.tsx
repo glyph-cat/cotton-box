@@ -1,5 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { shallowCompareObject } from '@glyph-cat/equality'
+import { objectIsShallowEqual } from '@glyph-cat/equality'
 import { HookTester } from '@glyph-cat/react-test-utils'
 import { JSX } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -144,7 +144,7 @@ wrapper(({
             cleanupManager.append(TestState.dispose)
 
             const hookInterface = new HookTester({
-              useHook: () => useStateValue(TestState, null, shallowCompareObject),
+              useHook: () => useStateValue(TestState, null, objectIsShallowEqual),
               values: {
                 main(state) { return state },
               },
@@ -363,7 +363,7 @@ wrapper(({
               useHook: () => useStateValue(
                 TestState,
                 (s) => s.luckyNumber,
-                shallowCompareObject,
+                objectIsShallowEqual,
               ),
               values: {
                 main(state) { return state },

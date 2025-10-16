@@ -1,8 +1,8 @@
 import { hookstate, useHookstate } from '@hookstate/core'
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
-import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
-import { createContext, JSX, useContext, useMemo, useState } from 'react'
+import { useSimpleStateValueOnly, useStateValue } from 'cotton-box-react'
+import { createContext, JSX, useContext, useMemo, useState, useSyncExternalStore } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { create } from 'zustand'
 // import { RelinkSource, useRelinkValue } from 'react-relink'
@@ -14,14 +14,15 @@ export default function App(): JSX.Element {
       ...DEFAULT_SET_STATE_CONTEXT,
     }), [])}>
       <ControlComponent />
+      <BareBonesTestComponent />
       <SimpleStateManagerTestComponent />
-      <StateManagerTestComponent />
+      {/* <StateManagerTestComponent /> */}
       {/* <AsyncStateManagerTestComponent /> */}
-      <ReactTestComponent />
+      {/* <ReactTestComponent /> */}
       {/* <RecoilTestComponent /> */}
-      <ReduxTestComponent />
-      <ZustandTestComponent />
-      <HookstateTestComponent />
+      {/* <ReduxTestComponent /> */}
+      {/* <ZustandTestComponent /> */}
+      {/* <HookstateTestComponent /> */}
       {/* <ReactRelinkTestComponent /> */}
     </SetStateContext.Provider>
   )
@@ -30,7 +31,6 @@ export default function App(): JSX.Element {
 type StateManagerType = keyof typeof DEFAULT_SET_STATE_CONTEXT
 
 const DEFAULT_SET_STATE_CONTEXT = {
-  SimpleStateManager: null,
   StateManager: null,
   // AsyncStateManager: null,
   React: null,
@@ -39,6 +39,7 @@ const DEFAULT_SET_STATE_CONTEXT = {
   Zustand: null,
   HookState: null,
   // ReactRelink: null,
+  SimpleStateManager: null,
 } as const
 
 type ISetStateContext = Record<StateManagerType, Function>
@@ -48,11 +49,12 @@ const createTestHandler = (ctx: ISetStateContext, iterations: number) => async (
   for (const key in ctx) {
     const setState = (() => {
       switch (key as StateManagerType) {
-        case 'SimpleStateManager': return TestSimpleStateManager.set
-        case 'StateManager': return TestStateManager.set
+        // case 'SimpleStateManager': return TestSimpleStateManager.set
+        case 'SimpleStateManager': return BareBonesStateManager.set
+        // case 'StateManager': return TestStateManager.set
         // case 'AsyncStateManager': return TestAsyncStateManager.set
-        case 'Zustand': return useZustandState.setState
-        case 'HookState': return TestHookState.set
+        // case 'Zustand': return useZustandState.setState
+        // case 'HookState': return TestHookState.set
         // case 'ReactRelink': return TestRelinkState.set
         default: return ctx[key]
       }
@@ -94,9 +96,20 @@ function ControlComponent(): JSX.Element {
   )
 }
 
+const BareBonesStateManager = new SimpleStateManager(0)
+function BareBonesTestComponent(): JSX.Element {
+  // const state = useSimpleStateValueOnly(BareBonesStateManager)
+  const state = useSyncExternalStore(
+    BareBonesStateManager.watch,
+    BareBonesStateManager.get,
+    BareBonesStateManager.get,
+  )
+  return <h2><code>SimpleStateManager</code> (Bare Bones): {state}</h2>
+}
+
 const TestSimpleStateManager = new SimpleStateManager(0)
 function SimpleStateManagerTestComponent(): JSX.Element {
-  const state = useSimpleStateValue(TestSimpleStateManager)
+  const state = useSimpleStateValueOnly(TestSimpleStateManager)
   return <h2><code>SimpleStateManager</code>: {state}</h2>
 }
 

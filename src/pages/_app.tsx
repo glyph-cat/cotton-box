@@ -1,8 +1,11 @@
+import '../styles/globals.css'
+
 import type { AppProps } from 'next/app'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import QS from 'query-string'
 import { JSX, useCallback } from 'react'
-import '../styles/globals.css'
+import { SandboxUrlParam } from '~constants'
 
 export default function App({
   Component,
@@ -22,12 +25,15 @@ export default function App({
 }
 
 function UtilArea(): JSX.Element {
-  const { asPath, pathname, query } = useRouter()
-  const firstQueryKey = Object.keys(query)[0]
-  // This is an assumption because we are not using query for anything else
+  const { pathname } = useRouter()
   const openInEditor = useCallback(async () => {
-    await fetch(`/api/open-in-editor?p=${encodeURI(asPath.replace(/\?tsx?$/i, ''))}&e=${firstQueryKey}`)
-  }, [asPath, firstQueryKey])
+    await fetch(QS.stringifyUrl({
+      url: '/api/open-in-editor',
+      query: {
+        [SandboxUrlParam.PATHNAME]: pathname,
+      },
+    }))
+  }, [pathname])
   if (pathname === '/') { return null } // Early exit
   return (
     <div style={{ marginBottom: 10 }}>

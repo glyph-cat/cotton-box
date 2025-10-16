@@ -106,7 +106,8 @@ export const DocConstants = {
   TSDOC_DESC_INIT_COMMIT_NOOP: 'Skips committing the state and lets the State Manager know that initialization has completed.',
   TSDOC_DESC_STATE_MANAGER_DID_SET_ARGS: 'Callback arguments provided in the `.didSet` lifecycle hook.',
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_ARRAY: `Compares each element in the array using [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}). Use this when your selector returns an array.`,
-  TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_ARRAY_OR_OBJECT: 'A wrapper around `shallowCompareArray` and `shallowCompareObject`. Only use this when you cannot determine whether your selected state will return an array or an object as it exhausts additional computing resources that could otherwise be prevented.',
+  // TODO: remove unused values related to equality
+  TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_ARRAY_OR_OBJECT: 'A wrapper around `arrayIsShallowEqual` and `objectIsShallowEqual`. Only use this when you cannot determine whether your selected state will return an array or an object as it exhausts additional computing resources that could otherwise be prevented.',
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_OBJECT: `Compares each item in the object using [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}). Use this when your selector returns a plain object.`,
   TSDOC_DESC_EQUALITY_STRINGIFY_COMPARE: `Compares the previous and next states after serializing them with [\`JSON.stringify\`](${API_REFERENCE_URL_JSON_STRINGIFY}).`,
   TSDOC_DESC_WATCHER: 'An event manager that can be subscribed to and unsubscribed from, and the events can be fired to actively listening handlers.',

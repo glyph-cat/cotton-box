@@ -1,4 +1,4 @@
-import { shallowCompareArray } from '@glyph-cat/equality'
+import { arrayIsShallowEqual } from '@glyph-cat/equality'
 import { StateManager } from 'cotton-box'
 import { useStateValueWithReactiveSelector } from 'cotton-box-react'
 import { JSX, useCallback, useState } from 'react'
@@ -12,12 +12,12 @@ export default function App(): JSX.Element {
   const name = useStateValueWithReactiveSelector(
     UserState,
     selector,
-    shouldUseObjectIs ? Object.is : shallowCompareArray,
+    shouldUseObjectIs ? Object.is : arrayIsShallowEqual,
   )
   const setEqualityObjectIs = useCallback(() => {
     setUseObjectIs(true)
   }, [])
-  const setEqualityShallowCompareArray = useCallback(() => {
+  const setEqualityArrayIsShallowEqual = useCallback(() => {
     setUseObjectIs(false)
   }, [])
   console.log('App is rendering...')
@@ -28,8 +28,8 @@ export default function App(): JSX.Element {
       <button onClick={setEqualityObjectIs} disabled={shouldUseObjectIs}>
         Use <code>Object.is</code>
       </button>
-      <button onClick={setEqualityShallowCompareArray} disabled={!shouldUseObjectIs}>
-        Use <code>shallowCompareArray</code>
+      <button onClick={setEqualityArrayIsShallowEqual} disabled={!shouldUseObjectIs}>
+        Use <code>arrayIsShallowEqual</code>
       </button>
     </div>
   )

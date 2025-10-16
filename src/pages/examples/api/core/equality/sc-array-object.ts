@@ -1,18 +1,18 @@
 import {
-  shallowCompareArray,
-  shallowCompareArrayOrObject,
-  shallowCompareObject,
+  arrayIsShallowEqual,
+  arrayOrObjectIsShallowEqual,
+  objectIsShallowEqual,
 } from '@glyph-cat/equality'
 
 if (typeof window !== 'undefined') {
   // #region example
-  console.log(shallowCompareArrayOrObject([], [])) // true
-  console.log(shallowCompareArrayOrObject({}, {})) // true
-  console.log(shallowCompareArrayOrObject([], {})) // false
+  console.log(arrayOrObjectIsShallowEqual([], [])) // true
+  console.log(arrayOrObjectIsShallowEqual({}, {})) // true
+  console.log(arrayOrObjectIsShallowEqual([], {})) // false
 
-  console.log(shallowCompareArray([1, 2], [1, 2])) // true
+  console.log(arrayIsShallowEqual([1, 2], [1, 2])) // true
 
-  console.log(shallowCompareObject(
+  console.log(objectIsShallowEqual(
     { a: 'foo', b: 42 },
     { a: 'foo', b: 42 }
   )) // true

@@ -19,6 +19,10 @@
     {
       "name": "Examples (web)",
       "path": "../src/pages/examples"
+    },
+    {
+      "name": "Examples (Expo)",
+      "path": "../src/packages/playground-expo/src/examples"
     }
   ],
   "settings": {

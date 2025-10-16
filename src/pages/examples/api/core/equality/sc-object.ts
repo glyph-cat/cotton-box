@@ -1,20 +1,20 @@
-import { shallowCompareObject } from '@glyph-cat/equality'
+import { objectIsShallowEqual } from '@glyph-cat/equality'
 
 if (typeof window !== 'undefined') {
   // #region example
-  console.log(shallowCompareObject({}, {})) // true
+  console.log(objectIsShallowEqual({}, {})) // true
 
-  console.log(shallowCompareObject(
+  console.log(objectIsShallowEqual(
     { a: 'foo', b: 42 },
     { a: 'foo', b: 42 }
   )) // true
 
-  console.log(shallowCompareObject(
+  console.log(objectIsShallowEqual(
     { a: 'foo', b: 42 },
     { a: 'foo', b: 101 }
   )) // false
 
-  console.log(shallowCompareObject(
+  console.log(objectIsShallowEqual(
     { a: 'foo', b: 42 },
     { a: 'foo', b: 42, c: [] }
   )) // false
