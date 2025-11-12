@@ -7,9 +7,10 @@ function main(): void {
   const packages = [
     'core',
     'react',
+    'playground-expo',
   ] as const
 
-  for (const packageName in packages) {
+  for (const packageName of packages) {
     setup(cwd, packageName)
   }
 

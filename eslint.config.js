@@ -5,8 +5,8 @@ const { recommended: jestRecommended } = require('@glyph-cat/eslint-config/jest'
 
 module.exports = [
   ...baseLibraryAuthoring,
-  ...jestRecommended,
   ...reactLibraryAuthoring,
+  ...jestRecommended,
   {
     rules: {
       '@typescript-eslint/no-require-imports': Severity.OFF,
