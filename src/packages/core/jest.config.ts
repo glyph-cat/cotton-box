@@ -2,6 +2,7 @@ import { Config } from '@jest/types'
 
 const config: Config.InitialOptions = {
   setupFilesAfterEnv: [
+    'jest-extended/all',
     '<rootDir>/jest.post-env-setup.ts',
   ],
   testPathIgnorePatterns: [
@@ -12,7 +13,7 @@ const config: Config.InitialOptions = {
   fakeTimers: {
     enableGlobally: true,
   },
-  testRegex: '.test.(tsx|ts)',
+  testRegex: '.test.tsx?',
   // verbose: true,
 }
 

@@ -27,7 +27,7 @@ wrapper(({
       const TestState = new SimpleStateManager(defaultState)
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookTester({
+      const hookTester = new HookTester({
         useHook: () => useSimpleStateValue(TestState),
         values: {
           main(state) { return state },
@@ -54,49 +54,49 @@ wrapper(({
       }, cleanupManager)
 
       // Check initial state
-      expect(Object.is(hookInterface.get('main'), defaultState)).toBe(true)
-      expect(hookInterface.get('main')).toStrictEqual({
+      expect(Object.is(hookTester.get('main'), defaultState)).toBe(true)
+      expect(hookTester.get('main')).toStrictEqual({
         firstName: 'John',
         lastName: 'Smith',
         luckyNumber: 42,
       })
-      expect(hookInterface.renderCount).toBe(1)
+      expect(hookTester.renderCount).toBe(1)
 
       // Set value normally
-      hookInterface.action('setValue')
-      expect(hookInterface.get('main')).toStrictEqual({
+      hookTester.action('setValue')
+      expect(hookTester.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
         luckyNumber: 101,
       })
-      expect(hookInterface.renderCount).toBe(2)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set value again and expect no re-renders
-      hookInterface.action('setSameValue')
-      expect(hookInterface.get('main')).toStrictEqual({
+      hookTester.action('setSameValue')
+      expect(hookTester.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
         luckyNumber: 101,
       })
-      expect(hookInterface.renderCount).toBe(2)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set value by function
-      hookInterface.action('setValueByFunction')
-      expect(hookInterface.get('main')).toStrictEqual({
+      hookTester.action('setValueByFunction')
+      expect(hookTester.get('main')).toStrictEqual({
         firstName: 'Jane',
         lastName: 'Clover',
         luckyNumber: 102,
       })
-      expect(hookInterface.renderCount).toBe(3)
+      expect(hookTester.renderCount).toBe(3)
 
       // Reset
-      hookInterface.action('reset')
-      expect(hookInterface.get('main')).toStrictEqual({
+      hookTester.action('reset')
+      expect(hookTester.get('main')).toStrictEqual({
         firstName: 'John',
         lastName: 'Smith',
         luckyNumber: 42,
       })
-      expect(hookInterface.renderCount).toBe(4)
+      expect(hookTester.renderCount).toBe(4)
 
     })
 
@@ -149,7 +149,7 @@ wrapper(({
       const TestState = new SimpleStateManager(defaultState)
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookTester({
+      const hookTester = new HookTester({
         useHook: () => useSimpleStateValue(TestState, (s) => s.luckyNumber),
         values: {
           main(state) { return state },
@@ -182,33 +182,33 @@ wrapper(({
       }, cleanupManager)
 
       // Check initial state
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(1)
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(1)
 
       // Set value normally
-      hookInterface.action('setValue')
-      expect(hookInterface.get('main')).toBe(101)
-      expect(hookInterface.renderCount).toBe(2)
+      hookTester.action('setValue')
+      expect(hookTester.get('main')).toBe(101)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set value again and expect no re-renders
-      hookInterface.action('setSameValue')
-      expect(hookInterface.get('main')).toBe(101)
-      expect(hookInterface.renderCount).toBe(2)
+      hookTester.action('setSameValue')
+      expect(hookTester.get('main')).toBe(101)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set value by function
-      hookInterface.action('setValueByFunction')
-      expect(hookInterface.get('main')).toBe(102)
-      expect(hookInterface.renderCount).toBe(3)
+      hookTester.action('setValueByFunction')
+      expect(hookTester.get('main')).toBe(102)
+      expect(hookTester.renderCount).toBe(3)
 
       // Set value for property not included by selector and expect no re-renders
-      hookInterface.action('setFirstName')
-      expect(hookInterface.get('main')).toBe(102)
-      expect(hookInterface.renderCount).toBe(3)
+      hookTester.action('setFirstName')
+      expect(hookTester.get('main')).toBe(102)
+      expect(hookTester.renderCount).toBe(3)
 
       // Reset
-      hookInterface.action('reset')
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(4)
+      hookTester.action('reset')
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(4)
 
     })
 

@@ -1,5 +1,31 @@
-import { StateManagerVisibility } from 'cotton-box'
-import { evaluateDebugValueVisibility } from '.'
+import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { SimpleStateManager, StateManagerVisibility } from 'cotton-box'
+import {
+  evaluateDebugValueVisibility,
+  getDebugName,
+} from '.'
+
+let cleanupManager: CleanupManager
+beforeEach(() => { cleanupManager = new CleanupManager() })
+afterEach(() => { cleanupManager.run() })
+
+describe(getDebugName.name, () => {
+
+  test('Happy path', () => {
+    const TestStateManager = new SimpleStateManager(0, { name: 'TestStateManager' })
+    cleanupManager.append(TestStateManager.dispose)
+    expect(getDebugName(TestStateManager)).toBe('TestStateManager')
+  })
+
+  test('null', () => {
+    expect(getDebugName(null)).toBe('NoState')
+  })
+
+  test('undefined', () => {
+    expect(getDebugName(undefined)).toBe('NoState')
+  })
+
+})
 
 describe(evaluateDebugValueVisibility.name, () => {
 

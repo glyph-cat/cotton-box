@@ -13,7 +13,7 @@ type $$ = $1 | $2
 const MockInitState = new SimpleStateManager<boolean>(false)
 
 export function useSuspenseWaiter<T>(
-  stateManager: SimpleStateManager<T> | StateManager<T> | AsyncStateManager<T> | SimpleFiniteStateManager<T> | ReadOnlyStateManager<T>
+  stateManager: SimpleStateManager<T> | StateManager<T> | AsyncStateManager<T> | SimpleFiniteStateManager<T> | ReadOnlyStateManager<T> | null | undefined
 ): void {
 
   // SimpleStateManager does not have this property.

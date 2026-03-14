@@ -52,7 +52,7 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
         waitedValue = await TestState.wait(42)
       }
       const cbPromise = cb()
-      expect(waitedValue).toBe(null)
+      expect(waitedValue).toBeNull()
       TestState.set(42)
       await cbPromise
       expect(waitedValue).toBe(42)
@@ -72,7 +72,7 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
         })
       }
       const cbPromise = cb()
-      expect(waitedValue).toBe(null)
+      expect(waitedValue).toBeNull()
       expect(spiedDefaultState).toBe(42)
       TestState.set(41)
       await cbPromise

@@ -1,6 +1,6 @@
+import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, StateChangeEventType, WaitEvaluator } from '../../abstractions'
 import { getAutomaticName } from '../../internals/name-generator'
-import { isFunction } from '../../internals/type-checking'
 import { Watcher } from '../Watcher'
 
 let internalIdCounter = 0

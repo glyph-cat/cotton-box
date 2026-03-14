@@ -38,8 +38,6 @@ const TSDOC_PARAM_DESC_EQUALITY_FN_BASE = `A function that compares the previous
 
 const TSDOC_PARAM_DESC_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN_BASE} This function does not need to be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`
 
-const TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN_BASE} This function _**must**_ be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`
-
 // const TYPE_BOOLEAN = `[\`boolean\`](${TYPE_REFERENCE_URL_BOOLEAN})`
 const TYPE_UNDEFINED = `[\`undefined\`](${TYPE_REFERENCE_URL_UNDEFINED})`
 const TYPE_PROMISE_UNDEFINED = `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) that resolves into ${TYPE_UNDEFINED}.`
@@ -90,9 +88,8 @@ export const DocConstants = {
   TSDOC_DESC_OPTIONS_STANDARD: `Additional options for [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) and [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
   TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR: 'An error that is thrown when attempting to change a state without conforming to the predefined state transitions.',
   TSDOC_DESC_USE_SIMPLE_STATE_VALUE: `A React hook to consume a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager).`,
-  TSDOC_DESC_USE_SIMPLE_STATE_VALUE_WITH_REACTIVE_SELECTOR: `A React hook to consume a \`SimpleStateManager\` with a selector that is wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
+  TSDOC_DESC_USE_SIMPLE_STATE_VALUE_ONLY: `A minimal React hook to consume a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager) that doesn't support additional options or selectors.`,
   TSDOC_DESC_USE_STATE_VALUE: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
-  TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR: `A React hook to consume either a [\`SimpleStateManager\`](${DOCS_API_CORE_URL}/SimpleStateManager), [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager), or [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager) with a selector that is wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
   TSDOC_DESC_OPTIONS_LIFECYCLE: 'Lifecycle hooks for the State Manager.',
   TSDOC_DESC_OPTIONS_LIFECYCLE_INIT: `Will be invoked upon instantiation of the State Manager. Also see [\`StateManagerInitArgs\`](${DOCS_API_CORE_URL}/StateManagerInitArgs).`,
   TSDOC_DESC_OPTIONS_LIFECYCLE_DID_SET: `Will be invoked each time the \`.set\` method is called, even if the actual value remains the same.\n\nAlso see [\`StateManagerDidSetArgs\`](${DOCS_API_CORE_URL}/StateManagerDidSetArgs).`,
@@ -154,15 +151,12 @@ export const DocConstants = {
   TSDOC_PARAM_DESC_WAIT_EVALUATOR: 'Determines whether the state fulfills a certain condition.',
   TSDOC_PARAM_DESC_STATE_MANAGER: 'The State Manager to watch for changes.',
   TSDOC_PARAM_DESC_SELECTOR: `${SELECTOR_BASE_DESC} This function does not need to be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
-  TSDOC_PARAM_DESC_REACTIVE_SELECTOR: `${SELECTOR_BASE_DESC} This function _**must**_ be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`,
   TSDOC_PARAM_DESC_FROM_STATE: 'The value of the state which is it changing from.',
   TSDOC_PARAM_DESC_TO_STATE: 'The value of the state which is it changing to.',
   TSDOC_PARAM_DESC_ACTIVE,
   TSDOC_PARAM_DESC_FULL_ACTIVE: `${TSDOC_PARAM_DESC_ACTIVE} Defaults to \`true\`.`,
   TSDOC_PARAM_DESC_EQUALITY_FN,
   TSDOC_PARAM_DESC_FULL_EQUALITY_FN: `${TSDOC_PARAM_DESC_EQUALITY_FN} Defaults to [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}).`,
-  TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN,
-  TSDOC_PARAM_DESC_FULL_REACTIVE_EQUALITY_FN: `${TSDOC_PARAM_DESC_REACTIVE_EQUALITY_FN} Defaults to [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}).`,
 
   TSDOC_TYPE_DESC_WAIT_EVALUATOR: `Type definition of the evaluator function that is used in the \`.wait\` method of all State Managers.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,
   TSDOC_TYPE_DESC_STATE_SELECTOR: `Type definition of the selector function that is used in the hooks provided by \`${REACT_PACKAGE_NAME}\`. \n\nIt is a function that accepts the state as an argument and returns a derived value.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,

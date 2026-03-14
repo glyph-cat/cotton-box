@@ -27,7 +27,7 @@
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "target": "ESNext",
   },
   "exclude": [
@@ -40,6 +40,6 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
+    "**/*.tsx", "eslint.config.js",
   ],
 }

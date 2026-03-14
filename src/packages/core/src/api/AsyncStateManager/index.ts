@@ -1,5 +1,5 @@
+import { isFunction, isNull } from '@glyph-cat/type-checking'
 import { AsyncSetStateFn, CommitStrategy, StateChangeEventType } from '../../abstractions'
-import { isFunction, isNull } from '../../internals/type-checking'
 import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {

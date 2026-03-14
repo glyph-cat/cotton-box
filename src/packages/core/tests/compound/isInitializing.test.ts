@@ -14,6 +14,7 @@ wrapper(({ Lib: { StateManager, AsyncStateManager } }: TestConfig) => {
   afterEach(() => { cleanupManager.run() })
 
   let TestState: $
+  // let TestState: InstanceType<typeof StateManager<unknown> | typeof AsyncStateManager<unknown>>
   afterEach(() => { TestState?.dispose() })
 
   const stateManagersToTestWith = {

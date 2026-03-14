@@ -1,3 +1,4 @@
+import { isFunction, isNull } from '@glyph-cat/type-checking'
 import {
   AsyncStateManager,
   EqualityFn,
@@ -8,13 +9,13 @@ import {
   StateSelector,
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { isFunction, isNull } from '../../../../core/src/internals/type-checking'
 import { $1, $2, SyncValue } from '../../abstractions'
 import { $$INTERNALS } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
 import { useResolveHydrationStateManager } from '../hydration/internal'
+import { NoState } from '../no-state'
 
 type $$ = $1 | $2
 
@@ -90,14 +91,12 @@ export function useStateValue<State, SelectedState>(
 ): SelectedState
 
 export function useStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState> | null = null,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State> | null | undefined,
+  selector: StateSelector<State | NoState, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
-): State | SelectedState {
+): State | SelectedState | NoState {
 
-  stateManager = useResolveHydrationStateManager(
-    stateManager as unknown as StateManager<State> | AsyncStateManager<State>
-  )
+  stateManager = useResolveHydrationStateManager(stateManager)
 
   useSuspenseWaiter(stateManager)
   useDebugName(stateManager)
@@ -123,7 +122,7 @@ export function useStateValue<State, SelectedState>(
   isEqualRef.current = isEqual
 
   const selectValue = useCallback(() => {
-    const fullStateSnapshot = (stateManager as $$).get(1) as State
+    const fullStateSnapshot = stateManager.get(1) as State
     if (selectorRef.current) {
       return selectorRef.current(fullStateSnapshot)
     } else {
@@ -143,138 +142,6 @@ export function useStateValue<State, SelectedState>(
     }
     return cachedSyncValue.current!
   }, [selectValue])
-
-  const stateValue = useSyncExternalStore(
-    active ? stateManager.watch : emptyWatcher,
-    getSnapshot,
-    (stateManager as $$).clientOnly ? undefined : getSnapshot,
-  )
-  useInspectableValue((stateManager as $$).visibility, stateValue)
-  return stateValue.get($$INTERNALS)!
-
-}
-
-/**
- * {:TSDOC_MARKER_UNSTABLE_API:}
- * {:TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR:}
- * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
- * @param selector - {:TSDOC_PARAM_DESC_REACTIVE_SELECTOR:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValueWithReactiveSelector
- * @returns -{:COMMON_DESC_CURRENT_STATE:}
- * @public
- * @deprecated This hook does not seem to have a valid use case so far and will
- * most likely be removed in the next major version (v0 -> v1).
- * If you use this hook and find a valid use case, please
- * [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose)
- * to explain your use case.
- */
-export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState>
-): SelectedState
-
-/**
- * {:TSDOC_MARKER_UNSTABLE_API:}
- * {:TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR:}
- * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
- * @param selector - {:TSDOC_PARAM_DESC_REACTIVE_SELECTOR:}
- * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValueWithReactiveSelector
- * @returns -{:COMMON_DESC_CURRENT_STATE:}
- * @public
- * @deprecated This hook does not seem to have a valid use case so far and will
- * most likely be removed in the next major version (v0 -> v1).
- * If you use this hook and find a valid use case, please
- * [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose)
- * to explain your use case.
- */
-export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState>,
-  active?: boolean,
-): SelectedState
-
-/**
- * {:TSDOC_MARKER_UNSTABLE_API:}
- * {:TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR:}
- * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
- * @param selector - {:TSDOC_PARAM_DESC_REACTIVE_SELECTOR:}
- * @param equalityFn - {:TSDOC_PARAM_DESC_FULL_REACTIVE_EQUALITY_FN:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValueWithReactiveSelector
- * @returns -{:COMMON_DESC_CURRENT_STATE:}
- * @public
- * @deprecated This hook does not seem to have a valid use case so far and will
- * most likely be removed in the next major version (v0 -> v1).
- * If you use this hook and find a valid use case, please
- * [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose)
- * to explain your use case.
- */
-export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState>,
-  equalityFn?: EqualityFn<State | SelectedState>,
-): SelectedState
-
-/**
- * {:TSDOC_MARKER_UNSTABLE_API:}
- * {:TSDOC_DESC_USE_STATE_VALUE_WITH_REACTIVE_SELECTOR:}
- * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
- * @param selector - {:TSDOC_PARAM_DESC_REACTIVE_SELECTOR:}
- * @param equalityFn - {:TSDOC_PARAM_DESC_FULL_REACTIVE_EQUALITY_FN:}
- * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValueWithReactiveSelector
- * @returns -{:COMMON_DESC_CURRENT_STATE:}
- * @public
- * @deprecated This hook does not seem to have a valid use case so far and will
- * most likely be removed in the next major version (v0 -> v1).
- * If you use this hook and find a valid use case, please
- * [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose)
- * to explain your use case.
- */
-export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState>,
-  equalityFn: EqualityFn<State | SelectedState>,
-  active?: boolean,
-): SelectedState
-
-export function useStateValueWithReactiveSelector<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
-  selector: StateSelector<State, SelectedState>,
-  ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
-): SelectedState {
-
-  useSuspenseWaiter(stateManager)
-  useDebugName(stateManager)
-
-  let active: boolean
-  let isEqual: EqualityFn<State | SelectedState>
-  if (optionalArgs.length >= 2) {
-    isEqual = optionalArgs[0] as EqualityFn<State | SelectedState> ?? Object.is
-    active = optionalArgs[1] ?? false
-  } else {
-    if (isFunction(optionalArgs[0])) {
-      isEqual = optionalArgs[0]
-      active = true
-    } else {
-      isEqual = Object.is
-      active = optionalArgs[0] ?? true
-    }
-  }
-
-  const cachedSyncValue = useRef<SyncValue<SelectedState>>(null)
-  const getSnapshot = useCallback((): SyncValue<SelectedState> => {
-    const selectedState = selector((stateManager as $$).get(1))
-    if (
-      isNull(cachedSyncValue.current) ||
-      !isEqual(cachedSyncValue.current.get($$INTERNALS)!, selectedState)
-    ) {
-      cachedSyncValue.current = new WeakMap([
-        [$$INTERNALS, selectedState],
-      ]) as SyncValue<SelectedState>
-    }
-    return cachedSyncValue.current!
-  }, [isEqual, selector, stateManager])
 
   const stateValue = useSyncExternalStore(
     active ? stateManager.watch : emptyWatcher,

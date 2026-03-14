@@ -7,6 +7,7 @@ import {
 } from 'cotton-box'
 import { useDebugValue } from 'react'
 import { SyncValue } from '../../abstractions'
+import { NoState } from '../../api/no-state'
 import { $$INTERNALS } from '../../constants'
 
 /**
@@ -15,9 +16,15 @@ import { $$INTERNALS } from '../../constants'
  * But for now, this will do.
  */
 export function useDebugName(
-  stateManager: SimpleStateManager<any> | StateManager<any> | AsyncStateManager<any> | ReadOnlyStateManager<any>
+  stateManager: SimpleStateManager<any> | StateManager<any> | AsyncStateManager<any> | ReadOnlyStateManager<any> | null | undefined
 ): void {
-  useDebugValue(stateManager?.name ?? null)
+  useDebugValue(getDebugName(stateManager))
+}
+
+export function getDebugName(
+  stateManager: SimpleStateManager<any> | StateManager<any> | AsyncStateManager<any> | ReadOnlyStateManager<any> | null | undefined,
+): string {
+  return stateManager ? (stateManager.name ?? null) : NoState.description!
 }
 
 export function useInspectableValue(

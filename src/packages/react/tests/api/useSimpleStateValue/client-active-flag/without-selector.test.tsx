@@ -24,13 +24,13 @@ wrapper(({
       test(flagScenario, () => {
         const TestState = new SimpleStateManager(42)
         cleanupManager.append(TestState.dispose)
-        const hookInterface = new HookTester({
+        const hookTester = new HookTester({
           useHook: () => useHook(TestState),
           values: {
             main(state) { return state },
           },
         }, cleanupManager)
-        expect(hookInterface.get('main')).toBe(42)
+        expect(hookTester.get('main')).toBe(42)
       })
     }
 
@@ -43,7 +43,7 @@ wrapper(({
       const TestState = new SimpleStateManager(42)
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookTester({
+      const hookTester = new HookTester({
         useHook: () => {
           const [active, setActiveState] = useState(true)
           const state = useSimpleStateValue(TestState, null, active)
@@ -66,23 +66,23 @@ wrapper(({
       }, cleanupManager)
 
       // Check initial state
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(1)
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(1)
 
       // Set active=false
-      hookInterface.action('setActiveFalse')
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(2)
+      hookTester.action('setActiveFalse')
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(2)
 
       // Perform state change
-      hookInterface.action('increment')
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(2)
+      hookTester.action('increment')
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set active=true
-      hookInterface.action('setActiveTrue')
-      expect(hookInterface.get('main')).toBe(43)
-      expect(hookInterface.renderCount).toBe(3)
+      hookTester.action('setActiveTrue')
+      expect(hookTester.get('main')).toBe(43)
+      expect(hookTester.renderCount).toBe(3)
 
     })
 
@@ -91,7 +91,7 @@ wrapper(({
       const TestState = new SimpleStateManager(42)
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookTester({
+      const hookTester = new HookTester({
         useHook: () => {
           const [active, setActiveState] = useState(false)
           const state = useSimpleStateValue(TestState, null, active)
@@ -114,28 +114,28 @@ wrapper(({
       }, cleanupManager)
 
       // Check initial state
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(1)
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(1)
 
       // Perform state change
-      hookInterface.action('increment')
-      expect(hookInterface.get('main')).toBe(42)
-      expect(hookInterface.renderCount).toBe(1)
+      hookTester.action('increment')
+      expect(hookTester.get('main')).toBe(42)
+      expect(hookTester.renderCount).toBe(1)
 
       // Set active=true
-      hookInterface.action('setActiveTrue')
-      expect(hookInterface.get('main')).toBe(43)
-      expect(hookInterface.renderCount).toBe(2)
+      hookTester.action('setActiveTrue')
+      expect(hookTester.get('main')).toBe(43)
+      expect(hookTester.renderCount).toBe(2)
 
       // Set active=false
-      hookInterface.action('setActiveFalse')
-      expect(hookInterface.get('main')).toBe(43)
-      expect(hookInterface.renderCount).toBe(3)
+      hookTester.action('setActiveFalse')
+      expect(hookTester.get('main')).toBe(43)
+      expect(hookTester.renderCount).toBe(3)
 
       // Perform state change again
-      hookInterface.action('increment')
-      expect(hookInterface.get('main')).toBe(43)
-      expect(hookInterface.renderCount).toBe(3)
+      hookTester.action('increment')
+      expect(hookTester.get('main')).toBe(43)
+      expect(hookTester.renderCount).toBe(3)
 
     })
 

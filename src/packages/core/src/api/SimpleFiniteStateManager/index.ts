@@ -1,6 +1,6 @@
+import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, StateChangeEventType, StateTransition } from '../../abstractions'
 import { InvalidStateTransitionError } from '../../errors'
-import { isFunction } from '../../internals/type-checking'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 
 /**
