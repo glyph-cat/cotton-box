@@ -1,8 +1,32 @@
-import { ReadOnlyStateManager, SimpleFiniteStateManager, SimpleStateManager } from 'cotton-box'
+import {
+  AsyncStateManager,
+  ReadOnlyStateManager,
+  SimpleFiniteStateManager,
+  SimpleStateManager,
+  StateManager,
+} from 'cotton-box'
 import { useSyncExternalStore } from 'react'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { NoState } from '../no-state'
 import { getNoState } from '../no-state/internal'
+
+/**
+ * {:TSDOC_WARN_NOT_SUPPORTED_HERE_STATE_MANAGER:}
+ * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
+ * @public
+ */
+export function useSimpleStateValueOnly<State>(
+  stateManager: StateManager<State>,
+): never
+
+/**
+ * {:TSDOC_WARN_NOT_SUPPORTED_HERE_ASYNC_STATE_MANAGER:}
+ * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
+ * @public
+ */
+export function useSimpleStateValueOnly<State>(
+  stateManager: AsyncStateManager<State>,
+): never
 
 /**
  * {:TSDOC_DESC_USE_SIMPLE_STATE_VALUE_ONLY:}
@@ -31,11 +55,11 @@ export function useSimpleStateValueOnly<State>(
  * @public
  */
 export function useSimpleStateValueOnly<State>(
-  stateManager: SimpleStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State> | null | undefined,
+  stateManager: SimpleStateManager<State> | SimpleFiniteStateManager<State> | StateManager<State> | AsyncStateManager<State> | ReadOnlyStateManager<State> | null | undefined,
 ): State | NoState
 
 export function useSimpleStateValueOnly<State>(
-  stateManager: SimpleStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State> | null | undefined,
+  stateManager: SimpleStateManager<State> | SimpleFiniteStateManager<State> | StateManager<State> | AsyncStateManager<State> | ReadOnlyStateManager<State> | null | undefined,
 ): State | NoState {
   return useSyncExternalStore(
     stateManager?.watch ?? emptyWatcher,
