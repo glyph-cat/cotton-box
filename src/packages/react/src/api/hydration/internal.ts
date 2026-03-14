@@ -9,9 +9,8 @@ export const HydrationMapContext = createContext<Nullable<HydrationMap<any>>>(nu
 
 export function useResolveHydrationStateManager<State>(
   stateManager: StateManager<State> | AsyncStateManager<State>,
-): StateManager<State> | AsyncStateManager<State> | null | undefined {
+): StateManager<State> | AsyncStateManager<State> {
   const hydrationMap = useContext(HydrationMapContext)
-  if (!stateManager) { return }
   if (typeof window !== 'undefined') {
     return stateManager // Early exit, client-side only.
   }

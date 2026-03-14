@@ -1,31 +1,10 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { SimpleStateManager, StateManagerVisibility } from 'cotton-box'
-import {
-  evaluateDebugValueVisibility,
-  getDebugName,
-} from '.'
+import { StateManagerVisibility } from 'cotton-box'
+import { evaluateDebugValueVisibility } from '.'
 
 let cleanupManager: CleanupManager
 beforeEach(() => { cleanupManager = new CleanupManager() })
 afterEach(() => { cleanupManager.run() })
-
-describe(getDebugName.name, () => {
-
-  test('Happy path', () => {
-    const TestStateManager = new SimpleStateManager(0, { name: 'TestStateManager' })
-    cleanupManager.append(TestStateManager.dispose)
-    expect(getDebugName(TestStateManager)).toBe('TestStateManager')
-  })
-
-  test('null', () => {
-    expect(getDebugName(null)).toBe('NoState')
-  })
-
-  test('undefined', () => {
-    expect(getDebugName(undefined)).toBe('NoState')
-  })
-
-})
 
 describe(evaluateDebugValueVisibility.name, () => {
 
@@ -33,19 +12,25 @@ describe(evaluateDebugValueVisibility.name, () => {
 
     let originalNodeEnv: typeof process.env.NODE_ENV
     beforeEach(() => { originalNodeEnv = process.env.NODE_ENV })
-    afterEach(() => { process.env.NODE_ENV = originalNodeEnv })
+    afterEach(() => {
+      // @ts-expect-error because we are forcing a test
+      process.env.NODE_ENV = originalNodeEnv
+    })
 
     test('production', () => {
+      // @ts-expect-error because we are forcing a test
       process.env.NODE_ENV = 'production'
       expect(evaluateDebugValueVisibility(StateManagerVisibility.ENVIRONMENT)).toBe(false)
     })
 
     test('test', () => {
+      // @ts-expect-error because we are forcing a test
       process.env.NODE_ENV = 'test'
       expect(evaluateDebugValueVisibility(StateManagerVisibility.ENVIRONMENT)).toBe(true)
     })
 
     test('development', () => {
+      // @ts-expect-error because we are forcing a test
       process.env.NODE_ENV = 'development'
       expect(evaluateDebugValueVisibility(StateManagerVisibility.ENVIRONMENT)).toBe(true)
     })

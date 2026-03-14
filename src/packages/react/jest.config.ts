@@ -21,7 +21,7 @@ const config: Config.InitialOptions = {
     enableGlobally: true,
   },
   testRegex: '.test.tsx?',
-  verbose: true,
+  // verbose: true,
 }
 
 export default config
