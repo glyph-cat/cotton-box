@@ -1,5 +1,5 @@
 import type { AsyncStateManager, StateManager, StateManagerLifecycle } from 'cotton-box'
-import { JSX, ReactNode, useContext } from 'react'
+import { ReactNode, useContext } from 'react'
 import { HydrationMap, HydrationMapContext } from './internal'
 
 /**
@@ -19,7 +19,7 @@ export interface HydrateStateManagerProps<State> {
  */
 export function HydrateStateManager<State>(
   props: HydrateStateManagerProps<State>
-): JSX.Element {
+): ReactNode {
   const HydrationComponent = typeof window !== 'undefined'
     ? HydrateForClient
     : HydrateForServer
@@ -29,7 +29,7 @@ export function HydrateStateManager<State>(
 function HydrateForClient<State>({
   children,
   values,
-}: HydrateStateManagerProps<State>): JSX.Element {
+}: HydrateStateManagerProps<State>): ReactNode {
   for (const [stateManager, hydrate] of values) {
     if (stateManager.isInternalHydrated) { continue }
     stateManager.internalHydrate(hydrate)
@@ -40,7 +40,7 @@ function HydrateForClient<State>({
 function HydrateForServer<State>({
   children,
   values,
-}: HydrateStateManagerProps<State>): JSX.Element {
+}: HydrateStateManagerProps<State>): ReactNode {
   const parentHydrationMap = useContext(HydrationMapContext) ?? new HydrationMap()
   const childHydrationMap = new HydrationMap(parentHydrationMap)
   for (const [stateManager, hydrate] of values) {

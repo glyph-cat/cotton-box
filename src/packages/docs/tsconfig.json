@@ -8,5 +8,8 @@
     "**/*.draft*",
     "**/*.old*",
     "**/*.scripted*",
+  ],
+  "include": [
+    "./custom.d.ts",
   ]
 }

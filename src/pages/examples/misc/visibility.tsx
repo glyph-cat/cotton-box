@@ -1,8 +1,8 @@
 import { StateManager, StateManagerVisibility } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   useStateValue(ExampleState)
   return null
 }

@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import styles from './styles.module.css'
 
 interface FeatureItem {
   title: string
   Svg: React.ComponentType<React.ComponentProps<'svg'>>
-  description: JSX.Element
+  description: ReactNode
 }
 
 const features: Array<FeatureItem> = [
@@ -44,7 +44,7 @@ function Feature({
   title,
   Svg,
   description,
-}: FeatureItem): JSX.Element {
+}: FeatureItem): ReactNode {
   return (
     <div className={clsx('col col--4')}>
       <div className='text--center'>
@@ -58,7 +58,7 @@ function Feature({
   )
 }
 
-export function HomepageFeatures(): JSX.Element {
+export function HomepageFeatures(): ReactNode {
   const renderStack = []
   for (let i = 0; i < features.length; i++) {
     renderStack.push(<Feature key={i} {...features[i]} />)

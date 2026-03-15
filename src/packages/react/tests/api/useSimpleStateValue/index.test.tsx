@@ -1,7 +1,7 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { HookTester } from '@glyph-cat/react-test-utils'
 import { SimpleStateManager as $0 } from 'cotton-box'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
@@ -110,15 +110,15 @@ wrapper(({
       }
 
       const flagScenarios = [
-        ['active=(default)', (): JSX.Element => {
+        ['active=(default)', (): ReactNode => {
           const value = useSimpleStateValue(TestState)
           return <span>Hello, {value.firstName} {value.lastName}!</span>
         }],
-        ['active=true', (): JSX.Element => {
+        ['active=true', (): ReactNode => {
           const value = useSimpleStateValue(TestState, null, true)
           return <span>Hello, {value.firstName} {value.lastName}!</span>
         }],
-        ['active=false', (): JSX.Element => {
+        ['active=false', (): ReactNode => {
           const value = useSimpleStateValue(TestState, null, false)
           return <span>Hello, {value.firstName} {value.lastName}!</span>
         }],
@@ -222,15 +222,15 @@ wrapper(({
       }
 
       const flagScenarios = [
-        ['active=(default)', (): JSX.Element => {
+        ['active=(default)', (): ReactNode => {
           const firstName = useSimpleStateValue(TestState, (s) => s.firstName)
           return <span>Hello, {firstName}!</span>
         }],
-        ['active=true', (): JSX.Element => {
+        ['active=true', (): ReactNode => {
           const firstName = useSimpleStateValue(TestState, (s) => s.firstName, true)
           return <span>Hello, {firstName}!</span>
         }],
-        ['active=false', (): JSX.Element => {
+        ['active=false', (): ReactNode => {
           const firstName = useSimpleStateValue(TestState, (s) => s.firstName, false)
           return <span>Hello, {firstName}!</span>
         }],

@@ -1,8 +1,8 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { JSX, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   const [active, setActive] = useState(true)
   const toggleActiveness = useCallback(() => { setActive(a => !a) }, [])
   const user = useStateValue(UserState, null, active)
@@ -10,7 +10,7 @@ export default function App(): JSX.Element {
   return (
     <div>
       <h1>Hello, {user.firstName} {user.lastName}!</h1>
-      <h2>Your lucky number is {user.luckyNumber ?? '...'}</h2>
+      <h2>Your lucky number is {user.luckyNumber || '...'}</h2>
       <button onClick={rollLuckyNumber}>Roll lucky number</button>
       <button onClick={toggleActiveness}>
         {active ? 'Pause watching' : 'Start watching'}
@@ -28,7 +28,7 @@ interface IUserState {
 const UserState = new StateManager<IUserState>({
   firstName: 'John',
   lastName: 'Smith',
-  luckyNumber: null,
+  luckyNumber: 0,
 })
 
 function rollLuckyNumber(): void {

@@ -1,8 +1,8 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
-function App(): JSX.Element {
+function App(): ReactNode {
   const luckyNumber = useStateValue(UserState, (state) => state.luckyNumber)
   console.log('App is rendering...')
   return (

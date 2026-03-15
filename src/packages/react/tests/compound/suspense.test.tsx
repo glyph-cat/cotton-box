@@ -1,6 +1,6 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { SuspenseTester } from '@glyph-cat/react-test-utils'
-import { act, JSX } from 'react'
+import { act, ReactNode } from 'react'
 import { TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
@@ -44,7 +44,7 @@ wrapper(({
           })
           cleanupManager.append(TestState.dispose)
 
-          const suspenseTester = new SuspenseTester((): JSX.Element => {
+          const suspenseTester = new SuspenseTester((): ReactNode => {
             useHook(TestState, TestUtils.mockSelector)
             return null
           }, cleanupManager)

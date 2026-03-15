@@ -71,7 +71,7 @@ To recap, State Managers are designed to be used globally most of the time, but 
 
 <TSCodeBlock>
 ```tsx
-function App(): JSX.Element {
+function App(): ReactNode {
   const ExampleState = useRef<StateManager<string>>()
   if (!ExampleState.current) {
     ExampleState.current = new StateManager<string>('...')
@@ -120,7 +120,7 @@ It seems like the only safe and stable way so far is to perform both the instant
 
 <TSCodeBlock>
 ```tsx
-function App(): JSX.Element {
+function App(): ReactNode {
   const [ExampleState, setExampleState] = useState<StateManager<string>>(null)
   useEffect(() => {
     const newExampleState = new StateManager<string>('...')

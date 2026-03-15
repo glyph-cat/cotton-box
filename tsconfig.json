@@ -38,7 +38,10 @@
     "./src/packages/docs/",
   ],
   "include": [
+    "eslint.config.ts",
     "next-env.d.ts",
-    "**/*.tsx?",
+    // "custom.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
   ],
 }

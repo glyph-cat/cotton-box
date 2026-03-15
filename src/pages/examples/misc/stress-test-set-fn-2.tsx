@@ -2,7 +2,7 @@ import { hookstate, useHookstate } from '@hookstate/core'
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
 import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
-import { createContext, Fragment, JSX, useContext, useMemo, useState } from 'react'
+import { createContext, Fragment, ReactNode, useContext, useMemo, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 import { create } from 'zustand'
 // import { RelinkSource, useRelinkValue } from 'react-relink'
@@ -21,7 +21,7 @@ const testSubjects = [
   'Redux',
 ]
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   return (
     <SetStateContext.Provider value={useMemo(() => ({
       ...DEFAULT_SET_STATE_CONTEXT,
@@ -146,7 +146,7 @@ const createTestHandler = (ctx: ISetStateContext, iterations: number) => async (
   }
 }
 
-function ControlComponent(): JSX.Element {
+function ControlComponent(): ReactNode {
   const ctx = useContext(SetStateContext)
   return (
     <div>
@@ -165,36 +165,36 @@ function ControlComponent(): JSX.Element {
 }
 
 const TestSimpleStateManager = new SimpleStateManager(0)
-function SimpleStateManagerTestComponent(): JSX.Element {
+function SimpleStateManagerTestComponent(): ReactNode {
   const state = useSimpleStateValue(TestSimpleStateManager)
   return <h2><code>SimpleStateManager</code>: {state}</h2>
 }
 
 const TestStateManager = new StateManager(0)
-function StateManagerTestComponent(): JSX.Element {
+function StateManagerTestComponent(): ReactNode {
   const state = useStateValue(TestStateManager)
   return <h2><code>StateManager</code>: {state}</h2>
 }
 
 // const TestAsyncStateManager = new AsyncStateManager(0)
-// function AsyncStateManagerTestComponent(): JSX.Element {
+// function AsyncStateManagerTestComponent(): ReactNode {
 //   const state = useStateValue(TestAsyncStateManager)
 //   return <h2><code>AsyncStateManager</code>: {state}</h2>
 // }
 
-function ReactTestComponent(): JSX.Element {
+function ReactTestComponent(): ReactNode {
   const [state, setState] = useState(0)
   useContext(SetStateContext).React = setState
   return <h2>React <code>useState</code>: {state}</h2>
 }
 
 // const RecoilAtom = atom({ key: 'test', default: 0 })
-// function RecoilTestComponentBase(): JSX.Element {
+// function RecoilTestComponentBase(): ReactNode {
 //   const [state, setState] = useRecoilState(RecoilAtom)
 //   useContext(SetStateContext).Recoil = setState
 //   return <h2>Recoil: {state}</h2>
 // }
-// function RecoilTestComponent(): JSX.Element {
+// function RecoilTestComponent(): ReactNode {
 //   return (
 //     <RecoilRoot>
 //       <RecoilTestComponentBase />
@@ -214,7 +214,7 @@ const TestStore = configureStore({
     test: TestSlice.reducer,
   },
 })
-function ReduxTestComponentBase(): JSX.Element {
+function ReduxTestComponentBase(): ReactNode {
   const state = useSelector(s => s['test']) as number
   const dispatch = useDispatch()
   useContext(SetStateContext).Redux = () => {
@@ -222,7 +222,7 @@ function ReduxTestComponentBase(): JSX.Element {
   }
   return <h2>Redux: {state}</h2>
 }
-function ReduxTestComponent(): JSX.Element {
+function ReduxTestComponent(): ReactNode {
   return (
     <Provider store={TestStore}>
       <ReduxTestComponentBase />
@@ -231,19 +231,19 @@ function ReduxTestComponent(): JSX.Element {
 }
 
 const useZustandState = create(() => 0)
-function ZustandTestComponent(): JSX.Element {
+function ZustandTestComponent(): ReactNode {
   const state = useZustandState()
   return <h2>Zustand: {state}</h2>
 }
 
 const TestHookState = hookstate(0)
-function HookstateTestComponent(): JSX.Element {
+function HookstateTestComponent(): ReactNode {
   const state = useHookstate(TestHookState)
   return <h2>Hookstate: {state.get()}</h2>
 }
 
 // const TestRelinkState = new RelinkSource({ key: 'test', default: 0 })
-// function ReactRelinkTestComponent(): JSX.Element {
+// function ReactRelinkTestComponent(): ReactNode {
 //   const state = useRelinkValue(TestRelinkState)
 //   return <h2><code>react-relink</code>: {state}</h2>
 // }

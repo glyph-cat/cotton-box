@@ -1,5 +1,5 @@
 import CodeInline from '@theme/CodeInline'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import { Link } from '../custom-link'
 import { LabeledItem } from '../labeled-item'
 
@@ -11,7 +11,7 @@ export interface InheritedFromProps {
 export function InheritedFrom({
   name,
   href,
-}: InheritedFromProps): JSX.Element {
+}: InheritedFromProps): ReactNode {
   return (
     <p>
       <LabeledItem label='Inherited from'>

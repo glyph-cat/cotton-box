@@ -1,6 +1,6 @@
 import { useHistory } from '@docusaurus/router'
 import { DocConstants } from '@site/src/constants'
-import { AnchorHTMLAttributes, DetailedHTMLProps, JSX, MouseEvent, useCallback } from 'react'
+import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, ReactNode, useCallback } from 'react'
 
 // Reference: https://docusaurus.io/docs/markdown-features/links
 // "Markdown file references only work when the source and target files are
@@ -16,7 +16,7 @@ export function Link({
   children,
   href,
   ...otherProps
-}: LinkProps): JSX.Element {
+}: LinkProps): ReactNode {
 
   const { push } = useHistory()
 

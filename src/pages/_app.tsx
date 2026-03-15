@@ -4,18 +4,20 @@ import type { AppProps } from 'next/app'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import QS from 'query-string'
-import { JSX, useCallback } from 'react'
+import { ReactNode, useCallback } from 'react'
 import { SandboxUrlParam } from '~constants'
 
 export default function App({
   Component,
   pageProps,
-}: AppProps): JSX.Element {
+}: AppProps): ReactNode {
   return (
-    <div style={{
-      display: 'grid',
-      padding: 20,
-    }}>
+    <div
+      style={{
+        display: 'grid',
+        padding: 20,
+      }}
+    >
       <UtilArea />
       <div style={{ margin: 10 }}>
         <Component {...pageProps} />
@@ -24,7 +26,7 @@ export default function App({
   )
 }
 
-function UtilArea(): JSX.Element {
+function UtilArea(): ReactNode {
   const { pathname } = useRouter()
   const openInEditor = useCallback(async () => {
     await fetch(QS.stringifyUrl({

@@ -1,7 +1,7 @@
 import CodeBlock from '@theme/CodeBlock'
 import TabItem from '@theme/TabItem'
 import Tabs from '@theme/Tabs'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
 // Yarn FTW
 
@@ -13,7 +13,7 @@ export interface YarnToNPMProps {
 export function YarnToNPM({
   children,
   title,
-}: YarnToNPMProps): JSX.Element {
+}: YarnToNPMProps): ReactNode {
   children = children['props'] ? children['props']['children'] : children
   if (Array.isArray(children)) { children = children.join('') }
   return (

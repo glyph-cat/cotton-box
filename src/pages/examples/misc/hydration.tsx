@@ -1,9 +1,9 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
 import { HydrateStateManager } from 'packages/react/src/api/hydration'
-import { JSX, useEffect, useReducer } from 'react'
+import { ReactNode, useEffect, useReducer } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   const [f, forceUpdate] = useReducer((c) => c + 1, 0)
   useEffect(() => {
     setTimeout(() => {
@@ -26,7 +26,7 @@ export default function App(): JSX.Element {
   )
 }
 
-function Component(): JSX.Element {
+function Component(): ReactNode {
   const value = useStateValue(ExampleState)
   const value2 = useStateValue(ExampleState2)
   return <>

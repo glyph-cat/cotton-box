@@ -39,13 +39,13 @@ wrapper(({
           test(flagScenario, () => {
             const TestState = new StateManagerType(42)
             cleanupManager.append(TestState.dispose)
-            const hookInterface = new HookTester({
+            const hookTester = new HookTester({
               useHook: () => useHook(TestState),
               values: {
                 main(state) { return state },
               },
             }, cleanupManager)
-            expect(hookInterface.get('main')).toBe(42)
+            expect(hookTester.get('main')).toBe(42)
           })
         }
 
@@ -58,7 +58,7 @@ wrapper(({
           const TestState = new StateManagerType(42)
           cleanupManager.append(TestState.dispose)
 
-          const hookInterface = new HookTester({
+          const hookTester = new HookTester({
             useHook: () => {
               const [active, setActiveState] = useState(true)
               const state = useStateValue(TestState, null, active)
@@ -81,35 +81,35 @@ wrapper(({
           }, cleanupManager)
 
           // Check initial state
-          expect(hookInterface.get('main')).toBe(42)
-          expect(hookInterface.renderCount).toBe(1)
+          expect(hookTester.get('main')).toBe(42)
+          expect(hookTester.renderCount).toBe(1)
 
           // Set active=false
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('setActiveFalse')
+            await hookTester.actionAsync('setActiveFalse')
           } else {
-            hookInterface.action('setActiveFalse')
+            hookTester.action('setActiveFalse')
           }
-          expect(hookInterface.get('main')).toBe(42)
-          expect(hookInterface.renderCount).toBe(2)
+          expect(hookTester.get('main')).toBe(42)
+          expect(hookTester.renderCount).toBe(2)
 
           // Perform state change
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('increment')
+            await hookTester.actionAsync('increment')
           } else {
-            hookInterface.action('increment')
+            hookTester.action('increment')
           }
-          expect(hookInterface.get('main')).toBe(42)
-          expect(hookInterface.renderCount).toBe(2)
+          expect(hookTester.get('main')).toBe(42)
+          expect(hookTester.renderCount).toBe(2)
 
           // Set active=true
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('setActiveTrue')
+            await hookTester.actionAsync('setActiveTrue')
           } else {
-            hookInterface.action('setActiveTrue')
+            hookTester.action('setActiveTrue')
           }
-          expect(hookInterface.get('main')).toBe(43)
-          expect(hookInterface.renderCount).toBe(3)
+          expect(hookTester.get('main')).toBe(43)
+          expect(hookTester.renderCount).toBe(3)
 
         })
 
@@ -118,7 +118,7 @@ wrapper(({
           const TestState = new StateManagerType(42)
           cleanupManager.append(TestState.dispose)
 
-          const hookInterface = new HookTester({
+          const hookTester = new HookTester({
             useHook: () => {
               const [active, setActiveState] = useState(false)
               const state = useStateValue(TestState, null, active)
@@ -141,44 +141,44 @@ wrapper(({
           }, cleanupManager)
 
           // Check initial state
-          expect(hookInterface.get('main')).toBe(42)
-          expect(hookInterface.renderCount).toBe(1)
+          expect(hookTester.get('main')).toBe(42)
+          expect(hookTester.renderCount).toBe(1)
 
           // Perform state change
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('increment')
+            await hookTester.actionAsync('increment')
           } else {
-            hookInterface.action('increment')
+            hookTester.action('increment')
           }
-          expect(hookInterface.get('main')).toBe(42)
-          expect(hookInterface.renderCount).toBe(1)
+          expect(hookTester.get('main')).toBe(42)
+          expect(hookTester.renderCount).toBe(1)
 
           // Set active=true
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('setActiveTrue')
+            await hookTester.actionAsync('setActiveTrue')
           } else {
-            hookInterface.action('setActiveTrue')
+            hookTester.action('setActiveTrue')
           }
-          expect(hookInterface.get('main')).toBe(43)
-          expect(hookInterface.renderCount).toBe(2)
+          expect(hookTester.get('main')).toBe(43)
+          expect(hookTester.renderCount).toBe(2)
 
           // Set active=false
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('setActiveFalse')
+            await hookTester.actionAsync('setActiveFalse')
           } else {
-            hookInterface.action('setActiveFalse')
+            hookTester.action('setActiveFalse')
           }
-          expect(hookInterface.get('main')).toBe(43)
-          expect(hookInterface.renderCount).toBe(3)
+          expect(hookTester.get('main')).toBe(43)
+          expect(hookTester.renderCount).toBe(3)
 
           // Perform state change again
           if (isAsyncStateManager) {
-            await hookInterface.actionAsync('increment')
+            await hookTester.actionAsync('increment')
           } else {
-            hookInterface.action('increment')
+            hookTester.action('increment')
           }
-          expect(hookInterface.get('main')).toBe(43)
-          expect(hookInterface.renderCount).toBe(3)
+          expect(hookTester.get('main')).toBe(43)
+          expect(hookTester.renderCount).toBe(3)
 
         })
 

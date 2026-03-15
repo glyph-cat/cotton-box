@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
 const fileExtensionPattern = /\.tsx?$/i
 
@@ -11,7 +11,7 @@ export interface IndexListProps {
 export function IndexList({
   data,
   parentHref,
-}: IndexListProps): JSX.Element {
+}: IndexListProps): ReactNode {
   const renderStack = []
   const dataKeys = Object.keys(data)
   for (let i = 0; i < dataKeys.length; i++) {

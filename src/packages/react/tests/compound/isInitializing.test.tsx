@@ -35,7 +35,7 @@ wrapper(({
       })
       cleanupManager.append(TestState.dispose)
 
-      const hookInterface = new HookTester({
+      const hookTester = new HookTester({
         useHook: () => useSimpleStateValue(TestState.isInitializing),
         values: {
           isInitializing(state) { return state },
@@ -51,14 +51,14 @@ wrapper(({
         },
       }, cleanupManager)
 
-      expect(hookInterface.get('isInitializing')).toBe(true)
-      await hookInterface.actionAsync('completeFirstInit')
-      expect(hookInterface.get('isInitializing')).toBe(false)
+      expect(hookTester.get('isInitializing')).toBe(true)
+      await hookTester.actionAsync('completeFirstInit')
+      expect(hookTester.get('isInitializing')).toBe(false)
 
-      hookInterface.action('initAgain')
-      expect(hookInterface.get('isInitializing')).toBe(true)
+      hookTester.action('initAgain')
+      expect(hookTester.get('isInitializing')).toBe(true)
       await act(async () => { await TestUtils.delay(10) })
-      expect(hookInterface.get('isInitializing')).toBe(false)
+      expect(hookTester.get('isInitializing')).toBe(false)
 
     })
   }

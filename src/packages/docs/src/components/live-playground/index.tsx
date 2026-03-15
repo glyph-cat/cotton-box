@@ -15,7 +15,7 @@ import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes'
 import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
 import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
-import { JSX, useCallback } from 'react'
+import { ReactNode, useCallback } from 'react'
 const INDEX_TS = 'index.js'
 const APP_TSX = 'App.tsx'
 const STYLES_CSS = 'styles.css'
@@ -102,7 +102,7 @@ export interface SimpleWebPlaygroundProps {
   options?: SandpackProps['options']
 }
 
-export function SimpleWebPlayground(props: SimpleWebPlaygroundProps): JSX.Element {
+export function SimpleWebPlayground(props: SimpleWebPlaygroundProps): ReactNode {
   // TOFIX: we should still render the code somehow for crawlers to be able to read it
   const visibility = useDelayedVisibility()
   return visibility ? <SimpleWebPlaygroundBase {...props} /> : null
@@ -113,7 +113,7 @@ function SimpleWebPlaygroundBase({
   css,
   extraDependencies,
   options,
-}: SimpleWebPlaygroundProps): JSX.Element {
+}: SimpleWebPlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
   return (
     <>
@@ -182,14 +182,14 @@ export interface SimpleConsolePlaygroundProps {
   code: string
 }
 
-export function SimpleConsolePlayground(props: SimpleConsolePlaygroundProps): JSX.Element {
+export function SimpleConsolePlayground(props: SimpleConsolePlaygroundProps): ReactNode {
   const visibility = useDelayedVisibility()
   return visibility ? <SimpleConsolePlaygroundBase {...props} /> : null
 }
 
 export function SimpleConsolePlaygroundBase({
   code,
-}: SimpleConsolePlaygroundProps): JSX.Element {
+}: SimpleConsolePlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
   // const { sandpack } = useSandpack()
   // const { logs } = useSandpackConsole()
@@ -237,7 +237,7 @@ export function SimpleConsolePlaygroundBase({
   )
 }
 
-function MonacoEditor(): JSX.Element {
+function MonacoEditor(): ReactNode {
   const { code, updateCode } = useActiveCode()
   const { sandpack } = useSandpack()
   return (

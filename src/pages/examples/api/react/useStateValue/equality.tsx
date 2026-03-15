@@ -1,9 +1,9 @@
 import { objectIsShallowEqual } from '@glyph-cat/equality'
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { JSX, useCallback, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   const [shouldUseObjectIs, setUseObjectIs] = useState(true)
   const user = useStateValue(
     UserState,
@@ -21,7 +21,7 @@ export default function App(): JSX.Element {
   return (
     <div>
       <h1>Hello, {user.firstName} {user.lastName}!</h1>
-      <h2>Your lucky number is {user.luckyNumber ?? '...'}</h2>
+      <h2>Your lucky number is {user.luckyNumber || '...'}</h2>
       <button onClick={setStateBySpreadingOnly}>Set state by spreading only</button>
       <button onClick={setEqualityObjectIs} disabled={shouldUseObjectIs}>
         Use <code>Object.is</code>
@@ -42,7 +42,7 @@ interface IUserState {
 const UserState = new StateManager<IUserState>({
   firstName: 'John',
   lastName: 'Smith',
-  luckyNumber: null,
+  luckyNumber: 0,
 })
 
 function setStateBySpreadingOnly(): void {

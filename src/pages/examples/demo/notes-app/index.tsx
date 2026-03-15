@@ -1,6 +1,6 @@
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
-import { ChangeEvent, JSX, MouseEvent, memo, useCallback, useDeferredValue, useEffect } from 'react'
+import { ChangeEvent, MouseEvent, ReactNode, memo, useCallback, useDeferredValue, useEffect } from 'react'
 import styles from './index.module.css'
 
 interface IAppState {
@@ -8,7 +8,7 @@ interface IAppState {
     title: string,
     body: string
   }>
-  currentlyPreviewing: string
+  currentlyPreviewing: string | null
 }
 
 const AppState = new StateManager<IAppState>({
@@ -28,7 +28,7 @@ function onSelectNote(noteId: string) {
 function addNewNote(title = '', body = ''): void {
   AppState.set((previousState) => {
     let newId: string
-    do { newId = getRandomId() } while (previousState[newId])
+    do { newId = getRandomId() } while (previousState.notes[newId])
     return {
       ...previousState,
       notes: {
@@ -91,7 +91,7 @@ function onChangeNoteBody(noteId: string) {
   }
 }
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   useEffect(() => {
     // Populate state with some data
     const firstNoteId = 'ZPM9XQ7i8G4Lh569ouOw'
@@ -122,7 +122,7 @@ export default function App(): JSX.Element {
   )
 }
 
-function Sidebar(): JSX.Element {
+function Sidebar(): ReactNode {
   const currentlyPreviewing = useStateValue(AppState, (state) => state.currentlyPreviewing)
   const notes = useDeferredValue(useStateValue(AppState, (state) => state.notes))
   const renderStack = []
@@ -160,7 +160,7 @@ const SidebarItem = memo(({
   id,
   isPreviewing,
   value,
-}: SidebarItemProps): JSX.Element => {
+}: SidebarItemProps): ReactNode => {
 
   const onRemoveNote = useCallback((e: MouseEvent<HTMLDivElement>) => {
     removeNote(id)
@@ -193,9 +193,9 @@ const SidebarItem = memo(({
   )
 })
 
-function Editor(): JSX.Element {
+function Editor(): ReactNode {
   const currentlyPreviewing = useStateValue(AppState, (state) => state.currentlyPreviewing)
-  const currentNote = useStateValue(AppState, (state) => state.notes[state.currentlyPreviewing])
+  const currentNote = useStateValue(AppState, (state) => state.notes[state.currentlyPreviewing ?? ''])
   const isPreviewingValidItem = currentlyPreviewing && currentNote
   return (
     <div className={styles.editorContainer}>
@@ -203,14 +203,14 @@ function Editor(): JSX.Element {
         className={styles.titleInput}
         disabled={!isPreviewingValidItem}
         value={isPreviewingValidItem ? currentNote.title : ''}
-        onChange={onChangeNoteTitle(currentlyPreviewing)}
+        onChange={onChangeNoteTitle(currentlyPreviewing!)}
         placeholder={isPreviewingValidItem ? 'Title' : undefined}
       />
       <textarea
         className={styles.bodyTextArea}
         disabled={!isPreviewingValidItem}
         value={isPreviewingValidItem ? currentNote.body : ''}
-        onChange={onChangeNoteBody(currentlyPreviewing)}
+        onChange={onChangeNoteBody(currentlyPreviewing!)}
         placeholder={isPreviewingValidItem
           ? 'What\'s on your mind?'
           : 'Select a note to begin editing'

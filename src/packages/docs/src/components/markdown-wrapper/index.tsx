@@ -1,4 +1,4 @@
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import Markdown, { Options } from 'react-markdown'
 import { Link } from '../custom-link'
 
@@ -10,7 +10,7 @@ export function MarkdownWrapper({
   children,
   unwrapParagraph,
   ...otherProps
-}: MarkdownWrapperProps): JSX.Element {
+}: MarkdownWrapperProps): ReactNode {
   return (
     <Markdown
       components={{ 'a': Link }}

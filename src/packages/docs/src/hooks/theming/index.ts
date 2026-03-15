@@ -2,7 +2,7 @@ import { ColorMode, useColorMode } from '@docusaurus/theme-common'
 import { SiteSettingsState, UIAppearance } from '@site/src/services/site-settings'
 import { isFunction } from '@site/src/utils/type-check'
 import { useStateValue } from 'cotton-box-react'
-import { useEffect, useLayoutEffect, useReducer, useState } from 'react'
+import { ReactNode, useEffect, useLayoutEffect, useReducer, useState } from 'react'
 
 const forceUpdateReducer = (c: number): number => c + 1
 
@@ -45,7 +45,7 @@ export function useDerivedColorMode(): ColorMode {
   }
 }
 
-export function ThemeInterception(): JSX.Element {
+export function ThemeInterception(): ReactNode {
   const { colorMode: currentColorMode, setColorMode } = useColorMode()
   const derivedColorMode = useDerivedColorMode()
   useEffect(() => {

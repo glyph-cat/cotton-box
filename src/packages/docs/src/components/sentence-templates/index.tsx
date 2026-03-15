@@ -1,6 +1,6 @@
 import { DocConstants } from '@site/src/constants'
 import CodeInline from '@theme/CodeInline'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import { MarkdownWrapper } from '../markdown-wrapper'
 
 export interface DoesNotTakeAnyParametersProps {
@@ -9,7 +9,7 @@ export interface DoesNotTakeAnyParametersProps {
 
 export function DoesNotTakeAnyParameters({
   name,
-}: DoesNotTakeAnyParametersProps): JSX.Element {
+}: DoesNotTakeAnyParametersProps): ReactNode {
   return (
     <p>
       <CodeInline>{name}</CodeInline> does not take any parameters.
@@ -23,7 +23,7 @@ interface DoesNotReturnAnythingProps {
 
 function DoesNotReturnAnything({
   name,
-}: DoesNotReturnAnythingProps): JSX.Element {
+}: DoesNotReturnAnythingProps): ReactNode {
   return (
     <p>
       <CodeInline>{name}</CodeInline> does not return anything.
@@ -39,7 +39,7 @@ export interface ReturnsProps {
 export function Returns({
   name,
   children,
-}: ReturnsProps): JSX.Element {
+}: ReturnsProps): ReactNode {
   if (children === DocConstants.TYPE_UNDEFINED) {
     return <DoesNotReturnAnything name={name} />
   } else {

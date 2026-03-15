@@ -1,5 +1,5 @@
 import { DocConstants } from '@site/src/constants'
-import { ElementType, JSX } from 'react'
+import { ElementType, ReactNode } from 'react'
 import { ApiLink } from '../api-link'
 import { LabeledItem } from '../labeled-item'
 import labeledItemStyles from '../labeled-item/index.module.css'
@@ -40,7 +40,7 @@ export function TypeDisplay({
   children,
   containerElement: ContainerElement = 'p',
   typeIsArrayOf,
-}: TypeDisplayProps): JSX.Element {
+}: TypeDisplayProps): ReactNode {
 
   const possibleTypes = Array.isArray(children) ? children : [children]
 

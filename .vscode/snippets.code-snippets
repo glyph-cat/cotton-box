@@ -16,8 +16,9 @@
     "body": [
       "import {  } from 'cotton-box'",
       "import {  } from 'cotton-box-react'",
+      "import { ReactNode } from 'react'",
       "",
-      "export default function App(): JSX.Element {",
+      "export default function App(): ReactNode {",
       "  return (",
       "    <div>",
       "      {/* ... */}",

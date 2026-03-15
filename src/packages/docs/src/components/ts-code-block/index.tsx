@@ -1,7 +1,7 @@
 import CodeBlock from '@theme/CodeBlock'
 import TabItem from '@theme/TabItem'
 import Tabs from '@theme/Tabs'
-import { JSX, ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 
 export interface TSCodeBlockProps {
   children: [tsCode: ReactElement, jsCode: ReactElement]
@@ -11,7 +11,7 @@ export interface TSCodeBlockProps {
 export function TSCodeBlock({
   children,
   title,
-}: TSCodeBlockProps): JSX.Element {
+}: TSCodeBlockProps): ReactNode {
   const renderStack = []
   for (const child of children) {
     const className = child.props.children.props.className as string

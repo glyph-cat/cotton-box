@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import styles from './index.module.css'
 
 export interface LabeledItemProps {
@@ -9,7 +9,7 @@ export interface LabeledItemProps {
 export function LabeledItem({
   label,
   children,
-}: LabeledItemProps): JSX.Element {
+}: LabeledItemProps): ReactNode {
   return (
     <>
       <span className={styles.label}>{`${label}: `}</span>

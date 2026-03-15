@@ -1,5 +1,5 @@
 import Admonition from '@theme/Admonition'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
 export interface WarningUnstableAPIProps {
   /**
@@ -10,7 +10,7 @@ export interface WarningUnstableAPIProps {
 
 export function WarningUnstableAPI({
   children,
-}: WarningUnstableAPIProps): JSX.Element {
+}: WarningUnstableAPIProps): ReactNode {
   return (
     <Admonition type='warning' title='Caution: Unstable API'>
       <p>The accepted parameters, return value and behavior of this function may change, and it might be renamed or entirely removed between minor versions in future releases.</p>

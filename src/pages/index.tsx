@@ -1,8 +1,8 @@
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import { IndexList } from '~components/index-list'
 import { PageIndex } from '~constants'
 
-function Home(): JSX.Element {
+function Home(): ReactNode {
   return (
     <IndexList
       data={PageIndex}

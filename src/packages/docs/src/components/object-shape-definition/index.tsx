@@ -1,4 +1,4 @@
-import { Fragment, JSX } from 'react'
+import { Fragment, ReactNode } from 'react'
 import { LabeledItem } from '../labeled-item'
 import labeledItemStyles from '../labeled-item/index.module.css'
 import { MarkdownWrapper } from '../markdown-wrapper'
@@ -33,7 +33,7 @@ export function ObjectShapeDefinition({
   data,
   hideOptional,
   requireEitherOne,
-}: ObjectShapeDefinitionProps): JSX.Element {
+}: ObjectShapeDefinitionProps): ReactNode {
   const renderStack = []
   for (const item of data) {
     const {

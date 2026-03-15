@@ -1,5 +1,5 @@
 import CodeInline from '@theme/CodeInline'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 import { Link } from '../custom-link'
 
 export interface ApiLinkProps {
@@ -10,7 +10,7 @@ export interface ApiLinkProps {
 export function ApiLink({
   children,
   href,
-}: ApiLinkProps): JSX.Element {
+}: ApiLinkProps): ReactNode {
   return (
     <Link href={href}>
       <CodeInline>

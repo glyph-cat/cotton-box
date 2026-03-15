@@ -10,10 +10,10 @@ import { SimpleWebPlayground } from '@site/src/components/live-playground'
 Occasionally, we might want to opt out of watching the state. This can be done by passing a third parameter. If we do not need to use a selector, we can pass `null` as the second parameter.
 
 ```jsx
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
 
-function App(): JSX.Element {
+function App(): ReactNode {
   const [active, setActive] = useState(true)
   const state = useStateValue(ExampleState, null, active)
   return '...'

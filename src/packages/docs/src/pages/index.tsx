@@ -4,12 +4,12 @@ import { HomepageFeatures } from '@site/src/components/homepage-features'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
 import clsx from 'clsx'
+import { ReactNode } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
-// @ts-expect-error as this is an import from raw loader
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
 import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
+import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext()
@@ -32,7 +32,7 @@ function HomepageHeader() {
   )
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext()
 
   return (

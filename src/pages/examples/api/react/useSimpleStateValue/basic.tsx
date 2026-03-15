@@ -1,13 +1,13 @@
 import { SimpleStateManager } from 'cotton-box'
 import { useSimpleStateValue } from 'cotton-box-react'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   const user = useSimpleStateValue(UserState)
   return (
     <div>
       <h1>Hello, {user.firstName} {user.lastName}!</h1>
-      <h2>Your lucky number is {user.luckyNumber ?? '...'}</h2>
+      <h2>Your lucky number is {user.luckyNumber || '...'}</h2>
       <button onClick={rollLuckyNumber}>Roll lucky number</button>
     </div>
   )
@@ -22,7 +22,7 @@ interface IUserState {
 const UserState = new SimpleStateManager<IUserState>({
   firstName: 'John',
   lastName: 'Smith',
-  luckyNumber: null,
+  luckyNumber: 0,
 })
 
 function rollLuckyNumber(): void {

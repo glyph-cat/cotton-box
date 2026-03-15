@@ -1,8 +1,8 @@
 import { StateManager } from 'cotton-box'
 import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
-import { JSX } from 'react'
+import { ReactNode } from 'react'
 
-export default function App(): JSX.Element {
+export default function App(): ReactNode {
   const isInitializing = useSimpleStateValue(UserState.isInitializing)
   return (
     <>
@@ -15,8 +15,9 @@ export default function App(): JSX.Element {
   )
 }
 
-function SubComponent(): JSX.Element {
+function SubComponent(): ReactNode {
   const user = useStateValue(UserState)
+  if (!user) { return <>Loading...</> }
   return (
     <div>
       <h1>Hello, {user.firstName} {user.lastName}!</h1>
@@ -30,14 +31,14 @@ interface IUserState {
   luckyNumber: number
 }
 
-const UserState = new StateManager<IUserState>(null, {
+const UserState = new StateManager<IUserState | null>(null, {
   lifecycle: {
     async init({ commit }) {
       await delay(1000)
       commit({
         firstName: 'John',
         lastName: 'Smith',
-        luckyNumber: null,
+        luckyNumber: 0,
       })
     },
   }
