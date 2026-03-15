@@ -1,5 +1,5 @@
 import { DocConstants } from '@site/src/constants'
-import { ElementType, ReactNode } from 'react'
+import { ElementType, ReactNode as React_ReactNode } from 'react'
 import { ApiLink } from '../api-link'
 import { LabeledItem } from '../labeled-item'
 import labeledItemStyles from '../labeled-item/index.module.css'
@@ -17,6 +17,7 @@ export enum DataType {
   SimpleStateManager,
   StateManager,
   AsyncStateManager,
+  SimpleFiniteStateManager,
   StateManagerVisibility,
   SimpleStateManagerOptions,
   StateManagerOptions,
@@ -40,7 +41,7 @@ export function TypeDisplay({
   children,
   containerElement: ContainerElement = 'p',
   typeIsArrayOf,
-}: TypeDisplayProps): ReactNode {
+}: TypeDisplayProps): React_ReactNode {
 
   const possibleTypes = Array.isArray(children) ? children : [children]
 
@@ -97,6 +98,7 @@ const URLs: Record<DataType, string> = {
   [DataType.SimpleStateManager]: `${DocConstants.DOCS_API_CORE_URL}/SimpleStateManager`,
   [DataType.StateManager]: `${DocConstants.DOCS_API_CORE_URL}/StateManager`,
   [DataType.AsyncStateManager]: `${DocConstants.DOCS_API_CORE_URL}/AsyncStateManager`,
+  [DataType.SimpleFiniteStateManager]: `${DocConstants.DOCS_API_CORE_URL}/SimpleFiniteStateManager`,
   [DataType.SimpleStateManagerOptions]: `${DocConstants.DOCS_API_CORE_URL}/SimpleStateManagerOptions`,
   [DataType.StateManagerOptions]: `${DocConstants.DOCS_API_CORE_URL}/StateManagerOptions`,
   [DataType.SetStateFn]: `${DocConstants.DOCS_API_CORE_URL}/SetStateFn`,
