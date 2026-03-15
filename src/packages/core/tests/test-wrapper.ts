@@ -78,6 +78,7 @@ export function wrapper(
   executor: ((cfg: TestConfig) => void)
 ): void {
   for (const testConfig of testConfigStack) {
+    // eslint-disable-next-line jest/valid-title
     describe(testConfig.description, (): void => {
       executor(testConfig)
     })

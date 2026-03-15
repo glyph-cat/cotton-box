@@ -22,7 +22,7 @@ export namespace TestUtils {
     try {
       callback()
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {/* ... */ }
+    } catch (e) { /* ... */ }
   }
 
 }

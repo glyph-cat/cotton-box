@@ -25,7 +25,7 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     expect(typeof unwatch2).toBe('function')
 
     // Expect no state changes after disposal
-    TestState.set(n => n + 1)
+    TestState.set((n) => n + 1)
     expect(watchPayload).toStrictEqual([])
 
     // Make sure there are no issues when calling `unwatch` even after disposed.

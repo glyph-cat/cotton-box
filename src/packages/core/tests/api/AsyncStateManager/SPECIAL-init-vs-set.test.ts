@@ -55,7 +55,6 @@ wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
 
     })
 
-
   })
 
   describe('Has pending changes', () => {

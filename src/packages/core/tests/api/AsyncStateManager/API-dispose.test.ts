@@ -26,7 +26,7 @@ wrapper(({ Lib: { AsyncStateManager } }: TestConfig) => {
     expect(typeof unwatch2).toBe('function')
 
     // Expect no state changes after disposal
-    await TestState.set(n => n + 1)
+    await TestState.set((n) => n + 1)
     expect(numbers1).toStrictEqual([])
     expect(numbers2).toStrictEqual([])
 

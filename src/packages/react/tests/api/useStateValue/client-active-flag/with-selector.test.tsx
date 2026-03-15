@@ -30,9 +30,9 @@ wrapper(({
       describe('Only test initial value', () => {
 
         const flagScenarioHooks = [
-          ['active=(default)', (TestState) => useStateValue(TestState, s => s.toString())],
-          ['active=true', (TestState) => useStateValue(TestState, s => s.toString(), true)],
-          ['active=false', (TestState) => useStateValue(TestState, s => s.toString(), false)],
+          ['active=(default)', (TestState) => useStateValue(TestState, (s) => s.toString())],
+          ['active=true', (TestState) => useStateValue(TestState, (s) => s.toString(), true)],
+          ['active=false', (TestState) => useStateValue(TestState, (s) => s.toString(), false)],
         ] as const
 
         for (const [flagScenario, useHook] of flagScenarioHooks) {
@@ -61,7 +61,7 @@ wrapper(({
           const hookInterface = new HookTester({
             useHook: () => {
               const [active, setActiveState] = useState(true)
-              const state = useStateValue(TestState, s => s.toString(), active)
+              const state = useStateValue(TestState, (s) => s.toString(), active)
               return { state, setActiveState }
             },
             values: {
@@ -121,7 +121,7 @@ wrapper(({
           const hookInterface = new HookTester({
             useHook: () => {
               const [active, setActiveState] = useState(false)
-              const state = useStateValue(TestState, s => s.toString(), active)
+              const state = useStateValue(TestState, (s) => s.toString(), active)
               return { state, setActiveState }
             },
             values: {

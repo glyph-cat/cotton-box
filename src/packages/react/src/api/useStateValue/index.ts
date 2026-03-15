@@ -90,13 +90,13 @@ export function useStateValue<State, SelectedState>(
 ): SelectedState
 
 export function useStateValue<State, SelectedState>(
-  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
+  $stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
 
-  stateManager = useResolveHydrationStateManager(
-    stateManager as StateManager<State> | AsyncStateManager<State>
+  const stateManager = useResolveHydrationStateManager(
+    $stateManager as StateManager<State> | AsyncStateManager<State>
   )
 
   useSuspenseWaiter(stateManager)
