@@ -28,8 +28,6 @@ export interface SimpleStateManagerOptions {
  */
 export class SimpleStateManager<State> {
 
-  readonly type = 'SimpleStateManager'
-
   /**
    * @internal
    */

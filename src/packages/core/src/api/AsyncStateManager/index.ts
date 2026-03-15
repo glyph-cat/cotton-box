@@ -17,11 +17,6 @@ const FILLER_STATE_CHANGE_EVENT_TYPE = null
  */
 export class AsyncStateManager<State> extends StateManager<State> {
 
-  // @ts-expect-error Forceful override
-  // This allows TS to show an error when `useSimpleStateValue` with any
-  // State Manager type other than `SimpleStateManager`.
-  readonly type = 'AsyncStateManager'
-
   /**
    * @internal
    */
@@ -45,7 +40,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   /**
    * @internal
    */
-  private async M$internalQueue(
+  protected override async M$internalQueue(
     newStateOrFn: State | AsyncSetStateFn<State> | null,
     eventType: StateChangeEventType | typeof FILLER_STATE_CHANGE_EVENT_TYPE
   ): Promise<void> {

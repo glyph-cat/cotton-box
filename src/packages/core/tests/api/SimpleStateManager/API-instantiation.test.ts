@@ -16,7 +16,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     }
     const TestState = new SimpleStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
-    expect(TestState.type).toBe('SimpleStateManager')
     expect(TestState.name).toBe('UnnamedStateManager_001')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
@@ -44,7 +43,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       clientOnly: true,
     })
     cleanupManager.append(TestState.dispose)
-    expect(TestState.type).toBe('SimpleStateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({

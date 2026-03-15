@@ -7,7 +7,7 @@ yarn api
 
 yarn tsx ./scripts/run/insert-doc-variables
 
-rm -r ./temp/tsc
+# rm -r ./temp/tsc
 
 # Copy index.mjs to 'temp/' and change extension to '.js'
 mkdir -p ./temp/test-builds

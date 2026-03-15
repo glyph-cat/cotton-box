@@ -125,11 +125,6 @@ export interface StateManagerOptions<State> extends SimpleStateManagerOptions {
  */
 export class StateManager<State> extends SimpleStateManager<State> {
 
-  // @ts-expect-error Forceful override
-  // This allows TS to show an error when `useSimpleStateValue` with any
-  // State Manager type other than `SimpleStateManager`.
-  readonly type = 'StateManager'
-
   /**
    * @internal
    */
@@ -186,7 +181,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * @internal
    */
-  private M$internalQueue(
+  protected M$internalQueue(
     newStateOrFn: State | SetStateFn<State>,
     eventType: StateChangeEventType
   ): void {

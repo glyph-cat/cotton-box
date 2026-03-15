@@ -1,4 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { Nullable } from '@glyph-cat/foundation'
 import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -17,7 +18,6 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     const TestState = new AsyncStateManager(defaultState)
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe('UnnamedStateManager_001')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
     expect(await TestState.get()).toStrictEqual({
@@ -49,7 +49,6 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     })
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe('AsyncStateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(await TestState.get(), defaultState)).toBe(true)
     expect(await TestState.get()).toStrictEqual({
@@ -77,7 +76,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: IUserState
+      let spiedDefaultState: Nullable<IUserState> = null
       const stateToCommit: IUserState = {
         firstName: 'John',
         lastName: 'Smith',
@@ -102,10 +101,10 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 41,
       })
       expect(didSet).not.toHaveBeenCalled()
-      let spiedCurrentState: IUserState
+      let spiedCurrentState: Nullable<IUserState> = null
       await TestState.init(({ commit, currentState }) => {
         spiedCurrentState = currentState
-        commit(null)
+        commit(currentState)
       })
       expect(spiedCurrentState).toStrictEqual({
         firstName: 'John',
@@ -121,7 +120,7 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: IUserState
+      let spiedDefaultState: Nullable<IUserState> = null
       const TestState = new AsyncStateManager(defaultState, {
         lifecycle: {
           init({ defaultState: $defaultState, commitNoop }) {

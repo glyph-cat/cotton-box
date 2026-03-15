@@ -1,4 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { Nullable } from '@glyph-cat/foundation'
 import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -17,7 +18,6 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     const TestState = new StateManager(defaultState)
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe('UnnamedStateManager_001')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
@@ -49,7 +49,6 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     })
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.type).toBe('StateManager')
     expect(TestState.name).toBe('numbers')
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
@@ -98,10 +97,10 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
         luckyNumber: 41,
       })
       expect(didSet).not.toHaveBeenCalled()
-      let spiedCurrentState: IUserState
+      let spiedCurrentState: Nullable<IUserState> = null
       await TestState.init(({ commit, currentState }) => {
         spiedCurrentState = currentState
-        commit(null)
+        commit(currentState)
       })
       expect(spiedCurrentState).toStrictEqual({
         firstName: 'John',
@@ -117,7 +116,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
         luckyNumber: 42,
       }
       const didSet = jest.fn()
-      let spiedDefaultState: IUserState
+      let spiedDefaultState: Nullable<IUserState> = null
       const TestState = new StateManager(defaultState, {
         lifecycle: {
           init({ defaultState: $defaultState, commitNoop }) {

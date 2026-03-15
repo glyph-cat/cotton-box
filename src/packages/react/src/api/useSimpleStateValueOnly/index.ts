@@ -7,6 +7,8 @@ import {
 } from 'cotton-box'
 import { useSyncExternalStore } from 'react'
 
+// #region Guard: invalid types
+
 /**
  * {:TSDOC_WARN_NOT_SUPPORTED_HERE_STATE_MANAGER:}
  * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
@@ -24,6 +26,8 @@ export function useSimpleStateValueOnly<State>(
 export function useSimpleStateValueOnly<State>(
   stateManager: AsyncStateManager<State>,
 ): never
+
+// #endregion Guard: invalid types
 
 /**
  * {:TSDOC_DESC_USE_SIMPLE_STATE_VALUE_ONLY:}
