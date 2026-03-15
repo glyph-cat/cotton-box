@@ -12,7 +12,7 @@
     "moduleResolution": "Node",
     "outDir": "./temp/tsc/js",
     "skipLibCheck": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "stripInternal": true,
     "target": "ES2020",

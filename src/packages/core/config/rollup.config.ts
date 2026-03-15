@@ -104,7 +104,7 @@ const config: Array<RollupOptions> = [
       file: 'lib/es/index.mjs',
       format: 'es',
       exports: 'named',
-      sourcemap: true,
+      sourcemap: false,
     },
     plugins: getPlugins({
       buildType: BuildType.MJS,
@@ -134,7 +134,7 @@ const config: Array<RollupOptions> = [
       format: 'umd',
       name: UMD_NAME,
       exports: 'named',
-      sourcemap: true,
+      sourcemap: false,
     },
     plugins: getPlugins({
       buildType: BuildType.UMD_MIN,

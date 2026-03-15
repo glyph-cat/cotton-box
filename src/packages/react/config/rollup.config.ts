@@ -112,7 +112,7 @@ const config: Array<RollupOptions> = [
       file: 'lib/es/index.mjs',
       format: 'es',
       exports: 'named',
-      sourcemap: true,
+      sourcemap: false,
     },
     external: REACT_EXTERNAL_LIBS,
     plugins: getPlugins({
@@ -146,7 +146,7 @@ const config: Array<RollupOptions> = [
       name: UMD_NAME,
       exports: 'named',
       globals: UMD_GLOBALS,
-      sourcemap: true,
+      sourcemap: false,
     },
     external: REACT_EXTERNAL_LIBS,
     plugins: getPlugins({
