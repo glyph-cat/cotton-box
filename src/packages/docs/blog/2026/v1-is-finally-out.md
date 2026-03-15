@@ -17,7 +17,7 @@ After countless rounds of testing, observation, and tweaking, Cotton Box's API h
 It was originally created as the successor of React Relink with a cleaner API, faster performance, and independence from React. However, it remained experimental and there was no concrete roadmap for further development.
 
 ## The Current Situation
-After testing it with my other side projects (from simple form applications, to projects with Live2D integration, to VR games that use [`media-pipe`](https://ai.google.dev/edge/mediapipe/solutions/guide) + [`react-three-fiber`](https://r3f.docs.pmnd.rs/getting-started/introduction)), the results have been quite satisfactory. There were almost no lags, and even when there were, state management was never the bottleneck.
+After testing it with some of my private side projects (from simple form applications, to projects with [Live2D](https://www.live2d.com) integration, to VR games that use [`media-pipe`](https://ai.google.dev/edge/mediapipe/solutions/guide) + [`react-three-fiber`](https://r3f.docs.pmnd.rs/getting-started/introduction)), the results have been quite satisfactory. There were almost no lags, and even when there were, state management was never the bottleneck.
 
 Combining the above factor with the fact that there is now a stable pattern in how the library can be used / how it should be used, it made sense to do some cleanup, remove some deprecated APIs, and release it as v1.
 
