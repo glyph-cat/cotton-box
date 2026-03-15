@@ -76,8 +76,8 @@ export const DocConstants = {
   TSDOC_MARKER_UNSTABLE_API: '# Caution: Unstable API\n',
 
   // #region tsdoc
-  TSDOC_WARN_NOT_SUPPORTED_HERE_STATE_MANAGER: `## ❌ [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) is not supported here.`,
-  TSDOC_WARN_NOT_SUPPORTED_HERE_ASYNC_STATE_MANAGER: `## ❌ [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager) is not supported here.`,
+  TSDOC_WARN_NOT_COMPATIBLE_HERE_STATE_MANAGER: `## ❌ [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) is not compatible here.`,
+  TSDOC_WARN_NOT_COMPATIBLE_HERE_ASYNC_STATE_MANAGER: `## ❌ [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager) is not compatible here.`,
   TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD: `## ➡️ Please [\`useStateValue\`](${DOCS_API_REACT_URL}/useStateValue) instead.`,
   TSDOC_DESC_SIMPLE_STATE_MANAGER: 'A bare-bones state manager.',
   TSDOC_DESC_STATE_MANAGER: 'A state manager with lifecycle management and enforces set-state functions to be executed based on order of invocation.',

@@ -14,7 +14,7 @@ import { emptyWatcher } from '../../internals/empty-watcher'
 // #region Guard: invalid types
 
 /**
- * {:TSDOC_WARN_NOT_SUPPORTED_HERE_STATE_MANAGER:}
+ * {:TSDOC_WARN_NOT_COMPATIBLE_HERE_STATE_MANAGER:}
  * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
  * @public
  */
@@ -25,7 +25,7 @@ export function useSimpleStateValue<State>(
 ): never
 
 /**
- * {:TSDOC_WARN_NOT_SUPPORTED_HERE_STATE_MANAGER:}
+ * {:TSDOC_WARN_NOT_COMPATIBLE_HERE_STATE_MANAGER:}
  * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
  * @public
  */
@@ -36,7 +36,7 @@ export function useSimpleStateValue<State>(
 ): never
 
 /**
- * {:TSDOC_WARN_NOT_SUPPORTED_HERE_ASYNC_STATE_MANAGER:}
+ * {:TSDOC_WARN_NOT_COMPATIBLE_HERE_ASYNC_STATE_MANAGER:}
  * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
  * @public
  */
@@ -47,7 +47,7 @@ export function useSimpleStateValue<State>(
 ): never
 
 /**
- * {:TSDOC_WARN_NOT_SUPPORTED_HERE_ASYNC_STATE_MANAGER:}
+ * {:TSDOC_WARN_NOT_COMPATIBLE_HERE_ASYNC_STATE_MANAGER:}
  * {:TSDOC_WARN_PLEASE_USE_STATE_VALUE_INSTEAD:}
  * @public
  */
