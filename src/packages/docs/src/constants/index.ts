@@ -110,12 +110,12 @@ export const DocConstants = {
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_ARRAY_OR_OBJECT: 'A wrapper around `arrayIsShallowEqual` and `objectIsShallowEqual`. Only use this when you cannot determine whether your selected state will return an array or an object as it exhausts additional computing resources that could otherwise be prevented.',
   TSDOC_DESC_EQUALITY_SHALLOW_COMPARE_OBJECT: `Compares each item in the object using [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}). Use this when your selector returns a plain object.`,
   TSDOC_DESC_EQUALITY_STRINGIFY_COMPARE: `Compares the previous and next states after serializing them with [\`JSON.stringify\`](${API_REFERENCE_URL_JSON_STRINGIFY}).`,
-  TSDOC_DESC_WATCHER: 'An event manager that can be subscribed to and unsubscribed from, and the events can be fired to actively listening handlers.',
 
   TSDOC_DESC_ENUM_BUILD_TYPE: 'The available build types of the package.',
   TSDOC_DESC_ENUM_BUILD_TYPE_CJS: 'Common JS',
   TSDOC_DESC_ENUM_BUILD_TYPE_ES: 'EcmaScript',
   TSDOC_DESC_ENUM_BUILD_TYPE_MJS: 'EcmaScript (minified)',
+  TSDOC_DESC_ENUM_BUILD_TYPE_RN: 'React Native',
   TSDOC_DESC_ENUM_BUILD_TYPE_UMD: 'Universal Module Definition',
   TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN: 'Universal Module Definition (Minified)',
   TSDOC_DESC_BUILD_TYPE: 'The package\'s build type.',
@@ -137,11 +137,6 @@ export const DocConstants = {
   TSDOC_METHOD_DESC_WAIT_BY_VALUE: 'Waits for the state to match the expected value. If the state already matches the `expectedValue`, the Promise will be resolved immediately.',
   TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR: 'Waits for the `evaluator` to evaluate to `true`. The `evaluator` will be called immediately to check if the condition is fulfilled. If not, it will be called again each time the state changes.',
   TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER: 'Disposes the State Manager when it is no longer in use. This will remove all watchers and prevent new ones from being added.',
-
-  TSDOC_METHOD_DESC_WATCHER_WATCH: 'Accepts a callback that serves as a handler and start watching for changes. The callback will be invoked whenever an event is posted.',
-  TSDOC_METHOD_DESC_WATCHER_POST: 'Posts an event to all handlers subscribed to the watcher.',
-  TSDOC_METHOD_DESC_WATCHER_UNWATCH_ALL: 'Forcefully removes all active handlers.',
-  TSDOC_METHOD_DESC_WATCHER_DISPOSE: 'Removes all active handlers and prevent new ones from being added.',
 
   TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL: 'Additional options for the State Manager.',
   TSDOC_PARAM_DESC_ALLOWED_STATE_TRANSITIONS: 'The list of allowed state transitions.',

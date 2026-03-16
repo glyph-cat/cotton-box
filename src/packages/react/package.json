@@ -40,7 +40,8 @@
     "@glyph-cat/equality": "^1.0.0"
   },
   "peerDependencies": {
-    "cotton-box": "*"
+    "cotton-box": "^1.0.0",
+    "react": "^19"
   },
   "peerDependenciesMeta": {
     "@types/react": {

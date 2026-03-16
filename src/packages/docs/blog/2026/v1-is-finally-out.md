@@ -22,7 +22,11 @@ After testing it with some of my private side projects (from simple form applica
 Combining the above factor with the fact that there is now a stable pattern in how the library can be used / how it should be used, it made sense to do some cleanup, remove some deprecated APIs, and release it as v1.
 
 ## Future Plans
-The APIs of this library will remain fairly consistent unless a future version of React with breaking changes is introduced or if any bug/vulnerability has been found. Considering the purpose of this library, it is deemed near-complete, with only rare cases that require writing custom React hooks as a workaround. I intend to keep this library simple and lightweight. However, feature suggestions are always welcomed, and I will consider adding them as long as they make sense and do not compromise performance.
+The APIs of this library will remain fairly consistent unless a future version of React with breaking changes is introduced or if any bug/vulnerability has been found. 
+
+Of course, there's also the experimental `<HydrateStateManager>` component, which is not listed in the documentation intentionally. More time is needed to test this out. Considering the purpose of this library, it is deemed near-complete, with only some rare cases that require writing custom React hooks as a workaround.
+
+I intend to keep this library simple and lightweight. However, feature suggestions are always welcomed, and I will consider adding them as long as they make sense and do not compromise performance.
 
 ## Closing Note
-Though this is not a popular library since the first release and neither is it at the time of writing. To anyone who comes across this post or has been using Cotton Box, thank you for putting your trust in this literally nameless state management library. I hope you continue to use and support it, and may you always find it a joy to use Cotton Box in your projects.
+Though this is not a popular library since its first release and neither is it at the time of writing. To anyone who comes across this post or has been using Cotton Box, thank you for putting your trust in this literally nameless state management library. I hope you continue to use and support it, and may you always find it a joy to use Cotton Box in your projects.

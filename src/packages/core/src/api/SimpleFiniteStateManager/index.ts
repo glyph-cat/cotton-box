@@ -78,7 +78,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       )
     }
     this.M$internalState = newState
-    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
   }
 
   /**
@@ -106,7 +106,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       return false
     }
     this.M$internalState = newState
-    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
     return true
   }
 

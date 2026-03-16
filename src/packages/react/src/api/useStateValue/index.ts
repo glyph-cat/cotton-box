@@ -1,3 +1,4 @@
+import { BuildType } from '@glyph-cat/foundation'
 import { isFunction, isNull } from '@glyph-cat/type-checking'
 import {
   AsyncStateManager,
@@ -10,11 +11,11 @@ import {
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
 import { $1, $2, SyncValue } from '../../abstractions'
-import { $$INTERNALS } from '../../constants'
+import { $$INTERNALS, BUILD_TYPE } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
-import { useResolveHydrationStateManager } from '../hydration/internal'
+import { useResolveHydrationStateManager } from '../hydration/internals'
 
 type $$ = $1 | $2
 
@@ -90,14 +91,19 @@ export function useStateValue<State, SelectedState>(
 ): SelectedState
 
 export function useStateValue<State, SelectedState>(
-  $stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
+  stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
 
-  const stateManager = useResolveHydrationStateManager(
-    $stateManager as StateManager<State> | AsyncStateManager<State>
-  )
+  if (BUILD_TYPE !== BuildType.RN) {
+    // NOTE: `BUILD_TYPE` is a compile-time constant.
+    // This conditional invocation will become static after compilation.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    stateManager = useResolveHydrationStateManager(
+      stateManager as StateManager<State> | AsyncStateManager<State>
+    )
+  }
 
   useSuspenseWaiter(stateManager)
   useDebugName(stateManager)

@@ -1,4 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { Nullable } from '@glyph-cat/foundation'
 import { StateChangeEventType } from '../../../src'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
@@ -13,7 +14,7 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new SimpleStateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
+      let waitedValue: Nullable<number> = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -24,9 +25,9 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new SimpleStateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
-      let spiedDefaultState: number = null
-      let spiedEventType: StateChangeEventType = null
+      let waitedValue: Nullable<number> = null
+      let spiedDefaultState: Nullable<number> = null
+      let spiedEventType: Nullable<StateChangeEventType> = null
       const cb = async () => {
         waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState
@@ -47,7 +48,7 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new SimpleStateManager(41)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
+      let waitedValue: Nullable<number> = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -61,9 +62,9 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new SimpleStateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
-      let spiedDefaultState: number = null
-      let spiedEventType: StateChangeEventType = null
+      let waitedValue: Nullable<number> = null
+      let spiedDefaultState: Nullable<number> = null
+      let spiedEventType: Nullable<StateChangeEventType> = null
       const cb = async () => {
         waitedValue = await TestState.wait((state, defaultState, eventType) => {
           spiedDefaultState = defaultState

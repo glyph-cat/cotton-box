@@ -1,3 +1,4 @@
+import { BuildType } from '@glyph-cat/foundation'
 import commonjs from '@rollup/plugin-commonjs'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
@@ -6,18 +7,34 @@ import { execSync } from 'child_process'
 import { RollupOptions, Plugin as RollupPlugin } from 'rollup'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from '../package.json'
-import { BuildType } from '../src/constants'
 
-const INPUT_FILE = 'src/index.ts'
+const NODE_RESOLVE_EXTENSIONS_BASE = [
+  '.tsx',
+  '.jsx',
+  '.ts',
+  '.js',
+]
+
+const NODE_RESOLVE_EXTENSIONS_RN = [
+  '.native.tsx',
+  '.native.jsx',
+  '.native.ts',
+  '.native.js',
+  ...NODE_RESOLVE_EXTENSIONS_BASE,
+]
 
 const UMD_NAME = 'CottonBoxReact'
 
 const UMD_GLOBALS = {
-  react: 'React',
+  '@glyph-cat/foundation': 'GCFoundation',
+  '@glyph-cat/type-checking': 'GCTypeChecking',
+  'react': 'React',
   'cotton-box': 'CottonBox',
 }
 
-const REACT_EXTERNAL_LIBS = Object.keys(UMD_GLOBALS)
+const EXTERNAL_LIBS = Object.keys(UMD_GLOBALS)
+
+const INPUT_FILE = 'src/index.ts'
 
 interface IPluginConfig {
   mode?: 'development' | 'production'
@@ -29,7 +46,7 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
 
   const pluginStack: Array<RollupPlugin> = [
     nodeResolve({
-      extensions: ['.ts'],
+      extensions: NODE_RESOLVE_EXTENSIONS_BASE,
     }),
     typescript({
       tsconfigOverride: {
@@ -84,7 +101,7 @@ const config: Array<RollupOptions> = [
       exports: 'named',
       sourcemap: false,
     },
-    external: REACT_EXTERNAL_LIBS,
+    external: EXTERNAL_LIBS,
     plugins: getPlugins({
       buildType: BuildType.CJS,
     }),
@@ -98,7 +115,7 @@ const config: Array<RollupOptions> = [
       exports: 'named',
       sourcemap: false,
     },
-    external: REACT_EXTERNAL_LIBS,
+    external: EXTERNAL_LIBS,
     plugins: getPlugins({
       buildType: BuildType.ES,
     }),
@@ -112,10 +129,30 @@ const config: Array<RollupOptions> = [
       exports: 'named',
       sourcemap: false,
     },
-    external: REACT_EXTERNAL_LIBS,
+    external: EXTERNAL_LIBS,
     plugins: getPlugins({
       buildType: BuildType.MJS,
       mode: 'production',
+    }),
+  },
+  {
+    // React Native
+    input: INPUT_FILE,
+    output: {
+      file: 'lib/native/index.js',
+      format: 'es',
+      exports: 'named',
+    },
+    external: EXTERNAL_LIBS,
+    plugins: getPlugins({
+      buildType: BuildType.RN,
+    }).map((plugin) => {
+      if (plugin.name === 'node-resolve') {
+        return nodeResolve({
+          extensions: NODE_RESOLVE_EXTENSIONS_RN,
+        })
+      }
+      return plugin
     }),
   },
   {
@@ -129,7 +166,7 @@ const config: Array<RollupOptions> = [
       globals: UMD_GLOBALS,
       sourcemap: false,
     },
-    external: REACT_EXTERNAL_LIBS,
+    external: EXTERNAL_LIBS,
     plugins: getPlugins({
       buildType: BuildType.UMD,
       mode: 'development',
@@ -146,7 +183,7 @@ const config: Array<RollupOptions> = [
       globals: UMD_GLOBALS,
       sourcemap: false,
     },
-    external: REACT_EXTERNAL_LIBS,
+    external: EXTERNAL_LIBS,
     plugins: getPlugins({
       buildType: BuildType.UMD_MIN,
       mode: 'production',

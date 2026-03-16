@@ -1,5 +1,6 @@
 import { isFunction, isNull } from '@glyph-cat/type-checking'
 import { AsyncSetStateFn, CommitStrategy, StateChangeEventType } from '../../abstractions'
+import { COMMIT_STRATEGY_COMMIT, COMMIT_STRATEGY_COMMIT_NOOP } from '../../constants'
 import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -67,7 +68,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn as State
-      this.M$watcher.post(this.M$internalState, eventType)
+      this.M$watcher.M$post(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {
@@ -132,14 +133,14 @@ export class AsyncStateManager<State> extends StateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commitNoop',
+              COMMIT_STRATEGY_COMMIT_NOOP,
               effectiveCommitStrategy,
             ))
           }
           return // Early exit
         }
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
-        effectiveCommitStrategy = 'commitNoop'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT_NOOP
       },
       commit: async (state: State) => {
         if (effectiveCommitStrategy) {
@@ -147,7 +148,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commit',
+              COMMIT_STRATEGY_COMMIT,
               effectiveCommitStrategy,
             ))
           }
@@ -155,7 +156,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
         }
         await this.M$internalQueue(state, StateChangeEventType.INIT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
-        effectiveCommitStrategy = 'commit'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
       },
     })
     await this.isInitializing.wait(false)

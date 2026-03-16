@@ -5,6 +5,7 @@ import {
   SetStateFn,
   StateChangeEventType,
 } from '../../abstractions'
+import { COMMIT_STRATEGY_COMMIT, COMMIT_STRATEGY_COMMIT_NOOP } from '../../constants'
 import { type AsyncStateManager } from '../AsyncStateManager'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 import {
@@ -198,7 +199,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn
-      this.M$watcher.post(this.M$internalState, eventType)
+      this.M$watcher.M$post(this.M$internalState, eventType)
       // #region Post-handling: lifecycle hooks
       if (eventType === StateChangeEventType.SET) {
         if (this.M$lifecycle.didSet) {
@@ -247,7 +248,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   /**
    * @internal
    */
-  internalHydrate(initFn: (args: StateManagerInitArgs<State>) => void): void {
+  internalHydrateSSR(initFn: (args: StateManagerInitArgs<State>) => void): void {
     let effectiveCommitStrategy: CommitStrategy
     initFn({
       currentState: this.M$internalState,
@@ -258,13 +259,13 @@ export class StateManager<State> extends SimpleStateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commitNoop',
+              COMMIT_STRATEGY_COMMIT_NOOP,
               effectiveCommitStrategy,
             ))
           }
           return // Early exit
         }
-        effectiveCommitStrategy = 'commitNoop'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT_NOOP
         this.isInternalHydrated = true
       },
       commit: (state: State) => {
@@ -273,14 +274,14 @@ export class StateManager<State> extends SimpleStateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commit',
+              COMMIT_STRATEGY_COMMIT,
               effectiveCommitStrategy,
             ))
           }
           return // Early exit
         }
         this.M$internalState = state
-        effectiveCommitStrategy = 'commit'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
         this.isInternalHydrated = true
       },
     })
@@ -310,14 +311,14 @@ export class StateManager<State> extends SimpleStateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commitNoop',
+              COMMIT_STRATEGY_COMMIT_NOOP,
               effectiveCommitStrategy,
             ))
           }
           return // Early exit
         }
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
-        effectiveCommitStrategy = 'commitNoop'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT_NOOP
       },
       commit: (state: State) => {
         if (effectiveCommitStrategy) {
@@ -325,7 +326,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
             // eslint-disable-next-line no-console
             console.error(getErrorMessageForRepeatedInitCommits(
               this.name,
-              'commit',
+              COMMIT_STRATEGY_COMMIT,
               effectiveCommitStrategy,
             ))
           }
@@ -333,7 +334,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
         }
         this.M$internalQueue(state, StateChangeEventType.INIT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
-        effectiveCommitStrategy = 'commit'
+        effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
       },
     })
     await this.isInitializing.wait(false)

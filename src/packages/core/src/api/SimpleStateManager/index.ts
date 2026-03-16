@@ -1,7 +1,7 @@
+import { Optional } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, StateChangeEventType, WaitEvaluator } from '../../abstractions'
-import { getAutomaticName } from '../../internals/name-generator'
-import { Watcher } from '../Watcher'
+import { Watcher } from '../../internals/watcher'
 
 let internalIdCounter = 0
 
@@ -15,7 +15,7 @@ export interface SimpleStateManagerOptions {
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_NAME:}
    */
-  readonly name?: string
+  readonly name?: Optional<string>
   /**
    * {:TSDOC_DESC_OPTIONS_CLIENT_ONLY:}
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_CLIENT_ONLY:}
@@ -31,7 +31,7 @@ export class SimpleStateManager<State> {
   /**
    * @internal
    */
-  protected readonly M$watcher = new Watcher<[State, StateChangeEventType]>()
+  protected readonly M$watcher = new Watcher<State>()
 
   /**
    * @internal
@@ -58,7 +58,7 @@ export class SimpleStateManager<State> {
    * {:TSDOC_DESC_OPTIONS_NAME:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#name
    */
-  readonly name: string
+  readonly name?: Optional<string>
 
   /**
    * {:TSDOC_DESC_SIMPLE_STATE_MANAGER:}
@@ -80,7 +80,7 @@ export class SimpleStateManager<State> {
     this.dispose = this.dispose.bind(this)
     this.defaultState = defaultState
     this.M$internalState = this.defaultState
-    this.name = name || getAutomaticName()
+    this.name = name
     this.clientOnly = clientOnly ?? false
   }
 
@@ -113,7 +113,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
   }
 
   /**
@@ -123,7 +123,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.post(this.M$internalState, StateChangeEventType.RESET)
+    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.RESET)
   }
 
   /**
@@ -133,7 +133,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_WATCH:}
    */
   watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void {
-    return this.M$watcher.watch(callback)
+    return this.M$watcher.M$watch(callback)
   }
 
   /**
@@ -142,7 +142,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_UNWATCH_ALL:}
    */
   unwatchAll(): void {
-    this.M$watcher.unwatchAll()
+    this.M$watcher.M$unwatchAll()
   }
 
   /**
@@ -177,7 +177,7 @@ export class SimpleStateManager<State> {
       return Promise.resolve(this.M$internalState)
     } else {
       return new Promise((resolve) => {
-        const unwatch = this.M$watcher.watch((state, eventType) => {
+        const unwatch = this.M$watcher.M$watch((state, eventType) => {
           if (fulfillsCondition(state, eventType)) {
             unwatch()
             resolve(state)
@@ -193,7 +193,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
-    this.M$watcher.dispose()
+    this.M$watcher.M$dispose()
   }
 
 }

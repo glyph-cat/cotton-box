@@ -18,7 +18,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
     const TestState = new StateManager(defaultState)
     cleanupManager.append(TestState.dispose)
     expect(TestState.isInitializing.get()).toBe(false)
-    expect(TestState.name).toBe('UnnamedStateManager_001')
+    expect(TestState.name).toBeUndefined()
     expect(Object.is(TestState.get(), defaultState)).toBe(true)
     expect(TestState.get()).toStrictEqual({
       firstName: 'John',

@@ -1,11 +1,13 @@
-export function getErrorMessageForOverlappingInits(name: string | undefined): string {
+import { CommitStrategy } from '../../abstractions'
+
+export function getErrorMessageForOverlappingInits(name: string | undefined | null): string {
   return `Cannot initialize ${name ? `"${name}"` : 'state'}` + ' because the previous initialization is not yet complete.'
 }
 
 export function getErrorMessageForRepeatedInitCommits(
-  name: string | undefined,
-  commitStrategy: 'commit' | 'commitNoop',
-  alreadyEffectiveCommitStrategy: 'commit' | 'commitNoop',
+  name: string | undefined | null,
+  commitStrategy: CommitStrategy,
+  alreadyEffectiveCommitStrategy: CommitStrategy,
 ): string {
   return [
     'Attempted to call',
@@ -16,6 +18,6 @@ export function getErrorMessageForRepeatedInitCommits(
   ].join(' ')
 }
 
-export function getErrorMessageForSetOrResetDuringInitialization(name: string | undefined): string {
+export function getErrorMessageForSetOrResetDuringInitialization(name: string | undefined | null): string {
   return `Cannot set/reset while ${name ? `"${name}"` : 'state'} is still initializing.`
 }

@@ -1,3 +1,5 @@
+import { Optional } from '@glyph-cat/foundation'
+
 /**
  * @public
  */
@@ -13,7 +15,7 @@ export class InvalidStateTransitionError extends Error {
   constructor(
     readonly fromState: string,
     readonly toState: string,
-    readonly stateManager?: string
+    readonly stateManager?: Optional<string>
   ) {
     super(`from "${fromState}" to "${toState}" in ${stateManager ?? 'unnamed state'}`)
     this.name = 'InvalidStateTransitionError'

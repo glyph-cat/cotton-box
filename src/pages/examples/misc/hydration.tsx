@@ -31,9 +31,23 @@ function Component(): ReactNode {
   const value2 = useStateValue(ExampleState2)
   return <>
     <span>{value}</span>
+    <br />
     <span>{value2}</span>
   </>
 }
 
-const ExampleState = new StateManager(0)
-const ExampleState2 = new StateManager(3)
+const ExampleState = new StateManager(0, {
+  lifecycle: {
+    init({ commit }) {
+      commit(1)
+    },
+  },
+})
+
+const ExampleState2 = new StateManager(3, {
+  lifecycle: {
+    init({ commit }) {
+      commit(42)
+    },
+  },
+})

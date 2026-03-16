@@ -1,30 +1,4 @@
-/**
- * {:TSDOC_DESC_ENUM_BUILD_TYPE:}
- * @see -{:DOCS_API_MISC_URL:}/BuildType
- * @public
- */
-export enum BuildType {
-  /**
-   * {:TSDOC_DESC_ENUM_BUILD_TYPE_CJS:}
-   */
-  CJS = 'CJS',
-  /**
-   * {:TSDOC_DESC_ENUM_BUILD_TYPE_ES:}
-   */
-  ES = 'ES',
-  /**
-   * {:TSDOC_DESC_ENUM_BUILD_TYPE_MJS:}
-   */
-  MJS = 'MJS',
-  /**
-   * {:TSDOC_DESC_ENUM_BUILD_TYPE_UMD:}
-   */
-  UMD = 'UMD',
-  /**
-   * {:TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN:}
-   */
-  UMD_MIN = 'UMD_MIN',
-}
+import { BuildType } from '@glyph-cat/foundation'
 
 // NOTE: These variables will be not be available (`undefined`) until they
 // have been bundled.

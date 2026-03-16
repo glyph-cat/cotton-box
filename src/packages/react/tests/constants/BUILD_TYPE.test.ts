@@ -1,8 +1,8 @@
+import { BuildType } from '@glyph-cat/foundation'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 wrapper(({ ReactLib: {
   BUILD_TYPE,
-  BuildType,
 }, buildEnv, buildType }: TestConfig) => {
   test('main', () => {
     expect(BUILD_TYPE).toBe((() => {
