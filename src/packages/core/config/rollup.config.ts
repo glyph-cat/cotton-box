@@ -57,15 +57,13 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
     preventAssignment: true,
     values: replaceValues,
   }))
-  if (mode === 'production') {
-    pluginStack.push(terser({
-      mangle: {
-        properties: {
-          regex: /^M\$/,
-        },
+  pluginStack.push(terser({
+    mangle: {
+      properties: {
+        regex: /^M\$/,
       },
-    }))
-  }
+    },
+  }))
 
   return pluginStack
 }
