@@ -4,7 +4,7 @@
 
 *Minimal state management for React and beyond.*
 
-[![Read The Docs](https://img.shields.io/badge/-📖_Read_The_Docs-blue)](https://glyph-cat.github.io/cotton-box)
+[![Read The Docs](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
 [![License](https://img.shields.io/github/license/glyph-cat/cotton-box)](https://github.com/glyph-cat/cotton-box/blob/main/LICENSE)
 [![Support me on Ko-fi](https://img.shields.io/static/v1?label&logo=kofi&logoColor=ffffff&message=Support%20me%20on%20Ko-fi&color=FF5E5B)](https://ko-fi.com/glyphcat)
 
@@ -72,4 +72,6 @@ function App() {
 
 ## Documentation
 
-[![Read The Docs](https://img.shields.io/badge/-📖_Read_The_Docs-blue)](https://glyph-cat.github.io/cotton-box)
+[![Read More](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
+
+<br/>
