@@ -36,7 +36,14 @@ The package comes with three types of State Managers, each with slightly differe
 - Slower than `StateManager` in order to accommodate asynchronous set-state functions.
 - Not suitable for scenarios that involve rapid state changes as it may result in noticeable lag.
 - Only use this as an escape hatch if you need to call asynchronous functions inside the set-state function for the `.set` method. `AsyncStateManager` will wait for these actions to be completed before setting the state.
+  - Example: calling a REST API that requires awareness about the previous state in order to derive the next state
 - Go to [API reference](../../api/core/AsyncStateManager.mdx).
+
+## `SimpleFiniteStateManager` ✨
+- Special state manager that also inherits everything from `SimpleStateManager`.
+- Behaves similarly to `SimpleStateManager` and has similar computing overhead.
+- State changes are only allowed based on predetermined state transitions.
+- Go to [API reference](../../api/core/SimpleFiniteStateManager.mdx).
 
 <br/>
 

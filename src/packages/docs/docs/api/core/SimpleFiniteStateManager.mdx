@@ -66,7 +66,7 @@ constructor(
 
 Consider an example where a playable character in a game:
 - can stand be standing `still`, `walking`, or `attacking`;
-- can perform an attack only when standing still.
+- can only attack only when standing still.
 
 ```mermaid
 stateDiagram-v2
@@ -211,11 +211,11 @@ ExampleState.set((previousState) => previousState === 'A' ? 'B' : 'C')
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_VALUE}</MarkdownWrapper>
 ```ts
-set(newState: State): void
+trySet(newState: State): void
 ```
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION}</MarkdownWrapper>
 ```ts
-set(setStateFn: SetStateFn<State>): void
+trySet(setStateFn: SetStateFn<State>): void
 ```
 
 #### Parameters
