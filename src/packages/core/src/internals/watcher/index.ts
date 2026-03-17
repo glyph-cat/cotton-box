@@ -1,5 +1,7 @@
 import { StateChangeEventType } from '../../abstractions'
 
+const __emptyFunction = () => { /* do nothing */ }
+
 export class Watcher<State> {
 
   private M$isDisposed = false
@@ -9,12 +11,12 @@ export class Watcher<State> {
   M$watch(
     callback: ((state: State, eventType: StateChangeEventType) => void)
   ): () => void {
+    if (this.M$isDisposed) { return __emptyFunction } // Early exit
     this.M$watcherCollection.add(callback)
     return () => { this.M$watcherCollection.delete(callback) }
   }
 
   M$post(state: State, event: StateChangeEventType): void {
-    if (this.M$isDisposed) { return } // Early exit
     this.M$watcherCollection.forEach((callback) => {
       callback(state, event)
     })
