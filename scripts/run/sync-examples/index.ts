@@ -70,6 +70,7 @@ crawl(pathToCrawl, (pathSegments, fileName) => {
   const destination = `${pathSegments.join('/')}/${fileName}`
   let fileContents = readFileSync(`${pathToCrawl}/${destination}`, ENCODING_UTF_8)
   if (/#\s*region\s+example/i.test(fileContents)) {
+    // KIV: Limitation - Import statements cannot be broken down into separate lines
     const fileLines = fileContents.split('\n')
     const lineAfterLastImport = findLineAfterLastImport(fileLines)
     const importLines = fileLines.slice(0, lineAfterLastImport)
