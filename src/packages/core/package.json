@@ -1,7 +1,7 @@
 {
   "name": "cotton-box",
   "version": "0.14.0",
-  "description": "Flexible toolbox for state management and event handling.",
+  "description": "Minimal state management library for React and beyond.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
   "unpkg": "lib/umd/index.js",

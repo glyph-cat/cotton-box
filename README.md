@@ -2,7 +2,7 @@
 
 [![Banner](https://raw.githubusercontent.com/glyph-cat/cotton-box/main/assets/icon-with-text.svg)](https://github.com/glyph-cat/cotton-box)
 
-*Minimal state management for React and beyond.*
+*Minimal state management library for React and beyond.*
 
 [![License](https://img.shields.io/github/license/glyph-cat/cotton-box)](https://github.com/glyph-cat/cotton-box/blob/main/LICENSE)
 [![Read The Docs](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)

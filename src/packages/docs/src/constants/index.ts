@@ -47,7 +47,7 @@ const RETURN_DESC_BUILT_IN_EQUALITY_PRESETS = '`true` if both states are conside
 export const DocConstants = {
 
   GITHUB_REPO_URL: `https://github.com/glyph-cat/${CORE_PACKAGE_NAME}`,
-  PACKAGE_DESCRIPTION: 'A flexible toolbox with different types of state managers catered to different scenarios.', // TODO: [Low priority] Should we get this from root package.json?
+  PACKAGE_DESCRIPTION: 'Minimal state management library for React and beyond.', // TODO: [Low priority] Should we get this from root package.json?
 
   // #region Package names
   DISPLAY_PACKAGE_NAME: 'Cotton Box',

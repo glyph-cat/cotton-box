@@ -2,7 +2,7 @@
   "name": "cotton-box-monorepo",
   "private": true,
   "version": "0.14.0",
-  "description": "Flexible toolbox for state management and event handling.",
+  "description": "Minimal state management library for React and beyond.",
   "author": "glyph-cat",
   "license": "MIT",
   "readme": "README.md",
