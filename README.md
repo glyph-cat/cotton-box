@@ -4,8 +4,8 @@
 
 *Minimal state management for React and beyond.*
 
-[![Read The Docs](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
 [![License](https://img.shields.io/github/license/glyph-cat/cotton-box)](https://github.com/glyph-cat/cotton-box/blob/main/LICENSE)
+[![Read The Docs](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
 [![Support me on Ko-fi](https://img.shields.io/static/v1?label&logo=kofi&logoColor=ffffff&message=Support%20me%20on%20Ko-fi&color=FF5E5B)](https://ko-fi.com/glyphcat)
 
 <!-- See: https://github.com/microsoft/vscode/issues/128813#issuecomment-943125631 -->
@@ -18,8 +18,8 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 
 <!--:DO_NOT_DELETE_THIS_LINE_SUB_PACKAGE_ADDITIONAL_INFO:-->
 
-| Packages           | Stats                                                                                                                                                                                     |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Packages | Stats |
+| --- | --- |
 | `cotton-box`       | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box)             |
 | `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) |
 
@@ -40,7 +40,7 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 
 ## Examples
 
-### Create A New State Manager
+### New State Manager
 ```js
 import { StateManager } from 'cotton-box'
 
@@ -50,7 +50,7 @@ const CounterState = new StateManager(0)
 ### Set Value
 ```js
 CounterState.set(42)
-CounterState.set((c) => c + 1)
+CounterState.set(c => c + 1)
 ```
 
 ### Get Value
@@ -70,8 +70,8 @@ function App() {
 
 <br/>
 
-## Documentation
+## Full Documentation
 
-[![Read More](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
+[![Read Full Documentation Here](https://img.shields.io/badge/_-Read_Here-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
 
 <br/>
