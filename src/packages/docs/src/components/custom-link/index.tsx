@@ -10,7 +10,7 @@ import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, ReactNode, useCall
 
 // Hacky drop-in replacement:
 
-export type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
+export type LinkProps = DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> & { href: string }
 
 export function Link({
   children,
