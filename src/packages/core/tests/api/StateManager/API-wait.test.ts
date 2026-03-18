@@ -1,5 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { StateChangeEventType } from '../../../src'
+import { Nullable } from '@glyph-cat/foundation'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { StateManager } }: TestConfig) => {
@@ -13,7 +13,7 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
+      let waitedValue: Nullable<number> = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -24,20 +24,17 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
-      let spiedDefaultState: number = null
-      let spiedEventType: StateChangeEventType = null
+      let waitedValue: Nullable<number> = null
+      let spiedDefaultState: Nullable<number> = null
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState, eventType) => {
+        waitedValue = await TestState.wait((state, defaultState) => {
           spiedDefaultState = defaultState
-          spiedEventType = eventType
           return state % 2 === 0
         })
       }
       await cb()
       expect(waitedValue).toBe(42)
       expect(spiedDefaultState).toBe(42)
-      expect(spiedEventType).toBeNull()
     })
 
   })
@@ -47,7 +44,7 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by value', async () => {
       const TestState = new StateManager(41)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
+      let waitedValue: Nullable<number> = null
       const cb = async () => {
         waitedValue = await TestState.wait(42)
       }
@@ -61,13 +58,11 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     test('Wait by evaluator', async () => {
       const TestState = new StateManager(42)
       cleanupManager.append(TestState.dispose)
-      let waitedValue: number = null
-      let spiedDefaultState: number = null
-      let spiedEventType: StateChangeEventType = null
+      let waitedValue: Nullable<number> = null
+      let spiedDefaultState: Nullable<number> = null
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState, eventType) => {
+        waitedValue = await TestState.wait((state, defaultState) => {
           spiedDefaultState = defaultState
-          spiedEventType = eventType
           return state % 2 !== 0
         })
       }
@@ -77,7 +72,6 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
       TestState.set(41)
       await cbPromise
       expect(waitedValue).toBe(41)
-      expect(spiedEventType).toBe(StateChangeEventType.SET)
     })
 
   })

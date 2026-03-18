@@ -1,6 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { Nullable } from '@glyph-cat/foundation'
-import { StateChangeEventType } from '../../../src'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
@@ -27,18 +26,15 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       cleanupManager.append(TestState.dispose)
       let waitedValue: Nullable<number> = null
       let spiedDefaultState: Nullable<number> = null
-      let spiedEventType: Nullable<StateChangeEventType> = null
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState, eventType) => {
+        waitedValue = await TestState.wait((state, defaultState) => {
           spiedDefaultState = defaultState
-          spiedEventType = eventType
           return state % 2 === 0
         })
       }
       await cb()
       expect(waitedValue).toBe(42)
       expect(spiedDefaultState).toBe(42)
-      expect(spiedEventType).toBeNull()
     })
 
   })
@@ -64,11 +60,9 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       cleanupManager.append(TestState.dispose)
       let waitedValue: Nullable<number> = null
       let spiedDefaultState: Nullable<number> = null
-      let spiedEventType: Nullable<StateChangeEventType> = null
       const cb = async () => {
-        waitedValue = await TestState.wait((state, defaultState, eventType) => {
+        waitedValue = await TestState.wait((state, defaultState) => {
           spiedDefaultState = defaultState
-          spiedEventType = eventType
           return state % 2 !== 0
         })
       }
@@ -78,7 +72,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       TestState.set(41)
       await cbPromise
       expect(waitedValue).toBe(41)
-      expect(spiedEventType).toBe(StateChangeEventType.SET)
     })
 
   })

@@ -45,6 +45,6 @@ export function useSimpleStateValueOnly<State>(
   return useSyncExternalStore(
     stateManager.watch,
     stateManager.get,
-    (stateManager as SimpleStateManager<State>).clientOnly ? undefined : stateManager.get,
+    stateManager.get,
   )
 }

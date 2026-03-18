@@ -97,7 +97,6 @@ export const DocConstants = {
   TSDOC_DESC_OPTIONS_LIFECYCLE_INIT: `Will be invoked upon instantiation of the State Manager. Also see [\`StateManagerInitArgs\`](${DOCS_API_CORE_URL}/StateManagerInitArgs).`,
   TSDOC_DESC_OPTIONS_LIFECYCLE_DID_SET: `Will be invoked each time the \`.set\` method is called, even if the actual value remains the same.\n\nAlso see [\`StateManagerDidSetArgs\`](${DOCS_API_CORE_URL}/StateManagerDidSetArgs).`,
   TSDOC_DESC_OPTIONS_LIFECYCLE_DID_RESET: 'Will be invoked each time the `.reset` method is called.',
-  TSDOC_DESC_OPTIONS_CLIENT_ONLY: `This only concerns [React](${REACT_DOCS_SITE}) for the time being.\n\nIf set to \`true\`, then this State Manager cannot be used for server-side rendering.`,
   TSDOC_DESC_OPTIONS_VISIBILITY: `This only concerns [React](${REACT_DOCS_SITE}) for the time being.\n\nThis is used to control whether state values will be exposed in the [React Developer Tools](${REACT_DOCS_SITE_DEV_TOOLS_URL}).`,
   TSDOC_DESC_OPTIONS_VISIBILITY_DETAILED: `This only concerns [React](${REACT_DOCS_SITE}) for the time being.\n\nThis is used to control whether state values will be exposed in the [React Developer Tools](${REACT_DOCS_SITE_DEV_TOOLS_URL}) but only applies to [\`StateManager\`](${DOCS_API_CORE_URL}/StateManager) and [\`AsyncStateManager\`](${DOCS_API_CORE_URL}/AsyncStateManager).`,
   TSDOC_DESC_OPTIONS_SUSPENSE: `Suspense [React](${REACT_DOCS_SITE}) components that consume this State Manager while the State Manager is initializing.`,
@@ -160,14 +159,12 @@ export const DocConstants = {
   TSDOC_TYPE_DESC_STATE_SELECTOR: `Type definition of the selector function that is used in the hooks provided by \`${REACT_PACKAGE_NAME}\`. \n\nIt is a function that accepts the state as an argument and returns a derived value.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`,
   TSDOC_TYPE_DESC_EQUALITY_FN: `Type definition of an equality checking function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).\n\nSome presets are available in the [\`Equality\`](${DOCS_API_CORE_URL}/Equality) object.`,
   TSDOC_TYPE_DESC_READONLY_STATE_MANAGER: 'A utility type for State Managers that allows [TypeScript](https://www.typescriptlang.org) to treat it as read-only.',
-  TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE: 'The type of state change event that was triggered.',
   TSDOC_TYPE_DESC_STATE_TRANSITION: 'The definition of a state change from one to another.',
   // #endregion tsdoc
 
   // #region Default value definitions
   DEFAULT_VALUE_OPTIONS_NAME: TYPE_UNDEFINED,
   DEFAULT_VALUE_OPTIONS_LIFECYCLE: TYPE_UNDEFINED,
-  DEFAULT_VALUE_OPTIONS_CLIENT_ONLY: '`false`',
   DEFAULT_VALUE_OPTIONS_VISIBILITY: '`StateManagerVisibility.ENVIRONMENT`',
   DEFAULT_VALUE_OPTIONS_SUSPENSE: '`false`',
   // #endregion Default value definitions
@@ -203,12 +200,6 @@ export const DocConstants = {
   DESC_STATE_MANAGER_VISIBILITY_EXPOSED: 'State values will be always exposed regardless of the environment.',
   DESC_STATE_MANAGER_VISIBILITY_HIDDEN: 'State values will be always hidden regardless of the environment.',
   // #endregion State Manager Visibility
-
-  // #region StateChangeEventType
-  DESC_STATE_CHANGE_EVENT_TYPE_SET: 'Indicates that the change was triggered by calling `.set`.',
-  DESC_STATE_CHANGE_EVENT_TYPE_RESET: 'Indicates that the change was triggered by calling `.reset`.',
-  DESC_STATE_CHANGE_EVENT_TYPE_INIT: 'Indicates that the change was triggered by calling `.init`.',
-  // #endregion StateChangeEventType
 
   // #region Type references
   TYPE_REFERENCE_URL_STRING: 'https://www.w3schools.com/jsref/jsref_obj_string.asp',

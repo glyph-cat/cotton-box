@@ -19,7 +19,7 @@ export type AsyncSetStateFn<State> = (currentState: State, defaultState: State) 
  * @see -{:DOCS_API_CORE_URL:}/WaitEvaluator
  * @public
  */
-export type WaitEvaluator<State> = (currentState: State, defaultState: State, eventType: StateChangeEventType | null) => boolean
+export type WaitEvaluator<State> = (currentState: State, defaultState: State) => boolean
 
 /**
  * {:TSDOC_TYPE_DESC_STATE_SELECTOR:}
@@ -41,26 +41,6 @@ export type EqualityFn<State> = (previousState: State, nextState: State) => bool
  * @public
  */
 export type ReadOnlyStateManager<State> = Pick<SimpleStateManager<State>, 'name' | 'get' | 'watch' | 'wait'>
-
-/**
- * {:TSDOC_TYPE_DESC_STATE_CHANGE_EVENT_TYPE:}
- * @see -{:DOCS_API_CORE_URL:}/StateChangeEventType
- * @public
- */
-export enum StateChangeEventType {
-  /**
-   * {:DESC_STATE_CHANGE_EVENT_TYPE_SET:}
-   */
-  SET = 1,
-  /**
-   * {:DESC_STATE_CHANGE_EVENT_TYPE_RESET:}
-   */
-  RESET,
-  /**
-   * {:DESC_STATE_CHANGE_EVENT_TYPE_INIT:}
-   */
-  INIT,
-}
 
 /**
  * {:TSDOC_TYPE_DESC_STATE_TRANSITION:}

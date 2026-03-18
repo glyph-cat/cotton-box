@@ -31,7 +31,6 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(TestState.clientOnly).toBe(false)
     expect(TestState.visibility).toBe(StateManagerVisibility.ENVIRONMENT)
     expect(TestState.suspense).toBe(false)
   })
@@ -44,7 +43,6 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
     }
     const TestState = new AsyncStateManager(defaultState, {
       name: 'numbers',
-      clientOnly: true,
       visibility: StateManagerVisibility.EXPOSED,
     })
     cleanupManager.append(TestState.dispose)
@@ -62,7 +60,6 @@ wrapper(({ Lib: { AsyncStateManager, StateManagerVisibility } }: TestConfig) => 
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(TestState.clientOnly).toBe(true)
     expect(TestState.visibility).toBe(StateManagerVisibility.EXPOSED)
     expect(TestState.suspense).toBe(false)
   })

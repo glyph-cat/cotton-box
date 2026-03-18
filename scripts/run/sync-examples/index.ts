@@ -48,7 +48,7 @@ function deepSet(
   value: unknown
 ): void {
   if (pathSegments.length <= 0) { return } // Early exit
-  let pointer: unknown = object
+  let pointer: any = object
   for (let i = 0; i < (pathSegments.length - 1); i++) {
     const pathSegment = pathSegments[i]
     if (!Object.prototype.hasOwnProperty.call(pointer, pathSegment)) {

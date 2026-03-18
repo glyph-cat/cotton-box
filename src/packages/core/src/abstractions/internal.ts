@@ -1,3 +1,7 @@
 export type CommitStrategy = 'commit' | 'commitNoop'
 
-export type Nullable<T> = T | null
+export enum StateChangeEventType {
+  /* Set   */ S = 1,
+  /* Reset */ R,
+  /* Init  */ I,
+}

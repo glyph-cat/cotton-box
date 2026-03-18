@@ -1,24 +1,24 @@
-import { StateChangeEventType } from '../../abstractions'
-
 const __emptyFunction = () => { /* do nothing */ }
+
+// TODO: Transfer changes to '@glyph-cat/swiss-army-knife'
 
 export class Watcher<State> {
 
   private M$isDisposed = false
 
-  private M$watcherCollection = new Set<(state: State, event: StateChangeEventType) => void>()
+  private M$watcherCollection = new Set<(state: State) => void>()
 
   M$watch(
-    callback: ((state: State, eventType: StateChangeEventType) => void)
+    callback: ((state: State) => void)
   ): () => void {
     if (this.M$isDisposed) { return __emptyFunction } // Early exit
     this.M$watcherCollection.add(callback)
     return () => { this.M$watcherCollection.delete(callback) }
   }
 
-  M$post(state: State, event: StateChangeEventType): void {
+  M$post(state: State): void {
     this.M$watcherCollection.forEach((callback) => {
-      callback(state, event)
+      callback(state)
     })
   }
 

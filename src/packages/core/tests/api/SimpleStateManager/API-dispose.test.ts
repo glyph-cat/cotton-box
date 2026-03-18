@@ -1,5 +1,4 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { StateChangeEventType } from '../../../src'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
@@ -13,7 +12,7 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     const TestState = new SimpleStateManager(42)
     cleanupManager.append(TestState.dispose)
 
-    const watchPayload: Array<[number, StateChangeEventType]> = []
+    const watchPayload: Array<[number]> = []
     const unwatch1 = TestState.watch((...args) => { watchPayload.push(args) })
 
     // Make sure there are no issues when calling `dispose` multiple times.

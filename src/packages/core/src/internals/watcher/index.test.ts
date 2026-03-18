@@ -1,6 +1,6 @@
 import { Watcher } from '.'
 
-describe.skip(Watcher.name, () => {
+describe(Watcher.name, () => {
 
   test('// TODO', () => {
     expect('').pass('')

@@ -7,7 +7,6 @@ import {
   StateSelector,
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { $0 } from '../../abstractions'
 import { useDebugName } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 
@@ -110,6 +109,6 @@ export function useSimpleStateValue<State, SelectedState>(
   return useSyncExternalStore(
     active ? stateManager.watch : emptyWatcher,
     getSnapshot,
-    (stateManager as $0).clientOnly ? undefined : getSnapshot
+    getSnapshot
   )
 }

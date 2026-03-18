@@ -8,8 +8,10 @@ import { ReactNode } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
-import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
+// import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
+// import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
+import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/counter/index.module.css'
+import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/counter/index.tsx'
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext()

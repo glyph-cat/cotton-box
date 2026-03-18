@@ -13,11 +13,12 @@ export default function App(): ReactNode {
   }, [])
   return (
     <HydrateStateManager
-      //@ts-expect-error
+      ////@ts-expect-error
+      // .filter((_, i) => i <= f)
       values={[
         [ExampleState, ({ commit }) => { console.log('commit(1)'); commit(1) }],
         [ExampleState2, ({ commit }) => { console.log('commit(42)'); commit(42) }],
-      ].filter((_, i) => i <= f)}
+      ]}
     >
       <Component />
       <br />

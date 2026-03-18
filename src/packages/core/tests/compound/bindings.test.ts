@@ -1,5 +1,6 @@
 /* eslint-disable jest/expect-expect */
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { StateManagerInitArgs } from 'cotton-box'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 let cleanupManager: CleanupManager
@@ -32,7 +33,10 @@ wrapper(({ Lib: {
     })
     cleanupManager.append(TestStateManager.dispose)
     await performInvocations([
-      [TestStateManager.init, ({ commitNoop }) => { commitNoop() }],
+      [
+        TestStateManager.init,
+        ({ commitNoop }: StateManagerInitArgs<unknown>) => { commitNoop() }
+      ],
       [TestStateManager.reinitialize],
       [TestStateManager.get],
       [TestStateManager.set, 37],
@@ -50,7 +54,10 @@ wrapper(({ Lib: {
     })
     cleanupManager.append(TestStateManager.dispose)
     await performInvocations([
-      [TestStateManager.init, ({ commitNoop }) => { commitNoop() }],
+      [
+        TestStateManager.init,
+        ({ commitNoop }: StateManagerInitArgs<unknown>) => { commitNoop() }
+      ],
       [TestStateManager.reinitialize],
       [TestStateManager.get],
       [TestStateManager.getSync],

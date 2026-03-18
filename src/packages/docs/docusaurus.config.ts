@@ -122,15 +122,15 @@ const config: Config = {
     footer: {
       style: 'dark',
       links: [
-        // {
-        //   title: 'Docs',
-        //   items: [
-        //     {
-        //       label: 'Tutorial',
-        //       to: '/docs',
-        //     },
-        //   ],
-        // },
+        {
+          title: 'Docs',
+          items: [
+            {
+              label: 'Tutorial',
+              to: '/docs/learn/tutorial',
+            },
+          ],
+        },
         // {
         //   title: 'Community',
         //   items: [
@@ -144,19 +144,19 @@ const config: Config = {
         //     },
         //   ],
         // },
-        // {
-        //   title: 'More',
-        //   items: [
-        //     {
-        //       label: 'Blog',
-        //       to: '/blog',
-        //     },
-        //     {
-        //       label: 'GitHub',
-        //       href: DocConstants.GITHUB_REPO_URL,
-        //     },
-        //   ],
-        // },
+        {
+          title: 'More',
+          items: [
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+            {
+              label: 'GitHub',
+              href: DocConstants.GITHUB_REPO_URL,
+            },
+          ],
+        },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} GlyphCat`,
     },

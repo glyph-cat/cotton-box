@@ -1,5 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import type { StateManager as $1, AsyncStateManager as $2 } from '../../src'
+import type { StateManager as $1, AsyncStateManager as $2, StateManagerInitArgs } from '../../src'
 import { TestUtils } from '../test-helpers'
 import { TestConfig, wrapper } from '../test-wrapper'
 
@@ -28,7 +28,7 @@ wrapper(({ Lib: { StateManager, AsyncStateManager } }: TestConfig) => {
 
       TestState = new StateManagerType(null, {
         lifecycle: {
-          async init({ commitNoop }) {
+          async init({ commitNoop }: StateManagerInitArgs<unknown>) {
             await TestUtils.delay(10)
             commitNoop()
           },

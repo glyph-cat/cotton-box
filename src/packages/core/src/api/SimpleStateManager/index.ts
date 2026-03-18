@@ -1,6 +1,6 @@
 import { Optional } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
-import { SetStateFn, StateChangeEventType, WaitEvaluator } from '../../abstractions'
+import { SetStateFn, WaitEvaluator } from '../../abstractions'
 import { Watcher } from '../../internals/watcher'
 
 let internalIdCounter = 0
@@ -16,11 +16,6 @@ export interface SimpleStateManagerOptions {
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_NAME:}
    */
   readonly name?: Optional<string>
-  /**
-   * {:TSDOC_DESC_OPTIONS_CLIENT_ONLY:}
-   * @defaultValue {:DEFAULT_VALUE_OPTIONS_CLIENT_ONLY:}
-   */
-  readonly clientOnly?: boolean
 }
 
 /**
@@ -44,11 +39,6 @@ export class SimpleStateManager<State> {
   readonly internalId: number = ++internalIdCounter
 
   /**
-   * @internal
-   */
-  readonly clientOnly: boolean
-
-  /**
    * {:COMMON_DESC_DEFAULT_STATE:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#defaultState
    */
@@ -70,7 +60,7 @@ export class SimpleStateManager<State> {
     defaultState: State,
     options: SimpleStateManagerOptions = {},
   ) {
-    const { clientOnly, name } = options
+    const { name } = options
     this.get = this.get.bind(this)
     this.set = this.set.bind(this)
     this.reset = this.reset.bind(this)
@@ -81,7 +71,6 @@ export class SimpleStateManager<State> {
     this.defaultState = defaultState
     this.M$internalState = this.defaultState
     this.name = name
-    this.clientOnly = clientOnly ?? false
   }
 
   /**
@@ -113,7 +102,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState)
   }
 
   /**
@@ -123,7 +112,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.RESET)
+    this.M$watcher.M$post(this.M$internalState)
   }
 
   /**
@@ -132,7 +121,7 @@ export class SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#watch
    * @returns -{:RETURN_DESC_WATCH:}
    */
-  watch(callback: (state: State, eventType: StateChangeEventType) => void): () => void {
+  watch(callback: (state: State) => void): () => void {
     return this.M$watcher.M$watch(callback)
   }
 
@@ -170,15 +159,15 @@ export class SimpleStateManager<State> {
   wait(valueOrEvaluator: State | WaitEvaluator<State>): Promise<State>
 
   wait(valueOrEvaluator: State | WaitEvaluator<State>): Promise<State> {
-    const fulfillsCondition = ($state: State, $eventType: StateChangeEventType | null) => isFunction(valueOrEvaluator)
-      ? valueOrEvaluator($state, this.defaultState, $eventType)
+    const fulfillsCondition = ($state: State) => isFunction(valueOrEvaluator)
+      ? valueOrEvaluator($state, this.defaultState)
       : Object.is(valueOrEvaluator, $state)
-    if (fulfillsCondition(this.M$internalState, null)) {
+    if (fulfillsCondition(this.M$internalState)) {
       return Promise.resolve(this.M$internalState)
     } else {
       return new Promise((resolve) => {
-        const unwatch = this.M$watcher.M$watch((state, eventType) => {
-          if (fulfillsCondition(state, eventType)) {
+        const unwatch = this.M$watcher.M$watch((state) => {
+          if (fulfillsCondition(state)) {
             unwatch()
             resolve(state)
           }

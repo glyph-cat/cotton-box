@@ -1,4 +1,5 @@
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { Nullable } from '@glyph-cat/foundation'
 import type { StateManagerDidSetArgs } from '../../../../core/src'
 import { IUserState } from '../../test-helpers'
 import { TestConfig, wrapper } from '../../test-wrapper'
@@ -47,8 +48,8 @@ wrapper(({ Lib: { StateManager } }: TestConfig) => {
     })
     expect(didReset).not.toHaveBeenCalled()
 
-    let spiedDefaultState: IUserState = null
-    let stateToSet2: IUserState = null
+    let spiedDefaultState: Nullable<IUserState> = null
+    let stateToSet2: Nullable<IUserState> = null
     TestState.set((currentState, defaultStateFromFn) => {
       spiedDefaultState = defaultStateFromFn
       const nextState: IUserState = {

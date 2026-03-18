@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
+import { Fn } from '@glyph-cat/foundation'
 import { TestConfig, wrapper } from '../../test-wrapper'
 
 wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
@@ -13,7 +14,8 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
   test('commit', async () => {
     const TestState = new StateManager(0)
     cleanupManager.append(TestState.dispose)
-    let commitRef: (state: number) => void = null
+    // Will not be null by the time it is used if test conditions are fulfilled.
+    let commitRef: Fn<number> = null!
     TestState.init(({ commit }) => {
       commitRef = commit
       commit(1)
@@ -28,7 +30,8 @@ wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
   test('commitNoop', async () => {
     const TestState = new StateManager(0)
     cleanupManager.append(TestState.dispose)
-    let commitRef: () => void = null
+    // Will not be null by the time it is used if test conditions are fulfilled.
+    let commitRef: Fn = null!
     TestState.init(({ commitNoop }) => {
       commitRef = commitNoop
       commitNoop()

@@ -29,7 +29,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(TestState.clientOnly).toBe(false)
   })
 
   test('With additional options', () => {
@@ -40,7 +39,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
     }
     const TestState = new SimpleStateManager(defaultState, {
       name: 'numbers',
-      clientOnly: true,
     })
     cleanupManager.append(TestState.dispose)
     expect(TestState.name).toBe('numbers')
@@ -56,7 +54,6 @@ wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(TestState.clientOnly).toBe(true)
   })
 
 })

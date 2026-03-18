@@ -35,7 +35,8 @@ export class AsyncStateManager<State> extends StateManager<State> {
   ) {
     super(defaultState, options)
     this.getSync = this.getSync.bind(this)
-    this.internalClone = this.internalClone.bind(this)
+    // KIV: Probably no binding required:
+    // this.internalClone = this.internalClone.bind(this)
   }
 
   /**
@@ -47,7 +48,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   ): Promise<void> {
 
     if (
-      eventType !== StateChangeEventType.INIT &&
+      eventType !== StateChangeEventType.I &&
       !Object.is(eventType, FILLER_STATE_CHANGE_EVENT_TYPE) &&
       this.isInitializing.get()
     ) {
@@ -68,9 +69,9 @@ export class AsyncStateManager<State> extends StateManager<State> {
       this.M$internalState = isFunction(newStateOrFn)
         ? await newStateOrFn(this.M$internalState, this.defaultState)
         : newStateOrFn as State
-      this.M$watcher.M$post(this.M$internalState, eventType)
+      this.M$watcher.M$post(this.M$internalState)
       // #region Post-handling: lifecycle hooks
-      if (eventType === StateChangeEventType.SET) {
+      if (eventType === StateChangeEventType.S) {
         if (this.M$lifecycle.didSet) {
           this.M$lifecycle.didSet({
             state: this.M$internalState,
@@ -78,7 +79,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
             previousState,
           })
         }
-      } else if (eventType === StateChangeEventType.RESET) {
+      } else if (eventType === StateChangeEventType.R) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }
@@ -104,8 +105,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
       lifecycle: this.M$lifecycle,
       visibility: this.visibility,
       suspense: this.suspense,
-      clientOnly: this.clientOnly,
-      name: `${this.name}_clone`,
+      name: this.name && `${this.name}_cloned`,
     })
   }
 
@@ -154,7 +154,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
           }
           return // Early exit
         }
-        await this.M$internalQueue(state, StateChangeEventType.INIT);
+        await this.M$internalQueue(state, StateChangeEventType.I);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
       },
@@ -211,7 +211,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   set(setStateFn: AsyncSetStateFn<State>): Promise<void>
 
   async set(newStateOrFn: State | AsyncSetStateFn<State>): Promise<void> {
-    await this.M$internalQueue(newStateOrFn, StateChangeEventType.SET)
+    await this.M$internalQueue(newStateOrFn, StateChangeEventType.S)
   }
 
   /**
@@ -220,7 +220,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @returns -{:RETURN_DESC_RESET_ASYNC:}
    */
   async reset(): Promise<void> {
-    await this.M$internalQueue(this.defaultState, StateChangeEventType.RESET)
+    await this.M$internalQueue(this.defaultState, StateChangeEventType.R)
   }
 
   // NOTE: `wait` method is not implemented here but it seems like TS docs will

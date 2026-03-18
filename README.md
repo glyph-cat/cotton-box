@@ -5,10 +5,8 @@
 *Minimal state management library for React and beyond.*
 
 [![License](https://img.shields.io/github/license/glyph-cat/cotton-box)](https://github.com/glyph-cat/cotton-box/blob/main/LICENSE)
-[![Read The Docs](https://img.shields.io/badge/_-Read_The_Docs-blue?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
-[![Support me on Ko-fi](https://img.shields.io/static/v1?label&logo=kofi&logoColor=ffffff&message=Support%20me%20on%20Ko-fi&color=FF5E5B)](https://ko-fi.com/glyphcat)
-
-<!-- See: https://github.com/microsoft/vscode/issues/128813#issuecomment-943125631 -->
+![React compatibility v19](https://img.shields.io/badge/v19-blue?logo=react&logoColor=white)
+[![Documentation](https://img.shields.io/badge/_-Docs-2b80ff?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
 
 </div>
 
@@ -70,8 +68,9 @@ function App() {
 
 <br/>
 
-## Full Documentation
+## Links
+[![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
 
-[![Read Full Documentation Here](https://img.shields.io/badge/_-Read_Here-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D65P69N)
 
 <br/>

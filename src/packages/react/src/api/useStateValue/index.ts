@@ -96,6 +96,7 @@ export function useStateValue<State, SelectedState>(
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
 
+  // TODO: Inspect RN build
   if (BUILD_TYPE !== BuildType.RN) {
     // NOTE: `BUILD_TYPE` is a compile-time constant.
     // This conditional invocation will become static after compilation.
@@ -153,7 +154,7 @@ export function useStateValue<State, SelectedState>(
   const stateValue = useSyncExternalStore(
     active ? stateManager.watch : emptyWatcher,
     getSnapshot,
-    (stateManager as $$).clientOnly ? undefined : getSnapshot,
+    getSnapshot,
   )
   useInspectableValue((stateManager as $$).visibility, stateValue)
   return stateValue.get($$INTERNALS)!

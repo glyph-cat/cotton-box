@@ -1,0 +1,146 @@
+.container {
+  --color: #2b80ff;
+  display: grid;
+  place-items: center;
+  height: 95vh;
+}
+
+.subContainer {
+  display: grid;
+  gap: 30px;
+  place-items: center;
+}
+
+.ringContainer {
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.bumpButton {
+  aspect-ratio: 1;
+  background-color: transparent;
+  border-radius: 240px;
+  border: none;
+  cursor: pointer;
+  display: grid;
+  height: 240px;
+  margin: 0;
+  outline: none;
+  overflow: hidden;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.bumpButton:hover {
+  transform: scale(1.05);
+}
+
+.bumpButton:active {
+  transform: scale(0.95);
+}
+
+.resetButton {
+  background-color: transparent;
+  border: solid 2px var(--color);
+  border-radius: 48px;
+  color: var(--color);
+  cursor: pointer;
+  font-size: 16pt;
+  height: 48px;
+  margin: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.resetButton:hover {
+  transform: scale(1.05);
+}
+
+.resetButton:active {
+  transform: scale(0.95);
+}
+
+.resetButton::before {
+  background-color: var(--color);
+  content: " ";
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.resetButton:hover::before {
+  opacity: 0.25;
+}
+
+.resetButton:active::before {
+  opacity: 0.5;
+}
+
+.counterContainer {
+  display: grid;
+  place-self: center;
+  position: absolute;
+}
+
+.counter {
+  color: var(--color);
+  font-size: 64pt;
+  font-weight: bold;
+  text-align: center;
+}
+
+.counterHint {
+  font-size: 12pt;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ring {
+  --angle: 0;
+  --thickness: 24px;
+  --size: 240px;
+  --maskSize: calc((var(--size) / 2) - var(--thickness));
+  background-image: conic-gradient(
+    var(--color) var(--angle),
+    #80808040 var(--angle)
+  );
+  border-radius: var(--size);
+  height: var(--size);
+  width: var(--size);
+  mask-image: radial-gradient(
+    circle,
+    transparent var(--maskSize),
+    black var(--maskSize)
+  );
+  position: relative;
+}
+
+.ringCap {
+  background-color: var(--color);
+  border-radius: var(--thickness);
+  height: var(--thickness);
+  left: calc(50% - (var(--thickness) / 2));
+  position: absolute;
+  top: 0;
+  width: var(--thickness);
+}
+
+.trailingRingCapContainer {
+  height: var(--size);
+  transform: rotateZ(var(--angle));
+  width: var(--size);
+}
+
+.ringCapWithShadow {
+  box-shadow: calc(var(--thickness) / 7) 0px calc(var(--thickness) / 7) 0px
+    #00000080;
+}

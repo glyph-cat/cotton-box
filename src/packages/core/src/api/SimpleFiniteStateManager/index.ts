@@ -1,5 +1,5 @@
 import { isFunction } from '@glyph-cat/type-checking'
-import { SetStateFn, StateChangeEventType, StateTransition } from '../../abstractions'
+import { SetStateFn, StateTransition } from '../../abstractions'
 import { InvalidStateTransitionError } from '../../errors'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
 
@@ -78,7 +78,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       )
     }
     this.M$internalState = newState
-    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState)
   }
 
   /**
@@ -106,7 +106,7 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
       return false
     }
     this.M$internalState = newState
-    this.M$watcher.M$post(this.M$internalState, StateChangeEventType.SET)
+    this.M$watcher.M$post(this.M$internalState)
     return true
   }
 
