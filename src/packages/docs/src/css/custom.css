@@ -19,16 +19,12 @@
   --ifm-code-font-size: 95%;
   /* TODO: [Low priority] Make code block BG dimmer and use #ffffff20 */
   --docusaurus-highlighted-code-line-bg: #ffee0040;
-  background-color: #ffffff;
-  color: #4a4a4a;
-}
-
-.navbar {
-  background-color: #ffffff;
+  --ifm-background-color: #ffffff;
+  --ifm-font-color-base: #4a4a4a;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
-[data-theme="dark"] {
+[data-theme="dark"]:root {
   --ifm-color-primary: #4b90ff;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -37,8 +33,12 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: #ffffff16;
-  background-color: #202428;
-  color: #cccccc;
+  --ifm-background-color: #202428;
+  --ifm-font-color-base: #cccccc;
+}
+
+.navbar {
+  background-color: #ffffff;
 }
 
 [data-theme="dark"] .navbar {
