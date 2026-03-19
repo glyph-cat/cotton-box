@@ -2,14 +2,14 @@
 
 The package comes with three types of State Managers, each with slightly different characteristics, tailored for different use cases.
 
-|                                               | `SimpleStateManager` |    `StateManager`    | `AsyncStateManager` |
-| --------------------------------------------- | :------------------: | :------------------: | :-----------------: |
-| Inherits from class                           |         -/-          | `SimpleStateManager` |   `StateManager`    |
-| Supports asynchronous set-state functions     |          No          |          No          |         Yes         |
-| `get`/`set`/`reset`/`dispose` methods         |     Synchronous      |     Synchronous      |    Asynchronous     |
-| Supports lifecycle hooks                      |          No          |         Yes          |         Yes         |
-| Can be hidden from [React Developer Tools][1] |          No          |         Yes          |         Yes         |
-| [Computing overhead][2]                       |       Very low       |         Low          |        High         |
+|                                           | `SimpleStateManager` |    `StateManager`    | `AsyncStateManager` |
+| ----------------------------------------- | :------------------: | :------------------: | :-----------------: |
+| Inherits from                             |         -/-          | `SimpleStateManager` |   `StateManager`    |
+| Async set-state                           |          No          |          No          |         Yes         |
+| `get`/`set`/`reset`/`dispose` methods     |     Synchronous      |     Synchronous      |    Asynchronous     |
+| Lifecycle hooks                           |          No          |         Yes          |         Yes         |
+| Can hide values from [React Dev Tools][1] |          No          |         Yes          |         Yes         |
+| [Computing overhead][2]                   |       Very low       |         Low          |        High         |
 
 ## `SimpleStateManager`
 - A bare-bones state manager.
@@ -33,11 +33,15 @@ The package comes with three types of State Managers, each with slightly differe
 
 ## `AsyncStateManager`
 - Similar to `StateManager` except `.get`, `.set`, `.reset`, and `.dispose` operations are asynchronous.
-- Slower than `StateManager` in order to accommodate asynchronous set-state functions.
+- Slower than `StateManager` since it needs to accommodate asynchronous set-state functions.
 - Not suitable for scenarios that involve rapid state changes as it may result in noticeable lag.
 - Only use this as an escape hatch if you need to call asynchronous functions inside the set-state function for the `.set` method. `AsyncStateManager` will wait for these actions to be completed before setting the state.
-  - Example: calling a REST API that requires awareness about the previous state in order to derive the next state
+  - Example: calling a REST API that requires awareness about the previous state in order to derive the next state.
 - Go to [API reference](../../api/core/AsyncStateManager.mdx).
+
+:::info
+It is strongly advised to move async logic out of `.set` calls whenever possible and only use `AsyncStateManager` as a last resort.
+:::
 
 ## `SimpleFiniteStateManager` ✨
 - Special state manager that also inherits everything from `SimpleStateManager`.

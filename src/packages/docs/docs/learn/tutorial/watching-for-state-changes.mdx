@@ -7,11 +7,11 @@ import { SimpleConsolePlayground } from '@site/src/components/live-playground'
 
 # Watching For State Changes
 
-We can create a watch handler to observe state changes with the `.watch` method.
+We can observe state changes with the `.watch` method.
 
-It accepts a callback function as its parameter and it will be invoked whenever the state changes.
+It accepts a callback that will be invoked whenever the state changes.
 
-The `.watch` method returns a callback, that when called, will remove the watch handler.
+It also returns a callback, that when called, will unsubscribe the watch handler from future state changes.
 
 ## Example
 

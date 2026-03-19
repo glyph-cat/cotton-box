@@ -23,7 +23,7 @@ export function HydrateStateManager<State>({
   children,
   values,
 }: HydrateStateManagerProps<State>): ReactNode {
-  // TODO: inspect RN build
+  // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
   if (IS_CLIENT_ENV) {
     return children
   } else {

@@ -1,0 +1,14 @@
+.container {
+  display: grid;
+  place-items: center;
+}
+
+.gameBoard {
+  display: grid;
+  grid-auto-rows: repeat(3, 1fr);
+}
+
+.gameTile {
+  aspect-ratio: 1;
+  place-items: center;
+}

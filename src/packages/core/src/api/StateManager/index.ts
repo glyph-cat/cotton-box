@@ -1,4 +1,3 @@
-import { BuildType } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
 import {
   CommitStrategy,
@@ -7,9 +6,9 @@ import {
   StateChangeEventType,
 } from '../../abstractions'
 import {
-  BUILD_TYPE,
   COMMIT_STRATEGY_COMMIT,
   COMMIT_STRATEGY_COMMIT_NOOP,
+  IS_RN_BUILD,
 } from '../../constants'
 import { type AsyncStateManager } from '../AsyncStateManager'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
@@ -251,8 +250,8 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @internal
    */
   internalHydrateSSR(initFn: (args: StateManagerInitArgs<State>) => void): void {
-    // TODO: Inspect RN build
-    if (BUILD_TYPE === BuildType.RN) { return } // Early exit
+    // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
+    if (IS_RN_BUILD) { return } // Early exit
     let effectiveCommitStrategy: CommitStrategy
     initFn({
       currentState: this.M$internalState,

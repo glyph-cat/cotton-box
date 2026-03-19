@@ -30,6 +30,7 @@ const UMD_GLOBALS = {
   '@glyph-cat/type-checking': 'GCTypeChecking',
   'react': 'React',
   'cotton-box': 'CottonBox',
+  'react/jsx-runtime': 'react_jsx_runtime', // name found from UNPKG
 }
 
 const EXTERNAL_LIBS = Object.keys(UMD_GLOBALS)

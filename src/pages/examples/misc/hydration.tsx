@@ -13,6 +13,7 @@ export default function App(): ReactNode {
   }, [])
   return (
     <HydrateStateManager
+      // TOFIX: [Low priority] `.filter` is causing the problem.
       ////@ts-expect-error
       // .filter((_, i) => i <= f)
       values={[

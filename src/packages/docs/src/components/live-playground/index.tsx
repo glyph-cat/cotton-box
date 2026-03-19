@@ -81,8 +81,11 @@ const sharedProps: SandpackProps = {
   customSetup: {
     dependencies: {
       // KIV: [Low priority] versioning support?
+      // KIV: [Low priority] Extract dependencies from source code?
       'cotton-box': 'latest',
       'cotton-box-react': 'latest',
+      'immer': 'latest',
+      'uuid': 'latest',
     },
   },
   options: {

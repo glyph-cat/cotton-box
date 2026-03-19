@@ -4,6 +4,7 @@ title: v1 is finally out
 authors: glyphcat
 tags: []
 date: 2026-03-31
+draft: true
 # date still unsure actually
 ---
 

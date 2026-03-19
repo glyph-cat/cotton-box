@@ -1,6 +1,6 @@
-const __emptyFunction = () => { /* do nothing */ }
+import { Fn } from '@glyph-cat/foundation'
 
-// TODO: Transfer changes to '@glyph-cat/swiss-army-knife'
+const __emptyFunction = () => { /* do nothing */ }
 
 export class Watcher<State> {
 
@@ -8,9 +8,7 @@ export class Watcher<State> {
 
   private M$watcherCollection = new Set<(state: State) => void>()
 
-  M$watch(
-    callback: ((state: State) => void)
-  ): () => void {
+  M$watch(callback: Fn<[State], void>): () => void {
     if (this.M$isDisposed) { return __emptyFunction } // Early exit
     this.M$watcherCollection.add(callback)
     return () => { this.M$watcherCollection.delete(callback) }

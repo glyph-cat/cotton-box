@@ -1,75 +1,85 @@
 import { Watcher } from '.'
 
-describe(Watcher.name, () => {
+let watcher: Watcher<number>
 
-  test('// TODO', () => {
-    expect('').pass('')
-  })
+beforeEach(() => { watcher = new Watcher() })
+afterEach(() => { watcher?.M$dispose() })
 
-  // let watcher: Watcher<[number]>
+test('Happy Path', () => {
 
-  // afterEach(() => { watcher.dispose() })
+  const watchFn1 = jest.fn()
+  const unwatchFn1 = watcher.M$watch(watchFn1)
+  const watchFn2 = jest.fn()
+  watcher.M$watch(watchFn2)
 
-  // test('Main', () => {
+  watcher.M$post(42)
+  expect(watchFn1).toHaveBeenCalledOnce()
+  expect(watchFn1).toHaveBeenNthCalledWith(1, 42)
+  expect(watchFn2).toHaveBeenCalledOnce()
+  expect(watchFn2).toHaveBeenNthCalledWith(1, 42)
 
-  //   watcher = new Watcher<[number]>()
+  unwatchFn1()
+  watcher.M$post(43)
+  expect(watchFn1).toHaveBeenCalledOnce() // Still, only once
+  expect(watchFn2).toHaveBeenCalledTimes(2)
+  expect(watchFn2).toHaveBeenNthCalledWith(2, 43)
 
-  //   let counter = 0
-  //   const stopWatching = watcher.watch((num: number) => { counter += num })
+  watcher.M$unwatchAll()
+  watcher.M$post(44)
+  expect(watchFn1).toHaveBeenCalledOnce() // Still, only once
+  expect(watchFn2).toHaveBeenCalledTimes(2) // Still, only twice
 
-  //   // Post and expect value to be updated
-  //   watcher.post(1)
-  //   expect(counter).toBe(1)
+})
 
-  //   // Post again and expect value to also be updated
-  //   watcher.post(2)
-  //   expect(counter).toBe(3)
+test(Watcher.prototype.M$unwatchAll.name, () => {
 
-  //   // Stop watching and expect value to stay the same as previous checkpoint
-  //   stopWatching()
-  //   // Make sure there are no issues when calling `unwatch` multiple times.
-  //   stopWatching()
-  //   watcher.post(3)
-  //   expect(counter).toBe(3)
+  const watchFn1 = jest.fn()
+  watcher.M$watch(watchFn1)
+  const watchFn2 = jest.fn()
+  watcher.M$watch(watchFn2)
 
-  // })
+  expect(watchFn1).not.toHaveBeenCalled()
+  expect(watchFn2).not.toHaveBeenCalled()
 
-  // test('Unwatch All & Dispose', () => {
+  expect(() => {
+    // Multiple invocations should not throw error
+    watcher.M$unwatchAll()
+    watcher.M$unwatchAll()
+    watcher.M$unwatchAll()
+  }).not.toThrow()
 
-  //   watcher = new Watcher<[number]>()
+  const watchFn3 = jest.fn()
+  watcher.M$watch(watchFn3)
+  watcher.M$post(42)
 
-  //   let counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0
-  //   const stopWatching1 = watcher.watch((num: number) => { counter1 += num })
-  //   const stopWatching2 = watcher.watch((num: number) => { counter2 += num })
+  // Watch handlers added after calling `M$unwatchAll` should still be valid.
+  expect(watchFn3).toHaveBeenCalledOnce()
+  expect(watchFn3).toHaveBeenNthCalledWith(1, 42)
 
-  //   // Make sure there are no issues when calling `unwatch` multiple times.
-  //   stopWatching1()
-  //   stopWatching2()
-  //   watcher.unwatchAll()
-  //   stopWatching1()
-  //   stopWatching2()
-  //   watcher.unwatchAll()
+})
 
-  //   // Should return (empty) function even after unwatch all
-  //   const unwatch3 = watcher.watch((num: number) => { counter3 += num })
-  //   expect(typeof unwatch3).toBe('function')
+test(Watcher.prototype.M$dispose.name, () => {
 
-  //   // Make sure there are no issues when calling `dispose` multiple times.
-  //   watcher.dispose()
-  //   watcher.dispose()
+  const watchFn1 = jest.fn()
+  watcher.M$watch(watchFn1)
+  const watchFn2 = jest.fn()
+  watcher.M$watch(watchFn2)
 
-  //   // Should return (empty) function even after dispose
-  //   const unwatch4 = watcher.watch((num: number) => { counter4 += num })
-  //   expect(typeof unwatch4).toBe('function')
+  expect(watchFn1).not.toHaveBeenCalled()
+  expect(watchFn2).not.toHaveBeenCalled()
 
-  //   watcher.post(1)
-  //   watcher.post(2)
-  //   watcher.post(3)
-  //   expect(counter1).toBe(0)
-  //   expect(counter2).toBe(0)
-  //   expect(counter3).toBe(0)
-  //   expect(counter4).toBe(0)
+  expect(() => {
+    // Multiple invocations should not throw error
+    watcher.M$dispose()
+    watcher.M$dispose()
+    watcher.M$dispose()
+  }).not.toThrow()
 
-  // })
+  const watchFn3 = jest.fn()
+  watcher.M$watch(watchFn3)
+  watcher.M$post(42)
+
+  // Watch handlers added after calling `M$dispose` should not be called.
+  expect(watchFn3).not.toHaveBeenCalled()
 
 })

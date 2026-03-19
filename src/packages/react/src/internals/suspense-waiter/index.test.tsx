@@ -36,6 +36,7 @@ describe(createSuspenseWaiter.name, () => {
     const promise = delay(10)
     const wait = createSuspenseWaiter(promise)
     await delay(20)
+    // KIV: The line below failed once, but the error was never encountered again.
     expect(() => { wait() }).not.toThrow()
   })
 

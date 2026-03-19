@@ -1,4 +1,3 @@
-import { BuildType } from '@glyph-cat/foundation'
 import { isFunction, isNull } from '@glyph-cat/type-checking'
 import {
   AsyncStateManager,
@@ -11,7 +10,7 @@ import {
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
 import { $1, $2, SyncValue } from '../../abstractions'
-import { $$INTERNALS, BUILD_TYPE } from '../../constants'
+import { $$INTERNALS, IS_RN_BUILD } from '../../constants'
 import { useDebugName, useInspectableValue } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
@@ -96,8 +95,8 @@ export function useStateValue<State, SelectedState>(
   ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
 ): State | SelectedState {
 
-  // TODO: Inspect RN build
-  if (BUILD_TYPE !== BuildType.RN) {
+  // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
+  if (!IS_RN_BUILD) {
     // NOTE: `BUILD_TYPE` is a compile-time constant.
     // This conditional invocation will become static after compilation.
     // eslint-disable-next-line react-hooks/rules-of-hooks
