@@ -28,7 +28,7 @@
   margin: 0;
 }
 
-.list>li {
+.list > li {
   align-items: center;
   display: grid;
   gap: 10px;
@@ -37,27 +37,69 @@
   grid-auto-columns: max-content;
 }
 
-.list>li>input {
+.list > li > input {
   padding: 0;
   margin: 0;
 }
 
-.list>li>input[type="checkbox"] {
+.list > li > input[type="checkbox"] {
+  appearance: none;
   aspect-ratio: 1;
+  border: solid 2px #808080;
+  border-radius: 5px;
+  cursor: pointer;
   height: 28px;
+  overflow: hidden;
+  position: relative;
 }
 
-.list>li>input[type="text"] {
+.list > li > input[type="checkbox"]::before {
+  content: " ";
+  height: 100%;
+  left: 0;
+  opacity: 0.2;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.list > li > input[type="checkbox"]:hover::before {
+  background-color: #ffffff;
+}
+
+.list > li > input[type="checkbox"]:active::before {
+  background-color: #000000;
+}
+
+.list > li > input[type="checkbox"]:checked {
+  background-color: #2b80ff;
+  border-color: #2b80ff;
+}
+
+.list > li > input[type="checkbox"]:checked::after {
+  color: #ffffff;
+  content: "✓";
+  display: grid;
+  font-weight: bold;
+  font-size: 14pt;
+  text-align: center;
+}
+
+.list > li > input[type="text"] {
   border: solid 2px transparent;
   background-color: transparent;
   font-size: 16pt;
 }
 
-.list>li:hover>input[type="text"] {
+.list > li > input[type="text"]::placeholder {
+  opacity: 0.35;
+}
+
+.list > li:hover > input[type="text"] {
   border-color: #80808080;
 }
 
-.list>li>button[data-type="delete"] {
+.list > li > button[data-type="delete"] {
   aspect-ratio: 1;
   background-color: transparent;
   border: none;
@@ -70,24 +112,24 @@
   padding: 0;
 }
 
-.list>li:hover>button[data-type="delete"] {
+.list > li:hover > button[data-type="delete"] {
   opacity: 1;
 }
 
-.list>li>button[data-type="delete"]:hover {
+.list > li > button[data-type="delete"]:hover {
   background-color: #ff000020;
   border-radius: 3px;
 }
 
-.list>li>button[data-type="delete"]:active {
+.list > li > button[data-type="delete"]:active {
   opacity: 0.5;
 }
 
-.list>li:has(button[data-type="add"]) {
+.list > li:has(button[data-type="add"]) {
   grid-template-columns: 1fr;
 }
 
-.list>li>button[data-type="add"] {
+.list > li > button[data-type="add"] {
   background-color: transparent;
   border: dashed 1px #808080;
   border-radius: 3px;
@@ -97,11 +139,11 @@
   opacity: 0.5;
 }
 
-.list>li>button[data-type="add"]:hover {
+.list > li > button[data-type="add"]:hover {
   background-color: #80808020;
 }
 
-.list>li>button[data-type="add"]:active {
+.list > li > button[data-type="add"]:active {
   background-color: #80808040;
 }
 

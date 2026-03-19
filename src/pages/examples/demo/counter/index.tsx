@@ -15,8 +15,10 @@ export default function App(): ReactNode {
           <button className={styles.bumpButton} onClick={bumpCounter}>
             <Ring value={counter} />
             <div className={styles.counterContainer}>
-              <span className={styles.counter}>{counter}</span>
-              <span className={styles.counterHint}>Click +1</span>
+              <div className={styles.counterSubContainer}>
+                <span className={styles.counter}>{counter}</span>
+                <span className={styles.counterHint}>Click +1</span>
+              </div>
             </div>
           </button>
         </div>

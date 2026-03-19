@@ -46,6 +46,7 @@ export default function App(): ReactNode {
                 <input
                   type='text'
                   value={item.label}
+                  placeholder='(New item)'
                   onChange={(e) => {
                     TodoItemsState.set((prevList) => {
                       return produce(prevList, (nextList) => {

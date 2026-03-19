@@ -84,8 +84,16 @@
 
 .counterContainer {
   display: grid;
+  width: 100%;
   place-self: center;
+  place-items: center;
+  top: 0;
+  height: 100%;
   position: absolute;
+}
+
+.counterSubContainer {
+  display: grid;
 }
 
 .counter {
