@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[5951],{19289:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Basic","slug":"demo/basic","permalink":"/cotton-box/docs/demo/basic","sidebar":"demoSidebar","navigation":{"next":{"title":"Counter","permalink":"/cotton-box/docs/demo/basic/counter"}}}}')}}]);

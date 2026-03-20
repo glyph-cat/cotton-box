@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[5187],{75187:(e,c,o)=>{o.d(c,{createTreemapServices:()=>s.d});var s=o(1592);o(6902)}}]);

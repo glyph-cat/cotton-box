@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[2024],{82024:(c,e,t)=>{t.d(e,{createArchitectureServices:()=>o.S});var o=t(98815);t(73579)}}]);

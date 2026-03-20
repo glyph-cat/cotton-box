@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[4736],{64736:(c,e,o)=>{o.d(e,{createRadarServices:()=>s.f});var s=o(36299);o(6902)}}]);

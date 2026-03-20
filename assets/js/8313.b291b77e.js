@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[8313],{58313:(c,e,o)=>{o.d(e,{createPacketServices:()=>s.$});var s=o(59923);o(73579)}}]);
