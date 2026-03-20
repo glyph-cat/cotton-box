@@ -38,6 +38,9 @@
   background-color: #f9f9f9;
   border-radius: 10px;
   max-width: 95vw;
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: 500px;
   z-index: 1;
 }
@@ -64,6 +67,14 @@
   margin: 0;
   padding: 0;
   place-items: center;
+}
+
+.closeButton:hover {
+  background-color: #80808020;
+}
+
+.closeButton:active {
+  background-color: #80808040;
 }
 
 .noScroll {

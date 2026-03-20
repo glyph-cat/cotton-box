@@ -50,9 +50,11 @@ export function KofiButton(): ReactNode {
             >
               <div style={{
                 display: 'grid',
-                justifySelf: 'end',
+                gridAutoFlow: 'column',
+                gridTemplateColumns: '1fr auto',
                 height: IFRAME_PADDING_TOP,
               }}>
+                <div /* temporary layout hack for Safari */ />
                 <button
                   className={styles.closeButton}
                   onClick={hidePanel}
