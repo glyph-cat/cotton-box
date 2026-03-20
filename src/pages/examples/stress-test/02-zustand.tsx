@@ -1,13 +1,12 @@
 import { Nullable } from '@glyph-cat/foundation'
-import { SimpleStateManager } from 'cotton-box'
-import { useSimpleStateValueOnly } from 'cotton-box-react'
 import { ReactNode, useCallback, useState } from 'react'
 import { flushSync } from 'react-dom'
+import { create } from 'zustand'
 
 const componentCount = 100
 const testDuration = 1000 // ms
 
-const TestState = new SimpleStateManager<{ i: number }>({ i: -1 })
+const useTestState = create<{ i: number }>(() => ({ i: -1 }))
 
 export default function App(): ReactNode {
 
@@ -17,7 +16,7 @@ export default function App(): ReactNode {
     const startTime = performance.now()
     flushSync(() => {
       do {
-        TestState.set({ i: ++i })
+        useTestState.setState({ i: ++i })
       } while ((performance.now() - startTime) < testDuration)
     })
     setScore(i)
@@ -25,7 +24,7 @@ export default function App(): ReactNode {
 
   return (
     <>
-      <h1>Cotton Box</h1>
+      <h1>Zustand</h1>
       <p>Operations per second: {score ?? '-/-'}</p>
       <button onClick={startTest}>Start</button>
       <br />
@@ -34,7 +33,7 @@ export default function App(): ReactNode {
         style={{
           display: 'grid',
           gap: 10,
-          gridTemplateColumns: `repeat(auto-fill, minmax(200px, 1fr))`,
+          gridTemplateColumns: `repeat(auto-fill, minmax(100px, 1fr))`,
         }}
       >
         {(() => {
@@ -51,15 +50,17 @@ export default function App(): ReactNode {
 }
 
 function TestComponent(): ReactNode {
-  const state = useSimpleStateValueOnly(TestState)
+  const state = useTestState()
   return (
-    <div style={{
-      aspectRatio: 1,
-      display: 'grid',
-      backgroundColor: '#80808080',
-      placeItems: 'center',
-      fontSize: '20pt',
-    }}>
+    <div
+      style={{
+        aspectRatio: 1,
+        display: 'grid',
+        backgroundColor: '#80808080',
+        placeItems: 'center',
+        fontSize: '14pt',
+      }}
+    >
       {state.i}
     </div>)
 }

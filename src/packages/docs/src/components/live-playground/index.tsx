@@ -31,7 +31,7 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
     'import App from \'./App.tsx\'',
     `import './${STYLES_CSS}'`,
     '',
-    'const root = createRoot(document.getElementById(\'root\'))',
+    'const root = createRoot(document.getElementById("root"))',
     'root.render(<App />)',
     '',
   ].join('\n'),
@@ -49,16 +49,9 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
     '  -webkit-touch-callout: none;',
     '}',
   ].join('\n'),
-  'package.json': [
-    '{',
-    `  "main": "${INDEX_TS}",`,
-    '  "dependencies": {',
-    '    "react": "^18.0.0",',
-    '    "react-dom": "^18.0.0",',
-    '    "react-scripts": "^5.0.0"',
-    '  }',
-    '}',
-  ].join('\n'),
+  'package.json': JSON.stringify({
+    main: INDEX_TS,
+  }),
   'public/index.html': [
     '<!DOCTYPE html>',
     '<html lang="en">',
@@ -123,7 +116,6 @@ function SimpleWebPlaygroundBase({
   options,
 }: SimpleWebPlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
-  console.log('d', getDependenciesAutomatically(code))
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
@@ -273,15 +265,12 @@ function MonacoEditor(): ReactNode {
 }
 
 function getImports(value: string): Array<string> {
-  return (value.match(/from '[.a-z0-9_-]+(?=')/g) || [])
+  return (value.match(/from '@?[.a-z0-9/_-]+(?=')/g) || [])
     .map((match) => match.replace(/^from '/, ''))
 }
 
 function getDependenciesAutomatically(value: string): Record<string, string> {
-  const excludedItems = new Set(['react', 'react-dom'])
-  return getImports(value).filter((item) => {
-    return !excludedItems.has(item)
-  }).map((item) => {
+  return getImports(value).map((item) => {
     return item
     return item.split(/\//g)[0]
   }).reduce((acc, item) => {

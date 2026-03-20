@@ -34,7 +34,7 @@ export default function App(): ReactNode {
           style={{
             display: 'grid',
             gap: 10,
-            gridTemplateColumns: `repeat(auto-fill, minmax(200px, 1fr))`,
+            gridTemplateColumns: `repeat(auto-fill, minmax(100px, 1fr))`,
           }}
         >
           {(() => {
@@ -59,7 +59,7 @@ function TestComponent(): ReactNode {
       display: 'grid',
       backgroundColor: '#80808080',
       placeItems: 'center',
-      fontSize: '20pt',
+      fontSize: '14pt',
     }}>
       {state.i}
     </div>
