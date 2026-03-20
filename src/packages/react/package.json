@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "debug": "scope=\"debug\" jest -c ./jest.config.ts",
     "bundle": "rollup -c ./config/rollup.config.js",
-    "types": "tsc --declaration",
+    "types": "yarn tsc --declaration",
     "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
     "build": "sh ./scripts/run/build.sh",
     "test": "jest -c ./jest.config.ts",
@@ -36,9 +36,6 @@
   },
   "bugs": {
     "url": "https://github.com/glyph-cat/cotton-box/issues"
-  },
-  "dependencies": {
-    "@glyph-cat/equality": "^1.0.0"
   },
   "peerDependencies": {
     "cotton-box": "^1.0.0",
