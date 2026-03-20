@@ -40,9 +40,9 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 
 ### New State Manager
 ```js
-import { StateManager } from 'cotton-box'
+import { SimpleStateManager } from 'cotton-box'
 
-const CounterState = new StateManager(0)
+const CounterState = new SimpleStateManager(0)
 ```
 
 ### Set Value
@@ -58,10 +58,10 @@ CounterState.get()
 
 ### With React
 ```jsx
-import { useStateValue } from 'cotton-box-react'
+import { useSimpleStateValue } from 'cotton-box-react'
 
 function App() {
-  const counter = useStateValue(CounterState)
+  const counter = useSimpleStateValue(CounterState)
   return <p>Counter: {counter}</p>
 }
 ```
