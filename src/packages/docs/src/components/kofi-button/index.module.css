@@ -10,3 +10,62 @@
 .button > img {
   pointer-events: none;
 }
+
+.popupContainer {
+  display: grid;
+  height: 100vh;
+  left: 0;
+  place-items: center;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 999;
+}
+
+.underlay {
+  backdrop-filter: blur(2px);
+  background-color: #00000080;
+  display: grid;
+  height: 100vh;
+  left: 0;
+  place-items: center;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
+
+.popupSheet {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  max-width: 95vw;
+  width: 500px;
+  z-index: 1;
+}
+
+.iframe {
+  border: none;
+  max-height: calc(100vh - 100px);
+  overflow: auto;
+  padding: 4;
+  width: 100%;
+}
+
+.closeButton {
+  appearance: none;
+  aspect-ratio: 1;
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  color: #808080;
+  display: grid;
+  font-size: 20pt;
+  height: 100%;
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+}
+
+.noScroll {
+  overflow: hidden;
+}
