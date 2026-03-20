@@ -60,7 +60,7 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
       preventAssignment: true,
       values: {
         'process.env.BUILD_HASH': JSON.stringify(
-          `${execSync('git rev-parse HEAD').toString().trim()}-${Date.now().toString(16)}`
+          `${execSync('git rev-parse --short HEAD').toString().trim()}-${Date.now().toString(16)}`
         ),
         'process.env.BUILD_TYPE': JSON.stringify(buildType),
         'process.env.IS_INTERNAL_DEBUG_ENV': JSON.stringify('false'),
