@@ -4,6 +4,7 @@
   "description": "The official React bindings for Cotton Box.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
+  "react-native": "lib/native/index.js",
   "unpkg": "lib/umd/index.js",
   "files": [
     "lib"
