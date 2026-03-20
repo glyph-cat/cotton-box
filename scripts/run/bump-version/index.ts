@@ -10,7 +10,7 @@ import { ENCODING_UTF_8 } from '../../constants'
 function main(version: string): void {
 
   if (!version) {
-    console.log(chalk.redBright(`Missing argument "${version}"`))
+    console.log(chalk.redBright(`Missing argument \`version\``))
     process.exit(1)
   }
 

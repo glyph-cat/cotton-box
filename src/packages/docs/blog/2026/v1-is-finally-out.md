@@ -3,9 +3,7 @@ slug: v1-is-finally-out
 title: v1 is finally out
 authors: glyphcat
 tags: []
-date: 2026-03-31
-draft: true
-# date still unsure actually
+date: 2026-03-20
 ---
 
 Hello there, it's been quite a while. Two years, in fact, since the first blog post. In this one, I will be writing from an "author's note" perspective.
