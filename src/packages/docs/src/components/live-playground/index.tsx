@@ -71,9 +71,6 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
     '  </body>',
     '</html>',
   ].join('\n'),
-  'sandbox.config.json': JSON.stringify({
-    infiniteLoopProtection: false,
-  }),
 }
 
 function useCodeEditorTheme(): SandpackTheme {
@@ -97,6 +94,7 @@ export interface SimpleWebPlaygroundProps {
   css?: string
   extraDependencies?: SandpackSetup['dependencies']
   options?: SandpackProps['options']
+  disableInfiniteLoopProtection?: boolean
 }
 
 export function SimpleWebPlayground(props: SimpleWebPlaygroundProps): ReactNode {
@@ -110,10 +108,11 @@ function SimpleWebPlaygroundBase({
   css,
   extraDependencies,
   options,
+  disableInfiniteLoopProtection,
 }: SimpleWebPlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
   const detectedDependencies = getDependenciesAutomatically(code)
-  console.log('Detected dependencies:', detectedDependencies)
+  // console.log('Detected dependencies:', detectedDependencies)
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
@@ -123,6 +122,11 @@ function SimpleWebPlaygroundBase({
               ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
               [APP_TSX]: code,
               ...(css ? { [CSS]: css } : {}),
+              ...(disableInfiniteLoopProtection ? {
+                'sandbox.config.json': JSON.stringify({
+                  infiniteLoopProtection: false,
+                }),
+              } : {}),
             }}
             {...sharedProps}
             theme={codeEditorTheme}
@@ -130,7 +134,7 @@ function SimpleWebPlaygroundBase({
               ...sharedProps.customSetup,
               entry: INDEX_TS,
               dependencies: {
-                ...getDependenciesAutomatically(code),
+                ...detectedDependencies,
                 ...extraDependencies,
               },
             }}
@@ -160,7 +164,7 @@ function SimpleWebPlaygroundBase({
               ...sharedProps.customSetup,
               entry: INDEX_TS,
               dependencies: {
-                ...getDependenciesAutomatically(code),
+                ...detectedDependencies,
                 ...extraDependencies,
               },
             }}
