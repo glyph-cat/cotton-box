@@ -5,6 +5,7 @@ import {
   SandpackPreview,
   SandpackProps,
   SandpackProvider,
+  SandpackSetup,
   SandpackStack,
   SandpackTheme,
   useActiveCode,
@@ -78,16 +79,16 @@ function useCodeEditorTheme(): SandpackTheme {
 }
 
 const sharedProps: SandpackProps = {
-  customSetup: {
-    dependencies: {
-      // KIV: [Low priority] versioning support?
-      // KIV: [Low priority] Extract dependencies from source code?
-      'cotton-box': 'latest',
-      'cotton-box-react': 'latest',
-      'immer': 'latest',
-      'uuid': 'latest',
-    },
-  },
+  // customSetup: {
+  //   dependencies: {
+  //     // KIV: [Low priority] versioning support?
+  //     // KIV: [Low priority] Extract dependencies from source code?
+  //     'cotton-box': 'latest',
+  //     'cotton-box-react': 'latest',
+  //     'immer': 'latest',
+  //     'uuid': 'latest',
+  //   },
+  // },
   options: {
     editorWidthPercentage: 65,
     editorHeight: '45vh',
@@ -101,7 +102,7 @@ const sharedProps: SandpackProps = {
 export interface SimpleWebPlaygroundProps {
   code: string
   css?: string
-  extraDependencies?: SandpackProps['customSetup']['dependencies']
+  extraDependencies?: SandpackSetup['dependencies']
   options?: SandpackProps['options']
 }
 
@@ -134,7 +135,7 @@ function SimpleWebPlaygroundBase({
               ...sharedProps.customSetup,
               entry: INDEX_TS,
               dependencies: {
-                ...sharedProps.customSetup.dependencies,
+                ...getDependenciesAutomatically(code),
                 ...extraDependencies,
               },
             }}
@@ -164,7 +165,7 @@ function SimpleWebPlaygroundBase({
               ...sharedProps.customSetup,
               entry: INDEX_TS,
               dependencies: {
-                ...sharedProps.customSetup.dependencies,
+                ...getDependenciesAutomatically(code),
                 ...extraDependencies,
               },
             }}
@@ -251,7 +252,9 @@ function MonacoEditor(): ReactNode {
           language='typescript' // TODO: [critical] 'typescriptreact'
           theme='vs-dark'
           defaultValue={code}
-          onChange={useCallback((value) => updateCode(value || ''), [updateCode])}
+          onChange={useCallback((value: string | undefined) => {
+            updateCode(value || '')
+          }, [updateCode])}
           options={{
             fontSize: 14,
             minimap: { enabled: false },
@@ -262,4 +265,19 @@ function MonacoEditor(): ReactNode {
       </div>
     </SandpackStack>
   )
+}
+
+function getImports(value: string): Array<string> {
+  return (value.match(/from '[.a-z0-9_-]+(?=')/g) || [])
+    .map((match) => match.replace(/^from '/, ''))
+}
+
+function getDependenciesAutomatically(value: string): Record<string, string> {
+  const excludedItems = new Set(['react'])
+  return getImports(value).filter((item) => {
+    return !excludedItems.has(item)
+  }).reduce((acc, item) => {
+    acc[item] = 'latest'
+    return acc
+  }, {} as Record<string, string>)
 }
