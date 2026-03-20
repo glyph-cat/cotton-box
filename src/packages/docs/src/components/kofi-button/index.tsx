@@ -10,7 +10,6 @@ export function KofiButton(): ReactNode {
   const hidePanel = useCallback(() => { setPanelVisibility(false) }, [])
   useInsertionEffect(() => {
     // Docusaurus injects an inline `overflow: visible;` to the document body.
-    console.log('shouldShowPanel', shouldShowPanel)
     if (shouldShowPanel) {
       document.body.classList.add(styles.noScroll)
       document.body.style.overflow = 'hidden'

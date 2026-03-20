@@ -121,12 +121,12 @@ function SimpleWebPlaygroundBase({
             files={{
               ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
               [APP_TSX]: code,
-              ...(css ? { [CSS]: css } : {}),
-              ...(disableInfiniteLoopProtection ? {
+              ...(css && { [CSS]: css }),
+              ...(disableInfiniteLoopProtection && {
                 'sandbox.config.json': JSON.stringify({
                   infiniteLoopProtection: false,
                 }),
-              } : {}),
+              }),
             }}
             {...sharedProps}
             theme={codeEditorTheme}
@@ -156,7 +156,12 @@ function SimpleWebPlaygroundBase({
             files={{
               ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
               [APP_TSX]: code,
-              ...(css ? { [CSS]: css } : {}),
+              ...(css && { [CSS]: css }),
+              ...(disableInfiniteLoopProtection && {
+                'sandbox.config.json': JSON.stringify({
+                  infiniteLoopProtection: false,
+                }),
+              }),
             }}
             {...sharedProps}
             theme={codeEditorTheme}
