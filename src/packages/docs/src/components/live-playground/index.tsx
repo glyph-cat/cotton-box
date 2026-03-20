@@ -23,6 +23,11 @@ const APP_TSX = 'App.tsx'
 const STYLES_CSS = 'styles.css'
 const CSS = 'index.module.css'
 
+const BASE_DEPENDENCIES: Record<string, string> = {
+  'react': 'latest',
+  'react-dom': 'latest',
+}
+
 const TEMP_READY_TO_USE_MONACO_EDITOR = false // TODO
 
 const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
@@ -51,6 +56,7 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
   ].join('\n'),
   'package.json': JSON.stringify({
     main: INDEX_TS,
+    dependencies: BASE_DEPENDENCIES,
   }),
   'public/index.html': [
     '<!DOCTYPE html>',
@@ -76,16 +82,6 @@ function useCodeEditorTheme(): SandpackTheme {
 }
 
 const sharedProps: SandpackProps = {
-  // customSetup: {
-  //   dependencies: {
-  //     // KIV: [Low priority] versioning support?
-  //     // KIV: [Low priority] Extract dependencies from source code?
-  //     'cotton-box': 'latest',
-  //     'cotton-box-react': 'latest',
-  //     'immer': 'latest',
-  //     'uuid': 'latest',
-  //   },
-  // },
   options: {
     editorWidthPercentage: 65,
     editorHeight: '45vh',
@@ -116,6 +112,8 @@ function SimpleWebPlaygroundBase({
   options,
 }: SimpleWebPlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
+  const detectedDependencies = getDependenciesAutomatically(code)
+  console.log('Detected dependencies:', detectedDependencies)
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
@@ -270,7 +268,9 @@ function getImports(value: string): Array<string> {
 }
 
 function getDependenciesAutomatically(value: string): Record<string, string> {
-  return getImports(value).map((item) => {
+  return getImports(value).filter((item) => {
+    return !item.startsWith('./') || BASE_DEPENDENCIES[value]
+  }).map((item) => {
     return item
     return item.split(/\//g)[0]
   }).reduce((acc, item) => {
