@@ -56,32 +56,27 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
       },
     }),
     commonjs(),
-  ]
-
-  // Replace values
-  const replaceValues: Record<string, string> = {
-    'process.env.BUILD_HASH': JSON.stringify(
-      execSync('git rev-parse HEAD').toString().trim()
-    ),
-    'process.env.BUILD_TYPE': JSON.stringify(buildType),
-    'process.env.IS_INTERNAL_DEBUG_ENV': JSON.stringify('false'),
-    'process.env.PACKAGE_VERSION': JSON.stringify(pkg.version),
-    'process.env.REPORT_ISSUE_URL': JSON.stringify(pkg.bugs.url),
-  }
-  if (mode) {
-    replaceValues['process.env.NODE_ENV'] = JSON.stringify(mode)
-  }
-  pluginStack.push(replace({
-    preventAssignment: true,
-    values: replaceValues,
-  }))
-  pluginStack.push(terser({
-    mangle: {
-      properties: {
-        regex: /^M\$/,
+    replace({
+      preventAssignment: true,
+      values: {
+        'process.env.BUILD_HASH': JSON.stringify(
+          `${execSync('git rev-parse HEAD').toString().trim()}-${Date.now().toString(16)}`
+        ),
+        'process.env.BUILD_TYPE': JSON.stringify(buildType),
+        'process.env.IS_INTERNAL_DEBUG_ENV': JSON.stringify('false'),
+        'process.env.PACKAGE_VERSION': JSON.stringify(pkg.version),
+        'process.env.REPORT_ISSUE_URL': JSON.stringify(pkg.bugs.url),
+        ...(mode && { 'process.env.NODE_ENV': JSON.stringify(mode) }),
       },
-    },
-  }))
+    }),
+    terser({
+      mangle: {
+        properties: {
+          regex: /^M\$/,
+        },
+      },
+    }),
+  ]
 
   return pluginStack
 }
