@@ -38,26 +38,32 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 
 ## Examples
 
-### New State Manager
-```js
+### Creating A State Manager
+```ts
 import { SimpleStateManager } from 'cotton-box'
 
 const CounterState = new SimpleStateManager(0)
 ```
 
 ### Set Value
-```js
+
+#### By providing a value
+```ts
 CounterState.set(42)
+```
+
+#### By using a function
+```ts
 CounterState.set((c) => c + 1)
 ```
 
 ### Get Value
-```js
-CounterState.get()
+```ts
+const counter = CounterState.get()
 ```
 
-### With React
-```jsx
+### Using With React
+```tsx
 import { useSimpleStateValue } from 'cotton-box-react'
 
 function App() {
@@ -70,7 +76,7 @@ function App() {
 
 ## Links
 [![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
-
+<br/>
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D65P69N)
 
 <br/>
