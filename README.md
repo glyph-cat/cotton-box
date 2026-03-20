@@ -10,7 +10,7 @@
 
 </div>
 
-Cotton Box is a lightweight state management library designed for flexibility and simplicity.  
+Cotton Box is a lightweight state management library designed for flexibility and simplicity.
 
 It works seamlessly with React Hooks while remaining usable outside React, requires no providers or boilerplate, and supports advanced features like async state updates, customizable equality checks, and declarative lifecycle management.
 
