@@ -1,6 +1,6 @@
 {
   "name": "cotton-box",
-  "version": "0.14.0",
+  "version": "1.0.0",
   "description": "Minimal state management library for React and beyond.",
   "main": "lib/cjs/index.js",
   "module": "lib/es/index.js",
