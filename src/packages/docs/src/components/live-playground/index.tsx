@@ -17,6 +17,7 @@ import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
 import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
 import { ReactNode, useCallback } from 'react'
+
 const INDEX_TS = 'index.js'
 const APP_TSX = 'App.tsx'
 const STYLES_CSS = 'styles.css'
@@ -71,6 +72,9 @@ const SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES = {
     '  </body>',
     '</html>',
   ].join('\n'),
+  'sandbox.config.json': JSON.stringify({
+    infiniteLoopProtection: false,
+  }),
 }
 
 function useCodeEditorTheme(): SandpackTheme {
@@ -119,6 +123,7 @@ function SimpleWebPlaygroundBase({
   options,
 }: SimpleWebPlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
+  console.log('d', getDependenciesAutomatically(code))
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
@@ -273,9 +278,12 @@ function getImports(value: string): Array<string> {
 }
 
 function getDependenciesAutomatically(value: string): Record<string, string> {
-  const excludedItems = new Set(['react'])
+  const excludedItems = new Set(['react', 'react-dom'])
   return getImports(value).filter((item) => {
     return !excludedItems.has(item)
+  }).map((item) => {
+    return item
+    return item.split(/\//g)[0]
   }).reduce((acc, item) => {
     acc[item] = 'latest'
     return acc

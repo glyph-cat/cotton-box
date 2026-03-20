@@ -7,8 +7,6 @@ const testDuration = 1000 // ms
 
 const TestContext = createContext<{ i: number }>({ i: -1 })
 
-// Score: 3501443, 4243610
-
 export default function App(): ReactNode {
 
   const [score, setScore] = useState<Nullable<number>>(null)
@@ -30,29 +28,40 @@ export default function App(): ReactNode {
       <p>Operations per second: {score ?? '-/-'}</p>
       <button onClick={startTest}>Start</button>
       <br />
+      <br />
       <TestContext value={state}>
-        <Container />
+        <div
+          style={{
+            display: 'grid',
+            gap: 10,
+            gridTemplateColumns: `repeat(auto-fill, minmax(200px, 1fr))`,
+          }}
+        >
+          {(() => {
+            const stack = []
+            for (let i = 0; i < componentCount; i++) {
+              stack.push(<TestComponent key={i} />)
+            }
+            return stack
+          })()}
+        </div>
       </TestContext>
     </>
   )
 
 }
 
-function Container(): ReactNode {
-  return (
-    <>
-      {(() => {
-        const stack = []
-        for (let i = 0; i < componentCount; i++) {
-          stack.push(<TestComponent key={i} />)
-        }
-        return stack
-      })()}
-    </>
-  )
-}
-
 function TestComponent(): ReactNode {
   const state = useContext(TestContext)
-  return <>{JSON.stringify(state)}</>
+  return (
+    <div style={{
+      aspectRatio: 1,
+      display: 'grid',
+      backgroundColor: '#80808080',
+      placeItems: 'center',
+      fontSize: '20pt',
+    }}>
+      {state.i}
+    </div>
+  )
 }
