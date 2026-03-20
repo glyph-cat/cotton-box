@@ -1,13 +1,14 @@
 import { SimpleStateManager } from 'cotton-box'
 import { useSimpleStateValue } from 'cotton-box-react'
 import { StatusBar } from 'expo-status-bar'
+import { ReactNode } from 'react'
 import { Button, StyleSheet, Text, View } from 'react-native'
 
 const CounterState = new SimpleStateManager(0)
 
-const increment = () => { CounterState.set(c => c + 1) }
+const increment = () => { CounterState.set((c) => c + 1) }
 
-export default function App() {
+export default function App(): ReactNode {
   const counter = useSimpleStateValue(CounterState)
   return (
     <View style={styles.container}>
