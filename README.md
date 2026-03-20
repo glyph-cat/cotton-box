@@ -48,7 +48,7 @@ const CounterState = new StateManager(0)
 ### Set Value
 ```js
 CounterState.set(42)
-CounterState.set(c => c + 1)
+CounterState.set((c) => c + 1)
 ```
 
 ### Get Value
