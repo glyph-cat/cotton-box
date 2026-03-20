@@ -1,0 +1,65 @@
+---
+hide_table_of_contents: true
+---
+
+import DEMO_REACT from '!!raw-loader!@site/src/examples/stress-test/react-built-in.tsx'
+import DEMO_COTTON_BOX from '!!raw-loader!@site/src/examples/stress-test/cotton-box.tsx'
+import DEMO_ZUSTAND from '!!raw-loader!@site/src/examples/stress-test/zustand.tsx'
+import DEMO_REDUX from '!!raw-loader!@site/src/examples/stress-test/redux.tsx'
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+
+# Stress Test
+
+The sandboxes below show how many operations per second each library is capable of.
+
+Upon clicking "Start", the sandbox will try to invoke as many set-state calls as possible for 1 second.
+
+## React (built-in state)
+
+<SimpleWebPlayground
+  code={DEMO_REACT}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+<br /><br />
+
+# Cotton Box
+
+<SimpleWebPlayground
+  code={DEMO_COTTON_BOX}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+<br /><br />
+
+# Zustand
+
+<SimpleWebPlayground
+  code={DEMO_ZUSTAND}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+<br /><br />
+
+# Redux
+
+<SimpleWebPlayground
+  code={DEMO_REDUX}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
