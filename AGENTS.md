@@ -17,7 +17,10 @@
 
 ## Preferred Framing
 - Emphasize on speed, on par with Zustand
-- Emphasize simplicity and no boilerplate
+- Promote simplicity and no boilerplate
+- Possible to compose graph-like structures but is not the default practice
+- Friendly to object-oriented programming codebase
+- A good library for managing state and reactivity for games built with React
 
 ## Mental Model
 - A "State Manager" is a self-contained reactive state container
@@ -121,6 +124,8 @@
 ## Naming Conventions
 
 ### Instantiating State Managers
+
+#### As Global Variable
 - Always use pascal case
 - Always end with `State`
 - Correct examples: `CounterState`, `UserState`, `AuthState`
@@ -128,6 +133,24 @@
 - Full correct example:
 ```ts
 const CounterState = new StateManager(42)
+```
+
+#### As Class Property
+- Always use camel case
+- Does not require prefix or suffix
+- Correct examples: `state`, `result`, `stack`
+- Incorrect examples: `State`, `resultState`, `stackState`
+- Full correct example:
+```ts
+class ChessGameInstance {
+
+  readonly boardTiles = new StateManager(
+    new Array(8).fill([]).map((row) => {
+      return new Array(8).fill('')
+    })
+  )
+
+}
 ```
 
 ### TypeScript State Interfaces
