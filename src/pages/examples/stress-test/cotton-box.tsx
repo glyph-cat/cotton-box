@@ -20,13 +20,15 @@ export default function App(): ReactNode {
         TestState.set({ i: ++i })
       } while ((performance.now() - startTime) < testDuration)
     })
-    setScore(i)
+    const trueDelta = performance.now() - startTime
+    const opsPerSecond = Math.floor(1000 * i / trueDelta)
+    setScore(opsPerSecond)
   }, [])
 
   return (
     <>
       <h1>Cotton Box</h1>
-      <p>Operations per second: {score ?? '-/-'}</p>
+      <p>State updates per second: {score ?? '-/-'}</p>
       <button onClick={startTest}>Start</button>
       <br />
       <br />

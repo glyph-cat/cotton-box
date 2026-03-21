@@ -11,8 +11,16 @@ import { SimpleWebPlayground } from '@site/src/components/live-playground'
 # Stress Test
 
 The sandboxes below show how many operations per second each library is capable of.
+<br />
+
+How the test is conducted:
+1. While `performance.now() - startTime` is less than 1 second, keep running.
+2. After loop has completed calculate, `performance.now() - startTime` again. This is because it is not guaranteed that loops will stop immediately after one second.
+3. Operations per second = total operations recorded ÷ total run time × 1000 milliseconds
+<br />
 
 Upon clicking "Start", the sandbox will try to invoke as many set-state calls as possible for 1 second.
+<br />
 
 ## React (built-in state)
 

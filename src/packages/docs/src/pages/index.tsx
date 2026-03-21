@@ -23,7 +23,7 @@ function HomepageHeader() {
           className='hero__title'
           style={{
             fontFamily: 'Work Sans',
-            fontSize: '5rem',
+            fontSize: '4rem',
             fontWeight: '300',
           }}
         >
