@@ -48,14 +48,13 @@
 }
 
 .gameBoard {
+  --marker-preview-symbol: "";
   aspect-ratio: 1;
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(3, 1fr);
   padding: 20px;
-  max-width: 600px;
-  min-width: 200px;
-  width: 50vmin;
+  width: 65vmin;
 }
 
 .gameTile {
@@ -65,7 +64,7 @@
   border: solid 2px transparent;
   border-radius: 20px;
   color: #ffffff;
-  font-size: 36pt;
+  font-size: 8vmin;
   font-weight: bold;
   overflow: hidden;
   place-items: center;
@@ -77,11 +76,13 @@
 }
 
 .gameTile[data-marker="x"] {
-  color: #ff2b80;
+  --marker-color: #ff2b80;
+  color: var(--marker-color);
 }
 
 .gameTile[data-marker="o"] {
-  color: #2b80ff;
+  --marker-color: #2b80ff;
+  color: var(--marker-color);
 }
 
 .gameTile:enabled {
@@ -90,10 +91,24 @@
 
 .gameTile:enabled::before {
   animation: gameTileEmphasis 0.5s infinite alternate;
-  background-color: #808080;
+  background-color: #8080802b;
   content: " ";
   height: 100%;
   left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.gameTile:enabled:hover:after {
+  color: var(--marker-preview-color);
+  content: var(--marker-preview-symbol);
+  display: grid;
+  height: 100%;
+  left: 0;
+  opacity: 0.65;
+  place-items: center;
   position: absolute;
   top: 0;
   width: 100%;
@@ -116,11 +131,15 @@
   cursor: not-allowed;
 }
 
+.gameTile[data-highlight="true"] {
+  background-color: #2bff8040;
+}
+
 @keyframes gameTileEmphasis {
   0% {
     opacity: 0;
   }
   100% {
-    opacity: 0.15;
+    opacity: 1;
   }
 }

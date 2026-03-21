@@ -1,8 +1,8 @@
 import { IDisposable, Nullable } from '@glyph-cat/foundation'
 import { SimpleFiniteStateManager, SimpleStateManager } from 'cotton-box'
-import { useSimpleStateValue, useSimpleStateValueOnly, useStateValue } from 'cotton-box-react'
+import { useSimpleStateValue, useStateValue } from 'cotton-box-react'
 import { produce } from 'immer'
-import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 import styles from './index.module.css'
 
 export default function App(): ReactNode {
@@ -17,6 +17,7 @@ export default function App(): ReactNode {
 
   const endCurrentGame = useCallback(() => {
     gameInstance?.dispose()
+    setGameInstance(null)
   }, [])
 
   return (
@@ -24,6 +25,7 @@ export default function App(): ReactNode {
       {gameInstance ? (
         <GameInstanceContext value={gameInstance}>
           <div className={styles.gameContainer}>
+            <MenuArea onQuit={endCurrentGame} />
             <InstructionBoard />
             <GameBoard />
           </div>
@@ -41,9 +43,35 @@ export default function App(): ReactNode {
   )
 }
 
+interface MenuAreaProps {
+  onQuit(): void
+}
+
+function MenuArea({ onQuit }: MenuAreaProps): ReactNode {
+  return (
+    <div style={{
+      display: 'grid',
+      gridAutoColumns: 'auto',
+      gridAutoFlow: 'column',
+      justifyItems: 'end',
+      width: '100%',
+    }}>
+      <button
+        className={styles.menuButton}
+        onClick={onQuit}
+      >Quit</button>
+    </div>
+  )
+}
+
 function InstructionBoard(): ReactNode {
   const gameInstance = useGameInstance()
+  const hasConcluded = useSimpleStateValue(
+    gameInstance.state,
+    (s) => s === GameInstanceState.CONCLUDED,
+  )
   const isPlayersTurn = usePlayersTurn(gameInstance)
+  const winner = useSimpleStateValue(gameInstance.winInfo, (s) => s?.winner)
   return (
     <div style={{
       display: 'grid',
@@ -51,7 +79,14 @@ function InstructionBoard(): ReactNode {
       fontWeight: 'bold',
       textAlign: 'center',
     }}>
-      {isPlayersTurn ? 'It\'s your turn' : 'Please wait a moment'}
+      {hasConcluded
+        ? winner === gameInstance.playerSymbol
+          ? 'Congratulations, you won!'
+          : winner === gameInstance.botSymbol
+            ? 'The bot has won!'
+            : 'It\'s a tie!'
+        : isPlayersTurn ? 'It\'s your turn' : 'The bot is thinking'
+      }
     </div>
   )
 }
@@ -60,7 +95,13 @@ function GameBoard(): ReactNode {
   const gameInstance = useGameInstance()
   const tiles = useStateValue(gameInstance.tiles)
   return (
-    <div className={styles.gameBoard}>
+    <div
+      className={styles.gameBoard}
+      style={{
+        '--marker-preview-symbol': `"${gameInstance.playerSymbol === 'x' ? '╳' : '◯'}"`,
+        '--marker-preview-color': gameInstance.playerSymbol === 'x' ? '#ff2b80' : '#2b80ff',
+      }}
+    >
       {tiles.map((tile, index) => (
         <Tile
           key={index}
@@ -87,6 +128,7 @@ function Tile({
     gameInstance.state,
     (state) => state === GameInstanceState.ONGOING,
   )
+  const highlightPattern = useSimpleStateValue(gameInstance.winInfo, (s) => s?.pattern)
   return (
     <button
       className={styles.gameTile}
@@ -95,6 +137,7 @@ function Tile({
       }, [])}
       disabled={!!value || !isPlayersTurn || !isActive}
       data-marker={value}
+      data-highlight={highlightPattern?.has(index)}
     >
       {value === 'x' ? '╳' : (value === 'o' ? '◯' : '')}
     </button>
@@ -119,13 +162,16 @@ type IGameTiles = [
   XO, XO, XO,
 ]
 
+interface IWinInfo {
+  winner: XO
+  pattern: Set<number>
+}
+
 enum GameInstanceState {
   ONGOING,
   CONCLUDED,
   DISPOSED,
 }
-
-type ConcludeType = 'TIE' | XO
 
 class GameInstance implements IDisposable {
 
@@ -146,9 +192,10 @@ class GameInstance implements IDisposable {
 
   readonly currentTurnSymbol = new SimpleStateManager<XO>('x')
 
-  // readonly victoryState
+  readonly winInfo = new SimpleStateManager<Nullable<IWinInfo>>(null)
 
   readonly playerSymbol: XO
+
   readonly botSymbol: XO
 
   readonly stopBot: () => void
@@ -199,30 +246,42 @@ class GameInstance implements IDisposable {
   }
 
   private commitTurn(): void {
+
     const tiles = this.tiles.get()
-    if (hasVictoryPattern(this.playerSymbol, tiles)) {
-      // Player wins
-      this.conclude(this.playerSymbol)
-      alert('Player wins')
-    } else if (hasVictoryPattern(this.botSymbol, tiles)) {
-      // Bot wins
-      this.conclude(this.botSymbol)
-      alert('Bot wins')
-    } else if (tiles.every((tile) => tile)) {
-      // Tie
-      this.conclude(null)
-      alert('Tie')
-    } else {
-      this.currentTurnSymbol.set((currentTurnSymbol) => {
-        return currentTurnSymbol === this.playerSymbol
-          ? this.botSymbol
-          : this.playerSymbol
-      })
+    let victoryPattern: Set<number> | undefined
+
+    // Player wins
+    victoryPattern = findVictoryPattern(this.playerSymbol, tiles)
+    if (victoryPattern) {
+      this.conclude(this.playerSymbol, victoryPattern)
+      return
     }
+
+    // Bot wins
+    victoryPattern = findVictoryPattern(this.botSymbol, tiles)
+    if (victoryPattern) {
+      this.conclude(this.botSymbol, victoryPattern)
+      return
+    }
+
+    // Tie
+    if (tiles.every((tile) => tile)) {
+      this.conclude('', new Set())
+      return
+    }
+
+    // Can proceed to next turn
+    this.currentTurnSymbol.set((currentTurnSymbol) => {
+      return currentTurnSymbol === this.playerSymbol
+        ? this.botSymbol
+        : this.playerSymbol
+    })
+
   }
 
-  private conclude(winner: Nullable<XO>): void {
+  private conclude(winner: XO, pattern: Set<number>): void {
     this.stopBot()
+    this.winInfo.set({ winner, pattern })
     this.state.set(GameInstanceState.CONCLUDED)
   }
 
@@ -242,7 +301,7 @@ function usePlayersTurn(gameInstance: GameInstance): boolean {
   return isPlayersTurn
 }
 
-const VICTORY_PATTERNS = new Set([
+const VICTORY_PATTERNS = [
   [
     '*', '*', '*',
     '', '', '',
@@ -283,20 +342,22 @@ const VICTORY_PATTERNS = new Set([
     '', '*', '',
     '*', '', '',
   ],
-].map((pattern) => serializePattern('*', pattern)))
+].map((pattern) => getPatternIndices('*', pattern))
 
-function serializePattern(symbol: string, tiles: Array<string>): string {
+function getPatternIndices(symbol: string, tiles: Array<string>): Set<number> {
   return tiles.reduce((acc, tile, index) => {
     if (tile === symbol) {
-      acc.push(index)
+      acc.add(index)
     }
     return acc
-  }, [] as Array<number>).join(',')
+  }, new Set<number>())
 }
 
-function hasVictoryPattern(symbol: XO, tiles: IGameTiles): boolean {
-  const serializedTiles = serializePattern(symbol, tiles)
-  return VICTORY_PATTERNS.has(serializedTiles)
+function findVictoryPattern(symbol: XO, tiles: IGameTiles): Set<number> | undefined {
+  const serializedTiles = getPatternIndices(symbol, tiles)
+  return VICTORY_PATTERNS.find((victoryPattern) => {
+    return victoryPattern.isSubsetOf(serializedTiles)
+  })
 }
 
 /**
