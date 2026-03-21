@@ -47,7 +47,7 @@ const CounterState = new SimpleStateManager(0)
 
 ### Set Value
 
-#### By providing a value
+#### By providing a new value
 ```ts
 CounterState.set(42)
 ```
@@ -60,6 +60,21 @@ CounterState.set((c) => c + 1)
 ### Get Value
 ```ts
 const counter = CounterState.get()
+```
+
+### Watch stage changes
+```tsx
+const unwatch = CounterState.watch((counter) => {
+  console.log(counter)
+})
+// ... other code here ...
+unwatch()
+```
+
+### Wait for a value
+```tsx
+// Wait for counter to reach 100
+await CounterState.wait(100)
 ```
 
 ### Using With React
