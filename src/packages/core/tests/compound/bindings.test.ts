@@ -1,6 +1,5 @@
-/* eslint-disable jest/expect-expect */
 import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { StateManagerInitArgs } from 'cotton-box'
+import type { StateManagerInitArgs } from '../../src'
 import { TestConfig, wrapper } from '../test-wrapper'
 
 let cleanupManager: CleanupManager
@@ -25,6 +24,7 @@ wrapper(({ Lib: {
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])
+    expect('').pass('`expect` is invoked by `performInvocations`')
   })
 
   test('StateManager', async () => {
@@ -46,6 +46,7 @@ wrapper(({ Lib: {
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])
+    expect('').pass('`expect` is invoked by `performInvocations`')
   })
 
   test('AsyncStateManager', async () => {
@@ -68,6 +69,7 @@ wrapper(({ Lib: {
       [TestStateManager.unwatchAll],
       [TestStateManager.dispose],
     ])
+    expect('').pass('`expect` is invoked by `performInvocations`')
   })
 
 })
