@@ -121,6 +121,8 @@
 ## Naming Conventions
 
 ### Instantiating State Managers
+
+#### As Global Variable
 - Always use pascal case
 - Always end with `State`
 - Correct examples: `CounterState`, `UserState`, `AuthState`
@@ -128,6 +130,24 @@
 - Full correct example:
 ```ts
 const CounterState = new StateManager(42)
+```
+
+#### As Class Property
+- Always use camel case
+- Does not require prefix or suffix
+- Correct examples: `state`, `result`, `stack`
+- Incorrect examples: `State`, `resultState`, `stackState`
+- Full correct example:
+```ts
+class ChessGameInstance {
+
+  readonly boardTiles = new StateManager(
+    new Array(8).fill([]).map((row) => {
+      return new Array(8).fill('')
+    })
+  )
+
+}
 ```
 
 ### TypeScript State Interfaces

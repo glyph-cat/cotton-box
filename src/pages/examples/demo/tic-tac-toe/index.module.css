@@ -1,14 +1,126 @@
 .container {
   display: grid;
   place-items: center;
+  height: 85vh;
+}
+
+.mainMenu {
+  display: grid;
+  gap: 20px;
+  place-items: center;
+}
+
+.menuButton {
+  appearance: none;
+  background-color: #808080;
+  border: none;
+  border-radius: 24px;
+  color: #b5b5b5;
+  display: grid;
+  height: 48px;
+  margin: 0;
+  padding: 0px 20px;
+  place-items: center;
+  text-align: center;
+}
+
+.menuButton:enabled {
+  background-color: #2b80ff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.menuButton:enabled:hover {
+  background-color: #408dff;
+}
+
+.menuButton:enabled:active {
+  background-color: #2070e8;
+}
+
+.menuButton:disabled {
+  cursor: not-allowed;
+}
+
+.gameContainer {
+  display: grid;
+  place-items: center;
 }
 
 .gameBoard {
+  aspect-ratio: 1;
   display: grid;
-  grid-auto-rows: repeat(3, 1fr);
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 20px;
+  max-width: 600px;
+  min-width: 200px;
+  width: 50vmin;
 }
 
 .gameTile {
+  appearance: none;
   aspect-ratio: 1;
+  background-color: #80808020;
+  border: solid 2px transparent;
+  border-radius: 20px;
+  color: #ffffff;
+  font-size: 36pt;
+  font-weight: bold;
+  overflow: hidden;
   place-items: center;
+  position: relative;
+  text-align: center;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+}
+
+.gameTile[data-marker="x"] {
+  color: #ff2b80;
+}
+
+.gameTile[data-marker="o"] {
+  color: #2b80ff;
+}
+
+.gameTile:enabled {
+  cursor: pointer;
+}
+
+.gameTile:enabled::before {
+  animation: gameTileEmphasis 0.5s infinite alternate;
+  background-color: #808080;
+  content: " ";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.gameTile:enabled:hover {
+  background-color: #80808040;
+  border-color: #80808080;
+}
+
+.gameTile:enabled:active {
+  background-color: #80808080;
+  transform: scale(0.9);
+}
+
+.gameTile:disabled {
+  background-color: transparent;
+  border-color: #80808040;
+  cursor: not-allowed;
+}
+
+@keyframes gameTileEmphasis {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.15;
+  }
 }

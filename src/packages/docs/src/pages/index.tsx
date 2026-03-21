@@ -18,14 +18,35 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className='container' style={{ color: '#000000' }}>
-        <Heading as='h1' className='hero__title'>
+        <Heading
+          as='h1'
+          className='hero__title'
+          style={{
+            fontFamily: 'Work Sans',
+            fontSize: '5rem',
+            fontWeight: '300',
+          }}
+        >
           {siteConfig.title}
         </Heading>
-        <p className='hero__subtitle'>{siteConfig.tagline}</p>
+        <p
+          className='hero__subtitle'
+          style={{
+            fontFamily: 'Work Sans',
+            letterSpacing: '-0.05rem',
+          }}
+        >
+          {siteConfig.tagline}
+        </p>
         <div className={styles.buttons}>
           <Link
             className='button button--secondary button--lg'
-            href='/cotton-box/docs/learn/tutorial/setup'>
+            href='/cotton-box/docs/learn/tutorial/setup'
+            style={{
+              fontFamily: 'Work Sans',
+              fontWeight: '500',
+            }}
+          >
             Get started
           </Link>
         </div>

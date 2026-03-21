@@ -7,10 +7,10 @@
 
 .featureSvg {
   height: 96px;
-  fill: #2b80ff;
+  fill: #46a9f5;
   width: 96px;
 }
 
 [data-theme="dark"] .featureSvg {
-  fill: #4b90ff;
+  fill: #70bdf7;
 }

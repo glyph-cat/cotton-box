@@ -9,15 +9,15 @@ export class InvalidStateTransitionError extends Error {
    * {:TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR:}
    * @param fromState - {:TSDOC_PARAM_DESC_FROM_STATE:}
    * @param toState - {:TSDOC_PARAM_DESC_TO_STATE:}
-   * @param stateManager - {:TSDOC_DESC_OPTIONS_NAME:}
+   * @param stateManagerName - {:TSDOC_DESC_OPTIONS_NAME:}
    * @see -{:DOCS_API_CORE_URL:}/InvalidStateTransitionError
    */
   constructor(
-    readonly fromState: string,
-    readonly toState: string,
-    readonly stateManager?: Optional<string>
+    readonly fromState: unknown,
+    readonly toState: unknown,
+    readonly stateManagerName?: Optional<string>
   ) {
-    super(`from "${fromState}" to "${toState}" in ${stateManager ?? 'unnamed state'}`)
+    super(`Invalid state transition from "${String(fromState)}" to "${String(toState)}" in ${stateManagerName ?? 'unnamed state'}`)
     this.name = 'InvalidStateTransitionError'
   }
 
