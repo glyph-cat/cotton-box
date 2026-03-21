@@ -19,7 +19,7 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 | Packages | Stats |
 | --- | --- |
 | `cotton-box`       | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box)             |
-| `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) |
+| `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box-react) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) |
 
 <br/>
 
