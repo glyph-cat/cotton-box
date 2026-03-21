@@ -21,6 +21,7 @@
 - Possible to compose graph-like structures but is not the default practice
 - Friendly to object-oriented programming codebase
 - A good library for managing state and reactivity for games built with React
+- State managers exist as classes
 
 ## Mental Model
 - A "State Manager" is a self-contained reactive state container
