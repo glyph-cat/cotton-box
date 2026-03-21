@@ -18,15 +18,24 @@ export default function App(): ReactNode {
   const endCurrentGame = useCallback(() => {
     gameInstance?.dispose()
     setGameInstance(null)
-  }, [])
+  }, [gameInstance])
+
+  const resetAndStartNewGame = useCallback(() => {
+    endCurrentGame()
+    startNewGame()
+  }, [endCurrentGame, startNewGame])
+
+  // TODO: Show a banner at start of game indicating who starts first
 
   return (
     <div className={styles.container}>
       {gameInstance ? (
         <GameInstanceContext value={gameInstance}>
           <div className={styles.gameContainer}>
-            <MenuArea onQuit={endCurrentGame} />
-            <InstructionBoard />
+            <HeadsUpDisplay
+              onExit={endCurrentGame}
+              onReset={resetAndStartNewGame}
+            />
             <GameBoard />
           </div>
         </GameInstanceContext>
@@ -43,28 +52,15 @@ export default function App(): ReactNode {
   )
 }
 
-interface MenuAreaProps {
-  onQuit(): void
+interface HeadsUpDisplayProps {
+  onExit(): void
+  onReset(): void
 }
 
-function MenuArea({ onQuit }: MenuAreaProps): ReactNode {
-  return (
-    <div style={{
-      display: 'grid',
-      gridAutoColumns: 'auto',
-      gridAutoFlow: 'column',
-      justifyItems: 'end',
-      width: '100%',
-    }}>
-      <button
-        className={styles.menuButton}
-        onClick={onQuit}
-      >Quit</button>
-    </div>
-  )
-}
-
-function InstructionBoard(): ReactNode {
+function HeadsUpDisplay({
+  onReset,
+  onExit,
+}: HeadsUpDisplayProps): ReactNode {
   const gameInstance = useGameInstance()
   const hasConcluded = useSimpleStateValue(
     gameInstance.state,
@@ -74,19 +70,35 @@ function InstructionBoard(): ReactNode {
   const winner = useSimpleStateValue(gameInstance.winInfo, (s) => s?.winner)
   return (
     <div style={{
+      alignItems: 'center',
       display: 'grid',
-      fontSize: '24pt',
-      fontWeight: 'bold',
-      textAlign: 'center',
+      gap: 10,
+      gridAutoColumns: 'auto',
+      gridTemplateColumns: '1fr repeat(2, auto)',
+      width: '100%',
+      paddingInline: 30,
     }}>
-      {hasConcluded
-        ? winner === gameInstance.playerSymbol
-          ? 'Congratulations, you won!'
-          : winner === gameInstance.botSymbol
-            ? 'The bot has won!'
-            : 'It\'s a tie!'
-        : isPlayersTurn ? 'It\'s your turn' : 'The bot is thinking'
-      }
+      <span style={{
+        fontSize: '20pt',
+        fontWeight: 'bold',
+      }}>
+        {hasConcluded
+          ? winner === gameInstance.playerSymbol
+            ? 'Congratulations, you won!'
+            : winner === gameInstance.botSymbol
+              ? 'The bot has won!'
+              : 'It\'s a tie!'
+          : isPlayersTurn ? 'It\'s your turn' : 'The bot is thinking'
+        }
+      </span>
+      <button
+        className={styles.menuButton}
+        onClick={onReset}
+      >Reset</button>
+      <button
+        className={styles.menuButton}
+        onClick={onExit}
+      >Quit</button>
     </div>
   )
 }
@@ -134,7 +146,7 @@ function Tile({
       className={styles.gameTile}
       onClick={useCallback(() => {
         gameInstance.onSelectTile(index)
-      }, [])}
+      }, [gameInstance])}
       disabled={!!value || !isPlayersTurn || !isActive}
       data-marker={value}
       data-highlight={highlightPattern?.has(index)}
@@ -228,7 +240,7 @@ class GameInstance implements IDisposable {
   }
 
   private async performBotTurn(): Promise<void> {
-    await delay(getRandomNumber(250, 750))
+    await delay(getRandomNumber(500, 1500))
     this.tiles.set((prevTiles) => {
       // Find empty tiles
       const availableTileIndices = prevTiles.map((tile, index) => {
