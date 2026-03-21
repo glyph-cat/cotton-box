@@ -21,21 +21,16 @@ export function Link({
   const { push } = useHistory()
 
   // If link references to origin of docs site, then use `push` instead
+  // Original reference localhost origin: /^http:\/\/localhost:3000\/?/
 
+  // KIV: Formerly in violation of CodeQL 'js/incomplete-sanitization'
   const normalizedOrigin = typeof window !== 'undefined'
     ? window.location.origin
     : DocConstants.GLYPH_CAT_GITHUB_IO
 
-  // KIV: Formerly in violation of CodeQL 'js/incomplete-sanitization'
-  const URL_REGEX = new RegExp(
-    `^${typeof window !== 'undefined'
-      ? window.location.origin // Slashes in 'https://' are automatically escaped
-      : DocConstants.GLYPH_CAT_GITHUB_IO
-    }\\/?`
-  )
-  console.log('window.location.origin', window.location.origin)
-  console.log('URL_REGEX', URL_REGEX)
-  // Original reference: /^http:\/\/localhost:3000\/?/
+  // Apparently slashes in 'https://' are automatically escaped
+  const URL_REGEX = new RegExp(`^${normalizedOrigin}\\/?`)
+
   const containsOrigin = String(href).includes(normalizedOrigin)
   const isSameOrigin = containsOrigin || /^(\.|\/)/.test(href)
 
