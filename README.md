@@ -75,12 +75,6 @@ function App() {
 <br/>
 
 ## Links
-<!-- | Links |
-|---|
-| [![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box) |
-| [![Code Sandbox Examples](https://img.shields.io/badge/_-Code_Sandbox_Examples-bada55?logo=codesandbox&logoColor=black&style=for-the-badge)](https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter)[![Source code](https://img.shields.io/badge/_-Source_code-9aad39?style=for-the-badge)](https://github.com/glyph-cat/cotton-box/tree/main/src/pages/examples) |
-| [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/D1D65P69N) | -->
-
 [![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
 <br />
 [![Code Sandbox Examples](https://img.shields.io/badge/_-Code_Sandbox_Examples-bada55?logo=codesandbox&logoColor=black&style=for-the-badge)](https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter)[![Source code](https://img.shields.io/badge/_-Source_code-9aad39?style=for-the-badge)](https://github.com/glyph-cat/cotton-box/tree/main/src/pages/examples)
