@@ -10,6 +10,34 @@
     "prefix": "// Early exit",
     "body": "// Early exit"
   },
+  "@defaultValue": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "@defaultValue",
+    "body": "@defaultValue",
+  },
+  "@defaultValue comment block": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "/**",
+    "body": [
+      "/**",
+      "* @defaultValue",
+      "*/",
+    ],
+  },
+  "@internal": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "@internal",
+    "body": "@internal",
+  },
+  "@internal comment block": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "/**",
+    "body": [
+      "/**",
+      "* @internal",
+      "*/",
+    ],
+  },
   "Create new example": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": "export default function App",
