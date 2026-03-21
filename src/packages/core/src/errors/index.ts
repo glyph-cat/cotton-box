@@ -17,7 +17,7 @@ export class InvalidStateTransitionError extends Error {
     readonly toState: unknown,
     readonly stateManagerName?: Optional<string>
   ) {
-    super(`Invalid state transition from "${String(fromState)}" to "${String(toState)}" in ${stateManagerName ?? 'unnamed state'}`)
+    super(`Invalid state transition from "${String(fromState)}" to "${String(toState)}"${stateManagerName ? ` in ${stateManagerName}` : ''}`)
     this.name = 'InvalidStateTransitionError'
   }
 

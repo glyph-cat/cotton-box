@@ -1,9 +1,10 @@
 import { Optional } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, WaitEvaluator } from '../../abstractions'
-import { Watcher } from '../../internals/watcher'
 
 let internalIdCounter = 0
+
+const __emptyFunction = () => { /* do nothing */ }
 
 /**
  * {:TSDOC_DESC_OPTIONS_SIMPLE:}
@@ -26,7 +27,12 @@ export class SimpleStateManager<State> {
   /**
    * @internal
    */
-  protected readonly M$watcher = new Watcher<State>()
+  private M$isDisposed = false
+
+  /**
+   * @internal
+   */
+  private M$watcherHandlers = new Set<(state: State) => void>()
 
   /**
    * @internal
@@ -102,7 +108,7 @@ export class SimpleStateManager<State> {
     this.M$internalState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
       : newStateOrFn
-    this.M$watcher.M$post(this.M$internalState)
+    this.M$post(this.M$internalState)
   }
 
   /**
@@ -112,7 +118,7 @@ export class SimpleStateManager<State> {
    */
   reset(): void {
     this.M$internalState = this.defaultState
-    this.M$watcher.M$post(this.M$internalState)
+    this.M$post(this.M$internalState)
   }
 
   /**
@@ -122,7 +128,9 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_WATCH:}
    */
   watch(callback: (state: State) => void): () => void {
-    return this.M$watcher.M$watch(callback)
+    if (this.M$isDisposed) { return __emptyFunction } // Early exit
+    this.M$watcherHandlers.add(callback)
+    return () => { this.M$watcherHandlers.delete(callback) }
   }
 
   /**
@@ -131,7 +139,7 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_UNWATCH_ALL:}
    */
   unwatchAll(): void {
-    this.M$watcher.M$unwatchAll()
+    this.M$watcherHandlers.clear()
   }
 
   /**
@@ -166,7 +174,7 @@ export class SimpleStateManager<State> {
       return Promise.resolve(this.M$internalState)
     } else {
       return new Promise((resolve) => {
-        const unwatch = this.M$watcher.M$watch((state) => {
+        const unwatch = this.watch((state) => {
           if (fulfillsCondition(state)) {
             unwatch()
             resolve(state)
@@ -182,7 +190,17 @@ export class SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_DISPOSE:}
    */
   dispose(): void {
-    this.M$watcher.M$dispose()
+    this.M$isDisposed = true
+    this.unwatchAll()
+  }
+
+  /**
+   * @internal
+   */
+  protected M$post(state: State): void {
+    this.M$watcherHandlers.forEach((callback) => {
+      callback(state)
+    })
   }
 
 }
