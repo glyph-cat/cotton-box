@@ -1,14 +1,16 @@
+import { Nullable, StringRecord } from '@glyph-cat/foundation'
 import { StateManager } from 'cotton-box'
 import { useStateValue } from 'cotton-box-react'
 import { ChangeEvent, MouseEvent, ReactNode, memo, useCallback, useDeferredValue, useEffect } from 'react'
+import { v4 as uuid } from 'uuid'
 import styles from './index.module.css'
 
 interface IAppState {
-  notes: Record<string, {
+  notes: StringRecord<{
     title: string,
     body: string
   }>
-  currentlyPreviewing: string | null
+  currentlyPreviewing: Nullable<string>
 }
 
 const AppState = new StateManager<IAppState>({
@@ -16,85 +18,10 @@ const AppState = new StateManager<IAppState>({
   currentlyPreviewing: null,
 })
 
-function onSelectNote(noteId: string) {
-  return () => {
-    AppState.set((previousState) => ({
-      ...previousState,
-      currentlyPreviewing: noteId,
-    }))
-  }
-}
-
-function addNewNote(title = '', body = ''): void {
-  AppState.set((previousState) => {
-    let newId: string
-    do { newId = getRandomId() } while (previousState.notes[newId])
-    return {
-      ...previousState,
-      notes: {
-        ...previousState.notes,
-        [newId]: {
-          title,
-          body,
-        },
-      },
-      currentlyPreviewing: newId,
-    }
-  })
-}
-
-function addNewNoteHandler() {
-  return addNewNote()
-}
-
-function removeNote(noteId: string): void {
-  AppState.set((previousState) => {
-    const originalIndex = Object.keys(previousState.notes).findIndex((id) => id === noteId)
-    const { [noteId]: _toExclude, ...nextNotes } = previousState.notes
-    const nextIds = Object.keys(nextNotes)
-    const nextPreviewId = nextIds[Math.min(Math.max(0, originalIndex - 1), nextIds.length - 1)]
-    return {
-      ...previousState,
-      notes: nextNotes,
-      currentlyPreviewing: nextPreviewId,
-    }
-  })
-}
-
-function onChangeNoteTitle(noteId: string) {
-  return (e: ChangeEvent<HTMLInputElement>) => {
-    AppState.set((previousState) => ({
-      ...previousState,
-      notes: {
-        ...previousState.notes,
-        [noteId]: {
-          ...previousState.notes[noteId],
-          title: e.target.value,
-        },
-      },
-    }))
-  }
-}
-
-function onChangeNoteBody(noteId: string) {
-  return (e: ChangeEvent<HTMLTextAreaElement>) => {
-    AppState.set((previousState) => ({
-      ...previousState,
-      notes: {
-        ...previousState.notes,
-        [noteId]: {
-          ...previousState.notes[noteId],
-          body: e.target.value,
-        },
-      },
-    }))
-  }
-}
-
 export default function App(): ReactNode {
   useEffect(() => {
     // Populate state with some data
-    const firstNoteId = 'ZPM9XQ7i8G4Lh569ouOw'
+    const firstNoteId = uuid()
     AppState.set((previousState) => ({
       ...previousState,
       currentlyPreviewing: firstNoteId,
@@ -103,11 +30,11 @@ export default function App(): ReactNode {
           title: 'Hello, world!',
           body: 'How are you?',
         },
-        'RjE5ICD3x0IuBCaSB5Q9': {
+        [uuid()]: {
           title: 'Lorem ipsum',
           body: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         },
-        'OP2842RclzxswovKcO8A': {
+        [uuid()]: {
           title: 'Click for here a surprise',
           body: 'Never gonna give you up\nNever gonna let you down\nNever gonna run around and desert you',
         }
@@ -220,11 +147,76 @@ function Editor(): ReactNode {
   )
 }
 
-function getRandomId(): string {
-  const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-  let hash = ''
-  while (hash.length < 20) {
-    hash += charset[Math.floor(Math.random() * charset.length)]
+function onSelectNote(noteId: string) {
+  return () => {
+    AppState.set((previousState) => ({
+      ...previousState,
+      currentlyPreviewing: noteId,
+    }))
   }
-  return hash
+}
+
+function addNewNote(title = '', body = ''): void {
+  AppState.set((previousState) => {
+    const newId = uuid()
+    return {
+      ...previousState,
+      notes: {
+        ...previousState.notes,
+        [newId]: {
+          title,
+          body,
+        },
+      },
+      currentlyPreviewing: newId,
+    }
+  })
+}
+
+function addNewNoteHandler() {
+  return addNewNote()
+}
+
+function removeNote(noteId: string): void {
+  AppState.set((previousState) => {
+    const originalIndex = Object.keys(previousState.notes).findIndex((id) => id === noteId)
+    const { [noteId]: _toExclude, ...nextNotes } = previousState.notes
+    const nextIds = Object.keys(nextNotes)
+    const nextPreviewId = nextIds[Math.min(Math.max(0, originalIndex - 1), nextIds.length - 1)]
+    return {
+      ...previousState,
+      notes: nextNotes,
+      currentlyPreviewing: nextPreviewId,
+    }
+  })
+}
+
+function onChangeNoteTitle(noteId: string) {
+  return (e: ChangeEvent<HTMLInputElement>) => {
+    AppState.set((previousState) => ({
+      ...previousState,
+      notes: {
+        ...previousState.notes,
+        [noteId]: {
+          ...previousState.notes[noteId],
+          title: e.target.value,
+        },
+      },
+    }))
+  }
+}
+
+function onChangeNoteBody(noteId: string) {
+  return (e: ChangeEvent<HTMLTextAreaElement>) => {
+    AppState.set((previousState) => ({
+      ...previousState,
+      notes: {
+        ...previousState.notes,
+        [noteId]: {
+          ...previousState.notes[noteId],
+          body: e.target.value,
+        },
+      },
+    }))
+  }
 }
