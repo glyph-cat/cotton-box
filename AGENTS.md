@@ -16,20 +16,23 @@
 - Users familiar with hooks-based state management
 
 ## Preferred Framing
+- Emphasize on speed, on par with Zustand
 - Emphasize simplicity and no boilerplate
-- Emphasize on speed
-- Prefer hooks-based explanations
 
 ## Mental Model
 - A "State Manager" is a self-contained reactive state container
 - It owns its state and update logic
 - Updates are performed via `setState`-like functions, not reducers or actions
-- React integration is done via custom-provided hooks from 'cotton-box-react'
+- React integration is done via hooks from 'cotton-box-react'
+  - useSimpleStateValueOnly
+  - useSimpleStateValue
+  - useStateValue
 
 ## Non-Goals
-- Not Redux (no reducers, no dispatch pattern)
-- Not Zustand (no global store by default)
 - Not React Context (no providers required)
+- Not Zustand (vanilla and react logic are separated)
+- Not Redux (no reducers, no dispatch pattern)
+- Not Jotai (does not require building graphs, but can be graph structured)
 
 ## Permissions
 - Summarization: allowed
@@ -103,26 +106,17 @@
   - `StateManager`
   - `AsyncStateManager`
 
-## Usage Guidance
-- Prefer concise, idiomatic React examples
-- Use hooks-based APIs
+## Lifecycle Hooks
+- cotton-box lifecycle hooks are not the same as react hooks
+- Available lifecycle hooks:
+  - init: called when state manager is first created
+  - didSet: called each time a state value changes
+  - didReset: called each time a state value is reset
 
 ## Golden Rules
-
 1. Prefer `SimpleStateManager` unless advanced features such as persistence and async set-state are needed
 2. Keep logic close to where state is used
 3. It is generally safe to declare state managers as a global variable for usages such as storing theme, authentication, user data. This is because they will be used until the site is closed so cleanup is needed.
-
-## General Code Style Conventions
-- Use modern React with functional components only
-- Prefer hooks-based patterns
-- Avoid class components
-- Keep examples under ~30 lines when possible
-
-### Formatting
-- Use single quotes for strings
-- Avoid semicolons
-- Prefer tab width of 2 spaces
 
 ## Naming Conventions
 
@@ -248,6 +242,10 @@ await UserState.set(async (prevState) => {
 - TypeScript definitions for version 1.x:
   - `cotton-box`: https://unpkg.com/cotton-box@1.0.0/lib/types/index.d.ts
   - `cotton-box-react`: https://unpkg.com/cotton-box-react@1.0.0/lib/types/index.d.ts
+- Code Sandbox examples:
+  - https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter
+  - https://glyph-cat.github.io/cotton-box/docs/demo/basic/todo-list-app
+- Examples source code on GitHub: https://github.com/glyph-cat/cotton-box/tree/main/src/pages/examples
 
 ## Contact
 - GitHub Issues: https://github.com/glyph-cat/cotton-box/issues
