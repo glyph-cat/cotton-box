@@ -24,15 +24,14 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 <br/>
 
 ## Features
-
-- No Providers/boilerplate 🧩
-- Customizable equality function 🎯
-- Async <code>setState</code> support 🔄
-- Temporarily unwatch state in React Hooks ⏸️
+- Lightweight & fast ⚡️
+- No providers or boilerplate 🧩
+- Customizable equality checking 🎯
 - Declarative lifecycle management 🌱
+- Works with and without react ⚛️
 - Private state values (without middleware) 🔒
-- Works with and without React ⚛️
-- Fast ⚡️
+- Temporarily unwatch state in hooks ⏸️
+- Supports async state updates 🔄
 
 <br/>
 

@@ -49,5 +49,6 @@ But if ever in doubt, hopefully this file will be able to clarify things.
 3. Swap the value with `cleanupManager.append(TestState.dispose)` as plain text.
 4. Compare the search result count, make sure they are the same as the count in #2.
 
-## Good First Issues
-There are some tasks listed in `TODO.md`. They could very well be a good first issue.
+## TODO List
+- There is a public to-do list at the root of the project directory
+- It contains some tasks that can very well be a good first issue and other more complex tasks as wel.

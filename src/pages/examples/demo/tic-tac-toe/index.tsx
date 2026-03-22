@@ -70,14 +70,30 @@ function HeadsUpDisplay({
   const winner = useSimpleStateValue(gameInstance.winInfo, (s) => s?.winner)
   return (
     <div style={{
-      alignItems: 'center',
       display: 'grid',
       gap: 10,
-      gridAutoColumns: 'auto',
-      gridTemplateColumns: '1fr repeat(2, auto)',
-      width: '100%',
       paddingInline: 30,
+      width: '100%',
     }}>
+      <div style={{
+        alignItems: 'center',
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridTemplateColumns: '1fr repeat(2, auto)',
+        gap: 10,
+      }}>
+        <div />
+        <button
+          className={styles.menuButton}
+          onClick={onReset}
+          style={{ height: 36 }}
+        >Reset</button>
+        <button
+          className={styles.menuButton}
+          onClick={onExit}
+          style={{ height: 36 }}
+        >Quit</button>
+      </div>
       <span style={{
         fontSize: '20pt',
         fontWeight: 'bold',
@@ -91,14 +107,6 @@ function HeadsUpDisplay({
           : isPlayersTurn ? 'It\'s your turn' : 'The bot is thinking'
         }
       </span>
-      <button
-        className={styles.menuButton}
-        onClick={onReset}
-      >Reset</button>
-      <button
-        className={styles.menuButton}
-        onClick={onExit}
-      >Quit</button>
     </div>
   )
 }

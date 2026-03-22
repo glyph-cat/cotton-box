@@ -8,10 +8,8 @@ import { ReactNode } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
-// import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
-// import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
-import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/counter/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/counter/index.tsx'
+import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.module.css'
+import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.tsx'
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext()
@@ -60,21 +58,55 @@ export default function Home(): ReactNode {
 
   return (
     <Layout description={siteConfig.tagline}>
+
       <HomepageHeader />
+
       <main>
         <HomepageFeatures />
       </main>
-      <h2 style={{ marginTop: 20, textAlign: 'center' }}>
-        {'Quick Demo'}
-      </h2>
-      <SimpleWebPlayground
-        code={DEMO_TSX}
-        css={DEMO_CSS as unknown as string}
-        options={{
-          editorHeight: 500,
-          editorWidthPercentage: 50,
-        }}
-      />
+
+      <Heading
+        as='h2'
+        style={{
+          fontFamily: 'Work Sans',
+          fontSize: '24pt',
+          fontWeight: 400,
+          marginTop: '1rem',
+          opacity: 0.65,
+          textAlign: 'center',
+        }}>
+        {'Demo'}
+      </Heading>
+
+      <div style={{
+        display: 'grid',
+        gap: 40,
+        placeItems: 'center',
+      }}>
+        <div style={{
+          display: 'grid',
+          maxWidth: 1000,
+          width: '100%',
+        }}>
+          <SimpleWebPlayground
+            code={DEMO_TSX}
+            css={DEMO_CSS as unknown as string}
+            options={{
+              editorHeight: 500,
+              editorWidthPercentage: 55,
+            }}
+          />
+        </div>
+        <Link
+          href='/cotton-box/docs/demo/advanced/tic-tac-toe'
+          style={{ fontSize: '16pt' }}
+        >
+          {'Explore more examples →'}
+        </Link>
+      </div>
+
+      <div style={{ height: 100 }} />
+
     </Layout>
   )
 }

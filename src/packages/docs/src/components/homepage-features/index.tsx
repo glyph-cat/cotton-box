@@ -2,7 +2,35 @@
 import Heading from '@theme/Heading'
 import clsx from 'clsx'
 import { ReactNode } from 'react'
-import styles from './styles.module.css'
+import styles from './index.module.css'
+
+export function HomepageFeatures(): ReactNode {
+  return (
+    <section className={styles.featuresSection}>
+      <Heading as='h2' className={styles.featuresTitle}>
+        {'Features'}
+      </Heading>
+      <div className={styles.featuresContainer}>
+        {features.map(({ title, description, Svg }, featureIndex) => (
+          <div
+            className={styles.featureItemContainer}
+            style={{ animationDelay: `${featureIndex * 10}ms` }}
+          >
+            <Svg className={styles.featureSvg} role='img' />
+            <Heading as='h3' className={styles.featureTitle}>
+              {title}
+            </Heading>
+            <div />
+            <p className={styles.featureDescription}>
+              {description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 
 interface FeatureItem {
   title: string
@@ -12,64 +40,76 @@ interface FeatureItem {
 
 const features: Array<FeatureItem> = [
   {
-    title: 'Lightweight & fast',
-    Svg: require('@site/static/img/electric_bolt.svg').default,
+    title: 'Lightweight & Fast',
+    Svg: require('@site/static/img/symbols/electric_bolt.svg').default,
     description: (
       <>
-        Suitable for various projects. From simple PWAs to complex applications and even time-critical games.
+        Works for simple PWAs, complex applications, and even time-critical games.
       </>
     ),
   },
   {
-    title: 'Declarative lifecycle management',
-    Svg: require('@site/static/img/cycle.svg').default,
+    title: 'No Providers or Boilerplate',
+    Svg: require('@site/static/img/symbols/skillet.svg').default,
     description: (
       <>
-        Persist and retrieve data with lifecycle hooks such as <code>init</code>, <code>didSet</code> & <code>didReset</code>.
+        Share states across different React render trees without providers or tedious setups.
       </>
     ),
   },
   {
-    title: 'Supports async set-state functions',
-    Svg: require('@site/static/img/acute.svg').default,
+    title: 'Customizable Equality Checking',
+    Svg: require('@site/static/img/symbols/compare_arrows.svg').default,
     description: (
       <>
-        An escape hatch for when you need to set state in conjunction with complicated data-fetching logic.
+        Minimize unnecessary re-renders even when selector returns new object on each render.
+      </>
+    ),
+  },
+
+  {
+    title: 'Declarative Lifecycle Management',
+    Svg: require('@site/static/img/symbols/cycle.svg').default,
+    description: (
+      <>
+        Persist state with <code>init</code>, <code>didSet</code>, and <code>didReset</code> lifecycle hooks.
+      </>
+    ),
+  },
+  {
+    title: 'Works With and Without React',
+    Svg: require('@site/static/img/react-logo.svg').default,
+    description: (
+      <>
+        React bindings exists as a separate package but still, with first-class integration.
+      </>
+    ),
+  },
+  {
+    title: 'Private State Values',
+    Svg: require('@site/static/img/symbols/visibility_off.svg').default,
+    description: (
+      <>
+        Hide sensitive information from being displayed in React Dev Tools. No middleware required.
+      </>
+    ),
+  },
+  {
+    title: 'Temporarily Unwatch State in Hooks',
+    Svg: require('@site/static/img/symbols/pause_circle.svg').default,
+    description: (
+      <>
+        Prevent components from re-rendering by temporarily unsubscribing from state changes.
+      </>
+    ),
+  },
+  {
+    title: 'Supports Async State Updates',
+    Svg: require('@site/static/img/symbols/acute.svg').default,
+    description: (
+      <>
+        For edge cases that really require it.
       </>
     ),
   },
 ]
-
-function Feature({
-  title,
-  Svg,
-  description,
-}: FeatureItem): ReactNode {
-  return (
-    <div className={clsx('col col--4')}>
-      <div className='text--center'>
-        <Svg className={styles.featureSvg} role='img' />
-      </div>
-      <div className='text--center padding-horiz--md'>
-        <Heading as='h3'>{title}</Heading>
-        <p style={{ opacity: 0.65 }}>{description}</p>
-      </div>
-    </div>
-  )
-}
-
-export function HomepageFeatures(): ReactNode {
-  const renderStack = []
-  for (let i = 0; i < features.length; i++) {
-    renderStack.push(<Feature key={i} {...features[i]} />)
-  }
-  return (
-    <section className={styles.features}>
-      <div className='container'>
-        <div className='row'>
-          {renderStack}
-        </div>
-      </div>
-    </section>
-  )
-}
