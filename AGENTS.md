@@ -19,9 +19,9 @@
 - Emphasize on speed, on par with Zustand
 - Promote simplicity and no boilerplate
 - Possible to compose graph-like structures but is not the default practice
-- Friendly to object-oriented programming codebase
-- A good library for managing state and reactivity for games built with React
+- Object-oriented
 - State managers exist as classes
+- Good recommendation for games that uses React
 
 ## Mental Model
 - A "State Manager" is a self-contained reactive state container
