@@ -15,6 +15,8 @@
 
 ### ▢ Add `image` property to front matter section of each demo
 
+### ▢ "User Authentication" demo
+
 ### ▢ Use Motion To Animate Progress Ring In Counter Example
 - Estimated difficulty: medium
 - Reference: https://motion.dev/docs/react-svg-animation

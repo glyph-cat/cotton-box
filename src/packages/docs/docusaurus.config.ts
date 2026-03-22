@@ -118,6 +118,12 @@ const config: Config = {
           position: 'left',
         },
         {
+          type: 'docSidebar',
+          sidebarId: 'changelogsSidebar',
+          label: 'Changelogs',
+          position: 'left',
+        },
+        {
           to: '/blog',
           label: 'Blog',
           position: 'left',
@@ -142,6 +148,14 @@ const config: Config = {
               label: 'Tutorial',
               to: '/docs/learn/tutorial',
             },
+            {
+              label: 'API',
+              to: '/docs/api/core',
+            },
+            {
+              label: 'Demo',
+              to: '/docs/demo/basic',
+            },
           ],
         },
         // {
@@ -161,6 +175,10 @@ const config: Config = {
           title: 'More',
           items: [
             {
+              label: 'Changelogs',
+              to: '/docs/changelogs/current',
+            },
+            {
               label: 'Blog',
               to: '/blog',
             },
@@ -173,6 +191,15 @@ const config: Config = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} GlyphCat`,
     },
+    // Doesn't seem to work (using sidebar as fallback for now):
+    // https://dev.to/dreamlogic/how-to-use-the-multi-blog-plugin-for-docusaurus-32a2
+    // plugins: [
+    //   ['@docusaurus/plugin-content-blog', {
+    //     id: 'changelogs',
+    //     routeBasePath: 'changelogs',
+    //     path: './changelogs',
+    //   }],
+    // ],
     prism: {
       theme: prismThemes.vsLight,
       darkTheme: prismThemes.vsDark,

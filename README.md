@@ -16,10 +16,10 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 
 <!--:DO_NOT_DELETE_THIS_LINE_SUB_PACKAGE_ADDITIONAL_INFO:-->
 
-| Packages | Stats |
-| --- | --- |
-| `cotton-box`       | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box)             |
-| `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box-react) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) |
+| Packages | Stats | |
+| --- | --- | --- |
+| `cotton-box`       | [![Version](https://img.shields.io/npm/v/cotton-box.svg)](https://www.npmjs.com/package/cotton-box) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box) | [Changelogs](https://glyph-cat.github.io/cotton-box/docs/changelogs/current#cotton-box) |
+| `cotton-box-react` | [![Version](https://img.shields.io/npm/v/cotton-box-react.svg)](https://www.npmjs.com/package/cotton-box-react) ![NPM Unpacked Size](https://img.shields.io/npm/unpacked-size/cotton-box-react) | [Changelogs](https://glyph-cat.github.io/cotton-box/docs/changelogs/current#cotton-box-react) |
 
 <br/>
 
@@ -89,7 +89,7 @@ function App() {
 <br/>
 
 ## Links
-[![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-blue?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)
+[![Full Documentation](https://img.shields.io/badge/_-Full_Documentation-2b80ff?logo=docusaurus&logoColor=white&style=for-the-badge)](https://glyph-cat.github.io/cotton-box)[![Changelogs](https://img.shields.io/badge/_-Changelogs-1b60e5?style=for-the-badge)](http://localhost:3000/cotton-box/docs/changelogs/current)
 <br />
 [![Code Sandbox Examples](https://img.shields.io/badge/_-Code_Sandbox_Examples-bada55?logo=codesandbox&logoColor=black&style=for-the-badge)](https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter)[![Source code](https://img.shields.io/badge/_-Source_code-89ad21?style=for-the-badge)](https://github.com/glyph-cat/cotton-box/tree/main/src/pages/examples)
 <br />
