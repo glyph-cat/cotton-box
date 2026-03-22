@@ -48,3 +48,6 @@ But if ever in doubt, hopefully this file will be able to clarify things.
 2. Take note of the search result count
 3. Swap the value with `cleanupManager.append(TestState.dispose)` as plain text.
 4. Compare the search result count, make sure they are the same as the count in #2.
+
+## Good First Issues
+There are some tasks listed in `TODO.md`. They could very well be a good first issue.
