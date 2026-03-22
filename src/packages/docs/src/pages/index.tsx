@@ -1,10 +1,13 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import { Link } from '@site/src/components/custom-link'
 import { HomepageFeatures } from '@site/src/components/homepage-features'
+import particleOptions from '@site/src/constants/particles.json'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
+import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { loadSlim } from '@tsparticles/slim'
 import clsx from 'clsx'
-import { ReactNode } from 'react'
+import { ReactNode, useCallback, useEffect, useReducer, useState } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
@@ -13,9 +16,39 @@ import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.tsx
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext()
+
+  const [areParticlesInitialized, onParticlesInitialized] = useReducer(() => true, false)
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine)
+    }).then(() => {
+      onParticlesInitialized()
+    }).catch((e) => {
+      console.error(e)
+    })
+  }, [])
+
+  const [areParticlesLoaded, onParticlesLoaded] = useReducer(() => true, false)
+  const onParticlesLoadedAsync = useCallback(async () => onParticlesLoaded(), [])
+
   return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className='container' style={{ color: '#000000' }}>
+    <header
+      className={clsx('hero hero--primary', styles.heroBanner)}
+      style={{ margin: 0, padding: 0 }}
+    >
+      {areParticlesInitialized && (
+        <div style={{
+          opacity: areParticlesLoaded ? 1 : 0,
+          transitionDuration: '3s',
+        }}>
+          <Particles
+            id='tsparticles'
+            particlesLoaded={onParticlesLoadedAsync}
+            options={particleOptions}
+          />
+        </div>
+      )}
+      <div className={styles.heroContent}>
         <Heading
           as='h1'
           className='hero__title'
@@ -65,24 +98,19 @@ export default function Home(): ReactNode {
         <HomepageFeatures />
       </main>
 
-      <Heading
-        as='h2'
-        style={{
-          fontFamily: 'Work Sans',
-          fontSize: '24pt',
-          fontWeight: 400,
-          marginTop: '1rem',
-          opacity: 0.65,
-          textAlign: 'center',
-        }}>
-        {'Demo'}
-      </Heading>
-
-      <div style={{
-        display: 'grid',
-        gap: 40,
-        placeItems: 'center',
-      }}>
+      <div className={styles.demoContainer}>
+        <Heading
+          as='h2'
+          style={{
+            fontFamily: 'Work Sans',
+            fontSize: '24pt',
+            fontWeight: 400,
+            marginTop: '1rem',
+            opacity: 0.65,
+            textAlign: 'center',
+          }}>
+          {'Demo'}
+        </Heading>
         <div style={{
           display: 'grid',
           maxWidth: 1000,
@@ -97,15 +125,19 @@ export default function Home(): ReactNode {
             }}
           />
         </div>
-        <Link
-          href='/cotton-box/docs/demo/advanced/tic-tac-toe'
-          style={{ fontSize: '16pt' }}
-        >
-          {'Explore more examples →'}
-        </Link>
+        <div style={{
+          display: 'grid',
+          height: 100,
+          placeItems: 'center',
+        }}>
+          <Link
+            href='/cotton-box/docs/demo/advanced/tic-tac-toe'
+            style={{ fontSize: '16pt' }}
+          >
+            {'Explore more examples →'}
+          </Link>
+        </div>
       </div>
-
-      <div style={{ height: 100 }} />
 
     </Layout>
   )

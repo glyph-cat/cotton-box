@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import Heading from '@theme/Heading'
-import clsx from 'clsx'
 import { ReactNode } from 'react'
 import styles from './index.module.css'
 
