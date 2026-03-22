@@ -104,11 +104,11 @@ const features: Array<FeatureItem> = [
     ),
   },
   {
-    title: 'Supports Async State Updates',
+    title: 'Async State Updates',
     Svg: require('@site/static/img/symbols/acute.svg').default,
     description: (
       <>
-        For edge cases that really require it.
+        For unique cases that really require it.
       </>
     ),
   },
