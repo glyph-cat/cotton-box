@@ -89,7 +89,7 @@ const features: Array<FeatureItem> = [
     Svg: require('@site/static/img/symbols/visibility_off.svg').default,
     description: (
       <>
-        Hide sensitive information from being displayed in React Dev Tools. No middleware required.
+        Hide sensitive information from React Developer Tools. No middleware required.
       </>
     ),
   },
