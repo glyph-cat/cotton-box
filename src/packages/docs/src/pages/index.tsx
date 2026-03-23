@@ -8,7 +8,7 @@ import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import clsx from 'clsx'
 import { motion } from 'motion/react'
-import { ReactNode, useCallback, useEffect, useReducer, useState } from 'react'
+import { ReactNode, useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
@@ -32,6 +32,20 @@ function HomepageHeader() {
   const [areParticlesLoaded, onParticlesLoaded] = useReducer(() => true, false)
   const onParticlesLoadedAsync = useCallback(async () => onParticlesLoaded(), [])
 
+  const tsParticlesId = 'tsParticles'
+  useLayoutEffect(() => {
+    if (!onParticlesLoadedAsync) { return }
+    const intervalRef = setInterval(() => {
+      const container = document.querySelector(`div#${tsParticlesId}`) as HTMLDivElement
+      console.log('container', container)
+      if (!container) { return }
+      clearInterval(intervalRef)
+      container.style.height = '330px'
+      container.style.minWidth = '1280px'
+    })
+    return () => { clearInterval(intervalRef) }
+  }, [onParticlesLoadedAsync])
+
   return (
     <header
       className={clsx('hero hero--primary', styles.heroBanner)}
@@ -43,7 +57,7 @@ function HomepageHeader() {
           transitionDuration: '3s',
         }}>
           <Particles
-            id='tsparticles'
+            id={tsParticlesId}
             particlesLoaded={onParticlesLoadedAsync}
             options={particleOptions}
           />
