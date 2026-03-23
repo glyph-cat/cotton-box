@@ -13,7 +13,7 @@ export function HomepageFeatures(): ReactNode {
         {features.map(({ title, description, Svg }, featureIndex) => (
           <div
             className={styles.featureItemContainer}
-            style={{ animationDelay: `${featureIndex * 10}ms` }}
+            style={{ animationDelay: `${featureIndex * 15}ms` }}
           >
             <Svg className={styles.featureSvg} role='img' />
             <Heading as='h3' className={styles.featureTitle}>

@@ -44,3 +44,9 @@
   align-items: center;
   justify-content: center;
 }
+
+.playgroundContentContainer {
+  display: grid;
+  max-width: 1000px;
+  width: 100%;
+}

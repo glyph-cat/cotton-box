@@ -1,0 +1,113 @@
+.container {
+  display: grid;
+  place-items: center;
+  height: 85vh;
+}
+
+.subContainer {
+  display: grid;
+  gap: 10px;
+  place-items: center;
+}
+
+.hidden {
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  z-index: -9999;
+}
+
+.buttonContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.button {
+  --color: #485e80;
+  appearance: none;
+  background-color: var(--color);
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  height: 42px;
+  margin: 0;
+  padding: 0;
+  padding-inline: 10px;
+  position: relative;
+}
+
+.button:enabled {
+  cursor: pointer;
+}
+
+.button:enabled:hover::before {
+  background-color: #ffffff20;
+  content: " ";
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.button:enabled:active::before {
+  background-color: #00000020;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  color: #808080;
+}
+
+.cameraDisplayContainer {
+  position: relative;
+}
+
+.spinner {
+  --angle: 0deg;
+  --color: #808080;
+  --thickness: 8px;
+  --size: 64px;
+  --maskSize: calc((var(--size) / 2) - var(--thickness));
+  animation: spin 1.5s infinite linear;
+  background-image: conic-gradient(transparent, var(--color));
+  border-radius: var(--size);
+  height: var(--size);
+  width: var(--size);
+  mask-image: radial-gradient(
+    circle,
+    transparent var(--maskSize),
+    black var(--maskSize)
+  );
+  position: relative;
+}
+
+.spinnerTrailingCapContainer {
+  height: var(--size);
+  transform: rotateZ(var(--angle));
+  width: var(--size);
+}
+
+.spinnerCap {
+  background-color: var(--color);
+  border-radius: var(--thickness);
+  height: var(--thickness);
+  left: calc(50% - (var(--thickness) / 2));
+  position: absolute;
+  top: 0;
+  width: var(--thickness);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

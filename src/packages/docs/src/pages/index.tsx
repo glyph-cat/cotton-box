@@ -7,6 +7,7 @@ import Layout from '@theme/Layout'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import clsx from 'clsx'
+import { motion } from 'motion/react'
 import { ReactNode, useCallback, useEffect, useReducer, useState } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
@@ -88,7 +89,6 @@ function HomepageHeader() {
 
 export default function Home(): ReactNode {
   const { siteConfig } = useDocusaurusContext()
-
   return (
     <Layout description={siteConfig.tagline}>
 
@@ -111,11 +111,12 @@ export default function Home(): ReactNode {
           }}>
           {'Demo'}
         </Heading>
-        <div style={{
-          display: 'grid',
-          maxWidth: 1000,
-          width: '100%',
-        }}>
+        <motion.div
+          className={styles.playgroundContentContainer}
+          initial={{ opacity: 0, transform: 'scale(0.95)' }}
+          whileInView={{ opacity: 1, transform: 'scale(1)' }}
+          viewport={{ amount: 0.5, once: true }}
+        >
           <SimpleWebPlayground
             code={DEMO_TSX}
             css={DEMO_CSS as unknown as string}
@@ -124,7 +125,7 @@ export default function Home(): ReactNode {
               editorWidthPercentage: 55,
             }}
           />
-        </div>
+        </motion.div>
         <div style={{
           display: 'grid',
           height: 100,
