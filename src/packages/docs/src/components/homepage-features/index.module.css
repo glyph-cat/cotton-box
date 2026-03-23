@@ -9,15 +9,18 @@
   align-items: start;
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-  max-width: calc((420px * 3) + (20px * 2));
+  max-width: calc((360px * 3) + (20px * 2));
   padding-bottom: 20px;
   width: 85vw;
-  /* background-color: #ff000020; */
+}
+
+@media only screen and (min-width: 360px) {
+  .featuresContainer {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  }
 }
 
 .featureItemContainer {
-  /* background-color: #ffff0020; */
   animation: featureItemEnter 0.5s forwards;
   opacity: 0;
   align-items: start;
