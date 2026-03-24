@@ -1832,17 +1832,12 @@
     autoprefixer "^10.4.27"
     postcss "^8.5.3"
 
-"@glyph-cat/equality@^1.0.0", "@glyph-cat/equality@^1.3.0":
+"@glyph-cat/equality@^1.3.0":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@glyph-cat/equality/-/equality-1.3.0.tgz#e45758c1fc3bee6c95d3c365a558869d202a6aa0"
   integrity sha512-Wyg7UrLwTc+dr2XHYMFNDzpOPD8wtUHX1CYebmtSOFL7eMxMIenn6sQFFWhf+QsBf62yj/EYccOxaW17CmJpKQ==
   dependencies:
     "@glyph-cat/foundation" "0.0.0-experimental.89"
-
-"@glyph-cat/equality@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@glyph-cat/equality/-/equality-1.2.0.tgz#1d0efec5c73a1bdd7f8ddfb96e2453cf2e114ca7"
-  integrity sha512-VUClwponbGdwml0KfJ4sgvdOuww9VQVoivt47J9uX1025IKjIcp1bWqoR1ZaewrdJ6uD551JRnC1n8Y6w4rG/A==
 
 "@glyph-cat/eslint-config@^1.0.1-alpha.15":
   version "1.0.1-alpha.15"
@@ -1870,65 +1865,25 @@
   resolved "https://registry.yarnpkg.com/@glyph-cat/foundation/-/foundation-0.0.0-experimental.89.tgz#4f3eb3e0acbad406bbcd243ba7239e871351b799"
   integrity sha512-55MKRr/pjXh13LmLTGuz9m8gMPAxTYXXuqq5YVhlk0zx62MmedetKQoMZDHVG+lEMPLjPBAlur6uW6n7ySixZA==
 
-"@glyph-cat/foundation@^0.0.0-experimental.90":
+"@glyph-cat/foundation@0.0.0-experimental.90", "@glyph-cat/foundation@^0.0.0-experimental.90":
   version "0.0.0-experimental.90"
   resolved "https://registry.yarnpkg.com/@glyph-cat/foundation/-/foundation-0.0.0-experimental.90.tgz#9c6f21939afacd0011acadf7416eb7883d526dc6"
   integrity sha512-cBIzWJY3WPXp2RPaUcvpzyEL71gbI+a/O72ZggEFWnTtkR+ZNvTffCrKYYCLMEIkubleLdlV/8waDOZ2RtLJWw==
 
-"@glyph-cat/react-test-utils@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@glyph-cat/react-test-utils/-/react-test-utils-0.9.0.tgz#f6e86e67119abbb1eaba55656b8e1349a9372eaa"
-  integrity sha512-PAeWmEXx4lIfSu2SrtLQpSJMu8YvcJis1P/5Q8MbYB3lstFNKYj5gyNNKmMom++eWSnv7csezVc6aBlwDeWJbg==
+"@glyph-cat/react-test-utils@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@glyph-cat/react-test-utils/-/react-test-utils-0.10.0.tgz#d6faa1dbf05576d2b1d1a306059f90511dcc8fdb"
+  integrity sha512-ZAndRFZx8MFYtF+AyDvAzKJbv89LKyCZ4W1MocNQK06NmF+NPaU/LkGQbGs0nHylaCOTbTE0lqqqKjqHDTn5dg==
   dependencies:
     "@glyph-cat/cleanup-manager" "^1.1.0"
-    "@glyph-cat/foundation" "0.0.0-experimental.89"
-    "@glyph-cat/swiss-army-knife" "0.0.0-experimental.89"
+    "@glyph-cat/foundation" "0.0.0-experimental.90"
+    "@glyph-cat/swiss-army-knife" "0.0.0-experimental.90"
     "@glyph-cat/type-checking" "^1.0.0"
     "@testing-library/dom" "^10.4.0"
     "@testing-library/react" "^16.1.0"
-    cotton-box "^0.14.0"
     react "^19.2.4"
 
-"@glyph-cat/swiss-army-knife-react@^0.0.0-experimental.90":
-  version "0.0.0-experimental.90"
-  resolved "https://registry.yarnpkg.com/@glyph-cat/swiss-army-knife-react/-/swiss-army-knife-react-0.0.0-experimental.90.tgz#cc084467a71b29dfeb3460ad606d8468563796a2"
-  integrity sha512-YXMF++WzUJ/kGlNKVhYBJYM1LJze7er/PEHrAKpblu48461b9Giads6+dp7ciaztfFHAN7lDkyOft/+/XtYYVg==
-  dependencies:
-    "@glyph-cat/cleanup-manager" "^1.1.0"
-    "@glyph-cat/css-utils" "^1.0.0"
-    "@glyph-cat/equality" "^1.3.0"
-    "@glyph-cat/foundation" "0.0.0-experimental.88"
-    "@glyph-cat/swiss-army-knife" "0.0.0-experimental.88"
-    "@glyph-cat/type-checking" "^1.0.0"
-    clsx "^2.1.1"
-    cotton-box "^0.14.0"
-    cotton-box-react "^0.14.0"
-
-"@glyph-cat/swiss-army-knife@0.0.0-experimental.88":
-  version "0.0.0-experimental.88"
-  resolved "https://registry.yarnpkg.com/@glyph-cat/swiss-army-knife/-/swiss-army-knife-0.0.0-experimental.88.tgz#60db28c7130a405cab69029a0bca5419e8f32f34"
-  integrity sha512-Tljr6khrS9ZDVSOwEVUn/oWw0zvxQLyg7elxp0DnpZjhTdTrNNCff1ie19CeHGqdpRnZ50kL0QkNP4D90BROPw==
-  dependencies:
-    autoprefixer "^10.4.21"
-    postcss "^8.5.3"
-    query-string "^9.3.1"
-
-"@glyph-cat/swiss-army-knife@0.0.0-experimental.89":
-  version "0.0.0-experimental.89"
-  resolved "https://registry.yarnpkg.com/@glyph-cat/swiss-army-knife/-/swiss-army-knife-0.0.0-experimental.89.tgz#609b098e5b446ae1e607a39a5e0a0d54a1121ad1"
-  integrity sha512-0otpnjMueyrRqrFapR9ZKAYZkzjoAnQD4GTI2cL3QmWybT8eR/frwTThgfDuXb3SsJwj7yLBgCm1tIYuClL/4g==
-  dependencies:
-    "@glyph-cat/color" "^1.0.0"
-    "@glyph-cat/css-utils" "^1.0.0"
-    "@glyph-cat/equality" "^1.2.0"
-    "@glyph-cat/foundation" "0.0.0-experimental.88"
-    "@glyph-cat/type-checking" "^1.0.0"
-    autoprefixer "^10.4.21"
-    cotton-box "^0.14.0"
-    postcss "^8.5.3"
-    query-string "^9.3.1"
-
-"@glyph-cat/swiss-army-knife@^0.0.0-experimental.90":
+"@glyph-cat/swiss-army-knife@0.0.0-experimental.90":
   version "0.0.0-experimental.90"
   resolved "https://registry.yarnpkg.com/@glyph-cat/swiss-army-knife/-/swiss-army-knife-0.0.0-experimental.90.tgz#34b23df1466320f6c8eb808a4360c4fac0b74ea5"
   integrity sha512-NFMvcZ5uUy62u93kr+T+LsoM4pwbgrdmqcQW+nxWl6ujLDbvg/1CBdkBhlZ8ocOrtAVprc8KqoqfAeoMESqUrw==
@@ -4737,13 +4692,6 @@ core-js-compat@^3.43.0:
   integrity sha512-tqTt5T4PzsMIZ430XGviK4vzYSoeNJ6CXODi6c/voxOT6IZqBht5/EKaSNnYiEjjRYxjVz7DQIsOsY0XNi8PIA==
   dependencies:
     browserslist "^4.25.3"
-
-cotton-box-react@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/cotton-box-react/-/cotton-box-react-0.14.0.tgz#dae6491bf8590dd386ebea2e58fc0c57fa34eeb7"
-  integrity sha512-qt5GBO1owumoIvxtKdZx8JwCeUAQboTnub7fvS9+c3rsU0Ri5epbTB0XTsrf/8fYurrggW6RAXHfKkUr2U9YgA==
-  dependencies:
-    "@glyph-cat/equality" "^1.0.0"
 
 cotton-box@^0.14.0:
   version "0.14.0"

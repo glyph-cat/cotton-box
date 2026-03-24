@@ -1,4 +1,4 @@
-import { Optional } from '@glyph-cat/foundation'
+import { IDisposable, Optional } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, WaitEvaluator } from '../../abstractions'
 
@@ -20,7 +20,7 @@ export interface SimpleStateManagerOptions {
 /**
  * @public
  */
-export class SimpleStateManager<State> {
+export class SimpleStateManager<State> implements IDisposable {
 
   /**
    * @internal

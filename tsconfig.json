@@ -19,10 +19,10 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "cotton-box": [
-        "./packages/core/src"
+        "packages/core/src"
       ],
       "cotton-box-react": [
-        "./packages/react/src"
+        "packages/react/src"
       ],
     },
     "resolveJsonModule": true,
