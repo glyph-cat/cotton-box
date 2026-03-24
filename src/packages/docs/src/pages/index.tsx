@@ -37,7 +37,7 @@ function HomepageHeader() {
     if (!onParticlesLoadedAsync) { return }
     const intervalRef = setInterval(() => {
       const container = document.querySelector(`div#${tsParticlesId}`) as HTMLDivElement
-      console.log('container', container)
+      // console.log('container', container)
       if (!container) { return }
       clearInterval(intervalRef)
       container.style.height = '330px'
@@ -125,21 +125,28 @@ export default function Home(): ReactNode {
           }}>
           {'Demo'}
         </Heading>
-        <motion.div
-          className={styles.playgroundContentContainer}
-          initial={{ opacity: 0, transform: 'scale(0.95)' }}
-          whileInView={{ opacity: 1, transform: 'scale(1)' }}
-          viewport={{ amount: 0.5, once: true }}
-        >
-          <SimpleWebPlayground
-            code={DEMO_TSX}
-            css={DEMO_CSS as unknown as string}
-            options={{
-              editorHeight: 500,
-              editorWidthPercentage: 55,
-            }}
-          />
-        </motion.div>
+        <div style={{
+          display: 'grid',
+          maxWidth: '100vw',
+          minHeight: 500,
+          overflow: 'hidden',
+        }}>
+          <motion.div
+            className={styles.playgroundContentContainer}
+            initial={{ opacity: 0, transform: 'scale(0.95) translateY(5%)' }}
+            whileInView={{ opacity: 1, transform: 'scale(1) translateY(0)' }}
+            viewport={{ amount: 0.4, once: true }}
+          >
+            <SimpleWebPlayground
+              code={DEMO_TSX}
+              css={DEMO_CSS as unknown as string}
+              options={{
+                editorHeight: 500,
+                editorWidthPercentage: 55,
+              }}
+            />
+          </motion.div>
+        </div>
         <div style={{
           display: 'grid',
           height: 100,

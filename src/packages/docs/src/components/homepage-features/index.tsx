@@ -85,20 +85,20 @@ const features: Array<FeatureItem> = [
     ),
   },
   {
-    title: 'Temporarily Unwatch State in Hooks',
-    Svg: require('@site/static/img/symbols/pause_circle.svg').default,
-    description: (
-      <>
-        Prevent components from re-rendering by temporarily unsubscribing from state changes.
-      </>
-    ),
-  },
-  {
     title: 'Async State Updates',
     Svg: require('@site/static/img/symbols/acute.svg').default,
     description: (
       <>
         For unique cases that really require it.
+      </>
+    ),
+  },
+  {
+    title: 'Temporarily Unwatch State in Hooks',
+    Svg: require('@site/static/img/symbols/pause_circle.svg').default,
+    description: (
+      <>
+        Temporarily unsubscribe from state changes to prevent components from re-rendering.
       </>
     ),
   },

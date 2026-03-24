@@ -8,15 +8,15 @@
 .featuresContainer {
   align-items: start;
   display: grid;
-  gap: 20px;
-  max-width: calc((360px * 3) + (20px * 2));
+  gap: 20px;  
+  max-width: calc((380px * 3) + (20px * 2));
   padding-bottom: 20px;
   width: 85vw;
 }
 
-@media only screen and (min-width: 360px) {
+@media only screen and (min-width: 380px) {
   .featuresContainer {
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   }
 }
 
@@ -53,6 +53,7 @@
   margin: 0;
   opacity: 0.65;
   padding: 0;
+  font-size: 11.5pt;
   line-height: 1.15em;
 }
 
