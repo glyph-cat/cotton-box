@@ -1,4 +1,4 @@
-import { isFunction } from '@glyph-cat/type-checking'
+import { isFunction, isNumber } from '@glyph-cat/type-checking'
 import {
   CommitStrategy,
   ReadOnlyStateManager,
@@ -86,6 +86,11 @@ export interface StateManagerLifecycle<State> {
  * {:TSDOC_DESC_OPTIONS_VISIBILITY_DETAILED:}
  * @see -{:DOCS_API_CORE_URL:}/StateManagerVisibility
  * @public
+ * @deprecated This is not a reliable way to hide sensitive values.
+ * While this works for React Dev Tools, the built-in memory inspector in
+ * most browsers will still be able to show the value anyway. Please consider
+ * storing sensitive information on the server and only expose what's absolutely
+ * necessary to the client instead.
  */
 export enum StateManagerVisibility {
   /**
@@ -116,6 +121,11 @@ export interface StateManagerOptions<State> extends SimpleStateManagerOptions {
   /**
    * {:TSDOC_DESC_OPTIONS_VISIBILITY:}
    * @defaultValue {:DEFAULT_VALUE_OPTIONS_VISIBILITY:}
+   * @deprecated This is not a reliable way to hide sensitive values.
+   * While this works for React Dev Tools, the built-in memory inspector in
+   * most browsers will still be able to show the value anyway. Please consider
+   * storing sensitive information on the server and only expose what's absolutely
+   * necessary to the client instead.
    */
   readonly visibility?: StateManagerVisibility
   /**
@@ -142,6 +152,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
 
   /**
    * @internal
+   * @deprecated
    */
   readonly visibility: StateManagerOptions<State>['visibility']
 
@@ -164,16 +175,21 @@ export class StateManager<State> extends SimpleStateManager<State> {
    */
   constructor(
     defaultState: State,
-    options: StateManagerOptions<State> = {},
+    options?: StateManagerOptions<State>,
   ) {
-    const { lifecycle, suspense, visibility, ...otherOptions } = options
-    super(defaultState, otherOptions)
+    super(defaultState, options)
     this.isInitializing = new SimpleStateManager(false, {
-      name: `${this.name} (isInitializing)`,
+      name: `${this.name}_isInitializing`,
     }) as unknown as ReadOnlyStateManager<boolean>
-    this.suspense = suspense ?? false
-    this.visibility = visibility ?? StateManagerVisibility.ENVIRONMENT
-    this.M$lifecycle = { ...lifecycle }
+    this.suspense = options?.suspense ?? false
+    this.visibility = options?.visibility
+    if (process.env.NODE_ENV !== 'production') {
+      if (isNumber(this.visibility)) {
+        // eslint-disable-next-line no-console
+        console.error('`options.visibility` is not a reliable way to hide sensitive values. While this works for React Dev Tools, the built-in memory inspector in most browsers will still be able to show the value anyway. Please consider storing sensitive information on the server and only expose what\'s absolutely necessary to the client instead.')
+      }
+    }
+    this.M$lifecycle = { ...options?.lifecycle }
     this.init = this.init.bind(this)
     this.reinitialize = this.reinitialize.bind(this)
     // KIV: Probably no binding required:

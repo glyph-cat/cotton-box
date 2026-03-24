@@ -8,10 +8,9 @@
 
 ### ▢ Fix horizontal overflow issue caused by feature list in docs site home page
 
-### ▢ tsParticles rendering particles in high density on smaller screens
-- On smaller screens, particles are being rendered in high density
-- This makes text in the banner somewhat illegible
-- When height of banner exceeds height constraint that defines ratio for tsParticles, top and bottom parts seem have a gap problem probably lies in size configuration of the `<canvas>` element
+### ▢ Document body has horizontal overflow upon first load on smaller screens
+- Overflow suddenly vanishes after scrolling down
+- Suspected to be caused by either tsParticles or `motion.div`
 
 ### ▢ Add `image` property to front matter section of each demo
 

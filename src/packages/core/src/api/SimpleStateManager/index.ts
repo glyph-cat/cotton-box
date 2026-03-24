@@ -2,8 +2,6 @@ import { Optional } from '@glyph-cat/foundation'
 import { isFunction } from '@glyph-cat/type-checking'
 import { SetStateFn, WaitEvaluator } from '../../abstractions'
 
-let internalIdCounter = 0
-
 const __emptyFunction = () => { /* do nothing */ }
 
 /**
@@ -40,11 +38,6 @@ export class SimpleStateManager<State> {
   protected M$internalState: State
 
   /**
-   * @internal
-   */
-  readonly internalId: number = ++internalIdCounter
-
-  /**
    * {:COMMON_DESC_DEFAULT_STATE:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager#defaultState
    */
@@ -64,9 +57,8 @@ export class SimpleStateManager<State> {
    */
   constructor(
     defaultState: State,
-    options: SimpleStateManagerOptions = {},
+    options?: SimpleStateManagerOptions,
   ) {
-    const { name } = options
     this.get = this.get.bind(this)
     this.set = this.set.bind(this)
     this.reset = this.reset.bind(this)
@@ -76,7 +68,7 @@ export class SimpleStateManager<State> {
     this.dispose = this.dispose.bind(this)
     this.defaultState = defaultState
     this.M$internalState = this.defaultState
-    this.name = name
+    this.name = options?.name
   }
 
   /**

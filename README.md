@@ -29,7 +29,6 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 - Customizable equality checking 🎯
 - Declarative lifecycle management 🌱
 - Works with and without react ⚛️
-- Private state values (without middleware) 🔒
 - Temporarily unwatch state in hooks ⏸️
 - Supports async state updates 🔄
 

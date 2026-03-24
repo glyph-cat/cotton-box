@@ -31,7 +31,7 @@ wrapper(({ Lib: { StateManager, StateManagerVisibility } }: TestConfig) => {
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(TestState.visibility).toBe(StateManagerVisibility.ENVIRONMENT)
+    expect(TestState.visibility).toBeUndefined()
     expect(TestState.suspense).toBe(false)
   })
 

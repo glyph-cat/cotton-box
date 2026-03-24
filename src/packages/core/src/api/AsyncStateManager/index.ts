@@ -31,7 +31,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    */
   constructor(
     defaultState: State,
-    options: StateManagerOptions<State> = {},
+    options?: StateManagerOptions<State>,
   ) {
     super(defaultState, options)
     this.getSync = this.getSync.bind(this)

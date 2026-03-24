@@ -85,15 +85,6 @@ const features: Array<FeatureItem> = [
     ),
   },
   {
-    title: 'Private State Values',
-    Svg: require('@site/static/img/symbols/visibility_off.svg').default,
-    description: (
-      <>
-        Hide sensitive information from React Developer Tools. No middleware required.
-      </>
-    ),
-  },
-  {
     title: 'Temporarily Unwatch State in Hooks',
     Svg: require('@site/static/img/symbols/pause_circle.svg').default,
     description: (

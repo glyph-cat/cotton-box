@@ -14,6 +14,7 @@ const TestSlice = createSlice({
     increment: (_, action) => ({ i: action.payload }),
   },
 })
+
 const TestStore = configureStore({
   reducer: {
     test: TestSlice.reducer,
