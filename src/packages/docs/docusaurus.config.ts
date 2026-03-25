@@ -191,20 +191,28 @@ const config: Config = {
       ],
       copyright: `Copyright © ${new Date().getFullYear()} GlyphCat`,
     },
-    // Doesn't seem to work (using sidebar as fallback for now):
-    // https://dev.to/dreamlogic/how-to-use-the-multi-blog-plugin-for-docusaurus-32a2
-    // plugins: [
-    //   ['@docusaurus/plugin-content-blog', {
-    //     id: 'changelogs',
-    //     routeBasePath: 'changelogs',
-    //     path: './changelogs',
-    //   }],
-    // ],
     prism: {
       theme: prismThemes.vsLight,
       darkTheme: prismThemes.vsDark,
     },
   } satisfies Preset.ThemeConfig,
+  plugins: [
+    // https://github.com/FlyNumber/markdown_docusaurus_plugin
+    // ['docusaurus-markdown-source-plugin', {
+    //   docsPath: '/cotton-box/docs',
+    // }],
+    // https://github.com/rachfop/docusaurus-plugin-llms
+    ['docusaurus-plugin-llms', {
+      excludeImports: true,
+      includeBlog: true,
+      generateMarkdownFiles: true,
+    }],
+    // ['@docusaurus/plugin-content-blog', {
+    //   id: 'changelogs',
+    //   routeBasePath: 'changelogs',
+    //   path: './changelogs',
+    // }],
+  ],
 }
 
 export default config
