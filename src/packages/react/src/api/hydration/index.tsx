@@ -24,6 +24,7 @@ export function HydrateStateManager<State>({
   values,
 }: HydrateStateManagerProps<State>): ReactNode {
   // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
+  // KIV: It just happens so that code is splitted here, '.native.tsx' was never used because unused prop `values,` is still present in the final output. Solution: downgrade to '@rollup/plugin-node-resolve' v13.3.0
   if (IS_CLIENT_ENV) {
     return children
   } else {

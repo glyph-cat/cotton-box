@@ -1,12 +1,14 @@
 import { BuildType } from '@glyph-cat/foundation'
 import commonjs from '@rollup/plugin-commonjs'
-import nodeResolve from '@rollup/plugin-node-resolve'
 import replace from '@rollup/plugin-replace'
 import terser from '@rollup/plugin-terser'
 import { execSync } from 'child_process'
 import { RollupOptions, Plugin as RollupPlugin } from 'rollup'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from '../package.json'
+
+// @ts-expect-error because we are relying on an old version
+import nodeResolve from '@rollup/plugin-node-resolve'
 
 const NODE_RESOLVE_EXTENSIONS_BASE = [
   '.tsx',
