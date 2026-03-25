@@ -1,10 +1,11 @@
 ---
 slug: reincarnation-of-an-old-package
-title: Reincarnation of an old package
 authors: glyphcat
 tags: [react, react-relink]
 date: 2024-03-31
 ---
+
+# Reincarnation of an old package
 
 In 2020, [`react-relink`](https://github.com/glyph-cat/react-relink) was released. It was heavily inspired by [`recoil`](https://github.com/facebookexperimental/Recoil) and had a similar API design.
 
