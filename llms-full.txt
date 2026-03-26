@@ -1,0 +1,3182 @@
+# Cotton Box
+
+> Minimal state management library for React and beyond.
+
+This file contains all documentation content in a single document following the llmstxt.org standard.
+
+## AsyncSetStateFn
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION_ASYNC}</MarkdownWrapper>
+
+```ts
+type AsyncSetStateFn<State> = (currentState: State, defaultState: State) => State | Promise<State>
+```
+
+---
+
+## AsyncStateManager
+
+DoesNotReturnAnything,
+  DoesNotTakeAnyParameters,
+  Returns,
+} from '@site/src/components/sentence-templates'
+
+# AsyncStateManager
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_ASYNC_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+class AsyncStateManager<State> extends StateManager<State> { }
+```
+
+### Constructor
+
+```ts
+constructor(defaultState: State, options: StateManagerOptions)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'options',
+      type: DataType.StateManagerOptions,
+      defaultValue: '`{}`',
+      description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL,
+    },
+  ]}
+/>
+
+#### Example
+```js
+
+const ExampleState = new AsyncStateManager('...')
+```
+
+## Properties
+
+### defaultState
+
+<InheritedFrom
+  href={'./StateManager#defaultState'}
+  name={'StateManager.defaultState'}
+/>
+
+<MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
+
+```ts
+readonly defaultState: State
+```
+
+### name
+
+<InheritedFrom
+  href={'./StateManager#name'}
+  name={'StateManager.name'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+
+```ts
+readonly name: string
+```
+
+### isInitializing
+
+<InheritedFrom
+  href={'./StateManager#isInitializing'}
+  name={'StateManager.isInitializing'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_IS_INITIALIZING}</MarkdownWrapper>
+
+```ts
+readonly isInitializing: SimpleStateManager<boolean>
+```
+
+## Methods
+
+### init
+
+<InheritedFrom
+  href={'./StateManager#init'}
+  name={'StateManager.init'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_INIT}</MarkdownWrapper>
+
+  <LabeledItem label='Also see'>
+    <ApiLink href='./StateManagerInitArgs'>StateManagerInitArgs</ApiLink>
+  </LabeledItem>
+
+```ts
+init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void>
+```
+
+#### Parameters
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'initFn',
+      type: DataType.Function,
+      description: DocConstants.TSDOC_PARAM_DESC_INIT_FN,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='init'>{DocConstants.RETURN_DESC_INIT}</Returns>
+
+#### Example
+```js
+await ExampleState.init(({ commit }) => {
+  const someValue = localStorage.get('some-value')
+  commit(someValue)
+})
+```
+
+### get
+
+<InheritedFrom
+  href={'./StateManager#get'}
+  name={'StateManager.get'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET_ASYNC}</MarkdownWrapper>
+
+```ts
+get(): Promise<State>
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='get' />
+
+#### Returns
+<Returns name='get'>{DocConstants.RETURN_DESC_GET_ASYNC}</Returns>
+
+#### Example
+```js
+const state = await ExampleState.get()
+```
+
+### getSync
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET_SYNC}</MarkdownWrapper>
+
+```ts
+getSync(): State
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='getSync' />
+
+#### Returns
+<Returns name='getSync'>{DocConstants.RETURN_DESC_GET}</Returns>
+
+#### Example
+```js
+const state = ExampleState.getSync()
+```
+
+### set
+
+<InheritedFrom
+  href={'./StateManager#set'}
+  name={'StateManager.set'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_VALUE}</MarkdownWrapper>
+
+```ts
+set(newState: State): Promise<void>
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+set(setStateFn: AsyncSetStateFn<State>): Promise<void>
+```
+
+#### Parameters
+`set` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='set'>{DocConstants.RETURN_DESC_SET_ASYNC}</Returns>
+
+#### Example
+```js
+// Assuming that state is of type `number`
+await ExampleState.set(42)
+await ExampleState.set((previousState) => previousState + 1)
+```
+
+### reset
+
+<InheritedFrom
+  href={'./StateManager#reset'}
+  name={'StateManager.reset'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_RESET}</MarkdownWrapper>
+
+```ts
+reset(): Promise<void>
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='reset' />
+
+#### Returns
+<Returns name='set'>{DocConstants.RETURN_DESC_RESET_ASYNC}</Returns>
+
+#### Example
+```js
+await ExampleState.reset()
+```
+
+### watch
+
+<InheritedFrom
+  href={'./StateManager#watch'}
+  name={'StateManager.watch'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
+
+```ts
+watch(callback: (state: State) => void): () => void
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[{
+    name: 'callback',
+    type: DataType.Function,
+    description: DocConstants.TSDOC_PARAM_DESC_WATCH_CALLBACK,
+  }]}
+/>
+
+#### Returns
+<Returns name='watch'>{DocConstants.RETURN_DESC_WATCH}</Returns>
+
+#### Example
+```js
+const unwatch = ExampleState.watch((state) => { console.log(state) })
+// ··· then after some time ···
+unwatch()
+```
+
+### unwatchAll
+
+<InheritedFrom
+  href={'./StateManager#unwatchAll'}
+  name={'StateManager.unwatchAll'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_UNWATCH_ALL}</MarkdownWrapper>
+
+```ts
+unwatchAll(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='unwatchAll' />
+
+#### Returns
+<Returns name='unwatchAll'>{DocConstants.RETURN_DESC_UNWATCH_ALL}</Returns>
+
+#### Example
+```js
+ExampleState.unwatchAll()
+```
+
+### wait
+
+<InheritedFrom
+  href={'./StateManager#wait'}
+  name={'StateManager.wait'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
+
+```ts
+wait(expectedValue: State): Promise<State>
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
+```ts
+wait(evaluator: WaitEvaluator<State>): Promise<State>
+```
+
+#### Parameters
+`wait` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'expectedValue',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE,
+    },
+    {
+      name: 'evaluator',
+      type: DataType.WaitEvaluator,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EVALUATOR,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='wait'>{DocConstants.RETURN_DESC_WAIT}</Returns>
+
+#### Example
+```js
+// Promise will resolve when the state value becomes `42`.
+await ExampleState.wait(42)
+
+// Promise will resolve when the function returns `true`.
+await ExampleState.wait((state) => fulfillsSomeCondition(state))
+```
+
+### dispose
+
+<InheritedFrom
+  href={'./StateManager#dispose'}
+  name={'StateManager.dispose'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+dispose(): Promise<void>
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='dispose' />
+
+#### Returns
+<Returns name='dispose'>{DocConstants.RETURN_DESC_DISPOSE_ASYNC}</Returns>
+
+#### Example
+```js
+await ExampleState.dispose()
+```
+
+---
+
+## EqualityFn
+
+
+<TypeDisplay>{DataType.Function}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_EQUALITY_FN}</MarkdownWrapper>
+
+```ts
+type EqualityFn<State> = (previousState: State, nextState: State) => boolean
+```
+
+---
+
+## InvalidStateTransitionError
+
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR}</MarkdownWrapper>
+
+```ts
+export class InvalidStateTransitionError extends Error {}
+```
+
+  <LabeledItem label='Also see'>
+    <ApiLink href='./SimpleFiniteStateManager'>SimpleFiniteStateManager</ApiLink>
+  </LabeledItem>
+
+### Constructor
+```ts
+constructor(fromState: string, toState: string, stateManager?: string)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'fromState',
+      type: DataType.string,
+      description: DocConstants.TSDOC_PARAM_DESC_FROM_STATE,
+    },
+    {
+      name: 'toState',
+      type: DataType.string,
+      description: DocConstants.TSDOC_PARAM_DESC_TO_STATE,
+    },
+    {
+      name: 'stateManager',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+  ]}
+/>
+
+### Message Format
+
+> _from "`fromState`" to "`toState`" in `stateManager`_
+
+#### Example
+
+> _from "A" to "B" in ExampleState_
+
+## Properties
+
+### fromState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_FROM_STATE}</MarkdownWrapper>
+```ts
+readonly fromState: string
+```
+
+### toState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_TO_STATE}</MarkdownWrapper>
+```ts
+readonly toState: string
+```
+
+### stateManager
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+```ts
+readonly stateManager: string
+```
+
+---
+
+## ReadOnlyStateManager
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_READONLY_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+type ReadOnlyStateManager<State> = Pick<SimpleStateManager<State>, 'name' | 'get' | 'watch' | 'wait'>
+```
+
+---
+
+## SetStateFn
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION}</MarkdownWrapper>
+
+```ts
+type SetStateFn<State> = (currentState: State, defaultState: State) => State
+```
+
+---
+
+## SimpleFiniteStateManager
+
+DoesNotReturnAnything,
+  DoesNotTakeAnyParameters,
+  Returns,
+} from '@site/src/components/sentence-templates'
+
+{/* Construction formula for this article: Copy everything from SimpleStateManager, then add <InheritedFrom> based on StateManager. */}
+
+# SimpleFiniteStateManager
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_SIMPLE_FINITE_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+class SimpleFiniteStateManager<State> extends SimpleStateManager<State> { }
+```
+
+### Constructor
+```ts
+constructor(
+  defaultState: State,
+  allowedStateTransitions: Array<[fromState: State, toState: State]>,
+  options: SimpleStateManagerOptions
+)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'allowedStateTransitions',
+      type: DataType.StateTransition,
+      typeIsArrayOf: true,
+      description: DocConstants.TSDOC_PARAM_DESC_ALLOWED_STATE_TRANSITIONS,
+    },
+    {
+      name: 'options',
+      type: DataType.SimpleStateManagerOptions,
+      defaultValue: '`{}`',
+      description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL,
+    },
+  ]}
+/>
+
+## Example
+
+Consider an example where a playable character in a game:
+- can stand be standing `idle`, `walking`, or `attacking`;
+- can only attack only when standing still.
+
+```mermaid
+stateDiagram-v2
+  idle --> walking
+  idle --> attacking
+  walking --> idle
+  attacking --> idle
+```
+
+This would roughly translate into the following code:
+```ts
+
+class PlayableCharacter {
+
+  readonly state = new SimpleFiniteStateManager('idle', [
+    ['idle', 'walking'],
+    ['idle', 'attacking'],
+    ['walking', 'idle'],
+    ['attacking', 'idle'],
+  ], {
+    name: 'PlayableCharacter',
+  })
+
+}
+```
+
+Since the initial state is `'idle'`, changing the state to `'walking'` immediately after instantiating the class would be just fine.
+```ts
+const newCharacter = new PlayableCharacter()
+newCharacter.set('walking')
+newCharacter.set('attacking')
+```
+
+However, proceeding to change the state from `'walking'` to `'attacking'` would result in the following error:
+
+> _InvalidStateTransitionError: from "walking" to "attacking" in PlayableCharacter_
+
+  <LabeledItem label='Also see'>
+    <ApiLink href='./InvalidStateTransitionError'>InvalidStateTransitionError</ApiLink>
+  </LabeledItem>
+
+## Properties
+
+### defaultState
+
+<InheritedFrom
+  href={'./SimpleStateManager#defaultState'}
+  name={'SimpleStateManager.defaultState'}
+/>
+
+<MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
+```ts
+readonly defaultState: State
+```
+
+### name
+
+<InheritedFrom
+  href={'./SimpleStateManager#name'}
+  name={'SimpleStateManager.name'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+```ts
+readonly name: string
+```
+
+## Methods
+
+### get
+
+<InheritedFrom
+  href={'./SimpleStateManager#get'}
+  name={'SimpleStateManager.get'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET}</MarkdownWrapper>
+```ts
+get(): State
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='get' />
+
+#### Returns
+<Returns name='get'>{DocConstants.RETURN_DESC_GET}</Returns>
+
+#### Example
+```js
+const state = ExampleState.get()
+```
+
+### set
+
+<InheritedFrom
+  href={'./SimpleStateManager#set'}
+  name={'SimpleStateManager.set'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_VALUE}</MarkdownWrapper>
+```ts
+set(newState: State): void
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+set(setStateFn: SetStateFn<State>): void
+```
+
+#### Parameters
+`set` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='set'>{DocConstants.RETURN_DESC_SET}</Returns>
+
+#### Example
+```js
+ExampleState.set('A')
+ExampleState.set((previousState) => previousState === 'A' ? 'B' : 'C')
+```
+
+### trySet
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_VALUE}</MarkdownWrapper>
+```ts
+trySet(newState: State): void
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+trySet(setStateFn: SetStateFn<State>): void
+```
+
+#### Parameters
+`trySet` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='trySet'>{DocConstants.RETURN_DESC_TRY_SET}</Returns>
+
+#### Example
+```js
+ExampleState.trySet('A')
+ExampleState.trySet((previousState) => previousState === 'A' ? 'B' : 'C')
+```
+
+### reset
+
+<InheritedFrom
+  href={'./SimpleStateManager#reset'}
+  name={'SimpleStateManager.reset'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_RESET}</MarkdownWrapper>
+```ts
+reset(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='reset' />
+
+#### Returns
+<Returns name='reset'>{DocConstants.RETURN_DESC_RESET}</Returns>
+
+#### Example
+```js
+ExampleState.reset()
+```
+
+### watch
+
+<InheritedFrom
+  href={'./SimpleStateManager#watch'}
+  name={'SimpleStateManager.watch'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
+```ts
+watch(callback: (state: State) => void): () => void
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[{
+    name: 'callback',
+    type: DataType.Function,
+    description: DocConstants.TSDOC_PARAM_DESC_WATCH_CALLBACK,
+  }]}
+/>
+
+#### Returns
+<Returns name='watch'>{DocConstants.RETURN_DESC_WATCH}</Returns>
+
+#### Example
+```js
+const unwatch = ExampleState.watch((state) => { console.log(state) })
+// ··· then after some time ···
+unwatch()
+```
+
+### unwatchAll
+
+<InheritedFrom
+  href={'./SimpleStateManager#unwatchAll'}
+  name={'SimpleStateManager.unwatchAll'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_UNWATCH_ALL}</MarkdownWrapper>
+```ts
+unwatchAll(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='unwatchAll' />
+
+#### Returns
+<Returns name='unwatchAll'>{DocConstants.RETURN_DESC_UNWATCH_ALL}</Returns>
+
+#### Example
+```js
+ExampleState.unwatchAll()
+```
+
+### wait
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
+```ts
+wait(expectedValue: State): Promise<State>
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
+```ts
+wait(evaluator: WaitEvaluator<State>): Promise<State>
+```
+
+#### Parameters
+`wait` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'expectedValue',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE,
+    },
+    {
+      name: 'evaluator',
+      type: DataType.WaitEvaluator,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EVALUATOR,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='wait'>{DocConstants.RETURN_DESC_WAIT}</Returns>
+
+#### Example
+```js
+// Promise will resolve when the state value becomes `42`.
+await ExampleState.wait(42)
+
+// Promise will resolve when the function returns `true`.
+await ExampleState.wait((state) => fulfillsSomeCondition(state))
+```
+
+### dispose
+
+<InheritedFrom
+  href={'./SimpleStateManager#dispose'}
+  name={'SimpleStateManager.dispose'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER}</MarkdownWrapper>
+```ts
+dispose(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='dispose' />
+
+#### Returns
+<Returns name='dispose'>{DocConstants.RETURN_DESC_DISPOSE}</Returns>
+
+#### Example
+```js
+ExampleState.dispose()
+```
+
+---
+
+## SimpleStateManagerOptions
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_SIMPLE_FINITE}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'name',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+    {
+      name: 'serializeState',
+      type: DataType.Function,
+      defaultValue: '`String(...)`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_SERIALIZE_STATE,
+    },
+  ]}
+/>
+
+---
+
+## SimpleStateManager
+
+DoesNotReturnAnything,
+  DoesNotTakeAnyParameters,
+  Returns,
+} from '@site/src/components/sentence-templates'
+
+# SimpleStateManager
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_SIMPLE_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+class SimpleStateManager<State> { }
+```
+
+### Constructor
+```ts
+constructor(defaultState: State, options: SimpleStateManagerOptions)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'options',
+      type: DataType.SimpleStateManagerOptions,
+      defaultValue: '`{}`',
+      description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL,
+    },
+  ]}
+/>
+
+#### Example
+```js
+
+const ExampleState = new SimpleStateManager('...')
+```
+
+## Properties
+
+### defaultState
+<MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
+```ts
+readonly defaultState: State
+```
+
+### name
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+```ts
+readonly name: string
+```
+
+## Methods
+
+### get
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET}</MarkdownWrapper>
+```ts
+get(): State
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='get' />
+
+#### Returns
+<Returns name='get'>{DocConstants.RETURN_DESC_GET}</Returns>
+
+#### Example
+```js
+const state = ExampleState.get()
+```
+
+### set
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_VALUE}</MarkdownWrapper>
+```ts
+set(newState: State): void
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+set(setStateFn: SetStateFn<State>): void
+```
+
+#### Parameters
+`set` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='set'>{DocConstants.RETURN_DESC_SET}</Returns>
+
+#### Example
+```js
+// Assuming that state is of type `number`
+ExampleState.set(42)
+ExampleState.set((previousState) => previousState + 1)
+```
+
+### reset
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_RESET}</MarkdownWrapper>
+```ts
+reset(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='reset' />
+
+#### Returns
+<Returns name='reset'>{DocConstants.RETURN_DESC_RESET}</Returns>
+
+#### Example
+```js
+ExampleState.reset()
+```
+
+### watch
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
+```ts
+watch(callback: (state: State) => void): () => void
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[{
+    name: 'callback',
+    type: DataType.Function,
+    description: DocConstants.TSDOC_PARAM_DESC_WATCH_CALLBACK,
+  }]}
+/>
+
+#### Returns
+<Returns name='watch'>{DocConstants.RETURN_DESC_WATCH}</Returns>
+
+#### Example
+```js
+const unwatch = ExampleState.watch((state) => { console.log(state) })
+// ··· then after some time ···
+unwatch()
+```
+
+### unwatchAll
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_UNWATCH_ALL}</MarkdownWrapper>
+```ts
+unwatchAll(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='unwatchAll' />
+
+#### Returns
+<Returns name='unwatchAll'>{DocConstants.RETURN_DESC_UNWATCH_ALL}</Returns>
+
+#### Example
+```js
+ExampleState.unwatchAll()
+```
+
+### wait
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
+```ts
+wait(expectedValue: State): Promise<State>
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
+```ts
+wait(evaluator: WaitEvaluator<State>): Promise<State>
+```
+
+#### Parameters
+`wait` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'expectedValue',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE,
+    },
+    {
+      name: 'evaluator',
+      type: DataType.WaitEvaluator,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EVALUATOR,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='wait'>{DocConstants.RETURN_DESC_WAIT}</Returns>
+
+#### Example
+```js
+// Promise will resolve when the state value becomes `42`.
+await ExampleState.wait(42)
+
+// Promise will resolve when the function returns `true`.
+await ExampleState.wait((state) => fulfillsSomeCondition(state))
+```
+
+### dispose
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER}</MarkdownWrapper>
+```ts
+dispose(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='dispose' />
+
+#### Returns
+<Returns name='dispose'>{DocConstants.RETURN_DESC_DISPOSE}</Returns>
+
+#### Example
+```js
+ExampleState.dispose()
+```
+
+---
+
+## SimpleStateManagerOptions(Core)
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_SIMPLE}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'name',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+  ]}
+/>
+
+---
+
+## StateManager
+
+DoesNotReturnAnything,
+  DoesNotTakeAnyParameters,
+  Returns,
+} from '@site/src/components/sentence-templates'
+
+# StateManager
+
+{/* Construction formula for this article: Copy everything from SimpleStateManager, change signature, change `options` param for constructor, then add a section for `init` and mention which properties and methods are inherited */}
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+class StateManager<State> extends SimpleStateManager<State> { }
+```
+
+### Constructor
+```ts
+constructor(defaultState: State, options: StateManagerOptions)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'options',
+      type: DataType.StateManagerOptions,
+      defaultValue: '`{}`',
+      description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL,
+    },
+  ]}
+/>
+
+#### Example
+```js
+
+const ExampleState = new StateManager('...')
+```
+
+## Properties
+
+### defaultState
+
+<InheritedFrom
+  href={'./SimpleStateManager#defaultState'}
+  name={'SimpleStateManager.defaultState'}
+/>
+
+<MarkdownWrapper>{DocConstants.COMMON_DESC_DEFAULT_STATE}</MarkdownWrapper>
+
+```ts
+readonly defaultState: State
+```
+
+### name
+
+<InheritedFrom
+  href={'./SimpleStateManager#name'}
+  name={'SimpleStateManager.name'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+
+```ts
+readonly name: string
+```
+
+### isInitializing
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_IS_INITIALIZING}</MarkdownWrapper>
+
+```ts
+readonly isInitializing: SimpleStateManager<boolean>
+```
+
+## Methods
+
+### init
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_INIT}</MarkdownWrapper>
+
+  <LabeledItem label='Also see'>
+    <ApiLink href='./StateManagerInitArgs'>StateManagerInitArgs</ApiLink>
+  </LabeledItem>
+
+```ts
+init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void>
+```
+
+#### Parameters
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'initFn',
+      type: DataType.Function,
+      description: DocConstants.TSDOC_PARAM_DESC_INIT_FN,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='init'>{DocConstants.RETURN_DESC_INIT}</Returns>
+
+#### Example
+```js
+await ExampleState.init(({ commit }) => {
+  const someValue = localStorage.get('some-value')
+  commit(someValue)
+})
+```
+
+### get
+
+<InheritedFrom
+  href={'./SimpleStateManager#get'}
+  name={'SimpleStateManager.get'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_GET}</MarkdownWrapper>
+
+```ts
+get(): State
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='get' />
+
+#### Returns
+<Returns name='get'>{DocConstants.RETURN_DESC_GET}</Returns>
+
+#### Example
+```js
+const state = ExampleState.get()
+```
+
+### set
+
+<InheritedFrom
+  href={'./SimpleStateManager#set'}
+  name={'SimpleStateManager.set'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_VALUE}</MarkdownWrapper>
+
+```ts
+set(newState: State): void
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_SET_BY_FUNCTION}</MarkdownWrapper>
+```ts
+set(setStateFn: SetStateFn<State>): void
+```
+
+#### Parameters
+`set` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'newState',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_NEW_STATE,
+    },
+    {
+      name: 'setStateFn',
+      type: DataType.SetStateFn,
+      description: DocConstants.TSDOC_PARAM_DESC_SET_FUNCTION,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='set'>{DocConstants.RETURN_DESC_SET}</Returns>
+
+#### Example
+```js
+// Assuming that state is of type `number`
+ExampleState.set(42)
+ExampleState.set((previousState) => previousState + 1)
+```
+
+### reset
+
+<InheritedFrom
+  href={'./SimpleStateManager#reset'}
+  name={'SimpleStateManager.reset'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_RESET}</MarkdownWrapper>
+
+```ts
+reset(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='reset' />
+
+#### Returns
+<Returns name='reset'>{DocConstants.RETURN_DESC_RESET}</Returns>
+
+#### Example
+```js
+ExampleState.reset()
+```
+
+### watch
+
+<InheritedFrom
+  href={'./SimpleStateManager#watch'}
+  name={'SimpleStateManager.watch'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WATCH}</MarkdownWrapper>
+
+```ts
+watch(callback: (state: State) => void): () => void
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[{
+    name: 'callback',
+    type: DataType.Function,
+    description: DocConstants.TSDOC_PARAM_DESC_WATCH_CALLBACK,
+  }]}
+/>
+
+#### Returns
+<Returns name='watch'>{DocConstants.RETURN_DESC_WATCH}</Returns>
+
+#### Example
+```js
+const unwatch = ExampleState.watch((state) => { console.log(state) })
+// ··· then after some time ···
+unwatch()
+```
+
+### unwatchAll
+
+<InheritedFrom
+  href={'./SimpleStateManager#unwatchAll'}
+  name={'SimpleStateManager.unwatchAll'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_UNWATCH_ALL}</MarkdownWrapper>
+
+```ts
+unwatchAll(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='unwatchAll' />
+
+#### Returns
+<Returns name='unwatchAll'>{DocConstants.RETURN_DESC_UNWATCH_ALL}</Returns>
+
+#### Example
+```js
+ExampleState.unwatchAll()
+```
+
+### wait
+
+<InheritedFrom
+  href={'./SimpleStateManager#wait'}
+  name={'SimpleStateManager.wait'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_VALUE}</MarkdownWrapper>
+
+```ts
+wait(expectedValue: State): Promise<State>
+```
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR}</MarkdownWrapper>
+```ts
+wait(evaluator: WaitEvaluator<State>): Promise<State>
+```
+
+#### Parameters
+`wait` takes either one of the following parameters:
+<ObjectShapeDefinition
+  requireEitherOne
+  data={[
+    {
+      name: 'expectedValue',
+      type: DataType.any,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EXPECTED_VALUE,
+    },
+    {
+      name: 'evaluator',
+      type: DataType.WaitEvaluator,
+      description: DocConstants.TSDOC_PARAM_DESC_WAIT_EVALUATOR,
+    },
+  ]}
+/>
+
+#### Returns
+<Returns name='wait'>{DocConstants.RETURN_DESC_WAIT}</Returns>
+
+#### Example
+```js
+// Promise will resolve when the state value becomes `42`.
+await ExampleState.wait(42)
+
+// Promise will resolve when the function returns `true`.
+await ExampleState.wait((state) => fulfillsSomeCondition(state))
+```
+
+### dispose
+
+<InheritedFrom
+  href={'./SimpleStateManager#dispose'}
+  name={'SimpleStateManager.dispose'}
+/>
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER}</MarkdownWrapper>
+
+```ts
+dispose(): void
+```
+
+#### Parameters
+<DoesNotTakeAnyParameters name='dispose' />
+
+#### Returns
+<Returns name='dispose'>{DocConstants.RETURN_DESC_DISPOSE}</Returns>
+
+#### Example
+```js
+ExampleState.dispose()
+```
+
+---
+
+## StateManagerDidSetArgs
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER_DID_SET_ARGS}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  hideOptional
+  data={[
+    {
+      name: 'state',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_CURRENT_STATE,
+    },
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'previousState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_PREVIOUS_STATE,
+    },
+  ]} 
+/>
+
+---
+
+## StateManagerInitArgs
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER_INIT_ARGS}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  hideOptional
+  data={[
+    {
+      name: 'currentState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_CURRENT_STATE,
+    },
+    {
+      name: 'defaultState',
+      type: DataType.any,
+      description: DocConstants.COMMON_DESC_DEFAULT_STATE,
+    },
+    {
+      name: 'commit',
+      type: DataType.Function,
+      description: DocConstants.TSDOC_DESC_INIT_COMMIT,
+    },
+    {
+      name: 'commitNoop',
+      type: DataType.Function,
+      description: DocConstants.TSDOC_DESC_INIT_COMMIT_NOOP,
+    },
+  ]} 
+/>
+
+---
+
+## StateManagerLifecycle
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_LIFECYCLE}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'init',
+      type: DataType.Function,
+      isOptional: true,
+      description: DocConstants.TSDOC_DESC_OPTIONS_LIFECYCLE_INIT,
+    },
+    {
+      name: 'didSet',
+      type: DataType.Function,
+      isOptional: true,
+      description: DocConstants.TSDOC_DESC_OPTIONS_LIFECYCLE_DID_SET,
+    },
+    {
+      name: 'didReset',
+      type: DataType.Function,
+      isOptional: true,
+      description: DocConstants.TSDOC_DESC_OPTIONS_LIFECYCLE_DID_RESET,
+    },
+  ]} 
+/>
+
+---
+
+## StateManagerOptions
+
+
+## Overview
+
+<TypeDisplay>{DataType.interface}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_STANDARD}</MarkdownWrapper>
+
+## Properties
+
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'name',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+    {
+      name: 'visibility',
+      type: DataType.StateManagerVisibility,
+      defaultValue: '`StateManagerVisibility.ENVIRONMENT`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_VISIBILITY,
+    },
+    {
+      name: 'suspense',
+      type: DataType.boolean,
+      defaultValue: '`false`',
+      description: DocConstants.TSDOC_DESC_OPTIONS_SUSPENSE,
+    },
+  ]} 
+/>
+
+---
+
+## StateManagerVisibility
+
+
+## Overview
+
+<TypeDisplay>{DataType.enum}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_VISIBILITY_DETAILED}</MarkdownWrapper>
+
+This can be specified in the [`options`](./StateManagerOptions.mdx) parameter in the constructor of the State Manager:
+```js
+
+const ExampleState = new StateManager('Hello, world!', {
+  visibility: StateManagerVisibility.HIDDEN,
+})
+```
+
+## Values
+
+| Key           | Value | Description                                              |
+| ------------- | :---: | -------------------------------------------------------- |
+| `ENVIRONMENT` |  `0`  | {DocConstants.DESC_STATE_MANAGER_VISIBILITY_ENVIRONMENT} |
+| `EXPOSED`     |  `1`  | {DocConstants.DESC_STATE_MANAGER_VISIBILITY_EXPOSED}     |
+| `HIDDEN`      |  `2`  | {DocConstants.DESC_STATE_MANAGER_VISIBILITY_HIDDEN}      |
+
+<DevToolsPreview />
+
+---
+
+## StateSelector
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_SELECTOR}</MarkdownWrapper>
+
+```ts
+type StateSelector<State, SelectedState> = (state: State) => SelectedState
+```
+
+---
+
+## StateTransition
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_STATE_TRANSITION}</MarkdownWrapper>
+
+```ts
+type StateTransition<State> = [fromState: State, toState: State]
+```
+
+---
+
+## WaitEvaluator
+
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_WAIT_EVALUATOR}</MarkdownWrapper>
+
+```ts
+type WaitEvaluator<State> = (currentState: State, defaultState: State) => boolean
+```
+
+:::note
+If the condition is already fulfilled at time of invocation, `eventType` will be `null`.
+:::
+
+---
+
+## BUILD_HASH
+
+
+<TypeDisplay>{DataType.string}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_BUILD_HASH}</MarkdownWrapper>
+
+This constant is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.
+
+---
+
+## BUILD_TYPE
+
+
+<TypeDisplay>{DataType.BuildType}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_BUILD_TYPE}</MarkdownWrapper>
+
+This constant is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.
+
+---
+
+## BuildType
+
+
+<TypeDisplay>{DataType.enum}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE}</MarkdownWrapper>
+
+This enum is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.
+
+## Values
+
+| Key       |    Value    | Description                                       |
+| --------- | :---------: | ------------------------------------------------- |
+| `CJS`     |   `'CJS'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_CJS}     |
+| `ES`      |   `'ES'`    | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_ES}      |
+| `MJS`     |   `'MJS'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_MJS}     |
+| `UMD`     |   `'UMD'`   | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_UMD}     |
+| `UMD_MIN` | `'UMD_MIN'` | {DocConstants.TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN} |
+
+---
+
+## VERSION
+
+
+<TypeDisplay>{DataType.string}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_VERSION}</MarkdownWrapper>
+
+This constant is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.
+
+---
+
+## useSimpleStateValue
+
+
+## Overview
+
+<TypeDisplay>{DataType.Function}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_USE_SIMPLE_STATE_VALUE}</MarkdownWrapper>
+
+```js
+const state = useSimpleStateValue(stateManager)
+```
+<details>
+  <summary>Overloads (+2)</summary>
+  <>
+    ```js
+    const state = useSimpleStateValue(stateManager, selector)
+    ```
+    ```js
+    const state = useSimpleStateValue(stateManager, selector, active)
+    ```
+  </>
+</details>
+
+## Parameters
+
+<ObjectShapeDefinition data={[
+  {
+    name: 'stateManager',
+    type: [
+      DataType.SimpleStateManager,
+      DataType.SimpleFiniteStateManager,
+    ],
+    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER,
+  },
+  {
+    name: 'selector',
+    type: DataType.StateSelector,
+    defaultValue: '`null`',
+    description: DocConstants.TSDOC_PARAM_DESC_SELECTOR,
+  },
+  {
+    name: 'active',
+    type: DataType.boolean,
+    defaultValue: '`true`',
+    description: DocConstants.TSDOC_PARAM_DESC_ACTIVE,
+  },
+]} />
+
+## Examples
+
+### Basic
+
+<SimpleWebPlayground code={CODE_EXAMPLE_BASIC} />
+
+### With selector
+
+<SimpleWebPlayground code={CODE_EXAMPLE_SELECTOR} />
+
+### Conditionally watch for changes
+
+<SimpleWebPlayground code={CODE_EXAMPLE_ACTIVE} />
+
+---
+
+## useSimpleStateValueOnly
+
+
+<TypeDisplay>{DataType.Function}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_USE_SIMPLE_STATE_VALUE_ONLY}</MarkdownWrapper>
+
+```js
+const state = useSimpleStateValueOnly(stateManager)
+```
+
+## Parameters
+
+<ObjectShapeDefinition data={[
+  {
+    name: 'stateManager',
+    type: [
+      DataType.SimpleStateManager,
+      DataType.SimpleFiniteStateManager,
+    ],
+    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER,
+  },
+]} />
+
+## Example
+
+<SimpleWebPlayground code={CODE_EXAMPLE} />
+
+---
+
+## useStateValue
+
+
+## Overview
+
+<TypeDisplay>{DataType.Function}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_USE_STATE_VALUE}</MarkdownWrapper>
+
+```js
+const state = useStateValue(stateManager)
+```
+<details>
+  <summary>Overloads (+4)</summary>
+  <>
+    ```js
+    const state = useStateValue(stateManager, selector)
+    ```
+    ```js
+    const state = useStateValue(stateManager, selector, active)
+    ```
+    ```js
+    const state = useStateValue(stateManager, selector, equalityFn)
+    ```
+    ```js
+    const state = useStateValue(stateManager, selector, equalityFn, active)
+    ```
+  </>
+</details>
+
+## Parameters
+
+<ObjectShapeDefinition data={[
+  {
+    name: 'stateManager',
+    type: [
+      DataType.SimpleStateManager,
+      DataType.StateManager,
+      DataType.AsyncStateManager,
+      DataType.SimpleFiniteStateManager,
+    ],
+    description: DocConstants.TSDOC_PARAM_DESC_STATE_MANAGER,
+  },
+  {
+    name: 'selector',
+    type: DataType.StateSelector,
+    defaultValue: '`null`',
+    description: DocConstants.TSDOC_PARAM_DESC_SELECTOR,
+  },
+  {
+    name: 'equalityFn',
+    type: DataType.EqualityFn,
+    defaultValue: `[\`Object.is\`](${DocConstants.API_REFERENCE_URL_OBJECT_IS})`,
+    description: DocConstants.TSDOC_PARAM_DESC_EQUALITY_FN,
+  },
+  {
+    name: 'active',
+    type: DataType.boolean,
+    defaultValue: '`true`',
+    description: DocConstants.TSDOC_PARAM_DESC_ACTIVE,
+  },
+]} />
+
+## Examples
+
+### Basic
+
+<SimpleWebPlayground code={CODE_EXAMPLE_BASIC} />
+
+### With selector
+
+<SimpleWebPlayground code={CODE_EXAMPLE_SELECTOR} />
+
+### Custom equality checking
+
+<SimpleWebPlayground code={CODE_EXAMPLE_EQUALITY} />
+
+### Conditionally watch for changes
+
+<SimpleWebPlayground code={CODE_EXAMPLE_ACTIVE} />
+
+---
+
+## V0.X.X
+
+## v0.14.0
+
+### cotton-box
+* `ReadOnlyStateManager` type now exposes the `name` property.
+
+### cotton-box-react
+* Fixed a bug where the error below might be thrown under some circumstances:
+  > Cannot use 'in' operator to search for 'name' in undefined
+* `useSimpleStateValueWithReactiveSelector` and `useStateValueWithReactiveSelector` has been marked as deprecated and will most likely be removed in the next major version (v0 -> v1). If you use this hook and find a valid use case, please [create an issue](https://github.com/glyph-cat/cotton-box/issues/new/choose) to explain your use case.
+
+## v0.13.1
+
+### cotton-box
+* Internal code optimizations with TypeScript strict mode enabled.
+
+### cotton-box-react
+* Internal code optimizations with TypeScript strict mode enabled.
+
+## v0.13.0
+
+### cotton-box
+* N/A
+
+### cotton-box-react
+* Added missing export.
+
+## v0.12.0
+
+### cotton-box
+* Added experimental hydration API for when server-side rendering is involved.
+
+### cotton-box-react
+* Added experimental hydration API for when server-side rendering is involved.
+
+## v0.11.0
+
+### cotton-box
+* Fixed incorrect type definition for `trySet`
+
+### cotton-box-react
+* N/A
+
+## v0.10.0
+
+### cotton-box
+* Added `trySet` method to `SimpleFiniteStateManager`.
+* Parameter `stateManagerName` of `InvalidStateTransitionError` has been renamed to `stateManager` for brevity.
+* Constructor parameters of `InvalidStateTransitionError` (`fromState`, `toState`, `stateManager`) are now also available as public readonly properties.
+
+### cotton-box-react
+* N/A
+
+## v0.9.0
+
+### cotton-box
+* Fixed a bug where `SimpleFiniteStateManager` would throw "TypeError: Cannot read properties of undefined (reading 'has')" when setting state under certain circumstances.
+* The constructor of `InvalidStateTransitionError` now accepts a third optional parameter `stateManagerName`.
+* `Watcher.refresh` has now been renamed to `.post`. The `.refresh` method is still available but will be removed in a future version.
+
+### cotton-box-react
+* N/A
+
+## v0.8.0
+
+### cotton-box
+* Added helper type `StateTransition`.
+
+### cotton-box-react
+* Updated type definitions for hooks to accept `SimpleFiniteStateManager` and `ReadonlyStateManager`.
+
+## v0.7.0
+
+### cotton-box
+* Added `SimpleFiniteStateManager`, a sub-class of `SimpleStateManager` that only allows state change according to a set of predefined state transitions.
+
+### cotton-box-react
+* N/A
+
+## v0.6.0
+
+### cotton-box
+* The `Equality` API has been removed — it now exists as a separate package: [`@glyph-cat/equality`](https://github.com/glyph-cat/swiss-army-knife/tree/main/src/packages/equality).
+
+### cotton-box-react
+* N/A
+
+## v0.5.0
+
+### cotton-box
+* N/A
+
+### cotton-box-react
+* Updated post-install script.
+* Removed Scope-related APIs (`StateManagerScopeProviderProps`, `StateManagerScopeProvider`, `useScoped`) to reduce complexity of the library.
+
+## v0.4.0
+
+### cotton-box
+* The `Watcher` that Cotton Box uses internally is now exposed as a public API.
+* Internal stability enhancements.
+
+### cotton-box-react
+* Internal stability enhancements.
+
+## v0.3.0
+
+### cotton-box
+* Fixed incorrect export name for UMD builds.
+* Events captured by `.watch` now includes `StateChangeEventType` as the second parameter.
+* Events captured by `.wait` now includes `StateChangeEventType` as the third parameter.
+* Type safety enhancements.
+* Internal optimizations.
+
+### cotton-box-react
+* Fixed incorrect export name for UMD builds.
+* Fixed a bug where error "Cannot read properties of null (reading 'name')" would be thrown in production.
+* Internal optimizations.
+
+## v0.2.0
+
+### cotton-box
+* The `isInitializing` property of `StateManager` and `AsyncStateManager` is now exposed as a `ReadOnlyStateManager`.
+* Removed method `.waitForInit` in favor of calling `….isInitializing.wait(false)` directly.
+* State Managers without names will be assigned automatic names (`UnnamedStateManager_001`, `UnnamedStateManager_002`, and so on).
+
+### cotton-box-react
+
+`useInitState` has been removed in favor of a more direct way to find out if a State Manager is initializing:
+
+```diff
+- const isInitializing = useInitState(ExampleState)
++ const isInitializing = useSimpleStateValue(ExampleState.isInitializing)
+```
+
+The way `useInitState` works internally is also similar to calling `useSimpleStateValue`. By having one less hook means the codebase will have less complexity and becomes easier to maintain.
+
+On top of that, now that `isInitializing` is exposed as a State Manager itself, this means it is also possible to watch for the changes and even use it with other UI libraries/frameworks such as Vue and Angular with significantly less friction.
+
+## v0.1.0
+
+### cotton-box
+* The `wait` method now will only wait for the state to match or evaluator to return true, without checking if the state is currently initializing.
+* Added new method `waitForInit` to `StateManager` and `AsyncStateManager`
+* Added new method `reinitialize` to `StateManager` and `AsyncStateManager`
+* `currentState` is now exposed in the `lifecycle.init` callback
+* New property `isInitializing` exposed for `StateManager` and `AsyncStateManager`
+
+### cotton-box-react
+* Added new hook `useInitState`
+
+## v0.0.2
+
+### cotton-box
+* Stability enhancements.
+
+### cotton-box-react
+* Passing `StateManager` and `AsyncStateManager` to `useSimpleStateValue` and `useSimpleStateValueWithReactiveSelector` will *not* cause an error to be thrown. This is the same behavior as v0.0.0. Instead, rely on TypeScript's type-checking to prevent passing the wrong State Manager type. This change is made to reduce some runtime overhead in the hooks by not having to validate the State Manager types.
+
+## v0.0.1
+
+### cotton-box
+* Fixed a bug where the `didReset` lifecycle hook is called during initialization via `commit`.
+
+### cotton-box-react
+* Passing `StateManager` and `AsyncStateManager` to `useSimpleStateValue` and `useSimpleStateValueWithReactiveSelector` will now cause an error to be thrown.
+
+## v0.0.0
+* Initial release / pre-release
+
+---
+
+## V1.X.X
+
+## v1.1.0
+
+### cotton-box
+- `options.visibility` has been deprecated.
+  - It is not a reliable way to hide sensitive values.
+  - While this works for React Dev Tools, the built-in memory inspector in most browsers will still be able to show the value anyway.
+  - Please consider storing sensitive information on the server and only expose what's absolutely necessary to the client instead.
+- Type definitions now include examples.
+- Internal performance optimizations.
+
+### cotton-box-react
+- `options.visibility` now no longer does anything in React Developer Tools.
+- Type definitions now include examples.
+- Internal performance optimizations.
+
+## v1.0.0
+
+### cotton-box
+- This package now has the following external dependencies:
+  - [`@glyph-cat/foundation`](https://www.npmjs.com/package/@glyph-cat/foundation)
+  - [`@glyph-cat/type-checking`](https://www.npmjs.com/package/@glyph-cat/type-checking)
+- Fixed `README.md` now displays the correct description: _"This is the core package of cotton-box."_ instead of _"This is the official React bindings for cotton-box."_
+- `Watcher` has been moved back to [`@glyph-cat/swiss-army-knife`](https://github.com/glyph-cat/swiss-army-knife)
+  - An internal implementation of "Watcher" still remains, but it is optimized for Cotton Box only (behavior and API can change suddenly), so it no longer makes sense to expose the `Watcher` API from this package.
+- `.watch` and `.wait` no longer includes event type.
+- State manager names remain optional, but if not provided, automatic names will no longer be generated either.
+- Internal performance optimizations.
+
+### cotton-box-react
+- This package now has the following external dependencies:
+  - [`@glyph-cat/foundation`](https://www.npmjs.com/package/@glyph-cat/foundation)
+  - [`@glyph-cat/type-checking`](https://www.npmjs.com/package/@glyph-cat/type-checking)
+- This package now requires React 19 (or above) to work
+- There is now a bundle specifically for React Native that excludes SSR logic which is only used for web (dead code in the case of React Native).
+  - No changes are required to take advantage of this optimization
+  - Web compilers (eg: babel, webpack) and React Native bundler (Metro) will be able to automatically select the correct bundle when compiling.
+- Added new hook `useSimpleStateValueOnly`. It is similar to `useSimpleStateValue` but does not support any additional options or selectors.
+- `useSimpleStateValueOnly` and `useSimpleStateValue` returns the `never` type when used with `StateManager` or `AsyncStateManager`. They are designed to be used with `SimpleStateManager` or `SimpleFiniteStateManager` only.
+- Removed previously deprecated APIs:
+  - `useSimpleStateValueWithReactiveSelector`
+  - `useStateValueWithReactiveSelector`
+- Internal performance optimizations.
+
+---
+
+## Tic Tac Toe
+
+
+This is a game of tic-tac-toe that uses a class to manage the game logic instead of writing it all with React Hooks.
+
+State managers are declared as read-only class properties and manage a very narrow scope of logic. React components that need to subscribe to state changes would only have to call the hook corresponding to the state manager class (in this case: `useSimpleStateValue`) with whichever class property of `GameInstance` that has the relevant logic.
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+/>
+
+---
+
+## Video Camera
+
+
+This is an adapted implementation of [`VideoCamera`](https://github.com/glyph-cat/swiss-army-knife/blob/main/src/packages/core/src/media/video-camera/index.ts) from `@glyph-cat/swiss-army-knife`.
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+    showConsole: false,
+  }}
+/>
+
+---
+
+## Counter
+
+
+In this example, a counter value is stored in a state manager.
+
+When the ring is clicked the `.set` method will be called to increase the counter by 1.
+
+When the "Reset" button is clicked, the `.reset` method will be called to reset `CounterState` back to `0`.
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+/>
+
+---
+
+## Notes App
+
+
+This is an example of a simple notes app that uses the spread operator (`...`) to set state.
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+/>
+
+---
+
+## Todo List App
+
+
+This is an example of a to-do list app that uses [Immer](https://immerjs.github.io/immer/) for immutability.
+
+The `<ItemCount>` component also demonstrates the usage of [selectors](../../learn/react/selectors.mdx).
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+/>
+
+---
+
+## Stress Test
+
+
+The sandboxes below show how many operations per second each library is capable of.
+
+How the test is conducted:
+1. While `performance.now() - startTime` is less than 1 second, keep running.
+2. After loop has completed calculate, `performance.now() - startTime` again. This is because it is not guaranteed that loops will stop immediately after one second.
+3. Operations per second = total operations recorded ÷ total run time × 1000 milliseconds
+
+Upon clicking "Start", the sandbox will try to invoke as many set-state calls as possible for 1 second.
+
+## React (built-in state)
+
+<SimpleWebPlayground
+  code={DEMO_REACT}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+# Cotton Box
+
+<SimpleWebPlayground
+  code={DEMO_COTTON_BOX}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+# Zustand
+
+<SimpleWebPlayground
+  code={DEMO_ZUSTAND}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+# Redux
+
+<SimpleWebPlayground
+  code={DEMO_REDUX}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+  disableInfiniteLoopProtection
+/>
+
+---
+
+## Hiding values from React Developer Tools
+
+
+By default, [`useStateValue`](../../api/react/useStateValue.mdx) only exposes the state value to the <Link href={DocConstants.REACT_DOCS_SITE_DEV_TOOLS_URL}>React Developer Tools</Link> in non-production environments and hides it in production environment.
+
+The state value is obscured by storing it inside a <ApiLink href={DocConstants.TYPE_REFERENCE_WEAK_MAP}>WeakMap</ApiLink> and conditionally exposed as "`InspectableValue`" instead.
+
+This behavior can be changed via the `visibility` option, which has three modes:
+* `ENVIRONMENT` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_ENVIRONMENT} This is the default behavior.
+* `EXPOSED` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_EXPOSED}
+* `HIDDEN` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_HIDDEN}
+
+<DevToolsPreview />
+
+Related items:
+* [`StateManagerOptions`](../../api/core/StateManagerOptions.mdx)
+* [`StateManagerVisibility`](../../api/core/StateManagerVisibility.mdx)
+
+---
+
+## Migration From `react-relink`
+
+{/* NOTE: sidebar position is not specified, this should be the last article in the sidebar. */}
+
+:::info
+The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
+:::
+
+## Setup
+```sh title="Before"
+yarn add react-relink
+```
+```sh title="Now"
+yarn add {:CORE_PACKAGE_NAME:} {:REACT_PACKAGE_NAME:}
+```
+
+## Instantiation
+```js title="Before"
+
+const ExampleSource = new RelinkSource({
+  key: 'example-source',
+  default: 'defaultState',
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    didSet({ state }) {
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  options: {
+    suspense: true | false,
+    public: true | false,
+  },
+  scope: OtherSource,
+})
+```
+
+```js title="Now"
+// highlight-next-line
+
+// highlight-start
+// Default state is passed as first parameter,
+// remaining options are passed as the second.
+const ExampleState = new AsyncStateManager('defaultState', {
+  // `key` is no longer needed, but there is a `name` property,
+  // which is *optional* and only used for debugging.
+  // highlight-end
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    // highlight-start
+    // `defaultState` is exposed here:
+    didSet({ state, defaultState }) {
+      // highlight-end
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  // highlight-start
+  // `visibility` is a boolean type in react-relink:
+  visibility: StateManagerVisibility.ENVIRONMENT,
+  // highlight-end
+  suspense: true | false,
+  // highlight-start
+  // Scope is not supported by Cotton Box
+  // highlight-end
+})
+```
+
+## Consuming the State
+
+```js title="Before"
+function App() {
+
+  const state = useRelinkValue(ExampleSource)
+  return '...'
+}
+```
+
+```js title="Now"
+function App() {
+  // highlight-next-line
+
+  // highlight-next-line
+  const state = useStateValue(ExampleState)
+  return '...'
+}
+```
+
+## Handling dependencies
+
+```js title="Before"
+const ExampleSourceA = new RelinkSource({
+  key: 'example-source-a',
+  default: '...',
+  lifecycle: { /* ... */ },
+})
+
+const ExampleSourceB = new RelinkSource({
+  key: 'example-source-b',
+  default: '...',
+  deps: [ExampleSourceA],
+  lifecycle: { /* ... */ },
+})
+```
+
+```js title="Now"
+const ExampleStateA = new StateManager('...')
+
+const ExampleStateB = new StateManager('...', {
+  lifecycle: {
+    init() {
+      await ExampleStateA.isInitializing.wait(false)
+      // continue to do something
+    },
+  },
+})
+```
+
+## Re-initialization
+
+```js title="Before"
+MySource.hydrate(...)
+```
+
+```js title="Now"
+ExampleState.init(...)
+```
+
+## Scope
+
+Cotton Box does not have Scope-related APIs to reduce complexity. Instead, we recommend using [React's Context API](https://react.dev/learn/passing-data-deeply-with-context) as a substitute as it allows more fine-grained control at the same time.
+
+---
+
+## Observing Initialization State
+
+
+To determine if a state is initializing, we can use the `.isInitializing` property. It is a  <ApiLink href='../../api/core/StateManagerInitArgs'>ReadOnlyStateManager</ApiLink> where only the `.get`, `.watch` and `.wait` methods are available.
+
+In React, we would <ApiLink href='../../api/react/useSimpleStateValue'>useSimpleStateValue</ApiLink> to subscribe to the changes of this read-only State Manager as demonstrated in the example below:
+
+## Example
+
+<SimpleWebPlayground code={CODE_EXAMPLE} />
+
+---
+
+## Opt Out of Re-renders Due To State Change
+
+
+Sometimes, we might want to temporarily unsubscribe from state changes in a component. This can be done by passing a third parameter. If a selector is not needed, `null` can be passed as the second parameter.
+
+```jsx
+
+function App(): ReactNode {
+  const [active, setActive] = useState(true)
+  const state = useStateValue(ExampleState, null, active)
+  return '...'
+}
+```
+
+The third parameter is a `boolean` flag that defaults to `true`. When set to `true`, the hook will observe state changes normally, when set to `false`, it will stop observing for state changes until it is set back to `true` again.
+
+:::note
+Setting the third parameter to `false` does not prevent the State Manager itself from changing state, but rather, it is just blocking the hook from watching for state changes.
+:::
+
+## Full Example
+
+<SimpleWebPlayground code={CODE_EXAMPLE} />
+
+---
+
+## Quick Start
+
+
+Let's begin by importing <ApiLink href='../../api/react/useStateValue'>useStateValue</ApiLink> from `'cotton-box-react'`.
+```js
+
+```
+
+Then, we can pass our State Manager to the hook.
+```js
+const state = useStateValue(ExampleState)
+```
+
+The example below shows how we can read from `CounterState` from inside a React component.
+
+<SimpleWebPlayground code={CODE_EXAMPLE} />
+
+---
+
+## Selectors
+
+
+Sometimes, our state might be an object and we only need to the value of certain properties from that object, but when any property is changed, the entire object changes, resulting in components to re-render. This is when selectors can help us overcome this problem.
+
+Take `IUserState` for example, we might have a component that is only responsible for showing `luckyNumber` and we do not want it to re-render when `firstName` changes.
+```ts
+interface IUserState {
+  firstName: string
+  lastName: string
+  luckyNumber: number
+}
+
+const UserState = new StateManager<IUserState>({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+
+We can pass `(state) => state.luckyNumber` as the second parameter to <ApiLink href='../../api/react/useStateValue'>useStateValue</ApiLink>.
+
+```tsx
+const luckyNumber = useStateValue(UserState, (state) => state.luckyNumber)
+```
+
+By doing so, only the previous and upcoming values of `state.luckyNumber` is compared when the state changes. Therefore, the component will only re-render when `luckyNumber` changes.
+
+## Example
+
+In this example, we can confirm that the component does not re-render by verifying that `console.log('Rendering...')` is not executed no matter how many times the value of `firstName` changes, but whenever `luckyNumber` changes, it will be executed.
+
+<SimpleWebPlayground code={CODE_EXAMPLE} options={{ showConsole: true }} />
+
+---
+
+## Setup
+
+
+:::info
+React **19** (or above) is required.
+:::
+
+In order to use `cotton-box` with <Link href={DocConstants.REACT_DOCS_SITE}>React</Link>, we need to install `cotton-box-react`.
+
+## Installation
+
+### Using a dependency manager
+<YarnToNPM>
+yarn add {DocConstants.CORE_PACKAGE_NAME}
+// highlight-next-line
+yarn add {DocConstants.REACT_PACKAGE_NAME}
+</YarnToNPM>
+
+### With UNPKG
+
+#### For development
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+<!-- highlight-next-line -->
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+```
+
+#### For production
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+<!-- highlight-next-line -->
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+```
+
+Then replace `<VERSION>` with the version that you need.
+
+---
+
+## Disposal
+
+
+## General Usage
+
+To dispose a State Manager, we use the `.dispose` method. This is important when the State Manager is not created/used globally.
+
+For example, we can have a `GameRoom` class in which each instance has a state. Upon cleaning up the `GameRoom`, we should also dispose the State Manager.
+
+<TSCodeBlock>
+```tsx
+
+enum GameRoomState {
+  CREATED,
+  INITIALIZED,
+  STARTED,
+  STOPPED,
+  DISPOSED,
+}
+
+class GameRoom {
+
+  state = new StateManager<GameRoomState>(GameRoomState.CREATED)
+
+  async dispose(): Promise<void> {
+    await this.state.wait((state) => { return state >= GameRoomState.INITIALIZED })
+    // ^ Pro tip: Wait for initialization to complete before performing teardown
+    this.state.set(GameRoomState.DISPOSED)
+    this.state.dispose()
+  }
+
+}
+```
+```jsx
+
+const GameRoomState = Object.freeze({
+  CREATED: 0,
+  INITIALIZED: 1,
+  STARTED: 2,
+  STOPPED: 3,
+  DISPOSED: 4,
+})
+
+class GameRoom {
+
+  state = new StateManager(GameRoomState.CREATED)
+
+  async dispose() {
+    await this.state.wait((state) => { return state >= GameRoomState.INITIALIZED })
+    // ^ Pro tip: Wait for initialization to complete before performing teardown
+    this.state.set(GameRoomState.DISPOSED)
+    this.state.dispose()
+  }
+
+}
+```
+</TSCodeBlock>
+
+## Using with React
+
+To recap, State Managers are designed to be used globally most of the time, but there are niche cases where they need to be dynamically created (and disposed). One such example is to dynamically create them within React components. In React, we can ["lazily initialize"](https://react.dev/reference/react/useRef#avoiding-recreating-the-ref-contents) the variables for <ApiLink href={DocConstants.REACT_DOCS_SITE_USE_REF_URL}>useRef</ApiLink> and State Managers can be instantiated in a similar way too.
+
+<TSCodeBlock>
+```tsx
+function App(): ReactNode {
+  const ExampleState = useRef<StateManager<string>>()
+  if (!ExampleState.current) {
+    ExampleState.current = new StateManager<string>('...')
+  }
+  useEffect(() => {
+    return () => {
+      ExampleState.current.dispose()
+    }
+  }, [])
+  console.log(ExampleState.current.get())
+  return '...'
+}
+```
+```jsx
+function App() {
+  const ExampleState = useRef(null)
+  if (!ExampleState.current) {
+    ExampleState.current = new StateManager('...')
+  }
+  useEffect(() => {
+    return () => {
+      ExampleState.current.dispose()
+    }
+  }, [])
+  console.log(ExampleState.current.get())
+  return '...'
+}
+```
+</TSCodeBlock>
+
+However, it can be tricky ([#14490](https://github.com/facebook/react/issues/14490), [#26315](https://github.com/facebook/react/issues/26315), [#27735](https://github.com/facebook/react/issues/27735)) to do this in <ApiLink href={DocConstants.REACT_DOCS_SITE_STRICT_MODE_URL}>StrictMode</ApiLink> due to how the effects are being fired:
+1. Setup effect is called for the first time.
+2. Setup effect is called for the second time.
+3. Cleanup effect is called for the first time.
+4. When component finally unmounts, cleanup effect is called for the second time.
+
+Which translates into:
+1. Variable is instantiated for the first time and assigned to `useRef`.
+2. Variable is instantiated for the _**second**_ time and _**overwrites**_ the _**first**_ value that is already assigned to `useRef`. (You would think `ExampleState.current` already has a value at this point, but for some reason, it is in fact still `null`).
+3. Cleanup effect is run for the _**first**_ time on the variable assigned to `useRef` (which is the _**second**_ instance).
+4. When component finally unmounts, the cleanup effect is run for the second time on whatever value that `useRef` may still be holding.
+
+There are a few workarounds for this problem, but at a higher level, this means that we are in some way still writing "unsafe" code — code that might lead to bugs in future versions of React or when we begin to adopt certain new features of React in the future. Instead of (1)setup -> (2)cleanup -> (3)setup -> (4)cleanup, `StrictMode` triggers (1)setup -> (2)setup -> (3)cleanup -> (4)cleanup. For now, we can think about it this way: it is possible for the same component to be rendered more than once before the first instance even has the chance to cleanup. Even if we intend for a component to only have one rendered instance at a time throughout the entire app, in reality, there is no guarantee that it would be rendered that way, and `StrictMode` helps to simulate such conditions which allows us to identify problems that may occur when components are rendered in such a way.
+
+It seems like the only safe and stable way so far is to perform both the instantiation and cleanup in the same effect. The downside to this is that the lazily initialized values will not be accessible in the first render and we will need to implement some sort of fallback UI or perform actions that are related to the lazily initialized value only when it becomes available.
+
+<TSCodeBlock>
+```tsx
+function App(): ReactNode {
+  const [ExampleState, setExampleState] = useState<StateManager<string>>(null)
+  useEffect(() => {
+    const newExampleState = new StateManager<string>('...')
+    setExampleState(newExampleState)
+    return () => {
+      newExampleState.dispose()
+      setExampleState(null)
+    }
+  }, [])
+  if (!ExampleState) { return <>Loading...</> }
+  console.log(ExampleState.get())
+  return '...'
+}
+```
+```jsx
+function App() {
+  const [ExampleState, setExampleState] = useState(null)
+  useEffect(() => {
+    const newExampleState = new StateManager('...')
+    setExampleState(newExampleState)
+    return () => {
+      newExampleState.dispose()
+      setExampleState(null)
+    }
+  }, [])
+  if (!ExampleState) { return <>Loading...</> }
+  console.log(ExampleState.get())
+  return '...'
+}
+```
+</TSCodeBlock>
+
+---
+
+## Persisting State
+
+
+[`StateManager`](../../api/core/StateManager.mdx) and [`AsyncStateManager`](../../api/core/AsyncStateManager.mdx) provides three lifecycle hooks:
+- `init` — triggers when the State Manager is instantiated
+- `didSet` — triggers each time the state is changed with `.set`, even if the value remains the same
+- `didReset` — triggers each time `.reset` is called
+
+:::tip
+These lifecycle hooks are are independent of each other and completely optional, but as far as lifecycle management is concerned, it is generally recommended to use all three.
+:::
+
+## Persisting & resetting state
+To begin, we can start by defining `didSet` and `didReset`. By doing so, we would have a better idea of how the state is being persisted, which in return makes it easier for us to figure out how to initialize the state. In this example, we will serialize the state using <ApiLink href={DocConstants.API_REFERENCE_URL_JSON_STRINGIFY}>JSON.stringify</ApiLink> and save it to <ApiLink href={DocConstants.API_REFERENCE_URL_LOCAL_STORAGE}>localStorage</ApiLink>.
+
+```js
+const UserState = new StateManager({
+    firstName: 'John',
+    lastName: 'Smith',
+    luckyNumber: 42,
+  }, {
+  // highlight-start
+  lifecycle: {
+    didSet({ state, defaultState }) {
+      localStorage.removeItem('key', JSON.stringify(state))
+    },
+    didReset() {
+      localStorage.removeItem('key')
+    },
+  },
+  // highlight-end
+})
+```
+
+:::danger[Caution!]
+Do not call `.set` inside the `didSet` lifecycle hook as this will result in infinite recursion. The same applies to calling `.reset` in the `didReset` lifecycle hook and calling `.init` in the `init` lifecycle hook.
+:::
+
+## Retrieving state
+Now that we know how the state is being persisted, all we need to do is to parse it back with <ApiLink href={DocConstants.API_REFERENCE_URL_JSON_PARSE}>JSON.parse</ApiLink> in the `init` lifecycle hook.
+
+```js
+const UserState = new StateManager({
+    firstName: 'John',
+    lastName: 'Smith',
+    luckyNumber: 42,
+  }, {
+  lifecycle: {
+    // highlight-start
+    init({ commit }) {
+      const persistedState = JSON.parse(localStorage.getItem('key'))
+      commit(persistedState)
+    },
+    // highlight-end
+    didSet({ state, defaultState }) {
+      localStorage.removeItem('key', JSON.stringify(state))
+    },
+    didReset() {
+      localStorage.removeItem('key')
+    },
+  },
+})
+```
+
+## Putting everything together
+The code in the section above is a simple example of we can persist data and use it to initialize a State Manager. In reality, however, it could be a little bit more complicated. The code below shows what it might look like in a more realistic scenario.
+
+```js
+const UserState = new StateManager({
+    firstName: 'John',
+    lastName: 'Smith',
+    luckyNumber: 42,
+  }, {
+  // 0. Do not run any lifecycle hooks in server environment
+  //    (for projects that uses server-side rendering)
+  lifecycle: typeof window === 'undefined' ? {} : {
+    init({ commit, commitNoop, defaultState }) {
+      // 1. Get raw (string) state.
+      const rawState = localStorage.getItem('key')
+      if (rawState) {
+        try {
+          // 2. If it exists, attempt to parse it.
+          const persistedState = JSON.parse(rawState)
+          // 3. Commit the state by merging the default and the persisted states
+          //    using the spread operator.
+          commit({
+            ...defaultState,
+            ...persistedState,
+          })
+          // 4. Initialization has completed,
+          //    execution of the function can be ended early.
+          return
+        } catch (error) {
+          // 5. try-catch is used in case of corrupted JSON string.
+          console.error(error)
+        }
+      }
+      commitNoop() // pronounced as "commit no-op"
+      // 6. This indicates that initialization has been completed but without
+      //    the need to change the state (state remains to be the default value).
+    },
+    didSet({ state, defaultState }) {
+      localStorage.removeItem('key', JSON.stringify(state))
+    },
+    didReset() {
+      localStorage.removeItem('key')
+    },
+  },
+})
+```
+
+---
+
+## Quick Start(Tutorial)
+
+
+## Creating a new State Manager
+
+First, import [`StateManager`](../../api/core/StateManager.mdx) from <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline>:
+
+```js
+
+```
+
+The `StateManager` is a [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class). We can create a new `StateManager` like this:
+
+<TSCodeBlock>
+```ts
+interface IUserState {
+  firstName: string
+  lastName: string
+  luckyNumber: number
+}
+
+const UserState = new StateManager<IUserState>({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+```js
+const UserState = new StateManager({
+  firstName: 'John',
+  lastName: 'Smith',
+  luckyNumber: 42,
+})
+```
+</TSCodeBlock>
+
+## Getting the state
+To get the current state, use the [`.get`](../../api/core/StateManager.mdx#get) method.
+```js
+const user = UserState.get()
+```
+
+To use the State Manager with React, we can import the [`useStateValue`](../../api/react/useStateValue.mdx) hook and use it like this:
+```js
+
+function App() {
+  const user = useStateValue(UserState)
+  // ...
+}
+```
+
+More on [using with React](../react/setup.mdx).
+
+## Setting the state
+
+With a value:
+```js
+UserState.set(64)
+```
+
+With a function:
+```js
+UserState.set((state) => ({
+  ...state, // <-- preserve other state properties
+  luckyNumber: Math.round(Math.random() * 100),
+  // ^ while only changing the value of `luckyNumber`
+}))
+```
+
+## Resetting the state
+```js
+UserState.reset()
+```
+
+:::tip
+It is safe to call all of the State Manager's methods (`.get`, `.set`, `.reset`, etc.) anywhere, both inside and outside of React components.
+:::
+
+---
+
+## Setup(Tutorial)
+
+
+## Installation
+
+### Using a dependency manager
+
+<YarnToNPM>yarn add {DocConstants.CORE_PACKAGE_NAME}</YarnToNPM>
+
+### With UNPKG
+
+#### For development
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+```
+
+#### For production
+```html
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+```
+
+Then replace `<VERSION>` with the version that you need.
+
+---
+
+## Waiting For State Change
+
+
+Waiting is an observation strategy that utilizes `.watch` under the hood. It allows us to watch for state value changes until it matches a certain value or fulfils a certain condition then stops watching and returns a snapshot of that state.
+
+Consider the code below, there are two things that we can do with it.
+```js
+const CounterState = new StateManager(0)
+
+setInterval(() => {
+  const randomNumber = Math.round(Math.random() * 100)
+  CounterState.set(randomNumber)
+}, 1000)
+```
+
+## Waiting for a exact value
+
+We can pass a value to `.wait` and it will resolve when the state matches that value. The state is compared with the expected value using <ApiLink href={DocConstants.API_REFERENCE_URL_OBJECT_IS}>Object.is</ApiLink>.
+
+In this example, the promise will resolve when the state equals to `42`.
+
+```js
+await CounterState.wait(42)
+```
+
+<SimpleConsolePlayground code={CODE_EXAMPLE_VALUE}/>
+
+:::tip
+The `.isInitializing` property of <ApiLink href={`${DocConstants.DOCS_API_CORE_URL}/StateManager`}>StateManager</ApiLink> and <ApiLink href={`${DocConstants.DOCS_API_CORE_URL}/AsyncStateManager`}>AsyncStateManager</ApiLink> can be used in a similar way to wait for initialization to complete (Example: `ExampleState.isInitializing.wait(false)`).
+:::
+
+## Waiting for a condition to be fulfilled
+We can also pass a callback to `.wait` to fine tune the waiting behavior. The state snapshot will be passed to the function each time the state changes and the callback should return either `true` or `false`.
+
+In this example, the promise will resolve when the state is a number that is divisible by 5.
+```js
+await CounterState.wait(state => state % 5 === 0)
+```
+
+<SimpleConsolePlayground code={CODE_EXAMPLE_EVALUATOR}/>
+
+:::tip
+When the condition is fulfilled, the `.wait` method returns a Promise that resolves into a snapshot of the state that fulfilled the condition. This is useful when we only know what condition to expect but not a specific value, as we could capture the value right after waiting.
+:::
+
+---
+
+## Watching For State Changes
+
+
+We can observe state changes with the `.watch` method.
+
+It accepts a callback that will be invoked whenever the state changes.
+
+It also returns a callback, that when called, will unsubscribe the watch handler from future state changes.
+
+## Example
+
+In the example below, we have an interval that sets the `CounterState` with random numbers every second. 
+
+A watcher is added to observe these changes and it will push the state values into an array. Once the array has 10 numbers, the unwatch function is called to stop watching.
+
+<SimpleConsolePlayground code={CODE_EXAMPLE}/>
+
+---
+
+## Which State Manager Should I Use?
+
+
+The package comes with three types of State Managers, each with slightly different characteristics, tailored for different use cases.
+
+|                                           | `SimpleStateManager` |    `StateManager`    | `AsyncStateManager` |
+| ----------------------------------------- | :------------------: | :------------------: | :-----------------: |
+| Inherits from                             |         -/-          | `SimpleStateManager` |   `StateManager`    |
+| Async set-state                           |          No          |          No          |         Yes         |
+| `get`/`set`/`reset`/`dispose` methods     |     Synchronous      |     Synchronous      |    Asynchronous     |
+| Lifecycle hooks                           |          No          |         Yes          |         Yes         |
+| Can hide values from [React Dev Tools][1] |          No          |         Yes          |         Yes         |
+| [Computing overhead][2]                   |       Very low       |         Low          |        High         |
+
+## `SimpleStateManager`
+- A bare-bones state manager.
+- Very fast and lightweight.
+- No lifecycle management.
+- State values cannot be hidden from React Developer Tools.
+- When `.set` calls are nested, only the outermost one will be effective. The nested `.set` calls will only result in a momentary state change and get overwritten by its outer `.set` calls right after.
+- Has the least flexibility and number of features, and is unlikely to have new features in future updates.
+- Suitable for general use cases (UIs, forms, lists, etc.) that do not require persisting state or hiding state values from React Developer Tools.
+- Go to [API reference](../../api/core/SimpleStateManager.mdx).
+
+## `StateManager`
+- Inherits everything from `SimpleStateManager`.
+- Slightly slower than `SimpleStateManager`, but still responsive enough to accommodate scenarios that involve rapid key presses and mouse events.
+- Supports lifecycle hooks.
+- State values can be hidden from React Developer Tools.
+- When `.set` calls are nested, they will be triggered in order, from outermost to innermost.
+- Has more flexibility over `SimpleStateManager` and is more likely to be updated to work with new external features where it makes sense to integrate them. (For example, new features from libraries such as React or browser APIs.)
+- Suitable for general use cases (UIs, forms, lists, etc.). This is the default recommendation.
+- Go to [API reference](../../api/core/StateManager.mdx).
+
+## `AsyncStateManager`
+- Similar to `StateManager` except `.get`, `.set`, `.reset`, and `.dispose` operations are asynchronous.
+- Slower than `StateManager` since it needs to accommodate asynchronous set-state functions.
+- Not suitable for scenarios that involve rapid state changes as it may result in noticeable lag.
+- Only use this as an escape hatch if you need to call asynchronous functions inside the set-state function for the `.set` method. `AsyncStateManager` will wait for these actions to be completed before setting the state.
+  - Example: calling a REST API that requires awareness about the previous state in order to derive the next state.
+- Go to [API reference](../../api/core/AsyncStateManager.mdx).
+
+:::info
+It is strongly advised to move async logic out of `.set` calls whenever possible and only use `AsyncStateManager` as a last resort.
+:::
+
+## `SimpleFiniteStateManager` ✨
+- Special state manager that also inherits everything from `SimpleStateManager`.
+- Behaves similarly to `SimpleStateManager` and has similar computing overhead.
+- State changes are only allowed based on predetermined state transitions.
+- Go to [API reference](../../api/core/SimpleFiniteStateManager.mdx).
+
+{/* #region Links */}
+[1]: https://react.dev/learn/react-developer-tools
+[2]: https://en.wikipedia.org/wiki/Overhead_(computing)
+{/* #endregion Links */}
+
+---
+
+## Reincarnation of an old package
+
+
+In 2020, [`react-relink`](https://github.com/glyph-cat/react-relink) was released. It was heavily inspired by [`recoil`](https://github.com/facebookexperimental/Recoil) and had a similar API design.
+
+`react-relink` was created with the goals of:
+
+1. not needing to wrap components in [Providers](https://react.dev/reference/react/createContext#provider) while still allowing states to be shared across different React components trees, and
+2. make it easy to transition from `recoil` by introducing similar concepts and APIs.
+
+As time goes on, the concepts of `recoil` were slowly disregarded, new features were added, and `react-relink` began to evolve into a state management library of it's own.
+
+At that point, there were three main problems...
+<!-- truncate -->
+- The codebase became bloated and difficult to maintain
+- It became so slow, that in some scenarios, it results in very noticeable lagging
+- There was no easy way to use `react-relink` as a state management tool outside of React because the dependencies are tied together.
+
+Eventually, the better solution was to create ~~a new package~~ two new packages —
+a core package and another one for its React bindings. This allows non-React projects to use this new state management library without needing to install [`react`](https://www.npmjs.com/package/react) as a dependency, and the core package is called `cotton-box`.
+
+`cotton-box` exposes three different types of State Managers that are built on top of one another for different needs:
+- `SimpleStateManager` — the most lightweight state manager
+- `StateManager` - generic state manager with lifecycle hooks for persisting data
+- `AsyncStateManager` - similar to `StateManager` but supports async set-state functions
+
+More information on the differences between these State Managers are available [here](/cotton-box/docs/learn/tutorial/which-state-manager-should-i-use).
+
+If you're migrating from `react-relink`, it is highly recommended to check out the [migration guide](/cotton-box/docs/learn/react/migration-from-react-relink).
+
+---
+
+## v1 is finally out
+
+
+Hello there, it's been quite a while. Two years, in fact, since the first blog post. In this one, I will be writing from an "author's note" perspective.
+
+After countless rounds of testing, observation, and tweaking, Cotton Box's API has finally become stable enough that breaking changes no longer need to be introduced in every new release.
+
+<!-- truncate -->
+
+## Recap
+It was originally created as the successor of React Relink with a cleaner API, faster performance, and independence from React. However, it remained experimental and there was no concrete roadmap for further development.
+
+## The Current Situation
+After testing it with some of my private side projects (from simple form applications, to projects with [Live2D](https://www.live2d.com) integration, and even to VR games that use [MediaPipe](https://ai.google.dev/edge/mediapipe/solutions/guide) + [`react-three-fiber`](https://r3f.docs.pmnd.rs/getting-started/introduction)), the results have been quite satisfactory. There were almost no lags, and even when there were, state management was never the bottleneck.
+
+Combining the above factor with the fact that there is now a stable pattern in how the library can be used / how it should be used, it made sense to do some cleanup, remove some deprecated APIs, and release it as v1.
+
+## Future Plans
+The APIs of this library will remain fairly consistent unless a future version of React with breaking changes is introduced or if any bug/vulnerability has been found. 
+
+Of course, there's also the experimental `<HydrateStateManager>` component, which is not listed in the documentation intentionally. More time is needed to test this out. Considering the purpose of this library, it is deemed near-complete, with only some rare cases that require writing custom React hooks as a workaround.
+
+I intend to keep this library simple and lightweight. However, feature suggestions are always welcomed, and I will consider adding them as long as they make sense and do not compromise performance.
+
+## Closing Note
+Though this is not a popular library since its first release and neither is it at the time of writing. To anyone who comes across this post or has been using Cotton Box, thank you for putting your trust in this literally nameless state management library. I hope you continue to use and support it, and may you always find it a joy to use Cotton Box in your projects.

@@ -1,0 +1,14 @@
+# BUILD_TYPE
+
+> import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+import { DocConstants } from '@site/src/constants'
+import CodeInline from '@theme/CodeInline'
+
+# BUILD_TYPE
+
+<TypeDisplay>{DataType.BuildType}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_BUILD_TYPE}</MarkdownWrapper>
+
+This constant is available in <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline> and <CodeInline>{DocConstants.REACT_PACKAGE_NAME}</CodeInline>.

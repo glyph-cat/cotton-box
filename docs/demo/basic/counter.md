@@ -1,0 +1,22 @@
+# Counter
+
+> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/counter/index.module.css'
+import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/counter/index.tsx'
+import { SimpleWebPlayground } from '@site/src/components/live-playground'
+
+# Counter
+
+In this example, a counter value is stored in a state manager.
+
+When the ring is clicked the `.set` method will be called to increase the counter by 1.
+
+When the "Reset" button is clicked, the `.reset` method will be called to reset `CounterState` back to `0`.
+
+<SimpleWebPlayground
+  code={DEMO_TSX}
+  css={DEMO_CSS}
+  options={{
+    editorHeight: 500,
+    editorWidthPercentage: 50,
+  }}
+/>

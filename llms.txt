@@ -1,0 +1,58 @@
+# Cotton Box
+
+> Minimal state management library for React and beyond.
+
+This file contains links to documentation sections following the llmstxt.org standard.
+
+## Table of Contents
+
+- [AsyncSetStateFn](https://glyph-cat.github.io/cotton-box/docs/api/core/AsyncSetStateFn.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [AsyncStateManager](https://glyph-cat.github.io/cotton-box/docs/api/core/AsyncStateManager.md): import { ApiLink } from '@site/src/components/api-link'
+- [EqualityFn](https://glyph-cat.github.io/cotton-box/docs/api/core/EqualityFn.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [InvalidStateTransitionError](https://glyph-cat.github.io/cotton-box/docs/api/core/InvalidStateTransitionError.md): import { ApiLink } from '@site/src/components/api-link'
+- [ReadOnlyStateManager](https://glyph-cat.github.io/cotton-box/docs/api/core/ReadOnlyStateManager.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [SetStateFn](https://glyph-cat.github.io/cotton-box/docs/api/core/SetStateFn.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [SimpleFiniteStateManager](https://glyph-cat.github.io/cotton-box/docs/api/core/SimpleFiniteStateManager.md): import { ApiLink } from '@site/src/components/api-link'
+- [SimpleStateManagerOptions](https://glyph-cat.github.io/cotton-box/docs/api/core/SimpleFiniteStateManagerOptions.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [SimpleStateManager](https://glyph-cat.github.io/cotton-box/docs/api/core/SimpleStateManager.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [SimpleStateManagerOptions](https://glyph-cat.github.io/cotton-box/docs/api/core/SimpleStateManagerOptions.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateManager](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManager.md): import { ApiLink } from '@site/src/components/api-link'
+- [StateManagerDidSetArgs](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManagerDidSetArgs.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateManagerInitArgs](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManagerInitArgs.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateManagerLifecycle](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManagerLifecycle.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateManagerOptions](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManagerOptions.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateManagerVisibility](https://glyph-cat.github.io/cotton-box/docs/api/core/StateManagerVisibility.md): import { ApiLink } from '@site/src/components/api-link'
+- [StateSelector](https://glyph-cat.github.io/cotton-box/docs/api/core/StateSelector.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [StateTransition](https://glyph-cat.github.io/cotton-box/docs/api/core/StateTransition.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [WaitEvaluator](https://glyph-cat.github.io/cotton-box/docs/api/core/WaitEvaluator.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [BUILD_HASH](https://glyph-cat.github.io/cotton-box/docs/api/misc/BUILD_HASH.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [BUILD_TYPE](https://glyph-cat.github.io/cotton-box/docs/api/misc/BUILD_TYPE.md): import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+- [BuildType](https://glyph-cat.github.io/cotton-box/docs/api/misc/BuildType.md): import { ApiLink } from '@site/src/components/api-link'
+- [VERSION](https://glyph-cat.github.io/cotton-box/docs/api/misc/VERSION.md): import { ApiLink } from '@site/src/components/api-link'
+- [useSimpleStateValue](https://glyph-cat.github.io/cotton-box/docs/api/react/useSimpleStateValue.md): import CODE_EXAMPLE_ACTIVE from '!!raw-loader!@site/src/examples/api/react/useSimpleStateValue/active'
+- [useSimpleStateValueOnly](https://glyph-cat.github.io/cotton-box/docs/api/react/useSimpleStateValueOnly.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useSimpleStateValueOnly/basic'
+- [useStateValue](https://glyph-cat.github.io/cotton-box/docs/api/react/useStateValue.md): import CODE_EXAMPLE_ACTIVE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'
+- [V0.X.X](https://glyph-cat.github.io/cotton-box/docs/changelogs/v0.x.x.md): `useInitState` has been removed in favor of a more direct way to find out if a State Manager is initializing:
+- [V1.X.X](https://glyph-cat.github.io/cotton-box/changelogs/current.md)
+- [Tic Tac Toe](https://glyph-cat.github.io/cotton-box/docs/demo/advanced/tic-tac-toe.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.module.css'
+- [Video Camera](https://glyph-cat.github.io/cotton-box/docs/demo/advanced/video-camera.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/video-camera/index.module.css'
+- [Counter](https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/counter/index.module.css'
+- [Notes App](https://glyph-cat.github.io/cotton-box/docs/demo/basic/notes-app.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
+- [Todo List App](https://glyph-cat.github.io/cotton-box/docs/demo/basic/todo-list-app.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/todo/index.module.css'
+- [Stress Test](https://glyph-cat.github.io/cotton-box/docs/demo/miscellaneous/stress-test.md): import DEMO_REACT from '!!raw-loader!@site/src/examples/stress-test/react-built-in.tsx'
+- [Hiding values from React Developer Tools](https://glyph-cat.github.io/cotton-box/docs/learn/react/hiding-values-from-react-developer-tools.md): import { ApiLink } from '@site/src/components/api-link'
+- [Migration From `react-relink`](https://glyph-cat.github.io/cotton-box/docs/learn/react/migration-from-react-relink.md): :::info
+- [Observing Initialization State](https://glyph-cat.github.io/cotton-box/docs/learn/react/observing-initialization-state.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/observing-initialization-state'
+- [Opt Out of Re-renders Due To State Change](https://glyph-cat.github.io/cotton-box/docs/learn/react/opt-out-of-rerenders.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'
+- [Quick Start](https://glyph-cat.github.io/cotton-box/docs/learn/react/quick-start.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/quick-start'
+- [Selectors](https://glyph-cat.github.io/cotton-box/docs/learn/react/selectors.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/selector'
+- [Setup](https://glyph-cat.github.io/cotton-box/docs/learn/react/setup.md): import { Link } from '@site/src/components/custom-link'
+- [Disposal](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/disposal.md): import { ApiLink } from '@site/src/components/api-link'
+- [Persisting State](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/persisting-state.md): import { ApiLink } from '@site/src/components/api-link'
+- [Quick Start](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/quick-start.md): import { SimpleWebPlayground } from '@site/src/components/live-playground'
+- [Setup](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/setup.md): import { YarnToNPM } from '@site/src/components/yarn-to-npm'
+- [Waiting For State Change](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/waiting-for-state-change.md): import CODE_EXAMPLE_EVALUATOR from '!!raw-loader!@site/src/examples/learn/tutorial/wait/evaluator'
+- [Watching For State Changes](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/watching-for-state-changes.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/tutorial/watch'
+- [Which State Manager Should I Use?](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/which-state-manager-should-i-use.md): The package comes with three types of State Managers, each with slightly different characteristics, tailored for different use cases.
+- [Reincarnation of an old package](https://glyph-cat.github.io/cotton-box/blog/2024/reincarnation-of-an-old-package.md): In 2020, [`react-relink`](https://github.com/glyph-cat/react-relink) was released. It was heavily inspired by [`recoil`](https://github.com/faceboo...
+- [v1 is finally out](https://glyph-cat.github.io/cotton-box/blog/2026/v1-is-finally-out.md): Hello there, it's been quite a while. Two years, in fact, since the first blog post. In this one, I will be writing from an "author's note" perspec...

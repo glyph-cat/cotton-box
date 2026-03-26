@@ -1,0 +1,20 @@
+# Watching For State Changes
+
+> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/tutorial/watch'
+import { SimpleConsolePlayground } from '@site/src/components/live-playground'
+
+# Watching For State Changes
+
+We can observe state changes with the `.watch` method.
+
+It accepts a callback that will be invoked whenever the state changes.
+
+It also returns a callback, that when called, will unsubscribe the watch handler from future state changes.
+
+## Example
+
+In the example below, we have an interval that sets the `CounterState` with random numbers every second. 
+
+A watcher is added to observe these changes and it will push the state values into an array. Once the array has 10 numbers, the unwatch function is called to stop watching.
+
+<SimpleConsolePlayground code={CODE_EXAMPLE}/>

@@ -1,0 +1,21 @@
+# WaitEvaluator
+
+> import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { DocConstants } from '@site/src/constants'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+
+# WaitEvaluator
+
+## Overview
+
+<TypeDisplay>{DataType.type}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_TYPE_DESC_WAIT_EVALUATOR}</MarkdownWrapper>
+
+```ts
+type WaitEvaluator<State> = (currentState: State, defaultState: State) => boolean
+```
+
+:::note
+If the condition is already fulfilled at time of invocation, `eventType` will be `null`.
+:::

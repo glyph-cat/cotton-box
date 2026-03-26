@@ -1,0 +1,79 @@
+# InvalidStateTransitionError
+
+> import { ApiLink } from '@site/src/components/api-link'
+import { LabeledItem } from '@site/src/components/labeled-item'
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
+import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
+import { DocConstants } from '@site/src/constants'
+import { DataType, TypeDisplay } from '@site/src/components/type-display'
+
+# InvalidStateTransitionError
+
+## Overview
+
+<TypeDisplay>{DataType.class}</TypeDisplay>
+
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR}</MarkdownWrapper>
+
+```ts
+export class InvalidStateTransitionError extends Error {}
+```
+
+  <LabeledItem label='Also see'>
+    <ApiLink href='./SimpleFiniteStateManager'>SimpleFiniteStateManager</ApiLink>
+  </LabeledItem>
+
+### Constructor
+```ts
+constructor(fromState: string, toState: string, stateManager?: string)
+```
+
+#### Parameters
+<ObjectShapeDefinition
+  data={[
+    {
+      name: 'fromState',
+      type: DataType.string,
+      description: DocConstants.TSDOC_PARAM_DESC_FROM_STATE,
+    },
+    {
+      name: 'toState',
+      type: DataType.string,
+      description: DocConstants.TSDOC_PARAM_DESC_TO_STATE,
+    },
+    {
+      name: 'stateManager',
+      type: DataType.string,
+      defaultValue: `[\`undefined\`](${DocConstants.TYPE_REFERENCE_URL_UNDEFINED})`,
+      description: DocConstants.TSDOC_DESC_OPTIONS_NAME,
+    },
+  ]}
+/>
+
+### Message Format
+
+> _from "`fromState`" to "`toState`" in `stateManager`_
+
+#### Example
+
+> _from "A" to "B" in ExampleState_
+
+## Properties
+
+### fromState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_FROM_STATE}</MarkdownWrapper>
+```ts
+readonly fromState: string
+```
+
+### toState
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_DESC_TO_STATE}</MarkdownWrapper>
+```ts
+readonly toState: string
+```
+
+### stateManager
+<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+```ts
+readonly stateManager: string
+```

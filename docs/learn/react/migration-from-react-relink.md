@@ -1,0 +1,144 @@
+# Migration From `react-relink`
+
+> :::info
+The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
+:::
+
+# Migration From `react-relink`
+{/* NOTE: sidebar position is not specified, this should be the last article in the sidebar. */}
+
+:::info
+The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
+:::
+
+## Setup
+```sh title="Before"
+yarn add react-relink
+```
+```sh title="Now"
+yarn add {:CORE_PACKAGE_NAME:} {:REACT_PACKAGE_NAME:}
+```
+
+## Instantiation
+```js title="Before"
+
+const ExampleSource = new RelinkSource({
+  key: 'example-source',
+  default: 'defaultState',
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    didSet({ state }) {
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  options: {
+    suspense: true | false,
+    public: true | false,
+  },
+  scope: OtherSource,
+})
+```
+
+```js title="Now"
+// highlight-next-line
+
+// highlight-start
+// Default state is passed as first parameter,
+// remaining options are passed as the second.
+const ExampleState = new AsyncStateManager('defaultState', {
+  // `key` is no longer needed, but there is a `name` property,
+  // which is *optional* and only used for debugging.
+  // highlight-end
+  lifecycle: {
+    init({ commit, commitNoop, defaultState }) {
+      // ...
+    },
+    // highlight-start
+    // `defaultState` is exposed here:
+    didSet({ state, defaultState }) {
+      // highlight-end
+      // ...
+    },
+    didReset() {
+      // ...
+    },
+  },
+  // highlight-start
+  // `visibility` is a boolean type in react-relink:
+  visibility: StateManagerVisibility.ENVIRONMENT,
+  // highlight-end
+  suspense: true | false,
+  // highlight-start
+  // Scope is not supported by Cotton Box
+  // highlight-end
+})
+```
+
+## Consuming the State
+
+```js title="Before"
+function App() {
+
+  const state = useRelinkValue(ExampleSource)
+  return '...'
+}
+```
+
+```js title="Now"
+function App() {
+  // highlight-next-line
+
+  // highlight-next-line
+  const state = useStateValue(ExampleState)
+  return '...'
+}
+```
+
+## Handling dependencies
+
+```js title="Before"
+const ExampleSourceA = new RelinkSource({
+  key: 'example-source-a',
+  default: '...',
+  lifecycle: { /* ... */ },
+})
+
+const ExampleSourceB = new RelinkSource({
+  key: 'example-source-b',
+  default: '...',
+  deps: [ExampleSourceA],
+  lifecycle: { /* ... */ },
+})
+```
+
+```js title="Now"
+const ExampleStateA = new StateManager('...')
+
+const ExampleStateB = new StateManager('...', {
+  lifecycle: {
+    init() {
+      await ExampleStateA.isInitializing.wait(false)
+      // continue to do something
+    },
+  },
+})
+```
+
+## Re-initialization
+
+```js title="Before"
+MySource.hydrate(...)
+```
+
+```js title="Now"
+ExampleState.init(...)
+```
+
+## Scope
+
+Cotton Box does not have Scope-related APIs to reduce complexity. Instead, we recommend using [React's Context API](https://react.dev/learn/passing-data-deeply-with-context) as a substitute as it allows more fine-grained control at the same time.
