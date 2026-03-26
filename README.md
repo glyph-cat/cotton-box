@@ -5,7 +5,7 @@
 *Minimal state management library for React and beyond.*
 
 [![License](https://img.shields.io/github/license/glyph-cat/cotton-box)](https://github.com/glyph-cat/cotton-box/blob/main/LICENSE)
-![React compatibility v19](https://img.shields.io/badge/v19-blue?logo=react&logoColor=white)
+[![React compatibility v19](https://img.shields.io/badge/v19-blue?logo=react&logoColor=white)](https://react.dev/versions)
 [![Documentation](https://img.shields.io/badge/_-Docs-2b80ff?logo=docusaurus&logoColor=white)](https://glyph-cat.github.io/cotton-box)
 
 </div>
