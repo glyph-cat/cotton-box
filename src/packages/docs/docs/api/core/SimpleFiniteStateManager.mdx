@@ -65,15 +65,15 @@ constructor(
 ## Example
 
 Consider an example where a playable character in a game:
-- can stand be standing `still`, `walking`, or `attacking`;
+- can stand be standing `idle`, `walking`, or `attacking`;
 - can only attack only when standing still.
 
 ```mermaid
 stateDiagram-v2
-  still --> walking
-  still --> attacking
-  walking --> still
-  attacking --> still
+  idle --> walking
+  idle --> attacking
+  walking --> idle
+  attacking --> idle
 ```
 
 <br/>
@@ -84,11 +84,11 @@ import { SimpleFiniteStateManager } from '{:CORE_PACKAGE_NAME:}'
 
 class PlayableCharacter {
 
-  readonly state = new SimpleFiniteStateManager('still', [
-    ['still', 'walking'],
-    ['still', 'attacking'],
-    ['walking', 'still'],
-    ['attacking', 'still'],
+  readonly state = new SimpleFiniteStateManager('idle', [
+    ['idle', 'walking'],
+    ['idle', 'attacking'],
+    ['walking', 'idle'],
+    ['attacking', 'idle'],
   ], {
     name: 'PlayableCharacter',
   })
@@ -96,7 +96,7 @@ class PlayableCharacter {
 }
 ```
 
-Since the initial state is `'still'`, changing the state to `'walking'` immediately after instantiating the class would be just fine.
+Since the initial state is `'idle'`, changing the state to `'walking'` immediately after instantiating the class would be just fine.
 ```ts
 const newCharacter = new PlayableCharacter()
 newCharacter.set('walking')

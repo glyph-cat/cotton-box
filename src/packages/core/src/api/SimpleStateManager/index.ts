@@ -55,6 +55,10 @@ export class SimpleStateManager<State> implements IDisposable {
    * @see -{:DOCS_API_CORE_URL:}/SimpleStateManager
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
+   * @example Plain example
+   * ```typescript
+   * const CounterState = new SimpleStateManager(0)
+   * ```
    */
   constructor(
     defaultState: State,

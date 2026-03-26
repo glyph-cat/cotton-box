@@ -27,6 +27,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
+   * @example Plain example
+   * ```typescript
+   * const CounterState = new AsyncStateManager(0)
+   * ```
    */
   constructor(
     defaultState: State,

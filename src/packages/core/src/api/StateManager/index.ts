@@ -173,6 +173,10 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @see -{:DOCS_API_CORE_URL:}/StateManager
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
+   * @example Plain example
+   * ```typescript
+   * const CounterState = new StateManager(0)
+   * ```
    */
   constructor(
     defaultState: State,
