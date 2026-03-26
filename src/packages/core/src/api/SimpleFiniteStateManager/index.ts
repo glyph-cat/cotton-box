@@ -67,6 +67,11 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
     this.M$allowedStateTransitions = $allowedStateTransitions
   }
 
+  // NOTE: It seems like parsing would break at `{` in VS Code when written as:
+  // ```ts
+  // @throws {@link InvalidStateTransitionError|`InvalidStateTransitionError`}
+  // ```
+
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_VALUE:}
    * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#set
@@ -76,6 +81,9 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    * ```typescript
    * character.state.set('walking')
    * ```
+   * @throws - {@link InvalidStateTransitionError|`InvalidStateTransitionError`}
+   * if the state transition from previous state to new state is not
+   * defined in the `allowedStateTransitions` parameter in the constructor.
    */
   set(newState: State): void
 
@@ -88,6 +96,9 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    * ```typescript
    * character.state.set((state) => state === 'idle' ? 'attacking' : 'idle')
    * ```
+   * @throws - {@link InvalidStateTransitionError|`InvalidStateTransitionError`}
+   * if the state transition from previous state to new state is not
+   * defined in the `allowedStateTransitions` parameter in the constructor.
    */
   set(setStateFn: SetStateFn<State>): void
 
