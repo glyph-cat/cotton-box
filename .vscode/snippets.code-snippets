@@ -38,6 +38,16 @@
       "*/",
     ],
   },
+  "@example": {
+    "scope": "typescript,typescriptreact",
+    "prefix": "@example",
+    "body": [
+      "@example",
+      "* ```typescript",
+      "* $0",
+      "* ```",
+    ],
+  },
   "Create new example": {
     "scope": "javascript,javascriptreact,typescript,typescriptreact",
     "prefix": "export default function App",

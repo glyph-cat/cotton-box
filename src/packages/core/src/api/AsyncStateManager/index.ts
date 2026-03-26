@@ -24,10 +24,9 @@ export class AsyncStateManager<State> extends StateManager<State> {
   protected readonly M$mutationQueue: Array<() => void | Promise<void>> = []
 
   /**
-   * {:TSDOC_DESC_ASYNC_STATE_MANAGER:}
+   * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
-   * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager
    */
   constructor(
     defaultState: State,
@@ -98,6 +97,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
   }
 
   /**
+   * @privateRemarks
+   * This is only used so that we can have a special instance of the state
+   * manager to be populated with server-side value.
+   * This method is used in conjunction with {@link internalHydrateSSR}.
    * @internal
    */
   internalClone(): StateManager<State> | AsyncStateManager<State> {
@@ -111,9 +114,22 @@ export class AsyncStateManager<State> extends StateManager<State> {
 
   /**
    * {:TSDOC_METHOD_DESC_INIT:}
-   * @param initFn - {:TSDOC_PARAM_DESC_INIT_FN:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#init
+   * @param initFn - {:TSDOC_PARAM_DESC_INIT_FN:}
    * @returns -{:RETURN_DESC_INIT:}
+   * @example
+   * ```typescript
+   * await CounterState.init(async ({ commit, commitNoop }) => {
+   *   try {
+   *     const counter = await fetch('/counter')
+   *     commit(parsedData)
+   *     return // Early exit
+   *   } catch (error) {
+   *     console.error('Failed to get counter', error)
+   *   }
+   *   commitNoop() // Fallback: commit using default state
+   * })
+   * ```
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
     if (this.isInitializing.get()) {
@@ -166,6 +182,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * {:TSDOC_METHOD_DESC_GET_ASYNC:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#get
    * @returns -{:RETURN_DESC_GET_ASYNC:}
+   * @example
+   * ```typescript
+   * const currentCount = await CounterState.get()
+   * ```
    */
   get(): Promise<State>
 
@@ -191,6 +211,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * {:TSDOC_METHOD_DESC_GET_SYNC:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#getSync
    * @returns -{:RETURN_DESC_GET:}
+   * @example
+   * ```typescript
+   * const currentCount = CounterState.getSync()
+   * ```
    */
   getSync(): State {
     return this.M$internalState
@@ -199,14 +223,26 @@ export class AsyncStateManager<State> extends StateManager<State> {
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_VALUE:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#set
+   * @param newState - {:TSDOC_PARAM_DESC_SET_NEW_STATE:}
    * @returns -{:RETURN_DESC_SET_ASYNC:}
+   * @example Set state by value
+   * ```typescript
+   * await CounterState.set(42)
+   * ```
    */
   set(newState: State): Promise<void>
 
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_FUNCTION:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#set
+   * @param setStateFn - {:TSDOC_PARAM_DESC_SET_FUNCTION:}
    * @returns -{:RETURN_DESC_SET_ASYNC:}
+   * @example Set state by function
+   * ```typescript
+   * // `await` is required because the method returns a promise,
+   * // even if set function is synchronous.
+   * await CounterState.set((prevCounter) => prevCounter + 1)
+   * ```
    */
   set(setStateFn: AsyncSetStateFn<State>): Promise<void>
 
@@ -218,6 +254,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * {:TSDOC_METHOD_DESC_RESET:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#reset
    * @returns -{:RETURN_DESC_RESET_ASYNC:}
+   * @example
+   * ```typescript
+   * await CounterState.reset()
+   * ```
    */
   async reset(): Promise<void> {
     await this.M$internalQueue(this.defaultState, StateChangeEventType.R)
@@ -232,6 +272,10 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * {:TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER:}
    * @see -{:DOCS_API_CORE_URL:}/AsyncStateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE_ASYNC:}
+   * @example
+   * ```typescript
+   * await CounterState.dispose()
+   * ```
    */
   async dispose(): Promise<void> {
     await this.M$internalQueue(null, FILLER_STATE_CHANGE_EVENT_TYPE)

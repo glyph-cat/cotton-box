@@ -9,6 +9,7 @@ import { $$INTERNALS } from '../constants'
 /**
  * State values are stored in a WeakMap so that they are not directly available
  * in the React Developer Tools.
+ * @deprecated since `options.visibility` is now no longer being used
  */
 export type SyncValue<T> = WeakMap<typeof $$INTERNALS, T>
 

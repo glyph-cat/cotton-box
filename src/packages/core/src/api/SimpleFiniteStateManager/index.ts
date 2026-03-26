@@ -16,6 +16,8 @@ export interface SimpleFiniteStateManagerOptions<State> extends SimpleStateManag
 }
 
 /**
+ * {:TSDOC_DESC_SIMPLE_FINITE_STATE_MANAGER:}
+ * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager
  * @public
  */
 export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
@@ -26,10 +28,10 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
   private readonly M$allowedStateTransitions: Map<State, ReadonlySet<State>>
 
   /**
-   * {:TSDOC_DESC_SIMPLE_FINITE_STATE_MANAGER:}
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param allowedStateTransitions  - {:TSDOC_PARAM_DESC_ALLOWED_STATE_TRANSITIONS:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
+   * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager
    */
   constructor(
     defaultState: State,

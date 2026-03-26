@@ -136,6 +136,8 @@ export interface StateManagerOptions<State> extends SimpleStateManagerOptions {
 }
 
 /**
+ * {:TSDOC_DESC_STATE_MANAGER:}
+ * @see -{:DOCS_API_CORE_URL:}/StateManager
  * @public
  */
 export class StateManager<State> extends SimpleStateManager<State> {
@@ -168,10 +170,9 @@ export class StateManager<State> extends SimpleStateManager<State> {
   readonly isInitializing: ReadOnlyStateManager<boolean>
 
   /**
-   * {:TSDOC_DESC_STATE_MANAGER:}
+   * @see -{:DOCS_API_CORE_URL:}/StateManager
    * @param defaultState - {:COMMON_DESC_DEFAULT_STATE:}
    * @param options - {:TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL:}
-   * @see -{:DOCS_API_CORE_URL:}/StateManager
    */
   constructor(
     defaultState: State,
@@ -249,6 +250,10 @@ export class StateManager<State> extends SimpleStateManager<State> {
   }
 
   /**
+   * @privateRemarks
+   * This is only used so that we can have a special instance of the state
+   * manager to be populated with server-side value.
+   * This method is used in conjunction with {@link internalHydrateSSR}.
    * @internal
    */
   internalClone(): StateManager<State> | AsyncStateManager<State> {
@@ -261,6 +266,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   }
 
   /**
+   * @privateRemarks
    * This is similar to init, except it doesn't trigger the watcher since this
    * is meant to be called in the server only.
    * @internal
@@ -306,9 +312,23 @@ export class StateManager<State> extends SimpleStateManager<State> {
 
   /**
    * {:TSDOC_METHOD_DESC_INIT:}
-   * @param initFn - {:TSDOC_PARAM_DESC_INIT_FN:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#init
+   * @param initFn - {:TSDOC_PARAM_DESC_INIT_FN:}
    * @returns -{:RETURN_DESC_INIT:}
+   * @example
+   * ```typescript
+   * CounterState.init(({ commit, commitNoop }) => {
+   *   const rawData = localStorage.getItem('counter')
+   *   if (rawData) {
+   *   const parsedData = Number(rawData)
+   *     if (typeof parsedData === 'number') {
+   *       commit(parsedData)
+   *       return // Early exit
+   *     }
+   *   }
+   *   commitNoop() // Fallback: commit using default state
+   * })
+   * ```
    */
   async init(initFn: (args: StateManagerInitArgs<State>) => void | Promise<void>): Promise<void> {
     if (this.isInitializing.get()) {
@@ -361,6 +381,20 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * {:TSDOC_METHOD_DESC_REINITIALIZE:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#reinitialize
    * @returns -{:RETURN_DESC_REINITIALIZE:}
+   * @example
+   * ```typescript
+   * CounterState.reinitialize(({ commit, commitNoop }) => {
+   *   const rawData = localStorage.getItem('counter')
+   *   if (rawData) {
+   *   const parsedData = Number(rawData)
+   *     if (typeof parsedData === 'number') {
+   *       commit(parsedData)
+   *       return // Early exit
+   *     }
+   *   }
+   *   commitNoop() // Fallback: commit using default state
+   * })
+   * ```
    */
   async reinitialize(): Promise<void> {
     if (this.M$lifecycle.init) {
@@ -370,17 +404,25 @@ export class StateManager<State> extends SimpleStateManager<State> {
 
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_VALUE:}
-   * @param newState - {:TSDOC_PARAM_DESC_SET_NEW_STATE:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#set
+   * @param newState - {:TSDOC_PARAM_DESC_SET_NEW_STATE:}
    * @returns -{:RETURN_DESC_SET:}
+   * @example Set state by value
+   * ```typescript
+   * CounterState.set(42)
+   * ```
    */
   set(newState: State): void
 
   /**
    * {:TSDOC_METHOD_DESC_SET_BY_FUNCTION:}
-   * @param setStateFn - {:TSDOC_PARAM_DESC_SET_FUNCTION:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#set
+   * @param setStateFn - {:TSDOC_PARAM_DESC_SET_FUNCTION:}
    * @returns -{:RETURN_DESC_SET:}
+   * @example Set state by function
+   * ```typescript
+   * CounterState.set((prevCounter) => prevCounter + 1)
+   * ```
    */
   set(setStateFn: SetStateFn<State>): void
 
@@ -392,6 +434,10 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * {:TSDOC_METHOD_DESC_RESET:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#reset
    * @returns -{:RETURN_DESC_RESET:}
+   * @example
+   * ```typescript
+   * CounterState.reset()
+   * ```
    */
   reset(): void {
     this.M$internalQueue(this.defaultState, StateChangeEventType.R)
@@ -406,6 +452,10 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * {:TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER:}
    * @see -{:DOCS_API_CORE_URL:}/StateManager#dispose
    * @returns -{:RETURN_DESC_DISPOSE:}
+   * @example
+   * ```typescript
+   * CounterState.dispose()
+   * ```
    */
   dispose(): void {
     (this.isInitializing as SimpleStateManager<boolean>).dispose()

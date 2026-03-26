@@ -134,7 +134,7 @@ export const DocConstants = {
   TSDOC_METHOD_DESC_WATCH: 'Watch for state changes.',
   TSDOC_METHOD_DESC_UNWATCH_ALL: 'Removes all existing watchers referencing to this State Manager. Watchers that added after calling this method will not be affected.',
   TSDOC_METHOD_DESC_WAIT_BY_VALUE: 'Waits for the state to match the expected value. If the state already matches the `expectedValue`, the Promise will be resolved immediately.',
-  TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR: 'Waits for the `evaluator` to evaluate to `true`. The `evaluator` will be called immediately to check if the condition is fulfilled. If not, it will be called again each time the state changes.',
+  TSDOC_METHOD_DESC_WAIT_BY_EVALUATOR: 'Waits for the `evaluator` to evaluate to `true`. The `evaluator` will be called immediately to check if the condition is fulfilled. If not, it will be called again each time the state changes until the condition is fulfilled.',
   TSDOC_METHOD_DESC_DISPOSE_STATE_MANAGER: 'Disposes the State Manager when it is no longer in use. This will remove all watchers and prevent new ones from being added.',
 
   TSDOC_PARAM_DESC_STATE_MANAGER_OPTIONS_GENERAL: 'Additional options for the State Manager.',

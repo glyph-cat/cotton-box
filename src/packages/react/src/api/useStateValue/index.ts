@@ -16,6 +16,8 @@ import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
 import { useResolveHydrationStateManager } from '../hydration/internals'
 
+// TODO: stop using `options.visibility`
+
 type $$ = $1 | $2
 
 type UseStateValueOptionalArgs<State, SelectedState> = [
@@ -27,11 +29,41 @@ type UseStateValueOptionalArgs<State, SelectedState> = [
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
+ * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
  * @param selector - {:TSDOC_PARAM_DESC_SELECTOR:}
  * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @returns -{:COMMON_DESC_CURRENT_STATE:}
+ * @example Plain usage
+ * ```typescript
+ * const counter = useStateValue(CounterState)
+ * ```
+ * @example With selector
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0)
+ * ```
+ * @example Temporarily pause component update due to state change
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, null, false)
+ * ```
+ * @example Temporarily pause component update due to state change (with selector)
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0, false)
+ * ```
+ * @example Custom equality checking
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * })
+ * ```
+ * @example Custom equality checking (+ temporarily pause component update)
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * }, false)
+ * ```
  * @public
  */
 export function useStateValue<State>(
@@ -42,12 +74,42 @@ export function useStateValue<State>(
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
+ * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
  * @param selector - {:TSDOC_PARAM_DESC_SELECTOR:}
  * @param equalityFn - {:TSDOC_PARAM_DESC_FULL_EQUALITY_FN:}
  * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @returns -{:COMMON_DESC_CURRENT_STATE:}
+ @example Plain usage
+ * ```typescript
+ * const counter = useStateValue(CounterState)
+ * ```
+ * @example With selector
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0)
+ * ```
+ * @example Temporarily pause component update due to state change
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, null, false)
+ * ```
+ * @example Temporarily pause component update due to state change (with selector)
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0, false)
+ * ```
+ * @example Custom equality checking
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * })
+ * ```
+ * @example Custom equality checking (+ temporarily pause component update)
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * }, false)
+ * ```
  * @public
  */
 export function useStateValue<State>(
@@ -59,11 +121,41 @@ export function useStateValue<State>(
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
+ * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
  * @param selector - {:TSDOC_PARAM_DESC_SELECTOR:}
  * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @returns -{:COMMON_DESC_CURRENT_STATE:}
+ @example Plain usage
+ * ```typescript
+ * const counter = useStateValue(CounterState)
+ * ```
+ * @example With selector
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0)
+ * ```
+ * @example Temporarily pause component update due to state change
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, null, false)
+ * ```
+ * @example Temporarily pause component update due to state change (with selector)
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0, false)
+ * ```
+ * @example Custom equality checking
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * })
+ * ```
+ * @example Custom equality checking (+ temporarily pause component update)
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * }, false)
+ * ```
  * @public
  */
 export function useStateValue<State, SelectedState>(
@@ -74,12 +166,42 @@ export function useStateValue<State, SelectedState>(
 
 /**
  * {:TSDOC_DESC_USE_STATE_VALUE:}
+ * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @param stateManager - {:TSDOC_PARAM_DESC_STATE_MANAGER:}
  * @param selector - {:TSDOC_PARAM_DESC_SELECTOR:}
  * @param equalityFn - {:TSDOC_PARAM_DESC_FULL_EQUALITY_FN:}
  * @param active - {:TSDOC_PARAM_DESC_FULL_ACTIVE:}
- * @see -{:DOCS_API_REACT_URL:}/useStateValue
  * @returns -{:COMMON_DESC_CURRENT_STATE:}
+ @example Plain usage
+ * ```typescript
+ * const counter = useStateValue(CounterState)
+ * ```
+ * @example With selector
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0)
+ * ```
+ * @example Temporarily pause component update due to state change
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, null, false)
+ * ```
+ * @example Temporarily pause component update due to state change (with selector)
+ * ```typescript
+ * const counterIsEven = useStateValue(CounterState, (c) => c % 2 === 0, false)
+ * ```
+ * @example Custom equality checking
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * })
+ * ```
+ * @example Custom equality checking (+ temporarily pause component update)
+ * ```typescript
+ * const user = useStateValue(UserState, null, (prevUser, nextUser) => {
+ *   return prevUser.firstName === nextUser.firstName &&
+ *     prevUser.lastName === nextUser.lastName
+ * }, false)
+ * ```
  * @public
  */
 export function useStateValue<State, SelectedState>(
