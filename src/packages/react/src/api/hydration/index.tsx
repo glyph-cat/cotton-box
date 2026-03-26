@@ -17,6 +17,28 @@ export interface HydrateStateManagerProps<State> {
 /**
  * Experimental API for hydration when server-side rendering is involved.
  * This does nothing on the client and state managers will hydrate through `lifecycle.init`.
+ * @example
+ * ```tsx
+ * import { ReactNode } from 'react'
+ *
+ * interface AppProps {
+ *   counterValueFromDatabase: number
+ * }
+ *
+ * export default function App({ counterValueFromDatabase }: AppProps): ReactNode {
+ *   return (
+ *     <HydrateStateManager
+ *       values={[
+ *         [CounterState, ({ commit }) => { commit(counterValueFromDatabase) }]
+ *       ]}
+ *     >
+ *       <Navbar />
+ *       <HomeScreen />
+ *       <Footer />
+ *     </HydrateStateManager>
+ *   )
+ * }
+ * ```
  * @public
  */
 export function HydrateStateManager<State>({
