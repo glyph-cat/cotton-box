@@ -1,4 +1,4 @@
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import CodeInline from '@theme/CodeInline'
 import { ReactNode } from 'react'
 import { MarkdownWrapper } from '../markdown-wrapper'

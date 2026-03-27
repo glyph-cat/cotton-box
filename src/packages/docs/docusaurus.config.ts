@@ -2,7 +2,7 @@ import type * as Preset from '@docusaurus/preset-classic'
 import type { Config } from '@docusaurus/types'
 import { themes as prismThemes } from 'prism-react-renderer'
 
-import { DocConstants } from './src/constants'
+import * as DocConstants from './src/constants/doc'
 
 const config: Config = {
   title: DocConstants.DISPLAY_PACKAGE_NAME,

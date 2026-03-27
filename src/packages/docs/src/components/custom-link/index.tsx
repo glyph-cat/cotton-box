@@ -1,5 +1,5 @@
 import { useHistory } from '@docusaurus/router'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, ReactNode, useCallback } from 'react'
 
 // Reference: https://docusaurus.io/docs/markdown-features/links

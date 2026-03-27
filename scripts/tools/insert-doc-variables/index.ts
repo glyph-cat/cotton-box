@@ -1,18 +1,16 @@
+import { Encoding } from '@glyph-cat/foundation'
 import chalk from 'chalk'
 import { readFileSync, writeFileSync } from 'fs'
-import { DocConstants } from '../../../src/packages/docs/src/constants/doc'
+import * as VARIABLE_POOL from '../../../src/packages/docs/src/constants/doc'
 import { stringMap } from '../../../src/packages/docs/src/utils/string-map'
-
-const ENCODING_UTF_8 = 'utf-8' // temp
-const variablePool = DocConstants // temp
 
 export function insertDocVariables(): void {
 
-  const packageInfo = JSON.parse(readFileSync('./package.json', ENCODING_UTF_8))
+  const packageInfo = JSON.parse(readFileSync('./package.json', Encoding.UTF_8))
   const typeDefinitionPath = `./${packageInfo.types}`
 
-  let typeDefinitionBody = readFileSync(typeDefinitionPath, ENCODING_UTF_8)
-  const { unusedVariables, data } = stringMap(typeDefinitionBody, variablePool, true)
+  let typeDefinitionBody = readFileSync(typeDefinitionPath, Encoding.UTF_8)
+  const { unusedVariables, data } = stringMap(typeDefinitionBody, VARIABLE_POOL, true)
   typeDefinitionBody = data
 
   if (/localhost:3000/.test(typeDefinitionBody)) {
@@ -21,7 +19,7 @@ export function insertDocVariables(): void {
     console.log(chalk.redBright('Parsed type definition body contains "localhost"'))
     process.exit(1)
   }
-  writeFileSync(typeDefinitionPath, typeDefinitionBody, ENCODING_UTF_8)
+  writeFileSync(typeDefinitionPath, typeDefinitionBody, Encoding.UTF_8)
 
   if (unusedVariables.length > 0) {
     // TOFIX: [Low priority] Some variables are only used in core and some in react, so this becomes inaccurate
@@ -34,7 +32,7 @@ export function insertDocVariables(): void {
     for (let i = 0; i < unparsedVariables.length; i++) {
       unparsedVariables[i] = unparsedVariables[i].replace(/^-?{:/, '').replace(/:}$/, '')
     }
-    console.log(chalk.redBright(`Undefined doc variables: ${unparsedVariables.join(', ')}`))
+    console.log(chalk.redBright(`Missing doc variables: ${unparsedVariables.join(', ')}`))
     process.exit(1)
   }
 

@@ -3,7 +3,7 @@ import useIsBrowser from '@docusaurus/useIsBrowser';
 import ElementContent from '@theme/CodeBlock/Content/Element';
 import StringContent from '@theme/CodeBlock/Content/String';
 import type {Props} from '@theme/CodeBlock';
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import { stringMap } from '@site/src/utils/string-map'
 
 /**
