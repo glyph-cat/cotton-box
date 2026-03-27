@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import { readFileSync, writeFileSync } from 'fs'
-import { DocConstants } from '../../../src/packages/docs/src/constants'
+import { DocConstants } from '../../../src/packages/docs/src/constants/doc'
 import { stringMap } from '../../../src/packages/docs/src/utils/string-map'
 
 const ENCODING_UTF_8 = 'utf-8' // temp
