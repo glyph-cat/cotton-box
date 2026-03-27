@@ -7,13 +7,13 @@ import * as DocConstants from './src/constants/doc'
 const config: Config = {
   title: DocConstants.DISPLAY_PACKAGE_NAME,
   tagline: DocConstants.PACKAGE_DESCRIPTION,
-  favicon: 'img/favicon.ico',
+  favicon: '/img/favicon.ico',
 
   // Set the production url of your site here
   url: DocConstants.GLYPH_CAT_GITHUB_IO,
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: `/${DocConstants.CORE_PACKAGE_NAME}`,
+  baseUrl: `/${DocConstants.CORE_PACKAGE_NAME}/`,
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -39,22 +39,31 @@ const config: Config = {
   // ],
 
   presets: [
-    [
-      'classic',
-      {
-        docs: {
-          sidebarPath: './sidebars.ts',
-          sidebarCollapsed: false,
-          editUrl: `${DocConstants.GITHUB_REPO_URL}/tree/main/packages/docs`,
+    ['@docusaurus/preset-classic', {
+      docs: {
+        sidebarPath: './sidebars.ts',
+        sidebarCollapsed: false,
+        editUrl: `${DocConstants.GITHUB_REPO_URL}/tree/main/packages/docs`,
+      },
+      blog: {
+        showReadingTime: true,
+      },
+      theme: {
+        customCss: './src/css/custom.css',
+      },
+      sitemap: {
+        lastmod: 'date',
+        changefreq: 'weekly',
+        priority: 0.5,
+        ignorePatterns: ['/tags/**'],
+        filename: 'sitemap.xml',
+        createSitemapItems: async (params) => {
+          const { defaultCreateSitemapItems, ...rest } = params
+          const items = await defaultCreateSitemapItems(rest)
+          return items.filter((item) => !item.url.includes('/page/'))
         },
-        blog: {
-          showReadingTime: true,
-        },
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      } satisfies Preset.Options,
-    ],
+      },
+    } satisfies Preset.Options],
   ],
 
   markdown: {
