@@ -51,6 +51,10 @@ const config: Config = {
       theme: {
         customCss: './src/css/custom.css',
       },
+      gtag: {
+        trackingID: 'G-JJ8BE3RZ4T',
+        anonymizeIP: true,
+      },
       sitemap: {
         lastmod: 'date',
         changefreq: 'weekly',
