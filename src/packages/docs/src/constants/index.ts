@@ -44,6 +44,9 @@ const TYPE_PROMISE_UNDEFINED = `A [\`Promise\`](${TYPE_REFERENCE_URL_PROMISE}) t
 
 const RETURN_DESC_BUILT_IN_EQUALITY_PRESETS = '`true` if both states are considered equal, otherwise `false`'
 
+/**
+ * @deprecated Please `import * as DocConstants from '@site/src/constants'` instead
+ */
 export const DocConstants = {
 
   GITHUB_REPO_URL: `https://github.com/glyph-cat/${CORE_PACKAGE_NAME}`,

@@ -37,32 +37,31 @@ export function useSuspenseWaiter<T>(
 // Modified based from ovieokeh's `wrapPromise` method. Reference:
 // https://github.com/ovieokeh/suspense-data-fetching/blob/master/lib/api/wrapPromise.js
 
-enum SuspenseStatus {
-  /** Success */ S,
-  /** Pending */ P,
-  /**   Error */ E,
-}
+type SuspenseStatus = 1 | 2 | 3
+const SUCCESS_STATUS_SUCCESS: SuspenseStatus = 1
+const SUCCESS_STATUS_PENDING: SuspenseStatus = 2
+const SUCCESS_STATUS_ERROR: SuspenseStatus = 3
 
 export function createSuspenseWaiter(
   promise: Promise<unknown>
 ): () => void {
-  let status = SuspenseStatus.P
+  let status: SuspenseStatus = SUCCESS_STATUS_PENDING
   let res: unknown = null
   const suspender = promise
     .then((r: unknown): void => {
-      status = SuspenseStatus.S
+      status = SUCCESS_STATUS_SUCCESS
       res = r
     })
     .catch((e): void => {
-      status = SuspenseStatus.E
+      status = SUCCESS_STATUS_ERROR
       res = e
     })
   // Throwing must be done in a callback so that it is not run in the same 'tick'
   // Otherwise, status will always be pending
   return (): void => {
     switch (status) {
-      case SuspenseStatus.P: throw suspender
-      case SuspenseStatus.E: throw res
+      case SUCCESS_STATUS_PENDING: throw suspender
+      case SUCCESS_STATUS_ERROR: throw res
     }
   }
 }

@@ -3,12 +3,15 @@ import {
   CommitStrategy,
   ReadOnlyStateManager,
   SetStateFn,
-  StateChangeEventType,
+  StateChangeEvent,
 } from '../../abstractions'
 import {
   COMMIT_STRATEGY_COMMIT,
   COMMIT_STRATEGY_COMMIT_NOOP,
   IS_RN_BUILD,
+  STATE_CHANGE_INIT_EVENT,
+  STATE_CHANGE_RESET_EVENT,
+  STATE_CHANGE_SET_EVENT,
 } from '../../constants'
 import { type AsyncStateManager } from '../AsyncStateManager'
 import { SimpleStateManager, SimpleStateManagerOptions } from '../SimpleStateManager'
@@ -197,9 +200,6 @@ export class StateManager<State> extends SimpleStateManager<State> {
     this.M$lifecycle = { ...options?.lifecycle }
     this.init = this.init.bind(this)
     this.reinitialize = this.reinitialize.bind(this)
-    // KIV: Probably no binding required:
-    // this.M$internalQueue = this.M$internalQueue.bind(this)
-    // this.internalClone = this.internalClone.bind(this)
     if (this.M$lifecycle.init) {
       this.init(this.M$lifecycle.init)
     }
@@ -210,9 +210,9 @@ export class StateManager<State> extends SimpleStateManager<State> {
    */
   protected M$internalQueue(
     newStateOrFn: State | SetStateFn<State>,
-    eventType: StateChangeEventType
+    eventType: StateChangeEvent
   ): void {
-    if (eventType !== StateChangeEventType.I && this.isInitializing.get()) {
+    if (eventType !== STATE_CHANGE_INIT_EVENT && this.isInitializing.get()) {
       if (process.env.NODE_ENV !== 'production') {
         // eslint-disable-next-line no-console
         console.error(getErrorMessageForSetOrResetDuringInitialization(this.name))
@@ -227,7 +227,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
         : newStateOrFn
       this.M$post(this.M$internalState)
       // #region Post-handling: lifecycle hooks
-      if (eventType === StateChangeEventType.S) {
+      if (eventType === STATE_CHANGE_SET_EVENT) {
         if (this.M$lifecycle.didSet) {
           this.M$lifecycle.didSet({
             state: this.M$internalState,
@@ -235,7 +235,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
             previousState,
           })
         }
-      } else if (eventType === StateChangeEventType.R) {
+      } else if (eventType === STATE_CHANGE_RESET_EVENT) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }
@@ -276,7 +276,6 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @internal
    */
   internalHydrateSSR(initFn: (args: StateManagerInitArgs<State>) => void): void {
-    // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
     if (IS_RN_BUILD) { return } // Early exit
     let effectiveCommitStrategy: CommitStrategy
     initFn({
@@ -373,7 +372,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
           }
           return // Early exit
         }
-        this.M$internalQueue(state, StateChangeEventType.I);
+        this.M$internalQueue(state, STATE_CHANGE_INIT_EVENT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
       },
@@ -431,7 +430,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
   set(setStateFn: SetStateFn<State>): void
 
   set(newStateOrFn: State | SetStateFn<State>): void {
-    this.M$internalQueue(newStateOrFn, StateChangeEventType.S)
+    this.M$internalQueue(newStateOrFn, STATE_CHANGE_SET_EVENT)
   }
 
   /**
@@ -444,7 +443,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * ```
    */
   reset(): void {
-    this.M$internalQueue(this.defaultState, StateChangeEventType.R)
+    this.M$internalQueue(this.defaultState, STATE_CHANGE_RESET_EVENT)
   }
 
   // NOTE: `wait` method is not implemented here but it seems like TS docs will

@@ -82,8 +82,8 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    * character.state.set('walking')
    * ```
    * @throws - {@link InvalidStateTransitionError|`InvalidStateTransitionError`}
-   * if the state transition from previous state to new state is not
-   * defined in the `allowedStateTransitions` parameter in the constructor.
+   * if the state transition from previous state to new state is not defined
+   * in the `allowedStateTransitions` parameter in the constructor.
    */
   set(newState: State): void
 

@@ -2574,7 +2574,7 @@
     js-yaml "~4.1.0"
     resolve "~1.22.1"
 
-"@microsoft/api-extractor-model@7.33.4":
+"@microsoft/api-extractor-model@7.33.4", "@microsoft/api-extractor-model@^7.33.4":
   version "7.33.4"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.33.4.tgz#da508eae2ac17e6630f8a57818261e2663af72e0"
   integrity sha512-u1LTaNTikZAQ9uK6KG1Ms7nvNedsnODnspq/gH2dcyETWvH4hVNGNDvRAEutH66kAmxA4/necElqGNs1FggC8w==

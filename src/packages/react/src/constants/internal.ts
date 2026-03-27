@@ -1,7 +1,5 @@
 import { BUILD_TYPE } from './public'
 
-export const $$INTERNALS = {} as const
-
 /**
  * Because terser could not statically determine the value of `BuildType.RN`,
  */

@@ -6,12 +6,6 @@
 - Estimated difficulty: easy
 - This should be achievable through a similar strategy used by `sync-examples`
 
-### ▢ Fix horizontal overflow issue caused by feature list in docs site home page
-
-### ▢ Document body has horizontal overflow upon first load on smaller screens
-- Overflow suddenly vanishes after scrolling down
-- Suspected to be caused by either tsParticles or `motion.div`
-
 ### ▢ Add `image` property to front matter section of each demo
 
 ### ▢ "User Authentication" demo
@@ -22,6 +16,12 @@
 - Target: https://github.com/glyph-cat/cotton-box/blob/main/src/pages/examples/demo/counter/index.tsx
 
 ## Complex Issues
+
+### ▢ Script to parse `{@link}`
+- If contents of `{@link}` match values from a dictionary, replace with:
+  - Link to docs site if build for docs
+  - Direct reference to the API in the '.d.ts' file
+- Dictionary should contain definitions of Cotton Box APIs
 
 ### ▢ Consider Migrating to Mintlify
 - Estimated difficulty: very hard

@@ -1,0 +1,17 @@
+export const COMMON_DESC_CURRENT_STATE = 'The current state.'
+export const COMMON_DESC_DEFAULT_STATE = 'The default state.'
+export const COMMON_DESC_PREVIOUS_STATE = 'The previous state.'
+export const COMMON_DESC_NEXT_STATE = 'The new state.'
+export const TSDOC_MARKER_UNSTABLE_API = '# Caution: Unstable API\n'
+
+export const TSDOC_DESC_ENUM_BUILD_TYPE = 'The available build types of the package.'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_CJS = 'Common JS'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_ES = 'EcmaScript'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_MJS = 'EcmaScript (minified)'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_RN = 'React Native'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_UMD = 'Universal Module Definition'
+export const TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN = 'Universal Module Definition (Minified)'
+
+export const TSDOC_DESC_BUILD_TYPE = 'The package\'s build type.'
+export const TSDOC_DESC_BUILD_HASH = 'Hash of the Git commit in which the package\'s version is built.'
+export const TSDOC_DESC_VERSION = 'The package\'s version number. It follows [Semantic Versioning](https://semver.org).'

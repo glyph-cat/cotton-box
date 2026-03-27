@@ -1,6 +1,12 @@
 import { isFunction, isNull } from '@glyph-cat/type-checking'
-import { AsyncSetStateFn, CommitStrategy, StateChangeEventType } from '../../abstractions'
-import { COMMIT_STRATEGY_COMMIT, COMMIT_STRATEGY_COMMIT_NOOP } from '../../constants'
+import { AsyncSetStateFn, CommitStrategy, StateChangeEvent } from '../../abstractions'
+import {
+  COMMIT_STRATEGY_COMMIT,
+  COMMIT_STRATEGY_COMMIT_NOOP,
+  STATE_CHANGE_INIT_EVENT,
+  STATE_CHANGE_RESET_EVENT,
+  STATE_CHANGE_SET_EVENT,
+} from '../../constants'
 import { SimpleStateManager } from '../SimpleStateManager'
 import { StateManager, StateManagerInitArgs, StateManagerOptions } from '../StateManager'
 import {
@@ -38,8 +44,6 @@ export class AsyncStateManager<State> extends StateManager<State> {
   ) {
     super(defaultState, options)
     this.getSync = this.getSync.bind(this)
-    // KIV: Probably no binding required:
-    // this.internalClone = this.internalClone.bind(this)
   }
 
   /**
@@ -47,11 +51,11 @@ export class AsyncStateManager<State> extends StateManager<State> {
    */
   protected override async M$internalQueue(
     newStateOrFn: State | AsyncSetStateFn<State> | null,
-    eventType: StateChangeEventType | typeof FILLER_STATE_CHANGE_EVENT_TYPE
+    eventType: StateChangeEvent | typeof FILLER_STATE_CHANGE_EVENT_TYPE
   ): Promise<void> {
 
     if (
-      eventType !== StateChangeEventType.I &&
+      eventType !== STATE_CHANGE_INIT_EVENT &&
       !Object.is(eventType, FILLER_STATE_CHANGE_EVENT_TYPE) &&
       this.isInitializing.get()
     ) {
@@ -74,7 +78,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
         : newStateOrFn as State
       this.M$post(this.M$internalState)
       // #region Post-handling: lifecycle hooks
-      if (eventType === StateChangeEventType.S) {
+      if (eventType === STATE_CHANGE_SET_EVENT) {
         if (this.M$lifecycle.didSet) {
           this.M$lifecycle.didSet({
             state: this.M$internalState,
@@ -82,7 +86,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
             previousState,
           })
         }
-      } else if (eventType === StateChangeEventType.R) {
+      } else if (eventType === STATE_CHANGE_RESET_EVENT) {
         if (this.M$lifecycle.didReset) {
           this.M$lifecycle.didReset()
         }
@@ -174,7 +178,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
           }
           return // Early exit
         }
-        await this.M$internalQueue(state, StateChangeEventType.I);
+        await this.M$internalQueue(state, STATE_CHANGE_INIT_EVENT);
         (this.isInitializing as SimpleStateManager<boolean>).set(false)
         effectiveCommitStrategy = COMMIT_STRATEGY_COMMIT
       },
@@ -251,7 +255,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
   set(setStateFn: AsyncSetStateFn<State>): Promise<void>
 
   async set(newStateOrFn: State | AsyncSetStateFn<State>): Promise<void> {
-    await this.M$internalQueue(newStateOrFn, StateChangeEventType.S)
+    await this.M$internalQueue(newStateOrFn, STATE_CHANGE_SET_EVENT)
   }
 
   /**
@@ -264,7 +268,7 @@ export class AsyncStateManager<State> extends StateManager<State> {
    * ```
    */
   async reset(): Promise<void> {
-    await this.M$internalQueue(this.defaultState, StateChangeEventType.R)
+    await this.M$internalQueue(this.defaultState, STATE_CHANGE_RESET_EVENT)
   }
 
   // NOTE: `wait` method is not implemented here but it seems like TS docs will

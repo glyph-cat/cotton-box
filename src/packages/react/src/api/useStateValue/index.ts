@@ -9,21 +9,11 @@ import {
   StateSelector,
 } from 'cotton-box'
 import { useCallback, useRef, useSyncExternalStore } from 'react'
-import { $1, $2, SyncValue } from '../../abstractions'
-import { $$INTERNALS, IS_RN_BUILD } from '../../constants'
-import { useDebugName, useInspectableValue } from '../../internals/debug-value'
+import { IS_RN_BUILD } from '../../constants'
+import { useDebugName } from '../../internals/debug-value'
 import { emptyWatcher } from '../../internals/empty-watcher'
 import { useSuspenseWaiter } from '../../internals/suspense-waiter'
 import { useResolveHydrationStateManager } from '../hydration/internals'
-
-// TODO: stop using `options.visibility`
-
-type $$ = $1 | $2
-
-type UseStateValueOptionalArgs<State, SelectedState> = [
-  activeOrEqualityFn?: boolean | EqualityFn<State | SelectedState>,
-  $active?: boolean,
-]
 
 // NOTE: For overloads where selectors are not null, we need to use `EqualityFn<any>`. Using `SelectedState` somehow messes up type inference, if that's what it's called.
 
@@ -214,10 +204,12 @@ export function useStateValue<State, SelectedState>(
 export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
-  ...optionalArgs: UseStateValueOptionalArgs<State, SelectedState>
+  ...optionalArgs: [
+    activeOrEqualityFn?: boolean | EqualityFn<State | SelectedState>,
+    $active?: boolean,
+  ]
 ): State | SelectedState {
 
-  // KIV: Checked on 2026-03-20 (1d415a1), bundle is generated correctly.
   if (!IS_RN_BUILD) {
     // NOTE: `BUILD_TYPE` is a compile-time constant.
     // This conditional invocation will become static after compilation.
@@ -259,17 +251,15 @@ export function useStateValue<State, SelectedState>(
     }
   }, [stateManager])
 
-  const cachedSyncValue = useRef<SyncValue<State | SelectedState>>(null)
-  const getSnapshot = useCallback((): SyncValue<State | SelectedState> => {
+  const cachedValue = useRef<State | SelectedState>(null)
+  const getSnapshot = useCallback((): State | SelectedState => {
     if (
-      isNull(cachedSyncValue.current) ||
-      !isEqualRef.current(cachedSyncValue.current.get($$INTERNALS)!, selectValue())
+      isNull(cachedValue.current) ||
+      !isEqualRef.current(cachedValue.current, selectValue())
     ) {
-      cachedSyncValue.current = new WeakMap([
-        [$$INTERNALS, selectValue()],
-      ]) as SyncValue<State | SelectedState>
+      cachedValue.current = selectValue()
     }
-    return cachedSyncValue.current!
+    return cachedValue.current!
   }, [selectValue])
 
   const stateValue = useSyncExternalStore(
@@ -277,7 +267,6 @@ export function useStateValue<State, SelectedState>(
     getSnapshot,
     getSnapshot,
   )
-  useInspectableValue((stateManager as $$).visibility, stateValue)
-  return stateValue.get($$INTERNALS)!
+  return stateValue
 
 }
