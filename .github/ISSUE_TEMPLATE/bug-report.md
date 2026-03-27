@@ -24,7 +24,7 @@ assignees: ''
 * Package version (Required): 
 <!-- Version is available in package.json -->
 * Build: 
-<!-- Should be one of `CJS` / `ES` / `MJS` / `UMD` / `UMD_MIN` -->
+<!-- Should be one of `CJS` / `ES` / `MJS` / `RN` / `UMD` / `UMD_MIN` -->
 <!-- Hint: The `BUILD_TYPE` variable can be imported from the package -->
 * OS and version (optional): 
 <!-- If bug is specific to certain OS -->
