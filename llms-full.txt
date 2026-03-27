@@ -35,7 +35,7 @@ DoesNotReturnAnything,
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_ASYNC_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class AsyncStateManager<State> extends StateManager<State> { }
+class AsyncStateManager<State> extends StateManager<State>
 ```
 
 ### Constructor
@@ -92,7 +92,7 @@ readonly defaultState: State
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
 
 ```ts
-readonly name: string
+readonly name?: string | undefined | null
 ```
 
 ### isInitializing
@@ -414,12 +414,8 @@ type EqualityFn<State> = (previousState: State, nextState: State) => boolean
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR}</MarkdownWrapper>
 
 ```ts
-export class InvalidStateTransitionError extends Error {}
+export class InvalidStateTransitionError extends Error
 ```
-
-  <LabeledItem label='Also see'>
-    <ApiLink href='./SimpleFiniteStateManager'>SimpleFiniteStateManager</ApiLink>
-  </LabeledItem>
 
 ### Constructor
 ```ts
@@ -450,11 +446,19 @@ constructor(fromState: string, toState: string, stateManager?: string)
 
 ### Message Format
 
-> _from "`fromState`" to "`toState`" in `stateManager`_
+#### For state manager with name
+> _Invalid state transition from "`fromState`" to "`toState`" in `stateManager`_
 
-#### Example
+#### For state manager without name
+> _Invalid state transition from "`fromState`" to "`toState`"_
 
-> _from "A" to "B" in ExampleState_
+### Message Example
+
+#### For state manager with name
+> _Invalid state transition from "A" to "B" in ExampleState_
+
+#### For state manager without name
+> _Invalid state transition from "A" to "B"_
 
 ## Properties
 
@@ -471,9 +475,9 @@ readonly toState: string
 ```
 
 ### stateManager
-<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_STATE_MANAGER_NAME}</MarkdownWrapper>
 ```ts
-readonly stateManager: string
+readonly stateManagerName?: string | undefined | null
 ```
 
 ---
@@ -526,7 +530,7 @@ DoesNotReturnAnything,
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_SIMPLE_FINITE_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class SimpleFiniteStateManager<State> extends SimpleStateManager<State> { }
+class SimpleFiniteStateManager<State> extends SimpleStateManager<State>
 ```
 
 ### Constructor
@@ -630,7 +634,7 @@ readonly defaultState: State
 
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
 ```ts
-readonly name: string
+readonly name?: string | undefined | null
 ```
 
 ## Methods
@@ -927,7 +931,7 @@ DoesNotReturnAnything,
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_SIMPLE_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class SimpleStateManager<State> { }
+class SimpleStateManager<State>
 ```
 
 ### Constructor
@@ -969,7 +973,7 @@ readonly defaultState: State
 ### name
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
 ```ts
-readonly name: string
+readonly name?: string | undefined | null
 ```
 
 ## Methods
@@ -1189,7 +1193,7 @@ DoesNotReturnAnything,
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class StateManager<State> extends SimpleStateManager<State> { }
+class StateManager<State> extends SimpleStateManager<State>
 ```
 
 ### Constructor
@@ -1245,7 +1249,7 @@ readonly defaultState: State
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
 
 ```ts
-readonly name: string
+readonly name?: string | undefined | null
 ```
 
 ### isInitializing
@@ -1662,6 +1666,14 @@ ExampleState.dispose()
 
 ## StateManagerVisibility
 
+
+:::danger[Deprecation notice]
+This is not a reliable way to hide sensitive values.
+
+While this works for React Dev Tools, the built-in memory inspector in most browsers will still be able to show the value anyway. Please consider storing sensitive information on the server and only expose what's absolutely necessary to the client instead.
+
+Starting from version `1.1.0`, this option will be completely ignored.
+:::
 
 ## Overview
 
@@ -2334,26 +2346,6 @@ Upon clicking "Start", the sandbox will try to invoke as many set-state calls as
   }}
   disableInfiniteLoopProtection
 />
-
----
-
-## Hiding values from React Developer Tools
-
-
-By default, [`useStateValue`](../../api/react/useStateValue.mdx) only exposes the state value to the <Link href={DocConstants.REACT_DOCS_SITE_DEV_TOOLS_URL}>React Developer Tools</Link> in non-production environments and hides it in production environment.
-
-The state value is obscured by storing it inside a <ApiLink href={DocConstants.TYPE_REFERENCE_WEAK_MAP}>WeakMap</ApiLink> and conditionally exposed as "`InspectableValue`" instead.
-
-This behavior can be changed via the `visibility` option, which has three modes:
-* `ENVIRONMENT` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_ENVIRONMENT} This is the default behavior.
-* `EXPOSED` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_EXPOSED}
-* `HIDDEN` — {DocConstants.DESC_STATE_MANAGER_VISIBILITY_HIDDEN}
-
-<DevToolsPreview />
-
-Related items:
-* [`StateManagerOptions`](../../api/core/StateManagerOptions.mdx)
-* [`StateManagerVisibility`](../../api/core/StateManagerVisibility.mdx)
 
 ---
 

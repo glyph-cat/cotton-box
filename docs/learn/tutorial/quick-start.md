@@ -2,7 +2,7 @@
 
 > import { SimpleWebPlayground } from '@site/src/components/live-playground'
 import { TSCodeBlock } from '@site/src/components/ts-code-block'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import CodeInline from '@theme/CodeInline'
 
 # Quick Start

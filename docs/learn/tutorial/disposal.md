@@ -2,7 +2,7 @@
 
 > import { ApiLink } from '@site/src/components/api-link'
 import { TSCodeBlock } from '@site/src/components/ts-code-block'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # Disposal
 

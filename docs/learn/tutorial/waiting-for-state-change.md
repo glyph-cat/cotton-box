@@ -4,7 +4,7 @@
 import CODE_EXAMPLE_VALUE from '!!raw-loader!@site/src/examples/learn/tutorial/wait/value'
 import { ApiLink } from '@site/src/components/api-link'
 import { SimpleConsolePlayground } from '@site/src/components/live-playground'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # Waiting For State Change
 

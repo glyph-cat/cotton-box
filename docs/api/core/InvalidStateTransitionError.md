@@ -1,10 +1,9 @@
 # InvalidStateTransitionError
 
 > import { ApiLink } from '@site/src/components/api-link'
-import { LabeledItem } from '@site/src/components/labeled-item'
 import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
 
 # InvalidStateTransitionError
@@ -16,12 +15,8 @@ import { DataType, TypeDisplay } from '@site/src/components/type-display'
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_INVALID_STATE_TRANSITION_ERROR}</MarkdownWrapper>
 
 ```ts
-export class InvalidStateTransitionError extends Error {}
+export class InvalidStateTransitionError extends Error
 ```
-
-  <LabeledItem label='Also see'>
-    <ApiLink href='./SimpleFiniteStateManager'>SimpleFiniteStateManager</ApiLink>
-  </LabeledItem>
 
 ### Constructor
 ```ts
@@ -52,11 +47,19 @@ constructor(fromState: string, toState: string, stateManager?: string)
 
 ### Message Format
 
-> _from "`fromState`" to "`toState`" in `stateManager`_
+#### For state manager with name
+> _Invalid state transition from "`fromState`" to "`toState`" in `stateManager`_
 
-#### Example
+#### For state manager without name
+> _Invalid state transition from "`fromState`" to "`toState`"_
 
-> _from "A" to "B" in ExampleState_
+### Message Example
+
+#### For state manager with name
+> _Invalid state transition from "A" to "B" in ExampleState_
+
+#### For state manager without name
+> _Invalid state transition from "A" to "B"_
 
 ## Properties
 
@@ -73,7 +76,7 @@ readonly toState: string
 ```
 
 ### stateManager
-<MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
+<MarkdownWrapper>{DocConstants.TSDOC_PARAM_STATE_MANAGER_NAME}</MarkdownWrapper>
 ```ts
-readonly stateManager: string
+readonly stateManagerName?: string | undefined | null
 ```

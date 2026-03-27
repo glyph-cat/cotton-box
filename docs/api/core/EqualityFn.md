@@ -2,7 +2,7 @@
 
 > import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # EqualityFn
 

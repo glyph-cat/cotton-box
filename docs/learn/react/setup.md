@@ -2,7 +2,7 @@
 
 > import { Link } from '@site/src/components/custom-link'
 import { YarnToNPM } from '@site/src/components/yarn-to-npm'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # Setup
 

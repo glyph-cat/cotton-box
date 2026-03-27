@@ -1,7 +1,7 @@
 # Setup
 
 > import { YarnToNPM } from '@site/src/components/yarn-to-npm'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # Setup
 

@@ -1,7 +1,7 @@
 # Persisting State
 
 > import { ApiLink } from '@site/src/components/api-link'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 
 # Persisting State
 

@@ -40,7 +40,6 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Notes App](https://glyph-cat.github.io/cotton-box/docs/demo/basic/notes-app.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
 - [Todo List App](https://glyph-cat.github.io/cotton-box/docs/demo/basic/todo-list-app.md): import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/todo/index.module.css'
 - [Stress Test](https://glyph-cat.github.io/cotton-box/docs/demo/miscellaneous/stress-test.md): import DEMO_REACT from '!!raw-loader!@site/src/examples/stress-test/react-built-in.tsx'
-- [Hiding values from React Developer Tools](https://glyph-cat.github.io/cotton-box/docs/learn/react/hiding-values-from-react-developer-tools.md): import { ApiLink } from '@site/src/components/api-link'
 - [Migration From `react-relink`](https://glyph-cat.github.io/cotton-box/docs/learn/react/migration-from-react-relink.md): :::info
 - [Observing Initialization State](https://glyph-cat.github.io/cotton-box/docs/learn/react/observing-initialization-state.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/observing-initialization-state'
 - [Opt Out of Re-renders Due To State Change](https://glyph-cat.github.io/cotton-box/docs/learn/react/opt-out-of-rerenders.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'

@@ -11,7 +11,7 @@ import {
   Returns,
 } from '@site/src/components/sentence-templates'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import CodeInline from '@theme/CodeInline'
 
 DoesNotReturnAnything,
@@ -30,7 +30,7 @@ DoesNotReturnAnything,
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_STATE_MANAGER}</MarkdownWrapper>
 
 ```ts
-class StateManager<State> extends SimpleStateManager<State> { }
+class StateManager<State> extends SimpleStateManager<State>
 ```
 
 ### Constructor
@@ -86,7 +86,7 @@ readonly defaultState: State
 <MarkdownWrapper>{DocConstants.TSDOC_DESC_OPTIONS_NAME}</MarkdownWrapper>
 
 ```ts
-readonly name: string
+readonly name?: string | undefined | null
 ```
 
 ### isInitializing

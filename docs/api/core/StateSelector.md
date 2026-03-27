@@ -1,7 +1,7 @@
 # StateSelector
 
 > import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { DocConstants } from '@site/src/constants'
+import * as DocConstants from '@site/src/constants/doc'
 import { DataType, TypeDisplay } from '@site/src/components/type-display'
 
 # StateSelector
