@@ -1,15 +1,17 @@
 # Setup
 
-> import { YarnToNPM } from '@site/src/components/yarn-to-npm'
+> import { PackageManagerCommand } from '@site/src/components/package-manager-command'
 import * as DocConstants from '@site/src/constants/doc'
 
 # Setup
 
 ## Installation
 
-### Using a dependency manager
+### Through dependency manager (recommended)
 
-<YarnToNPM>yarn add {DocConstants.CORE_PACKAGE_NAME}</YarnToNPM>
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ### With UNPKG
 

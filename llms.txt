@@ -49,7 +49,7 @@ This file contains links to documentation sections following the llmstxt.org sta
 - [Disposal](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/disposal.md): import { ApiLink } from '@site/src/components/api-link'
 - [Persisting State](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/persisting-state.md): import { ApiLink } from '@site/src/components/api-link'
 - [Quick Start](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/quick-start.md): import { SimpleWebPlayground } from '@site/src/components/live-playground'
-- [Setup](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/setup.md): import { YarnToNPM } from '@site/src/components/yarn-to-npm'
+- [Setup](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/setup.md): import { PackageManagerCommand } from '@site/src/components/package-manager-command'
 - [Waiting For State Change](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/waiting-for-state-change.md): import CODE_EXAMPLE_EVALUATOR from '!!raw-loader!@site/src/examples/learn/tutorial/wait/evaluator'
 - [Watching For State Changes](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/watching-for-state-changes.md): import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/tutorial/watch'
 - [Which State Manager Should I Use?](https://glyph-cat.github.io/cotton-box/docs/learn/tutorial/which-state-manager-should-i-use.md): The package comes with three types of State Managers, each with slightly different characteristics, tailored for different use cases.

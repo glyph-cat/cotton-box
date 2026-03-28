@@ -1,7 +1,7 @@
 # Setup
 
 > import { Link } from '@site/src/components/custom-link'
-import { YarnToNPM } from '@site/src/components/yarn-to-npm'
+import { PackageManagerCommand } from '@site/src/components/package-manager-command'
 import * as DocConstants from '@site/src/constants/doc'
 
 # Setup
@@ -14,12 +14,12 @@ In order to use `cotton-box` with <Link href={DocConstants.REACT_DOCS_SITE}>Reac
 
 ## Installation
 
-### Using a dependency manager
-<YarnToNPM>
-yarn add {DocConstants.CORE_PACKAGE_NAME}
+### Through dependency manager (recommended)
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME}
 // highlight-next-line
-yarn add {DocConstants.REACT_PACKAGE_NAME}
-</YarnToNPM>
+npm install {DocConstants.REACT_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ### With UNPKG
 

@@ -2582,12 +2582,12 @@ In order to use `cotton-box` with <Link href={DocConstants.REACT_DOCS_SITE}>Reac
 
 ## Installation
 
-### Using a dependency manager
-<YarnToNPM>
-yarn add {DocConstants.CORE_PACKAGE_NAME}
+### Through dependency manager (recommended)
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME}
 // highlight-next-line
-yarn add {DocConstants.REACT_PACKAGE_NAME}
-</YarnToNPM>
+npm install {DocConstants.REACT_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ### With UNPKG
 
@@ -2955,9 +2955,11 @@ It is safe to call all of the State Manager's methods (`.get`, `.set`, `.reset`,
 
 ## Installation
 
-### Using a dependency manager
+### Through dependency manager (recommended)
 
-<YarnToNPM>yarn add {DocConstants.CORE_PACKAGE_NAME}</YarnToNPM>
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ### With UNPKG
 
