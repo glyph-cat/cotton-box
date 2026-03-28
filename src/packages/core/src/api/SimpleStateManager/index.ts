@@ -32,7 +32,7 @@ export class SimpleStateManager<State> implements IDisposable {
   /**
    * @internal
    */
-  private M$watcherHandlers = new Set<(state: State) => void>()
+  private M$watchHandlers = new Set<(state: State) => void>()
 
   /**
    * @internal
@@ -148,8 +148,8 @@ export class SimpleStateManager<State> implements IDisposable {
    */
   watch(callback: (state: State) => void): () => void {
     if (this.M$isDisposed) { return __emptyFunction } // Early exit
-    this.M$watcherHandlers.add(callback)
-    return () => { this.M$watcherHandlers.delete(callback) }
+    this.M$watchHandlers.add(callback)
+    return () => { this.M$watchHandlers.delete(callback) }
   }
 
   /**
@@ -162,7 +162,7 @@ export class SimpleStateManager<State> implements IDisposable {
    * ```
    */
   unwatchAll(): void {
-    this.M$watcherHandlers.clear()
+    this.M$watchHandlers.clear()
   }
 
   /**
@@ -241,7 +241,7 @@ export class SimpleStateManager<State> implements IDisposable {
    * @internal
    */
   protected M$post(state: State): void {
-    this.M$watcherHandlers.forEach((callback) => {
+    this.M$watchHandlers.forEach((callback) => {
       callback(state)
     })
   }
