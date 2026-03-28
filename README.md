@@ -31,7 +31,7 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 - Works with and without react ⚛️
 - Temporarily unwatch state in hooks ⏸️
 - Supports async state updates 🔄
-- Fully typed API 
+- Fully typed API 📚
 
 <br/>
 
