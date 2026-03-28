@@ -85,11 +85,11 @@ const features: Array<FeatureItem> = [
     ),
   },
   {
-    title: 'Async State Updates',
-    Svg: require('@site/static/img/symbols/acute.svg').default,
+    title: 'Fully Typed API',
+    Svg: require('@site/static/img/symbols/api.svg').default,
     description: (
       <>
-        For unique cases that really require it.
+        Complete type definitions, detailed descriptions, and rich examples — all included.
       </>
     ),
   },
@@ -99,6 +99,15 @@ const features: Array<FeatureItem> = [
     description: (
       <>
         Temporarily unsubscribe from state changes to prevent components from re-rendering.
+      </>
+    ),
+  },
+  {
+    title: 'Async State Updates',
+    Svg: require('@site/static/img/symbols/acute.svg').default,
+    description: (
+      <>
+        For unique cases that really require it.
       </>
     ),
   },
