@@ -20,8 +20,9 @@
 - Promote simplicity and no boilerplate
 - Possible to compose graph-like structures but is not the default practice
 - Object-oriented
-- State managers exist as classes
-- Good recommendation for games that uses React
+- State managers are classes instead of objects, class prototypes make them more memory efficient
+- Disposable through the `.dispose()` method, unlike most other state managers
+- Good recommendation for games built with React
 
 ## Mental Model
 - A "State Manager" is a self-contained reactive state container

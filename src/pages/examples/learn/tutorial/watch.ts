@@ -16,7 +16,9 @@ if (typeof window !== 'undefined') {
 
   const intervalRef = setInterval(() => {
     // Generate random number between 1 to 100
-    CounterState.set(1 + Math.floor(Math.random() * 100))
+    const randomNumber = 1 + Math.floor(Math.random() * 100)
+    console.log(`randomNumber: ${randomNumber}`)
+    CounterState.set(randomNumber)
   }, 1000)
   // #endregion example
 }

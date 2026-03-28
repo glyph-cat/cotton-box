@@ -188,6 +188,7 @@ function SimpleWebPlaygroundBase({
 
 export interface SimpleConsolePlaygroundProps {
   code: string
+  extraDependencies?: SandpackSetup['dependencies']
 }
 
 export function SimpleConsolePlayground(props: SimpleConsolePlaygroundProps): ReactNode {
@@ -197,8 +198,11 @@ export function SimpleConsolePlayground(props: SimpleConsolePlaygroundProps): Re
 
 export function SimpleConsolePlaygroundBase({
   code,
+  extraDependencies,
 }: SimpleConsolePlaygroundProps): ReactNode {
   const codeEditorTheme = useCodeEditorTheme()
+  const detectedDependencies = getDependenciesAutomatically(code)
+  console.log('Detected dependencies:', detectedDependencies)
   // const { sandpack } = useSandpack()
   // const { logs } = useSandpackConsole()
   return (
@@ -212,6 +216,10 @@ export function SimpleConsolePlaygroundBase({
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,
+              dependencies: {
+                ...detectedDependencies,
+                ...extraDependencies,
+              },
             }}
             options={{
               ...sharedProps.options,
@@ -232,6 +240,10 @@ export function SimpleConsolePlaygroundBase({
             customSetup={{
               ...sharedProps.customSetup,
               entry: INDEX_TS,
+              dependencies: {
+                ...detectedDependencies,
+                ...extraDependencies,
+              },
             }}
             options={{
               ...sharedProps.options,
