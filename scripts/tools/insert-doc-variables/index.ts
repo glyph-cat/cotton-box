@@ -1,13 +1,23 @@
 import { Encoding } from '@glyph-cat/foundation'
 import chalk from 'chalk'
 import { readFileSync, writeFileSync } from 'fs'
-import * as VARIABLE_POOL from '../../../src/packages/docs/src/constants/doc'
+import { PackageJson } from 'type-fest'
+import * as DocConstants from '../../../src/packages/docs/src/constants/doc'
 import { stringMap } from '../../../src/packages/docs/src/utils/string-map'
 
 export function insertDocVariables(): void {
 
-  const packageInfo = JSON.parse(readFileSync('./package.json', Encoding.UTF_8))
+  const packageInfo = JSON.parse(readFileSync('./package.json', Encoding.UTF_8)) as PackageJson
   const typeDefinitionPath = `./${packageInfo.types}`
+
+  // Load variables
+  eval(readFileSync('./lib/cjs/index.js', Encoding.UTF_8))
+
+  const VARIABLE_POOL = {
+    ...DocConstants,
+    PACKAGE_BUILD_HASH: exports.BUILD_HASH,
+    PACKAGE_VERSION: exports.VERSION,
+  }
 
   let typeDefinitionBody = readFileSync(typeDefinitionPath, Encoding.UTF_8)
   const { unusedVariables, data } = stringMap(typeDefinitionBody, VARIABLE_POOL, true)

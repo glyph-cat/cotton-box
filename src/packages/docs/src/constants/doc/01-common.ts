@@ -1,3 +1,5 @@
+import { DOCS_API_DOCS_URL } from './00-repo'
+
 export const COMMON_DESC_CURRENT_STATE = 'The current state.'
 export const COMMON_DESC_DEFAULT_STATE = 'The default state.'
 export const COMMON_DESC_PREVIOUS_STATE = 'The previous state.'
@@ -13,5 +15,5 @@ export const TSDOC_DESC_ENUM_BUILD_TYPE_UMD = 'Universal Module Definition'
 export const TSDOC_DESC_ENUM_BUILD_TYPE_UMD_MIN = 'Universal Module Definition (Minified)'
 
 export const TSDOC_DESC_BUILD_TYPE = 'The package\'s build type.'
-export const TSDOC_DESC_BUILD_HASH = 'Hash of the Git commit in which the package\'s version is built.'
-export const TSDOC_DESC_VERSION = 'The package\'s version number. It follows [Semantic Versioning](https://semver.org).'
+export const TSDOC_DESC_BUILD_HASH = 'Hash of the Git commit in which the package\'s version is built + hex representation of the build timestamp.'
+export const TSDOC_DESC_VERSION = `The package's version number. It follows [Semantic Versioning](https://semver.org). The complete list of changelogs is available [here](${DOCS_API_DOCS_URL}/changelogs/current).`
