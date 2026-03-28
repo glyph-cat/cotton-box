@@ -12,8 +12,8 @@ if (typeof window !== 'undefined') {
       CounterState.set(randomNumber)
       intervalCount++
     }, 1000)
-    const awaitedValue = await CounterState.wait((state) => {
-      return state % 5 === 0
+    const awaitedValue = await CounterState.wait((counter) => {
+      return counter > 0 && counter % 5 === 0
     })
     clearInterval(intervalRef)
     console.log(`Received a number divisible by 5 after ${intervalCount} attempts.`)
