@@ -11,6 +11,22 @@ But if ever in doubt, hopefully this file will be able to clarify things.
   * `MacroCase` should be used for classes, React components, namespaces, etc.
   * `camelCase` should be used for functions
 
+### TSDoc
+
+Tags should follow the order below:
+- `@deprecated`
+- `@see`
+- `@remarks`
+- `@privateRemarks`
+- `@typeParam`
+- `@param`
+- `@returns`
+- `@example`
+- `@throws`
+- `@public` | `@internal`
+
+This order is not set by the [TSDocs Guidelines](https://github.com/microsoft/FluidFramework/wiki/TSDoc-Guidelines), but rather an opinionated order specific to this repository only.
+
 ## Tests
 
 * There are two types of tests, one in `src` and one in `tests`.
