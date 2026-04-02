@@ -320,7 +320,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_INIT:}
    * @example
    * ```typescript
-   * CounterState.init(({ commit, commitNoop }) => {
+   * await CounterState.init(({ commit, commitNoop }) => {
    *   const rawData = localStorage.getItem('counter')
    *   if (rawData) {
    *   const parsedData = Number(rawData)
@@ -386,17 +386,7 @@ export class StateManager<State> extends SimpleStateManager<State> {
    * @returns -{:RETURN_DESC_REINITIALIZE:}
    * @example
    * ```typescript
-   * CounterState.reinitialize(({ commit, commitNoop }) => {
-   *   const rawData = localStorage.getItem('counter')
-   *   if (rawData) {
-   *   const parsedData = Number(rawData)
-   *     if (typeof parsedData === 'number') {
-   *       commit(parsedData)
-   *       return // Early exit
-   *     }
-   *   }
-   *   commitNoop() // Fallback: commit using default state
-   * })
+   * await CounterState.reinitialize()
    * ```
    */
   async reinitialize(): Promise<void> {
