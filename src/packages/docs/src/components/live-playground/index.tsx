@@ -1,6 +1,7 @@
 import {
   Sandpack,
   SandpackConsole,
+  SandpackFiles,
   SandpackLayout,
   SandpackPreview,
   SandpackProps,
@@ -15,8 +16,9 @@ import {
 import { aquaBlue, freeCodeCampDark } from '@codesandbox/sandpack-themes'
 import { useColorMode } from '@docusaurus/theme-common'
 import MonacoEditorBase from '@monaco-editor/react'
+import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
 import { useDelayedVisibility } from '@site/src/hooks/delayed-visibility'
-import { ReactNode, useCallback } from 'react'
+import { ReactNode, useCallback, useEffect, useReducer } from 'react'
 
 const INDEX_TS = 'index.js'
 const APP_TSX = 'App.tsx'
@@ -110,7 +112,24 @@ function SimpleWebPlaygroundBase({
   options,
   disableInfiniteLoopProtection,
 }: SimpleWebPlaygroundProps): ReactNode {
+  const hasMounted = useMountedState()
   const codeEditorTheme = useCodeEditorTheme()
+  const files: SandpackFiles = {
+    ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
+    [APP_TSX]: code,
+    ...(css && { [CSS]: css }),
+    ...(disableInfiniteLoopProtection && {
+      'sandbox.config.json': JSON.stringify({
+        infiniteLoopProtection: false,
+      }),
+    }),
+  }
+
+  if (!hasMounted) {
+    return <StaticPlaygroundFiles files={files} />
+  }
+
+
   const detectedDependencies = getDependenciesAutomatically(code)
   // console.log('Detected dependencies:', detectedDependencies)
   return (
@@ -118,17 +137,8 @@ function SimpleWebPlaygroundBase({
       {TEMP_READY_TO_USE_MONACO_EDITOR
         ? (
           <SandpackProvider
-            files={{
-              ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
-              [APP_TSX]: code,
-              ...(css && { [CSS]: css }),
-              ...(disableInfiniteLoopProtection && {
-                'sandbox.config.json': JSON.stringify({
-                  infiniteLoopProtection: false,
-                }),
-              }),
-            }}
             {...sharedProps}
+            files={files}
             theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
@@ -153,17 +163,8 @@ function SimpleWebPlaygroundBase({
         )
         : (
           <Sandpack
-            files={{
-              ...SIMPLE_WEB_PLAYGROUND_TEMPLATE_FILES,
-              [APP_TSX]: code,
-              ...(css && { [CSS]: css }),
-              ...(disableInfiniteLoopProtection && {
-                'sandbox.config.json': JSON.stringify({
-                  infiniteLoopProtection: false,
-                }),
-              }),
-            }}
             {...sharedProps}
+            files={files}
             theme={codeEditorTheme}
             customSetup={{
               ...sharedProps.customSetup,
@@ -200,11 +201,16 @@ export function SimpleConsolePlaygroundBase({
   code,
   extraDependencies,
 }: SimpleConsolePlaygroundProps): ReactNode {
+  const hasMounted = useMountedState()
   const codeEditorTheme = useCodeEditorTheme()
   const detectedDependencies = getDependenciesAutomatically(code)
   console.log('Detected dependencies:', detectedDependencies)
   // const { sandpack } = useSandpack()
   // const { logs } = useSandpackConsole()
+  const files: SandpackFiles = { [INDEX_TS]: code }
+  if (!hasMounted) {
+    return <StaticPlaygroundFiles files={files} />
+  }
   return (
     <>
       {TEMP_READY_TO_USE_MONACO_EDITOR
@@ -298,4 +304,41 @@ function getDependenciesAutomatically(value: string): Record<string, string> {
     acc[item] = 'latest'
     return acc
   }, {} as Record<string, string>)
+}
+
+interface StaticMarkdownContainerProps {
+  files: SandpackFiles
+}
+
+// Used to wrap machine-readable version of the playground code when it's server-rendered.
+function StaticPlaygroundFiles({
+  files,
+}: StaticMarkdownContainerProps): ReactNode {
+  return (
+    <div style={{ height: 0, overflow: 'hidden' }}>
+      <MarkdownWrapper>
+        {Object.entries(files).map(([fileName, fileContents]) => {
+          const fileType = fileName.split('.').at(-1)
+          return [
+            `${fileName}:`,
+            '',
+            `\`\`\`${fileType}`,
+            fileType === 'json'
+              ? JSON.stringify(JSON.parse(String(fileContents)), null, 2)
+              : fileContents,
+            '```',
+          ].join('\n')
+        }).join('\n\n')}
+      </MarkdownWrapper>
+    </div>
+  )
+}
+
+const hasMountedReducer = () => true
+
+function useMountedState(): boolean {
+  return true // temp
+  const [hasMounted, onMount] = useReducer(hasMountedReducer, false)
+  useEffect(() => { onMount() }, [])
+  return hasMounted
 }
