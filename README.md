@@ -24,14 +24,14 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 <br/>
 
 ## Features
-- Lightweight & fast ⚡️
-- No providers or boilerplate 🧩
-- Customizable equality checking 🎯
-- Declarative lifecycle management 🌱
-- Works with and without react ⚛️
-- Temporarily unwatch state in hooks ⏸️
-- Supports async state updates 🔄
-- Fully typed API 📚
+- ⚡️ Lightweight & fast
+- 🧩 No providers or boilerplate
+- 🎯 Customizable equality checking
+- 🌱 Declarative lifecycle management
+- ⚛️ Works with and without react
+- ⏸️ Temporarily unwatch state in hooks
+- 🔄 Supports async state updates
+- 📚 Fully typed API
 
 <br/>
 
