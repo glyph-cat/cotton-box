@@ -102,6 +102,11 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
    */
   set(setStateFn: SetStateFn<State>): void
 
+  /**
+   * @internal
+   */
+  set(newStateOrFn: State | SetStateFn<State>): void
+
   set(newStateOrFn: State | SetStateFn<State>): void {
     const newState = isFunction(newStateOrFn)
       ? newStateOrFn(this.M$internalState, this.defaultState)
@@ -117,6 +122,25 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
     }
     this.M$internalState = newState
     this.M$post(this.M$internalState)
+  }
+
+  /**
+   * {:TSDOC_METHOD_DESC_RESET:}
+   * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#reset
+   * @returns -{:RETURN_DESC_RESET:}
+   * @example
+   * ```typescript
+   * character.state.reset()
+   * ```
+   */
+  reset(): void {
+    if (!this.tryReset()) {
+      /* eslint-disable no-console */
+      console.warn(new InvalidStateTransitionError(this.M$internalState, this.defaultState, this.name))
+      console.warn('This indicates a loop hole in the application logic. Starting from v2, this will cause an `InvalidStateTransitionError` to be thrown instead.')
+      /* eslint-enable no-console */
+      super.reset()
+    }
   }
 
   /**
@@ -148,16 +172,25 @@ export class SimpleFiniteStateManager<State> extends SimpleStateManager<State> {
   trySet(setStateFn: SetStateFn<State>): boolean
 
   trySet(newStateOrFn: State | SetStateFn<State>): boolean {
-    const newState = isFunction(newStateOrFn)
-      ? newStateOrFn(this.M$internalState, this.defaultState)
-      : newStateOrFn
-    const currentStateAllowedTransitions = this.M$allowedStateTransitions.get(this.M$internalState)
-    if (!currentStateAllowedTransitions?.has(newState)) {
+    try {
+      this.set(newStateOrFn)
+      return true
+    } catch (_) { // eslint-disable-line @typescript-eslint/no-unused-vars
       return false
     }
-    this.M$internalState = newState
-    this.M$post(this.M$internalState)
-    return true
+  }
+
+  /**
+   * {:TSDOC_METHOD_DESC_TRY_RESET:}
+   * @see -{:DOCS_API_CORE_URL:}/SimpleFiniteStateManager#tryReset
+   * @returns -{:RETURN_DESC_TRY_RESET:}
+   * @example
+   * ```typescript
+   * character.state.tryReset()
+   * ```
+   */
+  tryReset(): boolean {
+    return this.trySet(this.defaultState)
   }
 
 }
