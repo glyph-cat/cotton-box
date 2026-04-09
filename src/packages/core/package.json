@@ -13,12 +13,12 @@
   "scripts": {
     "clean": "rm -rf ./lib ./temp/tsc",
     "lint": "eslint .",
-    "debug": "scope=\"debug\" jest -c ./jest.config.ts",
+    "debug": "cross-env SCOPE=\"debug\" jest -c ./jest.config.ts",
     "bundle": "rollup -c ./config/rollup.config.js",
     "types": "yarn tsc --declaration",
     "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
     "build": "sh ./scripts/run/build.sh",
-    "test": "jest -c ./jest.config.ts",
+    "test": "cross-env SCOPE=\"bundled\" jest -c ./jest.config.ts",
     "prepack": "tsx ./scripts/run/sync-package",
     "all": "sh ./scripts/run/all.sh"
   },

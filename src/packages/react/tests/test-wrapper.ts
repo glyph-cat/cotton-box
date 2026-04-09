@@ -19,7 +19,7 @@ export interface TestConfig {
   ReactLib: typeof __debugReactLib__
 }
 
-const SCOPE = process.env.scope
+const SCOPE = process.env.SCOPE
 const DEBUG_BUILDS: Array<TestConfig> = [
   {
     buildEnv: 'debug',
