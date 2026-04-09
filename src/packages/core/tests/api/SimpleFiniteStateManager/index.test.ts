@@ -94,7 +94,7 @@ wrapper(({ Lib: {
 
   })
 
-  test('trySet', () => {
+  test(SimpleFiniteStateManager.prototype.trySet.name, () => {
 
     const TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
       [DummyState.CREATED, DummyState.STARTING],
@@ -115,6 +115,19 @@ wrapper(({ Lib: {
 
   })
 
-  // TODO: tryReset
+  test(SimpleFiniteStateManager.prototype.tryReset.name, () => {
+    const TestState = new SimpleFiniteStateManager(0, [
+      [0, 1],
+      [1, 0],
+    ], {
+      serializeState(state) {
+        return DummyState[state] ?? String(state)
+      },
+    })
+    cleanupManager.append(TestState.dispose)
+    expect(TestState.tryReset()).toBeFalse()
+    TestState.set(1)
+    expect(TestState.tryReset()).toBeTrue()
+  })
 
 })
