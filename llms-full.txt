@@ -766,6 +766,24 @@ reset(): void
 ExampleState.reset()
 ```
 
+{/* ### tryReset
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_RESET}</MarkdownWrapper>
+```ts
+tryReset(): boolean
+```
+
+#### Returns
+<Returns name='reset'>{DocConstants.RETURN_DESC_TRY_RESET}</Returns>
+
+#### Parameters
+<DoesNotTakeAnyParameters name='tryReset' />
+
+#### Example
+```js
+ExampleState.tryReset()
+``` */}
+
 ### watch
 
 <InheritedFrom
@@ -2167,7 +2185,7 @@ On top of that, now that `isInitializing` is exposed as a State Manager itself, 
 - Fixed `README.md` now displays the correct description: _"This is the core package of cotton-box."_ instead of _"This is the official React bindings for cotton-box."_
 - `Watcher` has been moved back to [`@glyph-cat/swiss-army-knife`](https://github.com/glyph-cat/swiss-army-knife)
   - An internal implementation of "Watcher" still remains, but it is optimized for Cotton Box only (behavior and API can change suddenly), so it no longer makes sense to expose the `Watcher` API from this package.
-- `.watch` and `.wait` no longer includes event type.
+- `.watch` and `.wait` no longer include event type.
 - State manager names remain optional, but if not provided, automatic names will no longer be generated either.
 - Internal performance optimizations.
 
@@ -2344,12 +2362,16 @@ The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
 :::
 
 ## Setup
-```sh title="Before"
-yarn add react-relink
-```
-```sh title="Now"
-yarn add {:CORE_PACKAGE_NAME:} {:REACT_PACKAGE_NAME:}
-```
+
+### Before
+<PackageManagerCommand>
+npm install react-relink
+</PackageManagerCommand>
+
+### Now
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME} {DocConstants.REACT_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ## Instantiation
 ```js title="Before"

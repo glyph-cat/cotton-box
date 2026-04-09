@@ -266,6 +266,24 @@ reset(): void
 ExampleState.reset()
 ```
 
+{/* ### tryReset
+
+<MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_RESET}</MarkdownWrapper>
+```ts
+tryReset(): boolean
+```
+
+#### Returns
+<Returns name='reset'>{DocConstants.RETURN_DESC_TRY_RESET}</Returns>
+
+#### Parameters
+<DoesNotTakeAnyParameters name='tryReset' />
+
+#### Example
+```js
+ExampleState.tryReset()
+``` */}
+
 ### watch
 
 <InheritedFrom

@@ -9,7 +9,7 @@
 - Fixed `README.md` now displays the correct description: _"This is the core package of cotton-box."_ instead of _"This is the official React bindings for cotton-box."_
 - `Watcher` has been moved back to [`@glyph-cat/swiss-army-knife`](https://github.com/glyph-cat/swiss-army-knife)
   - An internal implementation of "Watcher" still remains, but it is optimized for Cotton Box only (behavior and API can change suddenly), so it no longer makes sense to expose the `Watcher` API from this package.
-- `.watch` and `.wait` no longer includes event type.
+- `.watch` and `.wait` no longer include event type.
 - State manager names remain optional, but if not provided, automatic names will no longer be generated either.
 - Internal performance optimizations.
 
