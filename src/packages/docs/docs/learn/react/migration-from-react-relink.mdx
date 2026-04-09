@@ -1,3 +1,6 @@
+import { PackageManagerCommand } from '@site/src/components/package-manager-command'
+import * as DocConstants from '@site/src/constants/doc'
+
 # Migration From `react-relink`
 {/* NOTE: sidebar position is not specified, this should be the last article in the sidebar. */}
 
@@ -6,12 +9,16 @@ The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
 :::
 
 ## Setup
-```sh title="Before"
-yarn add react-relink
-```
-```sh title="Now"
-yarn add {:CORE_PACKAGE_NAME:} {:REACT_PACKAGE_NAME:}
-```
+
+### Before
+<PackageManagerCommand>
+npm install react-relink
+</PackageManagerCommand>
+
+### Now
+<PackageManagerCommand>
+npm install {DocConstants.CORE_PACKAGE_NAME} {DocConstants.REACT_PACKAGE_NAME}
+</PackageManagerCommand>
 
 ## Instantiation
 ```js title="Before"

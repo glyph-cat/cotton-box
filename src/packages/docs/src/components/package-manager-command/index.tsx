@@ -29,7 +29,7 @@ export function PackageManagerCommand({
       </TabItem>
       <TabItem value='pnpm' label='PNPM' default>
         <CodeBlock language='sh' title={title}>
-          {children.replace(npmInstallCommand, 'pnpm install')}
+          {children.replace(npmInstallCommand, 'pnpm add')}
         </CodeBlock>
       </TabItem>
       <TabItem value='bun' label='Bun' default>
