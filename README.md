@@ -28,9 +28,9 @@ It works seamlessly with React Hooks while remaining usable outside React, requi
 - 🧩 No providers or boilerplate
 - 🎯 Customizable equality checking
 - 🌱 Declarative lifecycle management
-- ⚛️ Works with and without react
+- 🌐 Library/Framework agnostic
 - ⏸️ Temporarily unwatch state in hooks
-- 🔄 Supports async state updates
+- ⏳ Supports async state updates
 - 📚 Fully typed API
 
 <br/>

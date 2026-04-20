@@ -76,11 +76,11 @@ const features: Array<FeatureItem> = [
     ),
   },
   {
-    title: 'Works With and Without React',
-    Svg: require('@site/static/img/react-logo.svg').default,
+    title: 'Library/Framework Agnostic',
+    Svg: require('@site/static/img/symbols/sdk.svg').default,
     description: (
       <>
-        React bindings exists as a separate package but still, with first-class integration.
+        Easily integrate with any project whether it's pure JavaScript/TypeScript or inside a framework.
       </>
     ),
   },
