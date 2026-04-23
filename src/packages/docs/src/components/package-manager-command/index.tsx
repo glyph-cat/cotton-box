@@ -16,28 +16,33 @@ export function PackageManagerCommand({
   if (Array.isArray(children)) { children = children.join('') }
   const npmInstallCommand = /npm install/
   return (
-    <Tabs groupId='language'>
+    <Tabs groupId='pkg-mgr'>
       <TabItem value='npm' label='NPM' default>
         <CodeBlock language='sh' title={title}>
           {children}
         </CodeBlock>
       </TabItem>
-      <TabItem value='yarn' label='Yarn' default>
+      <TabItem value='yarn' label='Yarn'>
         <CodeBlock language='sh' title={title}>
           {children.replace(npmInstallCommand, 'yarn add')}
         </CodeBlock>
       </TabItem>
-      <TabItem value='pnpm' label='PNPM' default>
+      <TabItem value='pnpm' label='PNPM'>
         <CodeBlock language='sh' title={title}>
           {children.replace(npmInstallCommand, 'pnpm add')}
         </CodeBlock>
       </TabItem>
-      <TabItem value='bun' label='Bun' default>
+      <TabItem value='bun' label='Bun'>
         <CodeBlock language='sh' title={title}>
           {children.replace(npmInstallCommand, 'bun add')}
         </CodeBlock>
       </TabItem>
-      <TabItem value='deno' label='Deno' default>
+      <TabItem value='rush' label='Rush'>
+        <CodeBlock language='sh' title={title}>
+          {children.replace(npmInstallCommand, 'rush add -p')}
+        </CodeBlock>
+      </TabItem>
+      <TabItem value='deno' label='Deno'>
         <CodeBlock language='sh' title={title}>
           {children.replace(npmInstallCommand, 'deno add').split(' ')
             .map((chunk, index) => {
