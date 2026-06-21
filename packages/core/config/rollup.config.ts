@@ -38,13 +38,6 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
     }),
     typescript({
       tsconfig: './tsconfig.build.json',
-      tsconfigOverride: {
-        compilerOptions: {
-          declaration: false,
-          declarationDir: null,
-          outDir: null,
-        },
-      },
     }),
     commonjs(),
     replace({
