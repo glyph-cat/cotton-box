@@ -1,0 +1,68 @@
+{
+  "name": "cotton-box",
+  "version": "1.0.0",
+  "description": "Minimal state management library for React and beyond.",
+  "main": "lib/cjs/index.js",
+  "module": "lib/es/index.js",
+  "unpkg": "lib/umd/index.js",
+  "files": [
+    "lib"
+  ],
+  "types": "lib/types/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf ./lib ./temp/tsc",
+    "lint": "eslint .",
+    "spellcheck": "cspell lint . -c ./.vscode/cspell.json",
+    "debug": "cross-env SCOPE=\"debug\" jest -c ./jest.config.ts",
+    "bundle": "rollup -c ./config/rollup.config.js",
+    "types": "tsc -p ./tsconfig.build.json",
+    "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
+    "build": "sh ./scripts/run/build.sh",
+    "test": "cross-env SCOPE=\"bundled\" jest -c ./jest.config.ts",
+    "prepack": "tsx ./scripts/run/sync-package",
+    "all": "sh ./scripts/run/all.sh"
+  },
+  "keywords": [
+    "State management"
+  ],
+  "author": "glyph-cat",
+  "readme": "README.md",
+  "license": "MIT",
+  "homepage": "https://glyph-cat.github.io/cotton-box",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/glyph-cat/cotton-box.git"
+  },
+  "bugs": {
+    "url": "https://github.com/glyph-cat/cotton-box/issues"
+  },
+  "dependencies": {
+    "@glyph-cat/foundation": "0.0.0-experimental.89",
+    "@glyph-cat/type-checking": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7",
+    "@babel/preset-typescript": "^7",
+    "@eslint/js": "~10.0.1",
+    "@glyph-cat/eslint-config": "~1.0.1-alpha.15",
+    "@jest/types": "~30.4.1",
+    "@microsoft/api-extractor": "~7.58.9",
+    "@rollup/plugin-commonjs": "~29.0.3",
+    "@rollup/plugin-node-resolve": "~16.0.3",
+    "@rollup/plugin-replace": "~6.0.3",
+    "@rollup/plugin-terser": "~1.0.0",
+    "@types/jest": "~30.0.0",
+    "@types/node": "~26.0.0",
+    "cross-env": "~10.1.0",
+    "cspell": "~10.0.1",
+    "eslint": "~10.5.0",
+    "globals": "~17.6.0",
+    "jest": "~30.4.2",
+    "jest-extended": "~7.0.0",
+    "jiti": "~2.7.0",
+    "rollup": "~4.62.2",
+    "rollup-plugin-typescript2": "~0.37.0",
+    "ts-node": "~10.9.2",
+    "tsx": "~4.22.4"
+  }
+}

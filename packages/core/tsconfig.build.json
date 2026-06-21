@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./temp/tsc/types",
+  },
+  "exclude": [
+    "**/*.draft*",
+    "**/*.old*",
+    "**/*.test.*",
+  ],
+  "include": [
+    "./src",
+    "./custom.d.ts", // tofix: not available in test files
+  ],
+}

@@ -1,0 +1,33 @@
+import { TestConfig, wrapper } from '../../test-wrapper'
+
+wrapper(({ Lib: { SimpleStateManager } }: TestConfig) => {
+
+  let TestState: InstanceType<typeof SimpleStateManager<number>>
+  afterEach(() => { TestState?.dispose() })
+
+  test('Main', () => {
+
+    TestState = new SimpleStateManager(42)
+
+    const watchPayload: Array<[number]> = []
+    const unwatch1 = TestState.watch((...args) => { watchPayload.push(args) })
+
+    // Make sure there are no issues when calling `dispose` multiple times.
+    TestState.dispose()
+    TestState.dispose()
+
+    // Make sure `unwatch` callback has the same type/signature even after dispose.
+    const unwatch2 = TestState.watch((...args) => { watchPayload.push(args) })
+    expect(typeof unwatch2).toBe('function')
+
+    // Expect no state changes after disposal
+    TestState.set((n) => n + 1)
+    expect(watchPayload).toStrictEqual([])
+
+    // Make sure there are no issues when calling `unwatch` even after disposed.
+    unwatch1()
+    unwatch2()
+
+  })
+
+})

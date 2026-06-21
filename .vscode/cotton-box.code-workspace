@@ -6,23 +6,23 @@
     },
     {
       "name": "core",
-      "path": "../src/packages/core"
+      "path": "../packages/core"
     },
     {
       "name": "react",
-      "path": "../src/packages/react"
+      "path": "../packages/react"
     },
     {
       "name": "docs",
-      "path": "../src/packages/docs"
-    },
-    {
-      "name": "Examples (web)",
-      "path": "../src/pages/examples"
+      "path": "../packages/docs"
     },
     // {
+    //   "name": "Examples (web)",
+    //   "path": "../packages/playground-web"
+    // },
+    // {
     //   "name": "Examples (Expo)",
-    //   "path": "../src/packages/playground-expo/src/examples"
+    //   "path": "../packages/playground-expo"
     // }
   ],
   "settings": {
