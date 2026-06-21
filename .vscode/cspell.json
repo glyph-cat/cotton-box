@@ -1,7 +1,10 @@
 {
-  // Reference: https://cspell.org/configuration
-  "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
   "language": "en",
+  "ignorePaths": [
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml"
+  ],
+  "useGitignore": true,
   "words": [
     "clsx",
     "codesandbox",
@@ -24,9 +27,9 @@
     "unwatch",
     "vercel",
     "zustand"
-  ],
-  "flagWords": [],
-  "enableFiletypes": [
-    "mdx"
   ]
+  // "flagWords": [],
+  // "enableFiletypes": [
+  //   "mdx"
+  // ]
 }
