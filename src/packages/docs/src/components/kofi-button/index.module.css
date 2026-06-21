@@ -49,7 +49,6 @@
   border: none;
   max-height: calc(100vh - 100px);
   overflow: auto;
-  padding: 4;
   width: 100%;
 }
 

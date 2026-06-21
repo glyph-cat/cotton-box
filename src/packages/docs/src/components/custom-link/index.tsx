@@ -32,7 +32,7 @@ export function Link({
   const URL_REGEX = new RegExp(`^${normalizedOrigin}\\/?`)
 
   const containsOrigin = String(href).includes(normalizedOrigin)
-  const isSameOrigin = containsOrigin || /^(\.|\/)/.test(href)
+  const isSameOrigin = containsOrigin || /^(\.|\/)/.test(href) || /^#/.test(href)
 
   // TODO: [critical] Replace portion after # with lowercase letters
 
