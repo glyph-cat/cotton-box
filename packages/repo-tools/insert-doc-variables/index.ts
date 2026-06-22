@@ -2,6 +2,7 @@ import { Encoding } from '@glyph-cat/foundation'
 import chalk from 'chalk'
 import { DocConstants, stringMap } from 'cotton-box-doc-utils'
 import { readFile, writeFile } from 'node:fs/promises'
+import path from 'node:path'
 import { PackageJson } from 'type-fest'
 
 interface IBundle {
@@ -9,11 +10,12 @@ interface IBundle {
   VERSION: string
 }
 
-export async function insertDocVariables(bundle: IBundle): Promise<void> {
+export async function insertDocVariables(): Promise<void> {
 
   const packageInfo = JSON.parse(await readFile('./package.json', Encoding.UTF_8)) as PackageJson
   const typeDefinitionPath = `./${packageInfo.types}`
 
+  const bundle: IBundle = await import(path.join(process.cwd(), 'lib', 'cjs', 'index.js'))
   const VARIABLE_POOL = {
     ...DocConstants,
     PACKAGE_BUILD_HASH: bundle.BUILD_HASH,

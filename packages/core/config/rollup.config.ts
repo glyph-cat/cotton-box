@@ -73,7 +73,7 @@ const config: Array<RollupOptions> = [
       file: './lib/cjs/index.js',
       format: 'cjs',
       exports: 'named',
-      sourcemap: true,
+      sourcemap: false,
     },
     external: EXTERNAL_LIBS,
     plugins: getPlugins({

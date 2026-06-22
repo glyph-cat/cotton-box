@@ -1,10 +1,10 @@
 /* eslint-disable import/no-unresolved */
-// import * as cjsLib from '../lib/cjs/index.js'
-// import * as esLib from '../lib/es/index.js'
-// import * as umdLib from '../lib/umd/index.js'
-// import * as umdMinLib from '../lib/umd/index.min.js'
+import * as cjsLib from '../lib/cjs/index.js'
+import * as esLib from '../lib/es/index.js'
+import * as umdLib from '../lib/umd/index.js'
+import * as umdMinLib from '../lib/umd/index.min.js'
 import * as debugLib from '../src'
-// import * as esMinLib from '../temp/test-builds/es-min.js'
+import * as esMinLib from '../temp/test-builds/es-min.js'
 /* eslint-enable import/no-unresolved */
 
 // import * as esMinLib from '../lib/es/index.mjs'
@@ -34,36 +34,36 @@ const DEBUG_BUILDS: Array<TestConfig> = [
   },
 ]
 const BUNDLED_BUILDS: Array<TestConfig> = [
-  // {
-  //   buildEnv: 'dev',
-  //   buildType: 'cjs',
-  //   description: 'CJS',
-  //   Lib: cjsLib,
-  // },
-  // {
-  //   buildEnv: 'dev',
-  //   buildType: 'es',
-  //   description: 'EcmaScript',
-  //   Lib: esLib,
-  // },
-  // // {
-  // //   buildEnv: 'prod',
-  // //   buildType: 'es',
-  // //   description: 'EcmaScript (Minified)',
-  // //   Lib: esMinLib,
-  // // },
-  // {
-  //   buildEnv: 'dev',
-  //   buildType: 'umd',
-  //   description: 'UMD',
-  //   Lib: umdLib,
-  // },
-  // {
-  //   buildEnv: 'prod',
-  //   buildType: 'umd',
-  //   description: 'UMD (Minified)',
-  //   Lib: umdMinLib,
-  // },
+  {
+    buildEnv: 'dev',
+    buildType: 'cjs',
+    description: 'CJS',
+    Lib: cjsLib,
+  },
+  {
+    buildEnv: 'dev',
+    buildType: 'es',
+    description: 'EcmaScript',
+    Lib: esLib,
+  },
+  {
+    buildEnv: 'prod',
+    buildType: 'es',
+    description: 'EcmaScript (Minified)',
+    Lib: esMinLib,
+  },
+  {
+    buildEnv: 'dev',
+    buildType: 'umd',
+    description: 'UMD',
+    Lib: umdLib,
+  },
+  {
+    buildEnv: 'prod',
+    buildType: 'umd',
+    description: 'UMD (Minified)',
+    Lib: umdMinLib,
+  },
 ]
 
 const testConfigStack: Array<TestConfig> = []
