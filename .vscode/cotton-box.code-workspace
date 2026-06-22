@@ -16,6 +16,14 @@
       "name": "docs",
       "path": "../packages/docs"
     },
+    {
+      "name": "doc-utils",
+      "path": "../packages/doc-utils"
+    },
+    {
+      "name": "repo-tools",
+      "path": "../packages/repo-tools"
+    },
     // {
     //   "name": "Examples (web)",
     //   "path": "../packages/playground-web"

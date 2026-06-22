@@ -10,14 +10,14 @@
   ],
   "types": "lib/types/index.d.ts",
   "scripts": {
-    "clean": "rm -rf ./lib ./temp/tsc",
+    "clean": "rm -rf ./lib ./temp",
     "lint": "eslint .",
     "spellcheck": "cspell lint . -c ../../.vscode/cspell.json",
     "debug": "cross-env SCOPE=\"debug\" jest -c ./jest.config.ts",
     "bundle": "rollup -c ./config/rollup.config.js",
     "types": "tsc -p ./tsconfig.build.json --declaration --declarationDir ./temp/tsc/types --emitDeclarationOnly",
     "api": "api-extractor run -c ./config/api-extractor.json --local --verbose",
-    "build": "sh ./scripts/run/build.sh",
+    "build": "tsx ./scripts/build",
     "test": "cross-env SCOPE=\"bundled\" jest -c ./jest.config.ts",
     "prepack": "tsx ./scripts/run/sync-package",
     "all": "sh ./scripts/run/all.sh"
@@ -53,6 +53,7 @@
     "@rollup/plugin-terser": "~1.0.0",
     "@types/jest": "~30.0.0",
     "@types/node": "~26.0.0",
+    "cotton-box-repo-tools": "workspace:*",
     "cross-env": "~10.1.0",
     "cspell": "~10.0.1",
     "eslint": "~10.5.0",
@@ -64,5 +65,8 @@
     "rollup-plugin-typescript2": "~0.37.0",
     "ts-node": "~10.9.2",
     "tsx": "~4.22.4"
+  },
+  "engines": {
+    "node": ">=24.0"
   }
 }

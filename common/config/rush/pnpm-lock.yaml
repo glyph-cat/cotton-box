@@ -55,6 +55,9 @@ importers:
       '@types/node':
         specifier: ~26.0.0
         version: 26.0.0
+      cotton-box-repo-tools:
+        specifier: workspace:*
+        version: link:../repo-tools
       cross-env:
         specifier: ~10.1.0
         version: 10.1.0
@@ -88,6 +91,12 @@ importers:
       tsx:
         specifier: ~4.22.4
         version: 4.22.4
+
+  ../../packages/doc-utils:
+    dependencies:
+      '@types/node':
+        specifier: ~26.0.0
+        version: 26.0.0
 
   ../../packages/docs:
     dependencies:
@@ -185,6 +194,24 @@ importers:
       cotton-box:
         specifier: workspace:*
         version: link:../core
+
+  ../../packages/repo-tools:
+    dependencies:
+      '@glyph-cat/foundation':
+        specifier: ~0.0.0-experimental.90
+        version: 0.0.0-experimental.90
+      '@types/node':
+        specifier: ~26.0.0
+        version: 26.0.0
+      chalk:
+        specifier: ~5.6.2
+        version: 5.6.2
+      cotton-box-doc-utils:
+        specifier: workspace:*
+        version: link:../doc-utils
+      type-fest:
+        specifier: ~5.7.0
+        version: 5.7.0
 
 packages:
 
@@ -1972,6 +1999,9 @@ packages:
 
   '@glyph-cat/foundation@0.0.0-experimental.89':
     resolution: {integrity: sha512-55MKRr/pjXh13LmLTGuz9m8gMPAxTYXXuqq5YVhlk0zx62MmedetKQoMZDHVG+lEMPLjPBAlur6uW6n7ySixZA==}
+
+  '@glyph-cat/foundation@0.0.0-experimental.90':
+    resolution: {integrity: sha512-cBIzWJY3WPXp2RPaUcvpzyEL71gbI+a/O72ZggEFWnTtkR+ZNvTffCrKYYCLMEIkubleLdlV/8waDOZ2RtLJWw==}
 
   '@glyph-cat/type-checking@1.0.0':
     resolution: {integrity: sha512-dxssMi8bdzZb/DU1Bptn42T5fXV2rtlZZJry3mWej+ru3nFBE2fRtPDAggaW9UJWjcvIZN8ThzSV/42/Geo4+g==}
@@ -7948,6 +7978,10 @@ packages:
     resolution: {integrity: sha512-eNRKgb3z66Yp3D2CixVujOUvXLFUTij/zVnV8KRyvFdQwpz7I5DS8UfRkTeLzb64u+dkzDSdelE24izu+zSSUg==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
+  tagged-tag@1.0.0:
+    resolution: {integrity: sha512-yEFYrVhod+hdNyx7g5Bnkkb0G6si8HJurOoOEgC8B/O0uXLHlaey/65KRv6cuWBNhBgHKAROVpc7QyYqE5gFng==}
+    engines: {node: '>=20'}
+
   tapable@2.3.3:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
@@ -8125,6 +8159,10 @@ packages:
   type-fest@2.19.0:
     resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
     engines: {node: '>=12.20'}
+
+  type-fest@5.7.0:
+    resolution: {integrity: sha512-1URUxUqfHFM1c+zfSPsa3gnkO7Aq21qyH75SIduNYz4SzY964rn1X2vCMQaHSHhktiw+0kPa2iyb6PUpXqB6Vg==}
+    engines: {node: '>=20'}
 
   type-is@1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
@@ -11272,6 +11310,8 @@ snapshots:
       - typescript
 
   '@glyph-cat/foundation@0.0.0-experimental.89': {}
+
+  '@glyph-cat/foundation@0.0.0-experimental.90': {}
 
   '@glyph-cat/type-checking@1.0.0':
     dependencies:
@@ -18650,6 +18690,8 @@ snapshots:
     dependencies:
       '@pkgr/core': 0.3.6
 
+  tagged-tag@1.0.0: {}
+
   tapable@2.3.3: {}
 
   terser-webpack-plugin@5.6.1(clean-css@5.3.3)(cssnano@6.1.2(postcss@8.5.15))(html-minifier-terser@7.2.0)(postcss@8.5.15)(webpack@5.107.2):
@@ -18776,6 +18818,10 @@ snapshots:
   type-fest@1.4.0: {}
 
   type-fest@2.19.0: {}
+
+  type-fest@5.7.0:
+    dependencies:
+      tagged-tag: 1.0.0
 
   type-is@1.6.18:
     dependencies:

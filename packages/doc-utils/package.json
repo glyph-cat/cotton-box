@@ -1,0 +1,9 @@
+{
+  "name": "cotton-box-doc-utils",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@types/node": "~26.0.0"
+  }
+}

@@ -138,9 +138,10 @@
   },
   "telemetryEnabled": false,
   "allowedProjectTags": [
-    "library",
     "doc",
-    "playground"
+    "library",
+    "playground",
+    "tools"
   ],
   "projects": [
     {
@@ -167,6 +168,22 @@
         "doc"
       ]
     },
+    {
+      "packageName": "cotton-box-doc-utils",
+      "projectFolder": "packages/doc-utils",
+      "shouldPublish": false,
+      "tags": [
+        "tools"
+      ]
+    },
+    {
+      "packageName": "cotton-box-repo-tools",
+      "projectFolder": "packages/repo-tools",
+      "shouldPublish": false,
+      "tags": [
+        "tools"
+      ]
+    }
     // {
     //   "packageName": "cotton-box-playground-web",
     //   "projectFolder": "packages/playground-web",

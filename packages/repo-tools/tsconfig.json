@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "importHelpers": false,
+    "isolatedModules": true,
+    "lib": [
+      "esnext",
+    ],
+    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "stripInternal": true,
+    "target": "esnext",
+    "types": [
+      "node",
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.draft*",
+    "**/*.old*",
+    "**/*.scripted*",
+    "**/*.test.*",
+  ],
+}
