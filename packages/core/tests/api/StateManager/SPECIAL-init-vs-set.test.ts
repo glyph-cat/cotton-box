@@ -16,7 +16,7 @@ test('commit', async () => {
   })
 
   TestState.set(41)
-  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(console.error).toHaveBeenCalledOnceInDevelopment()
   expect(TestState.get()).toBe(0)
 
   await initPromise
@@ -36,7 +36,7 @@ test('commitNoop', async () => {
   })
 
   TestState.set(41)
-  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(console.error).toHaveBeenCalledOnceInDevelopment()
   expect(TestState.get()).toBe(0)
 
   await initPromise

@@ -30,14 +30,14 @@ afterEach(() => {
 })
 
 expect.extend({
-  toHaveBeenCalledOnceInProduction(received: any) {
+  toHaveBeenCalledOnceInDevelopment(received: any) {
     if (!received?._isMockFunction) {
       return {
         pass: false,
         message: () => `Matcher error: ${this.utils.RECEIVED_COLOR('received')} value must be a mock or spy function`,
       }
     }
-    const expectedCallCount = CurrentTestSpec.BUNDLE_TYPE === 'production' ? 1 : 0
+    const expectedCallCount = CurrentTestSpec.BUNDLE_TYPE !== 'production' ? 1 : 0
     const actualCallCount = received.mock.calls.length
     return {
       pass: actualCallCount === expectedCallCount,

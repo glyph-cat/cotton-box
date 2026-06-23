@@ -18,7 +18,7 @@ test('commit', async () => {
   const watchCallback = jest.fn()
   commitRef(2)
   expect(watchCallback).not.toHaveBeenCalled()
-  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(console.error).toHaveBeenCalledOnceInDevelopment()
 })
 
 test('commitNoop', async () => {
@@ -32,5 +32,5 @@ test('commitNoop', async () => {
   const watchCallback = jest.fn()
   commitRef()
   expect(watchCallback).not.toHaveBeenCalled()
-  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(console.error).toHaveBeenCalledOnceInDevelopment()
 })

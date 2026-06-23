@@ -14,5 +14,5 @@ test('Main', () => {
   TestState.init(async ({ commitNoop }) => {
     commitNoop()
   })
-  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(console.error).toHaveBeenCalledOnceInDevelopment()
 })

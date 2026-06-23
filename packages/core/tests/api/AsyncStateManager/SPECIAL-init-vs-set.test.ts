@@ -18,7 +18,7 @@ describe('No pending changes', () => {
     })
 
     TestState.set(41)
-    expect(console.error).toHaveBeenCalledOnceInProduction()
+    expect(console.error).toHaveBeenCalledOnceInDevelopment()
     expect(TestState.getSync()).toBe(0)
 
     await initPromise
@@ -38,7 +38,7 @@ describe('No pending changes', () => {
     })
 
     TestState.set(41)
-    expect(console.error).toHaveBeenCalledOnceInProduction()
+    expect(console.error).toHaveBeenCalledOnceInDevelopment()
     expect(TestState.getSync()).toBe(0)
 
     await initPromise
