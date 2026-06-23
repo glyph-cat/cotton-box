@@ -1,14 +1,14 @@
 /* eslint-disable import/no-unresolved */
 import * as __debugLib__ from 'cotton-box'
 import * as __debugReactLib__ from '../src'
-import * as __cjsLib__ from 'cotton-box/../../src/packages/core/lib/cjs'
-import * as __cjsReactLib__ from '../lib/cjs/index.js'
-import * as __esLib__ from 'cotton-box/../../src/packages/core/lib/es/index.js'
-import * as __esReactLib__ from '../lib/es/index.js'
-import * as __umdLib__ from 'cotton-box/../../src/packages/core/lib/umd/index.js'
-import * as __umdMinLib__ from 'cotton-box/../../src/packages/core/lib/umd/index.min.js'
-import * as __umdReactLib__ from '../lib/umd/index.js'
-import * as __umdMinReactLib__ from '../lib/umd/index.min.js'
+import * as __cjsLib__ from 'cotton-box/../../src/packages/core/dist/cjs'
+import * as __cjsReactLib__ from '../dist/cjs/index.js'
+import * as __esLib__ from 'cotton-box/../../src/packages/core/dist/es/index.js'
+import * as __esReactLib__ from '../dist/es/index.js'
+import * as __umdLib__ from 'cotton-box/../../src/packages/core/dist/umd/index.js'
+import * as __umdMinLib__ from 'cotton-box/../../src/packages/core/dist/umd/index.min.js'
+import * as __umdReactLib__ from '../dist/umd/index.js'
+import * as __umdMinReactLib__ from '../dist/umd/index.min.js'
 /* eslint-enable import/no-unresolved */
 
 export interface TestConfig {
@@ -49,7 +49,7 @@ const BUNDLED_BUILDS: Array<TestConfig> = [
     buildEnv: 'prod',
     buildType: 'es',
     description: 'EcmaScript (Minified)',
-    Lib: require('cotton-box/lib/es/index.mjs'),
+    Lib: require('cotton-box/dist/es/index.mjs'),
     ReactLib: require('../temp/test-builds/es-min.js'),
   },
   {

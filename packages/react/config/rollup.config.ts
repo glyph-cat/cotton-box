@@ -94,7 +94,7 @@ const config: Array<RollupOptions> = [
     // CommonJS
     input: INPUT_FILE,
     output: {
-      file: 'lib/cjs/index.js',
+      file: 'dist/cjs/index.js',
       format: 'cjs',
       exports: 'named',
       sourcemap: false,
@@ -108,7 +108,7 @@ const config: Array<RollupOptions> = [
     // EcmaScript
     input: INPUT_FILE,
     output: {
-      file: 'lib/es/index.js',
+      file: 'dist/es/index.js',
       format: 'es',
       exports: 'named',
       sourcemap: false,
@@ -122,7 +122,7 @@ const config: Array<RollupOptions> = [
     // EcmaScript (Minified)
     input: INPUT_FILE,
     output: {
-      file: 'lib/es/index.mjs',
+      file: 'dist/es/index.mjs',
       format: 'es',
       exports: 'named',
       sourcemap: false,
@@ -137,7 +137,7 @@ const config: Array<RollupOptions> = [
     // React Native
     input: INPUT_FILE,
     output: {
-      file: 'lib/native/index.js',
+      file: 'dist/native/index.js',
       format: 'es',
       exports: 'named',
     },
@@ -157,7 +157,7 @@ const config: Array<RollupOptions> = [
     // UMD
     input: INPUT_FILE,
     output: {
-      file: 'lib/umd/index.js',
+      file: 'dist/umd/index.js',
       format: 'umd',
       name: UMD_NAME,
       exports: 'named',
@@ -174,7 +174,7 @@ const config: Array<RollupOptions> = [
     // UMD (Minified)
     input: INPUT_FILE,
     output: {
-      file: 'lib/umd/index.min.js',
+      file: 'dist/umd/index.min.js',
       format: 'umd',
       name: UMD_NAME,
       exports: 'named',

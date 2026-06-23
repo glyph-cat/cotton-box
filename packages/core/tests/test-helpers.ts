@@ -1,8 +1,12 @@
+import { type ICustomTestSpec } from 'cotton-box-repo-tools/test-abstractions'
+
 export interface IUserState {
   firstName: string
   lastName: string
   luckyNumber: number
 }
+
+export const CurrentTestSpec: ICustomTestSpec = __CUSTOM_TEST_SPEC
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {
@@ -11,11 +15,6 @@ export namespace TestUtils {
     return new Promise((resolve) => {
       setTimeout(resolve, timeout)
     })
-  }
-
-  export function isThenable<T>(value: unknown): value is Promise<T> {
-    // @ts-expect-error because we are forcefully probing at the property.
-    return typeof value?.['then'] === 'function'
   }
 
   export function tryOnly(callback: () => void): void {

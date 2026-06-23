@@ -15,7 +15,7 @@ export async function insertDocVariables(): Promise<void> {
   const packageInfo = JSON.parse(await readFile('./package.json', Encoding.UTF_8)) as PackageJson
   const typeDefinitionPath = `./${packageInfo.types}`
 
-  const bundle: IBundle = await import(path.join(process.cwd(), 'lib', 'cjs', 'index.js'))
+  const bundle: IBundle = await import(path.join(process.cwd(), 'dist', 'cjs', 'index.js'))
   const VARIABLE_POOL = {
     ...DocConstants,
     PACKAGE_BUILD_HASH: bundle.BUILD_HASH,

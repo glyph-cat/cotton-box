@@ -40,5 +40,6 @@
     "js/ts.format.semicolons": "remove",
     "js/ts.preferences.quoteStyle": "single",
     "search.useParentIgnoreFiles": true,
+    "chat.disableAIFeatures": false
   }
 }

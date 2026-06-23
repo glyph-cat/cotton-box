@@ -1,58 +1,50 @@
 import { Fn } from '@glyph-cat/foundation'
-import type { StateManager as $1, AsyncStateManager as $2, StateManagerInitArgs } from '../../src'
+import { AsyncStateManager, StateManager, StateManagerInitArgs } from 'cotton-box'
 import { TestUtils } from '../test-helpers'
-import { TestConfig, wrapper } from '../test-wrapper'
 
-type $ = $1<unknown> | $2<unknown>
+jest.useRealTimers()
 
-wrapper(({ Lib: { StateManager, AsyncStateManager } }: TestConfig) => {
+let disposeFn: Fn<void, void | Promise<void>>
+afterEach(async () => { await disposeFn?.() })
 
-  jest.useRealTimers()
+let TestState: StateManager<unknown> | AsyncStateManager<unknown>
+afterEach(() => { TestState?.dispose() })
 
-  let disposeFn: Fn<void, void | Promise<void>>
-  afterEach(async () => { await disposeFn?.() })
+const stateManagersToTestWith = {
+  StateManager,
+  AsyncStateManager,
+} as const
 
-  let TestState: $
-  // let TestState: InstanceType<typeof StateManager<unknown> | typeof AsyncStateManager<unknown>>
-  afterEach(() => { TestState?.dispose() })
+for (const StateManagerTypeKey in stateManagersToTestWith) {
+  const StateManagerType = stateManagersToTestWith[StateManagerTypeKey as keyof typeof stateManagersToTestWith]
+  test(StateManagerTypeKey, async () => {
 
-  const stateManagersToTestWith = {
-    StateManager,
-    AsyncStateManager,
-  } as const
-
-  for (const StateManagerTypeKey in stateManagersToTestWith) {
-    const StateManagerType = stateManagersToTestWith[StateManagerTypeKey]
-    test(StateManagerTypeKey, async () => {
-
-      TestState = new StateManagerType(null, {
-        lifecycle: {
-          async init({ commitNoop }: StateManagerInitArgs<unknown>) {
-            await TestUtils.delay(10)
-            commitNoop()
-          },
+    TestState = new StateManagerType(null, {
+      lifecycle: {
+        async init({ commitNoop }: StateManagerInitArgs<unknown>) {
+          await TestUtils.delay(10)
+          commitNoop()
         },
-        suspense: true,
-      })
-      disposeFn = TestState.dispose
-
-      // Scenario where State Managers should start off with `isInitializing === false`
-      // has already been tested when testing the instantiation process.
-      expect(TestState.isInitializing.get()).toBe(true)
-
-      await TestUtils.delay(10)
-      expect(TestState.isInitializing.get()).toBe(false)
-
-      TestState.init(async ({ commitNoop }) => {
-        await TestUtils.delay(10)
-        commitNoop()
-      })
-      expect(TestState.isInitializing.get()).toBe(true)
-
-      await TestUtils.delay(10)
-      expect(TestState.isInitializing.get()).toBe(false)
-
+      },
+      suspense: true,
     })
-  }
+    disposeFn = TestState.dispose
 
-})
+    // Scenario where State Managers should start off with `isInitializing === false`
+    // has already been tested when testing the instantiation process.
+    expect(TestState.isInitializing.get()).toBe(true)
+
+    await TestUtils.delay(10)
+    expect(TestState.isInitializing.get()).toBe(false)
+
+    TestState.init(async ({ commitNoop }) => {
+      await TestUtils.delay(10)
+      commitNoop()
+    })
+    expect(TestState.isInitializing.get()).toBe(true)
+
+    await TestUtils.delay(10)
+    expect(TestState.isInitializing.get()).toBe(false)
+
+  })
+}

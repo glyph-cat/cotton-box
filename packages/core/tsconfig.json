@@ -7,6 +7,11 @@
     "isolatedModules": true,
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "paths": {
+      "cotton-box": [
+        "./src/index.ts"
+      ]
+    },
     "rootDir": ".",
     "skipLibCheck": true,
     "strict": true,

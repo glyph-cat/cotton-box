@@ -1,13 +1,11 @@
 import { Severity } from '@glyph-cat/eslint-config'
 import { libraryAuthoring as baseLibraryAuthoring } from '@glyph-cat/eslint-config/base'
 import { recommended as jestRecommended } from '@glyph-cat/eslint-config/jest'
-import { libraryAuthoring as reactLibraryAuthoring } from '@glyph-cat/eslint-config/react'
 import { defineConfig } from 'eslint/config'
 import globals from 'globals'
 
 module.exports = defineConfig(
   baseLibraryAuthoring,
-  reactLibraryAuthoring,
   jestRecommended,
   {
     languageOptions: {
@@ -23,9 +21,18 @@ module.exports = defineConfig(
     },
   },
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: process.cwd(),
+      },
+    },
+  },
+  {
     settings: {
-      react: {
-        version: '19',
+      'import/resolver': {
+        typescript: true,
       },
     },
   },

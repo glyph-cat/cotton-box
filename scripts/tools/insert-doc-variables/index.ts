@@ -11,7 +11,7 @@ export function insertDocVariables(): void {
   const typeDefinitionPath = `./${packageInfo.types}`
 
   // Load variables
-  eval(readFileSync('./lib/cjs/index.js', Encoding.UTF_8))
+  eval(readFileSync('./dist/cjs/index.js', Encoding.UTF_8))
 
   const VARIABLE_POOL = {
     ...DocConstants,

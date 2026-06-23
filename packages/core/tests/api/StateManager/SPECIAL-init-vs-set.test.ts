@@ -1,52 +1,48 @@
 /* eslint-disable no-console */
+import { StateManager } from 'cotton-box'
 import { TestUtils } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
 
-wrapper(({ buildEnv, Lib: { StateManager } }: TestConfig) => {
+jest.useRealTimers()
 
-  jest.useRealTimers()
+let TestState: StateManager<number>
+afterEach(() => { TestState?.dispose() })
 
-  let TestState: InstanceType<typeof StateManager<number>>
-  afterEach(() => { TestState?.dispose() })
+test('commit', async () => {
 
-  test('commit', async () => {
-
-    TestState = new StateManager(0)
-    const initPromise = TestState.init(async ({ commit }) => {
-      await TestUtils.delay(10)
-      commit(101)
-    })
-
-    TestState.set(41)
-    expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
-    expect(TestState.get()).toBe(0)
-
-    await initPromise
-    expect(TestState.get()).toBe(101)
-
-    TestState.set(42)
-    expect(TestState.get()).toBe(42)
-
+  TestState = new StateManager(0)
+  const initPromise = TestState.init(async ({ commit }) => {
+    await TestUtils.delay(10)
+    commit(101)
   })
 
-  test('commitNoop', async () => {
+  TestState.set(41)
+  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(TestState.get()).toBe(0)
 
-    TestState = new StateManager(0)
-    const initPromise = TestState.init(async ({ commitNoop }) => {
-      await TestUtils.delay(10)
-      commitNoop()
-    })
+  await initPromise
+  expect(TestState.get()).toBe(101)
 
-    TestState.set(41)
-    expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
-    expect(TestState.get()).toBe(0)
+  TestState.set(42)
+  expect(TestState.get()).toBe(42)
 
-    await initPromise
-    expect(TestState.get()).toBe(0)
+})
 
-    TestState.set(42)
-    expect(TestState.get()).toBe(42)
+test('commitNoop', async () => {
 
+  TestState = new StateManager(0)
+  const initPromise = TestState.init(async ({ commitNoop }) => {
+    await TestUtils.delay(10)
+    commitNoop()
   })
+
+  TestState.set(41)
+  expect(console.error).toHaveBeenCalledOnceInProduction()
+  expect(TestState.get()).toBe(0)
+
+  await initPromise
+  expect(TestState.get()).toBe(0)
+
+  TestState.set(42)
+  expect(TestState.get()).toBe(42)
 
 })

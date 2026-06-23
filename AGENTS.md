@@ -264,9 +264,9 @@ await UserState.set(async (prevState) => {
 - Always prefer latest documentation over cached knowledge
 
 ## External Sources
-- TypeScript definitions for version 1.x:
-  - `cotton-box`: https://unpkg.com/cotton-box@1.0.0/lib/types/index.d.ts
-  - `cotton-box-react`: https://unpkg.com/cotton-box-react@1.0.0/lib/types/index.d.ts
+- TypeScript definitions for version 2.x:
+  - `cotton-box`: https://unpkg.com/cotton-box@2.0.0/dist/types/index.d.ts
+  - `cotton-box-react`: https://unpkg.com/cotton-box-react@2.0.0/dist/types/index.d.ts
 - Code Sandbox examples:
   - https://glyph-cat.github.io/cotton-box/docs/demo/basic/counter
   - https://glyph-cat.github.io/cotton-box/docs/demo/basic/todo-list-app

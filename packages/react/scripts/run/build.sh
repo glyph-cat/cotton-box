@@ -11,4 +11,4 @@ yarn tsx ./scripts/run/insert-doc-variables
 
 # Copy index.mjs to 'temp/' and change extension to '.js'
 mkdir -p ./temp/test-builds
-cp -rf ./lib/es/index.mjs ./temp/test-builds/es-min.js
+cp -rf ./dist/es/index.mjs ./temp/test-builds/es-min.js

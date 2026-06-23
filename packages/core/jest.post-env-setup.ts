@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { CurrentTestSpec } from './tests/test-helpers'
 
 type IConsole = typeof console
 type ConsoleKey = keyof IConsole
@@ -28,24 +29,21 @@ afterEach(() => {
   }
 })
 
-export { }
+expect.extend({
+  toHaveBeenCalledOnceInProduction(received: any) {
+    if (!received?._isMockFunction) {
+      return {
+        pass: false,
+        message: () => `Matcher error: ${this.utils.RECEIVED_COLOR('received')} value must be a mock or spy function`,
+      }
+    }
+    const expectedCallCount = CurrentTestSpec.BUNDLE_TYPE === 'production' ? 1 : 0
+    const actualCallCount = received.mock.calls.length
+    return {
+      pass: actualCallCount === expectedCallCount,
+      message: () => `Expected ${expectedCallCount} ${this.utils.pluralize('call', expectedCallCount)} in ${CurrentTestSpec.BUNDLE_TYPE} bundle but it has been called ${actualCallCount} ${this.utils.pluralize('time', actualCallCount)}`,
+    }
+  },
+})
 
-// TODO: [Low priority]
-// https://jestjs.io/docs/expect#expectextendmatchers
-// https://stackoverflow.com/a/64471550/5810737
-// import type { TestConfig } from './tests/test-wrapper'
-// expect.extend({
-//   toHaveBeenCalledIfNotProdEnv: (received, buildEnv: TestConfig['buildEnv']) => {
-//     if (buildEnv !== 'prod') {
-//       return {
-//         pass: true,
-//         message: () => `Expected \`console.error\` to be called but it is not`,
-//       }
-//     } else {
-//       return {
-//         pass: received,
-//         message: () => '',
-//       }
-//     }
-//   }
-// })
+export { }

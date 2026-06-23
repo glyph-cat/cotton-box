@@ -1,8 +1,7 @@
+import { VERSION } from 'cotton-box'
 import { version as PKG_VERSION } from '../../package.json'
-import { TestConfig, wrapper } from '../test-wrapper'
+import { CurrentTestSpec } from '../test-helpers'
 
-wrapper(({ Lib: { VERSION }, buildEnv }: TestConfig) => {
-  test('main', () => {
-    expect(VERSION).toBe(buildEnv === 'debug' ? undefined : PKG_VERSION)
-  })
+test('main', () => {
+  expect(VERSION).toBe(CurrentTestSpec.BUNDLE_TYPE === 'debug' ? undefined : PKG_VERSION)
 })

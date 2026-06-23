@@ -1,33 +1,29 @@
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { StateManager } from 'cotton-box'
 
-wrapper(({ Lib: { StateManager } }: TestConfig) => {
+let TestState: StateManager<number>
+afterEach(() => { TestState?.dispose() })
 
-  let TestState: InstanceType<typeof StateManager<number>>
-  afterEach(() => { TestState?.dispose() })
+test('Main', () => {
 
-  test('Main', () => {
+  TestState = new StateManager(42)
 
-    TestState = new StateManager(42)
+  const numbers: Array<[number]> = []
+  const unwatch1 = TestState.watch((...args) => { numbers.push(args) })
 
-    const numbers: Array<[number]> = []
-    const unwatch1 = TestState.watch((...args) => { numbers.push(args) })
+  // Make sure there are no issues when calling `dispose` multiple times.
+  TestState.dispose()
+  TestState.dispose()
 
-    // Make sure there are no issues when calling `dispose` multiple times.
-    TestState.dispose()
-    TestState.dispose()
+  // Make sure `unwatch` callback has the same type/signature even after dispose.
+  const unwatch2 = TestState.watch((...args) => { numbers.push(args) })
+  expect(typeof unwatch2).toBe('function')
 
-    // Make sure `unwatch` callback has the same type/signature even after dispose.
-    const unwatch2 = TestState.watch((...args) => { numbers.push(args) })
-    expect(typeof unwatch2).toBe('function')
+  // Expect no state changes after disposal
+  TestState.set((n) => n + 1)
+  expect(numbers).toStrictEqual([])
 
-    // Expect no state changes after disposal
-    TestState.set((n) => n + 1)
-    expect(numbers).toStrictEqual([])
-
-    // Make sure there are no issues when calling `unwatch` even after disposed.
-    unwatch1()
-    unwatch2()
-
-  })
+  // Make sure there are no issues when calling `unwatch` even after disposed.
+  unwatch1()
+  unwatch2()
 
 })

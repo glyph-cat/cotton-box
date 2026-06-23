@@ -1,104 +1,100 @@
 /* eslint-disable no-console */
+import { AsyncStateManager } from 'cotton-box'
 import { TestUtils } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
 
-wrapper(({ buildEnv, Lib: { AsyncStateManager } }: TestConfig) => {
+jest.useRealTimers()
 
-  jest.useRealTimers()
+let TestState: AsyncStateManager<number>
+afterEach(async () => { await TestState?.dispose() })
 
-  let TestState: InstanceType<typeof AsyncStateManager<number>>
-  afterEach(async () => { await TestState?.dispose() })
+describe('No pending changes', () => {
 
-  describe('No pending changes', () => {
+  test('commit', async () => {
 
-    test('commit', async () => {
-
-      TestState = new AsyncStateManager(0)
-      const initPromise = TestState.init(async ({ commit }) => {
-        await TestUtils.delay(10)
-        commit(101)
-      })
-
-      TestState.set(41)
-      expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
-      expect(TestState.getSync()).toBe(0)
-
-      await initPromise
-      expect(TestState.getSync()).toBe(101)
-
-      TestState.set(42)
-      expect(TestState.getSync()).toBe(42)
-
+    TestState = new AsyncStateManager(0)
+    const initPromise = TestState.init(async ({ commit }) => {
+      await TestUtils.delay(10)
+      commit(101)
     })
 
-    test('commitNoop', async () => {
+    TestState.set(41)
+    expect(console.error).toHaveBeenCalledOnceInProduction()
+    expect(TestState.getSync()).toBe(0)
 
-      TestState = new AsyncStateManager(0)
-      const initPromise = TestState.init(async ({ commitNoop }) => {
-        await TestUtils.delay(10)
-        commitNoop()
-      })
+    await initPromise
+    expect(TestState.getSync()).toBe(101)
 
-      TestState.set(41)
-      expect(console.error).toHaveBeenCalledTimes(buildEnv === 'prod' ? 0 : 1)
-      expect(TestState.getSync()).toBe(0)
-
-      await initPromise
-      expect(TestState.getSync()).toBe(0)
-
-      TestState.set(42)
-      expect(TestState.getSync()).toBe(42)
-
-    })
+    TestState.set(42)
+    expect(TestState.getSync()).toBe(42)
 
   })
 
-  describe('Has pending changes', () => {
+  test('commitNoop', async () => {
 
-    test('commit', async () => {
-
-      TestState = new AsyncStateManager(0)
-
-      TestState.set(async () => { await TestUtils.delay(10); return 1 })
-      setTimeout(() => {
-        TestState.init(async ({ commit }) => {
-          await TestUtils.delay(10)
-          commit(101)
-        })
-      }, 10)
-
-      expect(TestState.getSync()).toBe(0)
-
-      // Expect init to not take effect yet
+    TestState = new AsyncStateManager(0)
+    const initPromise = TestState.init(async ({ commitNoop }) => {
       await TestUtils.delay(10)
-      expect(TestState.getSync()).toBe(1)
-
-      await TestUtils.delay(10)
-      expect(TestState.getSync()).toBe(101)
-
+      commitNoop()
     })
 
-    test('commitNoop', async () => {
+    TestState.set(41)
+    expect(console.error).toHaveBeenCalledOnceInProduction()
+    expect(TestState.getSync()).toBe(0)
 
-      TestState = new AsyncStateManager(0)
+    await initPromise
+    expect(TestState.getSync()).toBe(0)
 
-      let isInitCalled = false
-      TestState.set(async () => { await TestUtils.delay(10); return 1 })
-      setTimeout(() => {
-        TestState.init(async ({ commitNoop }) => {
-          await TestUtils.delay(10)
-          commitNoop()
-          isInitCalled = true
-        })
-      }, 10)
+    TestState.set(42)
+    expect(TestState.getSync()).toBe(42)
 
-      await TestUtils.delay(10)
-      expect(isInitCalled).toBe(false)
+  })
 
-      await TestUtils.delay(10)
-      expect(isInitCalled).toBe(true)
+})
 
-    })
+describe('Has pending changes', () => {
+
+  test('commit', async () => {
+
+    TestState = new AsyncStateManager(0)
+
+    TestState.set(async () => { await TestUtils.delay(10); return 1 })
+    setTimeout(() => {
+      TestState.init(async ({ commit }) => {
+        await TestUtils.delay(10)
+        commit(101)
+      })
+    }, 10)
+
+    expect(TestState.getSync()).toBe(0)
+
+    // Expect init to not take effect yet
+    await TestUtils.delay(10)
+    expect(TestState.getSync()).toBe(1)
+
+    await TestUtils.delay(10)
+    expect(TestState.getSync()).toBe(101)
+
+  })
+
+  test('commitNoop', async () => {
+
+    TestState = new AsyncStateManager(0)
+
+    let isInitCalled = false
+    TestState.set(async () => { await TestUtils.delay(10); return 1 })
+    setTimeout(() => {
+      TestState.init(async ({ commitNoop }) => {
+        await TestUtils.delay(10)
+        commitNoop()
+        isInitCalled = true
+      })
+    }, 10)
+
+    await TestUtils.delay(10)
+    expect(isInitCalled).toBe(false)
+
+    await TestUtils.delay(10)
+    expect(isInitCalled).toBe(true)
 
   })
 

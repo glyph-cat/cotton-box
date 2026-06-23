@@ -1,4 +1,4 @@
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { InvalidStateTransitionError, SimpleFiniteStateManager } from 'cotton-box'
 
 enum DummyState {
   CREATED = 1,
@@ -8,119 +8,112 @@ enum DummyState {
   DISPOSED,
 }
 
-wrapper(({ Lib: {
-  SimpleFiniteStateManager,
-  InvalidStateTransitionError,
-} }: TestConfig) => {
+let TestState: SimpleFiniteStateManager<DummyState | number>
+afterEach(() => { TestState?.dispose() })
 
-  let TestState: InstanceType<typeof SimpleFiniteStateManager<DummyState>>
-  afterEach(() => { TestState?.dispose() })
+test('Happy path', () => {
 
-  test('Happy path', () => {
+  TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
+    [DummyState.CREATED, DummyState.STARTING],
+    [DummyState.CREATED, DummyState.DISPOSED],
+    [DummyState.STARTING, DummyState.STARTED],
+    [DummyState.STARTED, DummyState.STOPPED],
+    [DummyState.STOPPED, DummyState.STARTED],
+    [DummyState.STOPPED, DummyState.DISPOSED],
+  ], {
+    serializeState(state) {
+      return DummyState[state] ?? String(state)
+    },
+  })
+  expect(() => {
+    expect(TestState.get()).toBe(DummyState.CREATED)
+    TestState.set(DummyState.STARTING)
+    expect(TestState.get()).toBe(DummyState.STARTING)
+    TestState.set(DummyState.STARTED)
+    expect(TestState.get()).toBe(DummyState.STARTED)
+    TestState.set(DummyState.STOPPED)
+    expect(TestState.get()).toBe(DummyState.STOPPED)
+    TestState.set(DummyState.STARTED)
+    expect(TestState.get()).toBe(DummyState.STARTED)
+    TestState.set(DummyState.STOPPED)
+    expect(TestState.get()).toBe(DummyState.STOPPED)
+    TestState.set(DummyState.DISPOSED)
+    expect(TestState.get()).toBe(DummyState.DISPOSED)
+  }).not.toThrow()
 
-    TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
-      [DummyState.CREATED, DummyState.STARTING],
-      [DummyState.CREATED, DummyState.DISPOSED],
-      [DummyState.STARTING, DummyState.STARTED],
-      [DummyState.STARTED, DummyState.STOPPED],
-      [DummyState.STOPPED, DummyState.STARTED],
-      [DummyState.STOPPED, DummyState.DISPOSED],
-    ], {
-      serializeState(state) {
-        return DummyState[state] ?? String(state)
-      },
-    })
-    expect(() => {
-      expect(TestState.get()).toBe(DummyState.CREATED)
-      TestState.set(DummyState.STARTING)
-      expect(TestState.get()).toBe(DummyState.STARTING)
-      TestState.set(DummyState.STARTED)
-      expect(TestState.get()).toBe(DummyState.STARTED)
-      TestState.set(DummyState.STOPPED)
-      expect(TestState.get()).toBe(DummyState.STOPPED)
-      TestState.set(DummyState.STARTED)
-      expect(TestState.get()).toBe(DummyState.STARTED)
-      TestState.set(DummyState.STOPPED)
-      expect(TestState.get()).toBe(DummyState.STOPPED)
-      TestState.set(DummyState.DISPOSED)
-      expect(TestState.get()).toBe(DummyState.DISPOSED)
-    }).not.toThrow()
+})
 
+test('Invalid state transition', () => {
+
+  TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
+    [DummyState.CREATED, DummyState.STARTING],
+    [DummyState.CREATED, DummyState.DISPOSED],
+    [DummyState.STARTING, DummyState.STARTED],
+    [DummyState.STARTED, DummyState.STOPPED],
+    [DummyState.STOPPED, DummyState.STARTED],
+    [DummyState.STOPPED, DummyState.DISPOSED],
+  ], {
+    serializeState(state) {
+      return DummyState[state] ?? String(state)
+    },
+  })
+  expect(() => {
+    TestState.set(DummyState.STOPPED)
+  }).toThrow(new InvalidStateTransitionError(
+    DummyState[DummyState.CREATED],
+    DummyState[DummyState.STOPPED],
+    TestState.name,
+  ))
+
+})
+
+test('No state transitions defined', () => {
+
+  TestState = new SimpleFiniteStateManager<DummyState>(DummyState.CREATED, [], {
+    serializeState(state) {
+      return DummyState[state] ?? String(state)
+    },
+  })
+  expect(() => {
+    TestState.set(DummyState.STARTED)
+  }).toThrow(new InvalidStateTransitionError(
+    DummyState[DummyState.CREATED],
+    DummyState[DummyState.STARTED],
+    TestState.name,
+  ))
+
+})
+
+test(SimpleFiniteStateManager.prototype.trySet.name, () => {
+
+  TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
+    [DummyState.CREATED, DummyState.STARTING],
+    [DummyState.CREATED, DummyState.DISPOSED],
+    [DummyState.STARTING, DummyState.STARTED],
+    [DummyState.STARTED, DummyState.STOPPED],
+    [DummyState.STOPPED, DummyState.STARTED],
+    [DummyState.STOPPED, DummyState.DISPOSED],
+  ], {
+    serializeState(state) {
+      return DummyState[state] ?? String(state)
+    },
   })
 
-  test('Invalid state transition', () => {
+  expect(TestState.trySet(DummyState.STARTED)).toBe(false)
+  expect(TestState.trySet(DummyState.STARTING)).toBe(true)
 
-    TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
-      [DummyState.CREATED, DummyState.STARTING],
-      [DummyState.CREATED, DummyState.DISPOSED],
-      [DummyState.STARTING, DummyState.STARTED],
-      [DummyState.STARTED, DummyState.STOPPED],
-      [DummyState.STOPPED, DummyState.STARTED],
-      [DummyState.STOPPED, DummyState.DISPOSED],
-    ], {
-      serializeState(state) {
-        return DummyState[state] ?? String(state)
-      },
-    })
-    expect(() => {
-      TestState.set(DummyState.STOPPED)
-    }).toThrow(new InvalidStateTransitionError(
-      DummyState[DummyState.CREATED],
-      DummyState[DummyState.STOPPED],
-      TestState.name,
-    ))
+})
 
+test(SimpleFiniteStateManager.prototype.tryReset.name, () => {
+  TestState = new SimpleFiniteStateManager(0, [
+    [0, 1],
+    [1, 0],
+  ], {
+    serializeState(state) {
+      return DummyState[state] ?? String(state)
+    },
   })
-
-  test('No state transitions defined', () => {
-
-    TestState = new SimpleFiniteStateManager(DummyState.CREATED, [], {
-      serializeState(state) {
-        return DummyState[state] ?? String(state)
-      },
-    })
-    expect(() => {
-      TestState.set(DummyState.STARTED)
-    }).toThrow(new InvalidStateTransitionError(
-      DummyState[DummyState.CREATED],
-      DummyState[DummyState.STARTED],
-      TestState.name,
-    ))
-
-  })
-
-  test(SimpleFiniteStateManager.prototype.trySet.name, () => {
-
-    TestState = new SimpleFiniteStateManager(DummyState.CREATED, [
-      [DummyState.CREATED, DummyState.STARTING],
-      [DummyState.CREATED, DummyState.DISPOSED],
-      [DummyState.STARTING, DummyState.STARTED],
-      [DummyState.STARTED, DummyState.STOPPED],
-      [DummyState.STOPPED, DummyState.STARTED],
-      [DummyState.STOPPED, DummyState.DISPOSED],
-    ], {
-      serializeState(state) {
-        return DummyState[state] ?? String(state)
-      },
-    })
-
-    expect(TestState.trySet(DummyState.STARTED)).toBe(false)
-    expect(TestState.trySet(DummyState.STARTING)).toBe(true)
-
-  })
-
-  test(SimpleFiniteStateManager.prototype.tryReset.name, () => {
-    TestState = new SimpleFiniteStateManager(0, [
-      [0, 1],
-      [1, 0],
-    ], {
-      serializeState(state) {
-        return DummyState[state] ?? String(state)
-      },
-    })
-    expect(TestState.tryReset()).toBeFalse()
-    TestState.set(1)
-    expect(TestState.tryReset()).toBeTrue()
-  })
-
+  expect(TestState.tryReset()).toBeFalse()
+  TestState.set(1)
+  expect(TestState.tryReset()).toBeTrue()
 })

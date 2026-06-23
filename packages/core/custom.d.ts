@@ -1,8 +1,16 @@
+import { type ICustomTestSpec } from 'cotton-box-repo-tools/test-abstractions'
+import 'jest'
 import 'jest-extended'
 
-// import type { TestConfig } from './tests/test-wrapper'
-
 declare global {
+
+  namespace jest {
+
+    interface Matchers<R> {
+      toHaveBeenCalledOnceInProduction(): R
+    }
+
+  }
 
   namespace NodeJS {
 
@@ -12,11 +20,7 @@ declare global {
 
   }
 
-  // namespace jest {
-  //   interface Matchers {
-  //     toHaveBeenCalledIfNotProdEnv(buildEnv: TestConfig['buildEnv']): CustomMatcherResult
-  //   }
-  // }
+  export const __CUSTOM_TEST_SPEC: ICustomTestSpec
 
 }
 
