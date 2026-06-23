@@ -63,7 +63,7 @@ temp/
 *.scripted*
 
 # Automatically generated
-src/packages/**/LICENSE
-src/packages/**/README.md
+packages/**/LICENSE
+packages/**/README.md
 
 certificates

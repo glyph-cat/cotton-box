@@ -3,7 +3,7 @@ import { customSpawn } from 'cotton-box-repo-tools/node-extensions'
 import { copyFile, mkdir, rm } from 'node:fs/promises'
 import path from 'node:path'
 
-(async function main() {
+(async function () {
   const packageDirectory = process.cwd() // ".../cotton-box/packages/core"
   await rm('./dist', { recursive: true, force: true })
   await rm('./temp', { recursive: true, force: true })

@@ -2,7 +2,7 @@ import { Encoding } from '@glyph-cat/foundation'
 import { copyFile, readFile, writeFile } from 'node:fs/promises'
 import { basename } from 'node:path'
 
-export async function syncPackage(): Promise<void> {
+(async function () {
 
   const contentValues: Record<string, string> = {
     core: 'This is the core package of cotton-box.',
@@ -15,8 +15,8 @@ export async function syncPackage(): Promise<void> {
   })()
 
   const [rootReadme] = await Promise.all([
-    readFile('../../../README.md', Encoding.UTF_8),
-    copyFile('../../../LICENSE', './LICENSE'),
+    readFile('../../README.md', Encoding.UTF_8),
+    copyFile('../../LICENSE', './LICENSE'),
   ])
 
   const subPackageReadmeContents = rootReadme.replace(
@@ -26,4 +26,4 @@ export async function syncPackage(): Promise<void> {
 
   await writeFile('./README.md', subPackageReadmeContents, Encoding.UTF_8)
 
-}
+})()
