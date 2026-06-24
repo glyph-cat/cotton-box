@@ -12,13 +12,13 @@ test('No additional options', () => {
   }
   TestState = new SimpleStateManager(defaultState)
   expect(TestState.name).toBeUndefined()
-  expect(Object.is(TestState.get(), defaultState)).toBe(true)
+  expect(TestState.get()).toShareObjectReferenceWith(defaultState)
   expect(TestState.get()).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(Object.is(TestState.defaultState, defaultState)).toBe(true)
+  expect(TestState.defaultState).toShareObjectReferenceWith(defaultState)
   expect(TestState.defaultState).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
@@ -36,13 +36,13 @@ test('With additional options', () => {
     name: 'numbers',
   })
   expect(TestState.name).toBe('numbers')
-  expect(Object.is(TestState.get(), defaultState)).toBe(true)
+  expect(TestState.get()).toShareObjectReferenceWith(defaultState)
   expect(TestState.get()).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(Object.is(TestState.defaultState, defaultState)).toBe(true)
+  expect(TestState.defaultState).toShareObjectReferenceWith(defaultState)
   expect(TestState.defaultState).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',

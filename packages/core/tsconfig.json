@@ -5,7 +5,10 @@
     "esModuleInterop": true,
     "importHelpers": false,
     "isolatedModules": true,
-    "module": "ESNext",
+    "lib": [
+      "esnext"
+    ],
+    "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
       "cotton-box": [

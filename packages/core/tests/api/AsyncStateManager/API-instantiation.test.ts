@@ -14,13 +14,13 @@ test('No additional options', async () => {
   TestState = new AsyncStateManager(defaultState)
   expect(TestState.isInitializing.get()).toBe(false)
   expect(TestState.name).toBeUndefined()
-  expect(Object.is(await TestState.get(), defaultState)).toBe(true)
+  expect(await TestState.get()).toShareObjectReferenceWith(defaultState)
   expect(await TestState.get()).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(Object.is(TestState.defaultState, defaultState)).toBe(true)
+  expect(TestState.defaultState).toShareObjectReferenceWith(defaultState)
   expect(TestState.defaultState).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
@@ -55,8 +55,8 @@ describe('lifecycle.init', () => {
       },
     })
     await TestState.isInitializing.wait(false)
-    expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
-    expect(Object.is(await TestState.get(), stateToCommit)).toBe(true)
+    expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
+    expect(await TestState.get()).toShareObjectReferenceWith(stateToCommit)
     expect(await TestState.get()).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',
@@ -93,13 +93,13 @@ describe('lifecycle.init', () => {
       },
     })
     await TestState.isInitializing.wait(false)
-    expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
+    expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
     expect(spiedDefaultState).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(Object.is(await TestState.get(), defaultState)).toBe(true)
+    expect(await TestState.get()).toShareObjectReferenceWith(defaultState)
     expect(await TestState.get()).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',

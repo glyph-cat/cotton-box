@@ -30,6 +30,15 @@ afterEach(() => {
 })
 
 expect.extend({
+  toShareObjectReferenceWith(received: any, expected: unknown) {
+    return {
+      pass: Object.is(received, expected),
+      message: () => `${this.utils.RECEIVED_COLOR('received')} value and ${this.utils.EXPECTED_COLOR('expected')} value does not share the same object reference.`,
+    }
+  },
+})
+
+expect.extend({
   toHaveBeenCalledOnceInDevelopment(received: any) {
     if (!received?._isMockFunction) {
       return {

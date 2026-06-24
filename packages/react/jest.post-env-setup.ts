@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { CurrentTestSpec } from './tests/test-helpers'
 
 type IConsole = typeof console
 type ConsoleKey = keyof IConsole
@@ -26,6 +27,32 @@ afterEach(() => {
     // @ts-expect-error This is a wrapper, type-wise, it should be safe.
     console[consoleMethodName] = originalMethods[consoleMethodName] as any
   }
+})
+
+expect.extend({
+  toShareObjectReferenceWith(received: any, expected: unknown) {
+    return {
+      pass: Object.is(received, expected),
+      message: () => `${this.utils.RECEIVED_COLOR('received')} value and ${this.utils.EXPECTED_COLOR('expected')} value does not share the same object reference.`,
+    }
+  },
+})
+
+expect.extend({
+  toHaveBeenCalledOnceInDevelopment(received: any) {
+    if (!received?._isMockFunction) {
+      return {
+        pass: false,
+        message: () => `Matcher error: ${this.utils.RECEIVED_COLOR('received')} value must be a mock or spy function`,
+      }
+    }
+    const expectedCallCount = CurrentTestSpec.BUNDLE_TYPE !== 'production' ? 1 : 0
+    const actualCallCount = received.mock.calls.length
+    return {
+      pass: actualCallCount === expectedCallCount,
+      message: () => `Expected ${expectedCallCount} ${this.utils.pluralize('call', expectedCallCount)} in ${CurrentTestSpec.BUNDLE_TYPE} bundle but it has been called ${actualCallCount} ${this.utils.pluralize('time', actualCallCount)}`,
+    }
+  },
 })
 
 // https://github.com/jsdom/jsdom/issues/2448#issuecomment-1581009331

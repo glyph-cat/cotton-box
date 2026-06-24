@@ -37,7 +37,7 @@ const UMD_GLOBALS = {
 
 const EXTERNAL_LIBS = Object.keys(UMD_GLOBALS)
 
-const INPUT_FILE = 'src/index.ts'
+const INPUT_FILE = './src/index.ts'
 
 interface IPluginConfig {
   mode?: 'development' | 'production'
@@ -52,16 +52,17 @@ function getPlugins(config: IPluginConfig): Array<RollupPlugin> {
       extensions: NODE_RESOLVE_EXTENSIONS_BASE,
     }),
     typescript({
-      tsconfigOverride: {
-        compilerOptions: {
-          declaration: false,
-          declarationDir: null,
-          outDir: null,
-        },
-        exclude: [
-          './src/**/*.test*',
-        ],
-      },
+      tsconfig: './tsconfig.build.json',
+      // tsconfigOverride: {
+      //   compilerOptions: {
+      //     declaration: false,
+      //     declarationDir: null,
+      //     outDir: null,
+      //   },
+      //   exclude: [
+      //     './src/**/*.test*',
+      //   ],
+      // },
     }),
     commonjs(),
     replace({
@@ -94,7 +95,7 @@ const config: Array<RollupOptions> = [
     // CommonJS
     input: INPUT_FILE,
     output: {
-      file: 'dist/cjs/index.js',
+      file: './dist/cjs/index.js',
       format: 'cjs',
       exports: 'named',
       sourcemap: false,
@@ -108,7 +109,7 @@ const config: Array<RollupOptions> = [
     // EcmaScript
     input: INPUT_FILE,
     output: {
-      file: 'dist/es/index.js',
+      file: './dist/es/index.js',
       format: 'es',
       exports: 'named',
       sourcemap: false,
@@ -122,7 +123,7 @@ const config: Array<RollupOptions> = [
     // EcmaScript (Minified)
     input: INPUT_FILE,
     output: {
-      file: 'dist/es/index.mjs',
+      file: './dist/es/index.mjs',
       format: 'es',
       exports: 'named',
       sourcemap: false,
@@ -137,7 +138,7 @@ const config: Array<RollupOptions> = [
     // React Native
     input: INPUT_FILE,
     output: {
-      file: 'dist/native/index.js',
+      file: './dist/native/index.js',
       format: 'es',
       exports: 'named',
     },
@@ -157,7 +158,7 @@ const config: Array<RollupOptions> = [
     // UMD
     input: INPUT_FILE,
     output: {
-      file: 'dist/umd/index.js',
+      file: './dist/umd/index.js',
       format: 'umd',
       name: UMD_NAME,
       exports: 'named',
@@ -174,7 +175,7 @@ const config: Array<RollupOptions> = [
     // UMD (Minified)
     input: INPUT_FILE,
     output: {
-      file: 'dist/umd/index.min.js',
+      file: './dist/umd/index.min.js',
       format: 'umd',
       name: UMD_NAME,
       exports: 'named',

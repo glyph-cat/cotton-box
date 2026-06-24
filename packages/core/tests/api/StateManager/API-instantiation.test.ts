@@ -14,19 +14,18 @@ test('No additional options', () => {
   TestState = new StateManager(defaultState)
   expect(TestState.isInitializing.get()).toBe(false)
   expect(TestState.name).toBeUndefined()
-  expect(Object.is(TestState.get(), defaultState)).toBe(true)
+  expect(TestState.get()).toShareObjectReferenceWith(defaultState)
   expect(TestState.get()).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(Object.is(TestState.defaultState, defaultState)).toBe(true)
+  expect(TestState.defaultState).toShareObjectReferenceWith(defaultState)
   expect(TestState.defaultState).toStrictEqual({
     firstName: 'John',
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(TestState.visibility).toBeUndefined()
   expect(TestState.suspense).toBe(false)
 })
 
@@ -52,7 +51,7 @@ describe('lifecycle.init', () => {
         didSet,
       },
     })
-    expect(Object.is(TestState.get(), stateToCommit)).toBe(true)
+    expect(TestState.get()).toShareObjectReferenceWith(stateToCommit)
     expect(TestState.get()).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',
@@ -88,13 +87,13 @@ describe('lifecycle.init', () => {
         didSet,
       },
     })
-    expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
+    expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
     expect(spiedDefaultState).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(Object.is(TestState.get(), defaultState)).toBe(true)
+    expect(TestState.get()).toShareObjectReferenceWith(defaultState)
     expect(TestState.get()).toStrictEqual({
       firstName: 'John',
       lastName: 'Smith',

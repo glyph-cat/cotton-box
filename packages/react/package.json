@@ -20,7 +20,7 @@
     "build": "cross-env SCOPE=\"bundled\" sh ./scripts/run/build.sh",
     "test": "jest -c ./jest.config.ts",
     "prepack": "tsx ./scripts/run/sync-package",
-    "all": "sh ./scripts/run/all.sh"
+    "all": "rushx lint && rushx spellcheck && rushx debug && rushx build && rushx test && rush-pnpm pack"
   },
   "keywords": [
     "State management",
@@ -38,7 +38,42 @@
     "url": "https://github.com/glyph-cat/cotton-box/issues"
   },
   "dependencies": {
+    "@glyph-cat/foundation": "~0.0.0-experimental.90",
+    "@glyph-cat/type-checking": "~1.0.0",
     "cotton-box": "workspace:*"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "~8.0.1",
+    "@babel/preset-typescript": "~8.0.1",
+    "@eslint/js": "~10.0.1",
+    "@glyph-cat/eslint-config": "~1.0.1-alpha.15",
+    "@jest/types": "~30.4.1",
+    "@microsoft/api-extractor": "~7.58.9",
+    "@rollup/plugin-commonjs": "~29.0.3",
+    "@rollup/plugin-node-resolve": "13.3.0",
+    "@rollup/plugin-replace": "~6.0.3",
+    "@rollup/plugin-terser": "~1.0.0",
+    "@types/jest": "~30.0.0",
+    "@types/node": "~26.0.0",
+    "cotton-box-repo-tools": "workspace:*",
+    "cross-env": "~10.1.0",
+    "cspell": "~10.0.1",
+    "eslint": "~10.5.0",
+    "globals": "~17.7.0",
+    "jest": "~30.4.2",
+    "jest-extended": "~7.0.0",
+    "jiti": "~2.7.0",
+    "rollup": "~4.62.2",
+    "rollup-plugin-typescript2": "~0.37.0",
+    "ts-node": "~10.9.2",
+    "tsx": "~4.22.4",
+    "@testing-library/react": "~16.3.2",
+    "@testing-library/react-hooks": "~8.0.1",
+    "react": "~19.2.7",
+    "react-dom": "~19.2.7",
+    "@types/react": "~19.2.17",
+    "@types/react-dom": "~19.2.3",
+    "custom-react-hook-tester": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19"
@@ -47,5 +82,8 @@
     "@types/react": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=24.0"
   }
 }

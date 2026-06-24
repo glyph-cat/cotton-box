@@ -1,6 +1,6 @@
+import { Nullable } from '@glyph-cat/foundation'
 import type { AsyncStateManager, StateManager } from 'cotton-box'
 import { createContext, use } from 'react'
-import { Nullable } from '../../abstractions'
 import { IS_CLIENT_ENV } from '../../constants'
 
 // Key = original state manager, Value = isolated/static state manager on server-side

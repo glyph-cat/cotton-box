@@ -183,6 +183,14 @@
       "tags": [
         "tools"
       ]
+    },
+    {
+      "packageName": "custom-react-hook-tester",
+      "projectFolder": "packages/custom-react-hook-tester",
+      "shouldPublish": false,
+      "tags": [
+        "tools"
+      ]
     }
     // {
     //   "packageName": "cotton-box-playground-web",

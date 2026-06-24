@@ -21,7 +21,7 @@ test('Main', () => {
     luckyNumber: 101,
   }
   TestState.set(stateToSet1)
-  expect(Object.is(TestState.get(), stateToSet1)).toBe(true)
+  expect(TestState.get()).toShareObjectReferenceWith(stateToSet1)
   expect(TestState.get()).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
@@ -39,8 +39,8 @@ test('Main', () => {
     stateToSet2 = nextState
     return nextState
   })
-  expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
-  expect(Object.is(TestState.get(), stateToSet2)).toBe(true)
+  expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
+  expect(TestState.get()).toShareObjectReferenceWith(stateToSet2)
   expect(TestState.get()).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
@@ -49,6 +49,6 @@ test('Main', () => {
 
   TestState.reset()
   expect(TestState.get()).toBe(defaultState)
-  expect(Object.is(TestState.get(), defaultState)).toBe(true)
+  expect(TestState.get()).toShareObjectReferenceWith(defaultState)
 
 })

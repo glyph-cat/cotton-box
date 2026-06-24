@@ -1,3 +1,3 @@
-import { syncPackage } from '../../../../../../scripts/tools/sync-package'
+import { syncPackage } from 'cotton-box-repo-tools/sync-package'
 
-syncPackage('react')
+syncPackage()

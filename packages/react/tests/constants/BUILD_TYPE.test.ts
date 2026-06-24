@@ -1,30 +1,8 @@
-import { BuildType } from '@glyph-cat/foundation'
-import { TestConfig, wrapper } from '../test-wrapper'
+import { BUILD_TYPE as COTTON_BOX_BUILD_TYPE } from 'cotton-box'
+import { BUILD_TYPE } from 'cotton-box-react'
+import { CurrentTestSpec } from '../test-helpers'
 
-wrapper(({ ReactLib: {
-  BUILD_TYPE,
-}, buildEnv, buildType }: TestConfig) => {
-  test('main', () => {
-    expect(BUILD_TYPE).toBe((() => {
-      if (buildEnv === 'debug') {
-        return undefined
-      } else if (buildType === 'cjs') {
-        return BuildType.CJS
-      } else if (buildType === 'es') {
-        if (buildEnv === 'dev') {
-          return BuildType.ES
-        } else if (buildEnv === 'prod') {
-          return BuildType.MJS
-        }
-      } else if (buildType === 'umd') {
-        if (buildEnv === 'dev') {
-          return BuildType.UMD
-        } else if (buildEnv === 'prod') {
-          return BuildType.UMD_MIN
-        }
-      } else {
-        throw new Error(`Unexpected condition: [buildEnv=${String(buildEnv)}, buildType=${buildType}]`)
-      }
-    })())
-  })
+test('BUILD_TYPE', () => {
+  expect(BUILD_TYPE).toBe(CurrentTestSpec.BUILD_TYPE)
+  expect(COTTON_BOX_BUILD_TYPE).toBe(CurrentTestSpec.BUILD_TYPE)
 })

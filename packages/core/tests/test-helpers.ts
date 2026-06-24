@@ -1,12 +1,12 @@
 import { type ICustomTestSpec } from 'cotton-box-repo-tools/test-abstractions'
 
+export const CurrentTestSpec: ICustomTestSpec = __CUSTOM_TEST_SPEC
+
 export interface IUserState {
   firstName: string
   lastName: string
   luckyNumber: number
 }
-
-export const CurrentTestSpec: ICustomTestSpec = __CUSTOM_TEST_SPEC
 
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {

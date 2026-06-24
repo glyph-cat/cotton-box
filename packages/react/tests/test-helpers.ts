@@ -1,4 +1,7 @@
-/* eslint-disable no-console */
+// /* eslint-disable no-console */
+import { type ICustomTestSpec } from 'cotton-box-repo-tools/test-abstractions'
+
+export const CurrentTestSpec: ICustomTestSpec = __CUSTOM_TEST_SPEC
 
 export interface IUserState {
   firstName: string
@@ -15,16 +18,16 @@ export namespace TestUtils {
     })
   }
 
-  export function spyOnConsoleError(): void {
-    let consoleError: typeof console.error
-    beforeEach(() => {
-      consoleError = console.error
-      console.error = jest.fn(() => { /**/ })
-      // console.error = jest.fn(consoleError)
-      // ^ for ease of debug only, commented out when not in use
-    })
-    afterEach(() => { console.error = consoleError })
-  }
+  // export function spyOnConsoleError(): void {
+  //   let consoleError: typeof console.error
+  //   beforeEach(() => {
+  //     consoleError = console.error
+  //     console.error = jest.fn(() => { /**/ })
+  //     // console.error = jest.fn(consoleError)
+  //     // ^ for ease of debug only, commented out when not in use
+  //   })
+  //   afterEach(() => { console.error = consoleError })
+  // }
 
   export function mockSelector<S>(s: S): S { return s }
 

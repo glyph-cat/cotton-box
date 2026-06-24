@@ -1,7 +1,7 @@
 import { BUILD_HASH } from 'cotton-box'
 import { CurrentTestSpec } from '../test-helpers'
 
-test('main', () => {
+test('BUILD_HASH', () => {
   expect(
     Object.is(BUILD_HASH, undefined)
   ).toBe(CurrentTestSpec.BUNDLE_TYPE === 'debugging')

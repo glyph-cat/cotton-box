@@ -7,6 +7,7 @@ declare global {
   namespace jest {
 
     interface Matchers<R> {
+      toShareObjectReferenceWith(expected: unknown): R
       toHaveBeenCalledOnceInDevelopment(): R
     }
 

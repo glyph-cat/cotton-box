@@ -33,13 +33,13 @@ test('Main', async () => {
   TestState.set(stateToSet1)
   const stateSnapshot1 = TestState.get()
   expect(isThenable(stateSnapshot1)).toBe(true)
-  expect(Object.is(await stateSnapshot1, stateToSet1)).toBe(true)
+  expect(await stateSnapshot1).toShareObjectReferenceWith(stateToSet1)
   expect(await stateSnapshot1).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
     luckyNumber: 101,
   })
-  expect(Object.is(TestState.getSync(), stateToSet1)).toBe(true)
+  expect(TestState.getSync()).toShareObjectReferenceWith(stateToSet1)
   expect(TestState.getSync()).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
@@ -63,16 +63,16 @@ test('Main', async () => {
     stateToSet2 = nextState
     return nextState
   })
-  expect(Object.is(spiedDefaultState, defaultState)).toBe(true)
+  expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
   const stateSnapshot2 = TestState.get()
   expect(isThenable(stateSnapshot2)).toBe(true)
-  expect(Object.is(await stateSnapshot2, stateToSet2)).toBe(true)
+  expect(await stateSnapshot2).toShareObjectReferenceWith(stateToSet2)
   expect(await stateSnapshot2).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
     luckyNumber: 102,
   })
-  expect(Object.is(TestState.getSync(), stateToSet2)).toBe(true)
+  expect(TestState.getSync()).toShareObjectReferenceWith(stateToSet2)
   expect(TestState.getSync()).toStrictEqual({
     firstName: 'Jane',
     lastName: 'Clover',
@@ -89,9 +89,9 @@ test('Main', async () => {
   const stateSnapshot3 = TestState.get()
   expect(isThenable(stateSnapshot3)).toBe(true)
   expect(await stateSnapshot3).toBe(defaultState)
-  expect(Object.is(await stateSnapshot3, defaultState)).toBe(true)
+  expect(await stateSnapshot3).toShareObjectReferenceWith(defaultState)
   expect(TestState.getSync()).toBe(defaultState)
-  expect(Object.is(TestState.getSync(), defaultState)).toBe(true)
+  expect(TestState.getSync()).toShareObjectReferenceWith(defaultState)
   expect(didSetArgs.length).toBe(2) // No change compared to previous one.
   expect(didReset).toHaveBeenCalledTimes(1)
 

@@ -6,9 +6,6 @@ import {
   StateManager,
 } from 'cotton-box'
 import { useSyncExternalStore } from 'react'
-import { $1, $2 } from '../../abstractions'
-
-type $$ = $1 | $2
 
 const MockInitState = new SimpleStateManager<boolean>(false)
 
@@ -16,10 +13,12 @@ export function useSuspenseWaiter<T>(
   stateManager: SimpleStateManager<T> | StateManager<T> | AsyncStateManager<T> | SimpleFiniteStateManager<T> | ReadOnlyStateManager<T> | null | undefined
 ): void {
 
+  type $$ = StateManager<unknown> | AsyncStateManager<unknown>
+
   // SimpleStateManager does not have this property.
   // NOTE: Unable to use `instanceof` to check because for UMD builds somehow,
   // it will always be `false`.
-  const isInitializingState = (stateManager as StateManager<unknown> | AsyncStateManager<unknown>).isInitializing ?? MockInitState
+  const isInitializingState = (stateManager as $$).isInitializing ?? MockInitState
 
   const isInitializing = useSyncExternalStore(
     isInitializingState.watch,
