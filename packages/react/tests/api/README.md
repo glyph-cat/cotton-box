@@ -9,4 +9,4 @@ Then, test with:
 
 Tests involving the `active` flag is separated because the logic to test it alone is is quite redundant. For server-side rendering though, it is done in 'index.test.tsx' because we only need to check the rendered value.
 
-For `useSimpleStateValue`, client-active-flag is further splited into different files because this makes updating the test cases easier. You can modify one of the files, then use VS Code's diff editor to apply changes to the other file as you compare them side by side.
+For `useSimpleStateValue`, client-active-flag is further split into different files because this makes updating the test cases easier. You can modify one of the files, then use VS Code's diff editor to apply changes to the other file as you compare them side by side.

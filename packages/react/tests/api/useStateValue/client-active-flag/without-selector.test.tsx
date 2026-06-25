@@ -9,8 +9,6 @@ const stateManagersToTestWith = {
   AsyncStateManager,
 } as const
 
-type HookProps = { active: boolean }
-
 let teardownFunctions: Array<Fn>
 const collectForTeardown = (fn: Fn) => teardownFunctions.push(fn)
 beforeEach(() => { teardownFunctions = [] })
@@ -60,34 +58,34 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
         const TestState = new StateManagerType(42)
         collectForTeardown(TestState.dispose)
 
-        const hook = customRenderHook<HookProps, number>(({ active }) => {
+        const hook = customRenderHook(({ active }) => {
           return useStateValue(TestState, null, active)
         }, {
           initialProps: {
             active: true,
           },
         })
-        const { rerender, result, meta } = hook
+        const { rerender, result, getMetadata } = hook
         collectForTeardown(hook.unmount)
 
         // Check initial state
         expect(result.current).toBe(42)
-        expect(meta.renderCount).toBe(1)
+        expect(getMetadata().renderCount).toBe(1)
 
         // Set active=false
         rerender({ active: false })
         expect(result.current).toBe(42)
-        expect(meta.renderCount).toBe(2)
+        expect(getMetadata().renderCount).toBe(2)
 
         // Perform state change
         await act(async () => { await TestState.set((s) => s + 1) })
         expect(result.current).toBe(42)
-        expect(meta.renderCount).toBe(2)
+        expect(getMetadata().renderCount).toBe(2)
 
         // Set active=true
         rerender({ active: true })
         expect(result.current).toBe(43)
-        expect(meta.renderCount).toBe(3)
+        expect(getMetadata().renderCount).toBe(3)
 
       })
 
@@ -96,39 +94,39 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
         const TestState = new StateManagerType(42)
         collectForTeardown(TestState.dispose)
 
-        const hook = customRenderHook<HookProps, number>(({ active }) => {
+        const hook = customRenderHook(({ active }) => {
           return useStateValue(TestState, null, active)
         }, {
           initialProps: {
             active: false,
           },
         })
-        const { rerender, result, meta } = hook
+        const { rerender, result, getMetadata } = hook
         collectForTeardown(hook.unmount)
 
         // Check initial state
         expect(result.current).toBe(42)
-        expect(meta.renderCount).toBe(1)
+        expect(getMetadata().renderCount).toBe(1)
 
         // Perform state change
         await act(async () => { await TestState.set((s) => s + 1) })
         expect(result.current).toBe(42)
-        expect(meta.renderCount).toBe(1)
+        expect(getMetadata().renderCount).toBe(1)
 
         // Set active=true
         rerender({ active: true })
         expect(result.current).toBe(43)
-        expect(meta.renderCount).toBe(2)
+        expect(getMetadata().renderCount).toBe(2)
 
         // Set active=false
         rerender({ active: false })
         expect(result.current).toBe(43)
-        expect(meta.renderCount).toBe(3)
+        expect(getMetadata().renderCount).toBe(3)
 
         // Perform state change again
         await act(async () => { await TestState.set((s) => s + 1) })
         expect(result.current).toBe(43)
-        expect(meta.renderCount).toBe(3)
+        expect(getMetadata().renderCount).toBe(3)
 
       })
 

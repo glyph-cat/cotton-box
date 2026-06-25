@@ -7,7 +7,7 @@ beforeEach(() => { TestState = new SimpleStateManager(42) })
 afterEach(() => { TestState?.dispose() })
 
 type HookProps = { active: boolean }
-let hook: CustomRenderHookResult<HookProps, number>
+let hook: CustomRenderHookResult<number, HookProps>
 afterEach(() => { hook?.unmount() })
 
 describe('Only test initial value', () => {
@@ -38,26 +38,26 @@ describe('Test state changes', () => {
         active: true as boolean,
       },
     })
-    const { rerender, result, meta } = hook
+    const { rerender, result, getMetadata } = hook
 
     // Check initial state
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(1)
+    expect(getMetadata().renderCount).toBe(1)
 
     // Set active=false
     rerender({ active: false })
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Perform state change
     act(() => { TestState.set((s) => s + 1) })
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set active=true
     rerender({ active: true })
     expect(result.current).toBe(43)
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
   })
 
@@ -68,31 +68,31 @@ describe('Test state changes', () => {
         active: false as boolean,
       },
     })
-    const { rerender, result, meta } = hook
+    const { rerender, result, getMetadata } = hook
 
     // Check initial state
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(1)
+    expect(getMetadata().renderCount).toBe(1)
 
     // Perform state change
     act(() => { TestState.set((s) => s + 1) })
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(1)
+    expect(getMetadata().renderCount).toBe(1)
 
     // Set active=true
     rerender({ active: true })
     expect(result.current).toBe(43)
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set active=false
     rerender({ active: false })
     expect(result.current).toBe(43)
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
     // Perform state change again
     act(() => { TestState.set((s) => s + 1) })
     expect(result.current).toBe(43)
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
   })
 

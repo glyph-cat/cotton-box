@@ -5,47 +5,47 @@ export interface CustomRenderResultMetadata {
   renderCount: number
 }
 
-export interface CustomRenderHookResult<TProps, TResult> extends ReturnType<typeof renderHook<TProps, TResult>> {
-  meta: CustomRenderResultMetadata
+export interface CustomRenderHookResult<Result, Props> extends ReturnType<typeof renderHook<Result, Props>> {
+  getMetadata(): CustomRenderResultMetadata
 }
 
-export function customRenderHook<TProps, TResult>(
-  ...args: Parameters<typeof renderHook<TProps, TResult>>
-): CustomRenderHookResult<TProps, TResult> {
+export function customRenderHook<Result, Props>(
+  ...args: Parameters<typeof renderHook<Result, Props>>
+): CustomRenderHookResult<Result, Props> {
 
-  const meta = { renderCount: 0 }
+  const metadata = { renderCount: 0 }
 
   const [callback, ...remainingArgs] = args
   const hook = renderHook((...renderArgs) => {
-    meta.renderCount += 1
+    metadata.renderCount += 1
     return callback(...renderArgs)
   }, ...remainingArgs)
 
   return {
     ...hook,
-    meta,
+    getMetadata: () => metadata,
   }
 
 }
 
 export interface CustomSuspenseTesterResultMetadata extends CustomRenderResultMetadata {
-  isSuspended(): boolean
+  isSuspended: boolean
 }
 
-export interface CustomSuspenseTesterResult<TProps, TResult> extends Omit<CustomRenderHookResult<TProps, TResult>, 'meta'> {
-  meta: CustomSuspenseTesterResultMetadata
+export interface CustomSuspenseTesterResult<Result, Props> extends Omit<CustomRenderHookResult<Result, Props>, 'getMetadata'> {
+  getMetadata(): CustomSuspenseTesterResultMetadata
 }
 
-export function renderSuspenseTester<TProps, TResult>(
-  ...args: Parameters<typeof customRenderHook<TProps, TResult>>
-): CustomSuspenseTesterResult<TProps, TResult> {
+export function renderSuspenseTester<Result, Props>(
+  ...args: Parameters<typeof customRenderHook<Result, Props>>
+): CustomSuspenseTesterResult<Result, Props> {
 
-  let isSuspended = false
+  const metadata = { isSuspended: false }
 
   const FallbackComponent = (): undefined => {
     useEffect(() => {
-      isSuspended = true
-      return () => { isSuspended = false }
+      metadata.isSuspended = true
+      return () => { metadata.isSuspended = false }
     }, [])
   }
 
@@ -56,17 +56,17 @@ export function renderSuspenseTester<TProps, TResult>(
   )
 
   const [callback, options, ...remainingArgs] = args
-  const hook = customRenderHook<TProps, TResult>(callback, {
+  const hook = customRenderHook<Result, Props>(callback, {
     ...options,
     wrapper,
   }, ...remainingArgs)
 
   return {
     ...hook,
-    meta: {
-      ...hook.meta,
-      isSuspended: () => isSuspended,
-    },
+    getMetadata: () => ({
+      ...hook.getMetadata(),
+      ...metadata,
+    }),
   }
 
 }

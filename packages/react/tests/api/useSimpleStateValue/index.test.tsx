@@ -22,7 +22,7 @@ describe('Without selector', () => {
     TestState = new SimpleStateManager(defaultState)
 
     hook = customRenderHook(() => useSimpleStateValue(TestState))
-    const { result, meta } = hook
+    const { result, getMetadata } = hook
 
     // Check initial state
     expect(result.current).toShareObjectReferenceWith(defaultState)
@@ -31,7 +31,7 @@ describe('Without selector', () => {
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(meta.renderCount).toBe(1)
+    expect(getMetadata().renderCount).toBe(1)
 
     // Set value normally
     act(() => {
@@ -46,7 +46,7 @@ describe('Without selector', () => {
       lastName: 'Clover',
       luckyNumber: 101,
     })
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set value again and expect no re-renders
     act(() => { TestState.set((s) => s) })
@@ -55,7 +55,7 @@ describe('Without selector', () => {
       lastName: 'Clover',
       luckyNumber: 101,
     })
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set value by function
     act(() => {
@@ -69,7 +69,7 @@ describe('Without selector', () => {
       lastName: 'Clover',
       luckyNumber: 102,
     })
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
     // Reset
     act(() => { TestState.reset() })
@@ -78,7 +78,7 @@ describe('Without selector', () => {
       lastName: 'Smith',
       luckyNumber: 42,
     })
-    expect(meta.renderCount).toBe(4)
+    expect(getMetadata().renderCount).toBe(4)
 
   })
 
@@ -121,11 +121,11 @@ describe('With selector', () => {
     TestState = new SimpleStateManager(defaultState)
 
     hook = customRenderHook(() => useSimpleStateValue(TestState, (s) => s.luckyNumber))
-    const { result, meta } = hook
+    const { result, getMetadata } = hook
 
     // Check initial state
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(1)
+    expect(getMetadata().renderCount).toBe(1)
 
     // Set value normally
     act(() => {
@@ -136,12 +136,12 @@ describe('With selector', () => {
       })
     })
     expect(result.current).toBe(101)
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set value again and expect no re-renders
     act(() => { TestState.set((s) => s) })
     expect(result.current).toBe(101)
-    expect(meta.renderCount).toBe(2)
+    expect(getMetadata().renderCount).toBe(2)
 
     // Set value by function
     act(() => {
@@ -151,7 +151,7 @@ describe('With selector', () => {
       }))
     })
     expect(result.current).toBe(102)
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
     // Set value for property not included by selector and expect no re-renders
     act(() => {
@@ -161,12 +161,12 @@ describe('With selector', () => {
       }))
     })
     expect(result.current).toBe(102)
-    expect(meta.renderCount).toBe(3)
+    expect(getMetadata().renderCount).toBe(3)
 
     // Reset
     act(() => { TestState.reset() })
     expect(result.current).toBe(42)
-    expect(meta.renderCount).toBe(4)
+    expect(getMetadata().renderCount).toBe(4)
 
   })
 

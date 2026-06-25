@@ -38,7 +38,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
           collectForTeardown(TestState.dispose)
 
           const hook = customRenderHook(() => useStateValue(TestState))
-          const { result, meta } = hook
+          const { result, getMetadata } = hook
           collectForTeardown(hook.unmount)
 
           // Check initial state
@@ -48,7 +48,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Smith',
             luckyNumber: 42,
           })
-          expect(meta.renderCount).toBe(1)
+          expect(getMetadata().renderCount).toBe(1)
 
           // Set value normally
           await act(async () => {
@@ -63,7 +63,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 101,
           })
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value again and expect no re-renders
           await act(async () => { await TestState.set((s) => s) })
@@ -72,7 +72,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 101,
           })
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value by function
           await act(async () => {
@@ -86,7 +86,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 102,
           })
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Reset
           await act(async () => { await TestState.reset() })
@@ -95,7 +95,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Smith',
             luckyNumber: 42,
           })
-          expect(meta.renderCount).toBe(4)
+          expect(getMetadata().renderCount).toBe(4)
 
         })
 
@@ -105,7 +105,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
           collectForTeardown(TestState.dispose)
 
           const hook = customRenderHook(() => useStateValue(TestState, null, objectIsShallowEqual))
-          const { result, meta } = hook
+          const { result, getMetadata } = hook
           collectForTeardown(hook.unmount)
 
           // Check initial state
@@ -115,7 +115,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Smith',
             luckyNumber: 42,
           })
-          expect(meta.renderCount).toBe(1)
+          expect(getMetadata().renderCount).toBe(1)
 
           // Set value normally
           await act(async () => {
@@ -130,7 +130,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 101,
           })
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value again and expect no re-renders
           await act(async () => { await TestState.set((s) => s) })
@@ -139,7 +139,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 101,
           })
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value by function
           await act(async () => {
@@ -153,7 +153,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Clover',
             luckyNumber: 102,
           })
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Reset
           await act(async () => { await TestState.reset() })
@@ -162,7 +162,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             lastName: 'Smith',
             luckyNumber: 42,
           })
-          expect(meta.renderCount).toBe(4)
+          expect(getMetadata().renderCount).toBe(4)
 
         })
 
@@ -190,12 +190,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
           collectForTeardown(TestState.dispose)
 
           const hook = customRenderHook(() => useStateValue(TestState, (s) => s.luckyNumber))
-          const { result, meta } = hook
+          const { result, getMetadata } = hook
           collectForTeardown(hook.unmount)
 
           // Check initial state
           expect(result.current).toBe(42)
-          expect(meta.renderCount).toBe(1)
+          expect(getMetadata().renderCount).toBe(1)
 
           // Set value normally
           await act(async () => {
@@ -206,12 +206,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             })
           })
           expect(result.current).toBe(101)
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value again and expect no re-renders
           await act(async () => { await TestState.set((s) => s) })
           expect(result.current).toBe(101)
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value by function
           await act(async () => {
@@ -221,7 +221,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             }))
           })
           expect(result.current).toBe(102)
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Set value for property not included by selector and expect no re-renders
           await act(async () => {
@@ -231,12 +231,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             }))
           })
           expect(result.current).toBe(102)
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Reset
           await act(async () => { await TestState.reset() })
           expect(result.current).toBe(42)
-          expect(meta.renderCount).toBe(4)
+          expect(getMetadata().renderCount).toBe(4)
 
         })
 
@@ -250,12 +250,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             (s) => s.luckyNumber,
             objectIsShallowEqual,
           ))
-          const { result, meta } = hook
+          const { result, getMetadata } = hook
           collectForTeardown(hook.unmount)
 
           // Check initial state
           expect(result.current).toBe(42)
-          expect(meta.renderCount).toBe(1)
+          expect(getMetadata().renderCount).toBe(1)
 
           // Set value normally
           await act(async () => {
@@ -266,12 +266,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             })
           })
           expect(result.current).toBe(101)
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value again and expect no re-renders
           await act(async () => { await TestState.set((s) => s) })
           expect(result.current).toBe(101)
-          expect(meta.renderCount).toBe(2)
+          expect(getMetadata().renderCount).toBe(2)
 
           // Set value by function
           await act(async () => {
@@ -281,7 +281,7 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             }))
           })
           expect(result.current).toBe(102)
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Set value for property not included by selector and expect no re-renders
           await act(async () => {
@@ -291,12 +291,12 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
             }))
           })
           expect(result.current).toBe(102)
-          expect(meta.renderCount).toBe(3)
+          expect(getMetadata().renderCount).toBe(3)
 
           // Reset
           await act(async () => { await TestState.reset() })
           expect(result.current).toBe(42)
-          expect(meta.renderCount).toBe(4)
+          expect(getMetadata().renderCount).toBe(4)
 
         })
 
@@ -325,11 +325,11 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
         const TestState = new StateManagerType(defaultState)
 
         const hook = customRenderHook(() => useStateValue(TestState, null, null))
-        const { meta } = hook
+        const { getMetadata } = hook
         collectForTeardown(hook.unmount)
 
         await act(async () => { await TestState.set(defaultState) })
-        expect(meta.renderCount).toBe(1)
+        expect(getMetadata().renderCount).toBe(1)
         expect(Object.is).toHaveBeenCalledWith(defaultState, defaultState)
 
       })

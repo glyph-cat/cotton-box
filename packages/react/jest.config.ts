@@ -42,6 +42,7 @@ const SHARED_CONFIGS_FOR_BUNDLES: Config.InitialOptions = {
 }
 
 const config: Config.InitialOptions = {
+  ...BASE_SHARED_CONFIGS,
   projects: [
     ...(!SCOPE || SCOPE === 'debug' ? [{
       ...BASE_SHARED_CONFIGS,

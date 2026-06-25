@@ -213,7 +213,7 @@ export function useStateValue<State, SelectedState>(
   if (!IS_RN_BUILD) {
     // NOTE: `BUILD_TYPE` is a compile-time constant.
     // This conditional invocation will become static after compilation.
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    // eslint-disable-next-line react-hooks/rules-of-hooks, react-hooks/immutability
     stateManager = useResolveHydrationStateManager(
       stateManager as StateManager<State> | AsyncStateManager<State>
     )

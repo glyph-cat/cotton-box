@@ -40,13 +40,13 @@ for (const hookName in hooksToTestWith) {
         collectForTeardown(TestState.dispose)
 
         const hook = renderSuspenseTester(() => useHook(TestState, TestUtils.mockSelector))
-        const { meta } = hook
+        const { getMetadata } = hook
         collectForTeardown(hook.unmount)
 
-        expect(meta.isSuspended()).toBeTrue()
+        expect(getMetadata().isSuspended).toBeTrue()
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(meta.isSuspended()).toBeFalse()
+        expect(getMetadata().isSuspended).toBeFalse()
 
         act(() => {
           TestState.init(async ({ commitNoop }) => {
@@ -54,10 +54,10 @@ for (const hookName in hooksToTestWith) {
             commitNoop()
           })
         })
-        expect(meta.isSuspended()).toBeTrue()
+        expect(getMetadata().isSuspended).toBeTrue()
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(meta.isSuspended()).toBeFalse()
+        expect(getMetadata().isSuspended).toBeFalse()
 
       })
 

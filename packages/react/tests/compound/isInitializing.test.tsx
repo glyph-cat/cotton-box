@@ -5,7 +5,9 @@ import { customRenderHook, CustomRenderHookResult } from 'custom-react-hook-test
 import { act } from 'react'
 import { TestUtils } from '../test-helpers'
 
-let hook: CustomRenderHookResult<void, boolean>
+jest.useRealTimers()
+
+let hook: CustomRenderHookResult<boolean, void>
 afterEach(() => { hook?.unmount() })
 
 let teardownFunctions: Array<Fn>
@@ -41,14 +43,15 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
     await act(async () => { commitNoopRef() })
     expect(result.current).toBeFalse()
 
-    await act(async () => {
-      await TestState.init(async ({ commitNoop }) => {
+    let promise: Promise<void>
+    act(() => {
+      promise = TestState.init(async ({ commitNoop }) => {
         await TestUtils.delay(10)
         commitNoop()
       })
     })
     expect(result.current).toBeTrue()
-    await act(async () => { await TestUtils.delay(10) })
+    await act(async () => { await promise })
     expect(result.current).toBeFalse()
 
   })
