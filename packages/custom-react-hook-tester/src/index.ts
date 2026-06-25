@@ -29,7 +29,7 @@ export function customRenderHook<TProps, TResult>(
 }
 
 export interface CustomSuspenseTesterResultMetadata extends CustomRenderResultMetadata {
-  isSuspensed: boolean
+  isSuspended(): boolean
 }
 
 export interface CustomSuspenseTesterResult<TProps, TResult> extends Omit<CustomRenderHookResult<TProps, TResult>, 'meta'> {
@@ -40,14 +40,12 @@ export function renderSuspenseTester<TProps, TResult>(
   ...args: Parameters<typeof customRenderHook<TProps, TResult>>
 ): CustomSuspenseTesterResult<TProps, TResult> {
 
-  const meta = {
-    isSuspensed: false,
-  }
+  let isSuspended = false
 
   const FallbackComponent = (): undefined => {
     useEffect(() => {
-      meta.isSuspensed = true
-      return () => { meta.isSuspensed = false }
+      isSuspended = true
+      return () => { isSuspended = false }
     }, [])
   }
 
@@ -67,7 +65,7 @@ export function renderSuspenseTester<TProps, TResult>(
     ...hook,
     meta: {
       ...hook.meta,
-      ...meta,
+      isSuspended: () => isSuspended,
     },
   }
 

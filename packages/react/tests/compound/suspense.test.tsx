@@ -43,10 +43,10 @@ for (const hookName in hooksToTestWith) {
         const { meta } = hook
         collectForTeardown(hook.unmount)
 
-        expect(meta.isSuspensed).toBeTrue()
+        expect(meta.isSuspended()).toBeTrue()
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(meta.isSuspensed).toBeFalse()
+        expect(meta.isSuspended()).toBeFalse()
 
         act(() => {
           TestState.init(async ({ commitNoop }) => {
@@ -54,10 +54,10 @@ for (const hookName in hooksToTestWith) {
             commitNoop()
           })
         })
-        expect(meta.isSuspensed).toBeTrue()
+        expect(meta.isSuspended()).toBeTrue()
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(meta.isSuspensed).toBeFalse()
+        expect(meta.isSuspended()).toBeFalse()
 
       })
 

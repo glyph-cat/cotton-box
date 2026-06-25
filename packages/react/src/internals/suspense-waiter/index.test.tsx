@@ -61,7 +61,7 @@ describe(useSuspenseWaiter.name, () => {
         const { meta } = hook
         collectForTeardown(hook.unmount)
 
-        expect(meta.isSuspensed).toBeFalse()
+        expect(meta.isSuspended()).toBeFalse()
 
       })
 
@@ -82,11 +82,11 @@ describe(useSuspenseWaiter.name, () => {
         const { meta } = hook
         collectForTeardown(hook.unmount)
 
-        // Will not be suspensed if type is `SimpleStateManager`
-        expect(meta.isSuspensed).toBe((StateManagerTypeKey as keyof typeof stateManagersToTestWith) !== 'SimpleStateManager')
+        // Will not be suspended if type is `SimpleStateManager`
+        expect(meta.isSuspended()).toBe((StateManagerTypeKey as keyof typeof stateManagersToTestWith) !== 'SimpleStateManager')
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(meta.isSuspensed).toBeFalse()
+        expect(meta.isSuspended()).toBeFalse()
 
       })
 
