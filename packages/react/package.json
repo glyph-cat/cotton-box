@@ -58,7 +58,7 @@
     "@rollup/plugin-terser": "~1.0.0",
     "@testing-library/dom": "~10.4.1",
     "@types/jest": "~30.0.0",
-    "@types/node": "~26.0.0",
+    "@types/node": "~26.0.1",
     "@types/react": "~19.2.17",
     "@types/react-dom": "~19.2.3",
     "cotton-box-repo-tools": "workspace:*",

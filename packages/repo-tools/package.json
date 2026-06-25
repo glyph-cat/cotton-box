@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "@types/node": "~26.0.0",
+    "@types/node": "~26.0.1",
     "@glyph-cat/foundation": "~0.0.0-experimental.90",
     "type-fest": "~5.7.0",
     "cotton-box-doc-utils": "workspace:*",
