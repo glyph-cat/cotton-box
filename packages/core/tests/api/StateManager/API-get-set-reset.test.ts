@@ -1,18 +1,16 @@
 import { Nullable } from '@glyph-cat/foundation'
 import { StateManager } from 'cotton-box'
 import type { StateManagerDidSetArgs } from '../../../../core/src'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: StateManager<IUserState>
 afterEach(() => { TestState?.dispose() })
 
-test('Main', () => {
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
 
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
+test('Main', () => {
 
   const didSetArgs: Array<StateManagerDidSetArgs<IUserState>> = []
   const didReset = jest.fn()

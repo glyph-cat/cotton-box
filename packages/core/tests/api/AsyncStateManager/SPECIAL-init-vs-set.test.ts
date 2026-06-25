@@ -91,10 +91,10 @@ describe('Has pending changes', () => {
     }, 10)
 
     await TestUtils.delay(10)
-    expect(isInitCalled).toBe(false)
+    expect(isInitCalled).toBeFalse()
 
     await TestUtils.delay(10)
-    expect(isInitCalled).toBe(true)
+    expect(isInitCalled).toBeTrue()
 
   })
 

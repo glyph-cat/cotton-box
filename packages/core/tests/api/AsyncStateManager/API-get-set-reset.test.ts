@@ -2,18 +2,16 @@ import { Nullable } from '@glyph-cat/foundation'
 import { isThenable } from '@glyph-cat/type-checking'
 import { AsyncStateManager } from 'cotton-box'
 import type { StateManagerDidSetArgs } from '../../../../core/src'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: AsyncStateManager<IUserState>
 afterEach(async () => { await TestState?.dispose() })
 
-test('Main', async () => {
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
 
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
+test('Main', async () => {
 
   const didSetArgs: Array<StateManagerDidSetArgs<IUserState>> = []
   const didReset = jest.fn()
@@ -32,7 +30,7 @@ test('Main', async () => {
   }
   TestState.set(stateToSet1)
   const stateSnapshot1 = TestState.get()
-  expect(isThenable(stateSnapshot1)).toBe(true)
+  expect(isThenable(stateSnapshot1)).toBeTrue()
   expect(await stateSnapshot1).toShareObjectReferenceWith(stateToSet1)
   expect(await stateSnapshot1).toStrictEqual({
     firstName: 'Jane',
@@ -65,7 +63,7 @@ test('Main', async () => {
   })
   expect(spiedDefaultState).toShareObjectReferenceWith(defaultState)
   const stateSnapshot2 = TestState.get()
-  expect(isThenable(stateSnapshot2)).toBe(true)
+  expect(isThenable(stateSnapshot2)).toBeTrue()
   expect(await stateSnapshot2).toShareObjectReferenceWith(stateToSet2)
   expect(await stateSnapshot2).toStrictEqual({
     firstName: 'Jane',
@@ -87,7 +85,7 @@ test('Main', async () => {
 
   await TestState.reset()
   const stateSnapshot3 = TestState.get()
-  expect(isThenable(stateSnapshot3)).toBe(true)
+  expect(isThenable(stateSnapshot3)).toBeTrue()
   expect(await stateSnapshot3).toBe(defaultState)
   expect(await stateSnapshot3).toShareObjectReferenceWith(defaultState)
   expect(TestState.getSync()).toBe(defaultState)

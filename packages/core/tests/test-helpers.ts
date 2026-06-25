@@ -8,6 +8,14 @@ export interface IUserState {
   luckyNumber: number
 }
 
+export function createDefaultUserState(): IUserState {
+  return Object.freeze({
+    firstName: 'John',
+    lastName: 'Smith',
+    luckyNumber: 42,
+  })
+}
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {
 

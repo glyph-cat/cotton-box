@@ -1,41 +1,32 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { SuspenseTester } from '@glyph-cat/react-test-utils'
+import { Fn } from '@glyph-cat/foundation'
+import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
+import { renderSuspenseTester } from 'custom-react-hook-tester'
 import { act } from 'react'
-import { AsyncStateManager, SimpleStateManager, StateManager } from '../../../../core/src'
+import { createSuspenseWaiter, useSuspenseWaiter } from '.'
 import { TestUtils } from '../../../tests/test-helpers'
-import {
-  createSuspenseWaiter,
-  useSuspenseWaiter,
-} from '../../internals/suspense-waiter'
 
 jest.useRealTimers()
-
-function delay(timeout: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, timeout)
-  })
-}
 
 describe(createSuspenseWaiter.name, () => {
 
   test('Error', async () => {
     const promise = Promise.reject('match-key')
     const wait = createSuspenseWaiter(promise)
-    await delay(10)
+    await TestUtils.delay(10)
     expect(() => { wait() }).toThrow('match-key')
   })
 
   test('Pending', async () => {
-    const promise = delay(20)
+    const promise = TestUtils.delay(20)
     const wait = createSuspenseWaiter(promise)
-    await delay(10)
+    await TestUtils.delay(10)
     expect(() => { wait() }).toThrow()
   })
 
   test('Completed', async () => {
-    const promise = delay(10)
+    const promise = TestUtils.delay(10)
     const wait = createSuspenseWaiter(promise)
-    await delay(20)
+    await TestUtils.delay(20)
     // KIV: The line below failed once, but the error was never encountered again.
     expect(() => { wait() }).not.toThrow()
   })
@@ -44,9 +35,10 @@ describe(createSuspenseWaiter.name, () => {
 
 describe(useSuspenseWaiter.name, () => {
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+  let teardownFunctions: Array<Fn>
+  const collectForTeardown = (fn: Fn) => teardownFunctions.push(fn)
+  beforeEach(() => { teardownFunctions = [] })
+  afterEach(() => { teardownFunctions = null! })
 
   const stateManagersToTestWith = {
     SimpleStateManager,
@@ -63,14 +55,13 @@ describe(useSuspenseWaiter.name, () => {
         const TestState = new StateManagerType(null, {
           suspense: true,
         })
-        cleanupManager.append(TestState.dispose)
+        collectForTeardown(TestState.dispose)
 
-        const suspenseTester = new SuspenseTester((): null => {
-          useSuspenseWaiter(TestState)
-          return null
-        }, cleanupManager)
+        const hook = renderSuspenseTester(() => useSuspenseWaiter(TestState))
+        const { meta } = hook
+        collectForTeardown(hook.unmount)
 
-        expect(suspenseTester.componentIsUnderSuspense).toBe(false)
+        expect(meta.isSuspensed).toBeFalse()
 
       })
 
@@ -85,19 +76,17 @@ describe(useSuspenseWaiter.name, () => {
           },
           suspense: true,
         })
-        cleanupManager.append(TestState.dispose)
+        collectForTeardown(TestState.dispose)
 
-        const suspenseTester = new SuspenseTester((): null => {
-          useSuspenseWaiter(TestState)
-          return null
-        }, cleanupManager)
+        const hook = renderSuspenseTester(() => useSuspenseWaiter(TestState))
+        const { meta } = hook
+        collectForTeardown(hook.unmount)
 
-        expect(suspenseTester.componentIsUnderSuspense).toBe(
-          StateManagerTypeKey === 'SimpleStateManager' ? false : true
-        )
+        // Will not be suspensed if type is `SimpleStateManager`
+        expect(meta.isSuspensed).toBe((StateManagerTypeKey as keyof typeof stateManagersToTestWith) !== 'SimpleStateManager')
 
         await act(async () => { await TestUtils.delay(10) })
-        expect(suspenseTester.componentIsUnderSuspense).toBe(false)
+        expect(meta.isSuspensed).toBeFalse()
 
       })
 

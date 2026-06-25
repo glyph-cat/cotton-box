@@ -24,6 +24,10 @@
       "name": "repo-tools",
       "path": "../packages/repo-tools"
     },
+    {
+      "name": "custom-react-hook-tester",
+      "path": "../packages/custom-react-hook-tester"
+    },
     // {
     //   "name": "Examples (web)",
     //   "path": "../packages/playground-web"

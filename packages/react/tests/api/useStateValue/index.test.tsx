@@ -1,513 +1,341 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
 import { objectIsShallowEqual } from '@glyph-cat/equality'
-import { HookTester } from '@glyph-cat/react-test-utils'
+import { Fn } from '@glyph-cat/foundation'
+import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
+import { useStateValue } from 'cotton-box-react'
+import { act, customRenderHook } from 'custom-react-hook-tester'
 import { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { IUserState } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
-wrapper(({
-  Lib: { AsyncStateManager, SimpleStateManager, StateManager },
-  ReactLib: { useStateValue },
-}: TestConfig) => {
+const stateManagersToTestWith = {
+  SimpleStateManager,
+  StateManager,
+  AsyncStateManager,
+} as const
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
 
-  const stateManagersToTestWith = {
-    SimpleStateManager,
-    StateManager,
-    AsyncStateManager,
-  } as const
+let teardownFunctions: Array<Fn>
+const collectForTeardown = (fn: Fn) => teardownFunctions.push(fn)
+beforeEach(() => { teardownFunctions = [] })
+afterEach(() => { teardownFunctions = null! })
 
-  type StateManagerType = typeof SimpleStateManager<IUserState> | typeof StateManager<IUserState> | typeof AsyncStateManager<IUserState>
+for (const StateManagerTypeKey in stateManagersToTestWith) {
 
-  for (const StateManagerTypeKey in stateManagersToTestWith) {
+  const StateManagerType = stateManagersToTestWith[StateManagerTypeKey as keyof typeof stateManagersToTestWith]
 
-    const StateManagerType = stateManagersToTestWith[StateManagerTypeKey] as StateManagerType
-    const isAsyncStateManager = StateManagerTypeKey === 'AsyncStateManager'
+  describe(StateManagerTypeKey, () => {
 
-    describe(StateManagerTypeKey, () => {
+    describe('Without selector', () => {
 
-      describe('Without selector', () => {
+      describe('Client-side', () => {
 
-        describe('Client-side', () => {
+        test('Without equalityFn', async () => {
 
-          test('Without equalityFn', async () => {
+          const TestState = new StateManagerType(defaultState)
+          collectForTeardown(TestState.dispose)
 
-            const defaultState: IUserState = {
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            }
-            const TestState = new StateManagerType(defaultState)
-            cleanupManager.append(TestState.dispose)
+          const hook = customRenderHook(() => useStateValue(TestState))
+          const { result, meta } = hook
+          collectForTeardown(hook.unmount)
 
-            const hookTester = new HookTester({
-              useHook: () => useStateValue(TestState),
-              values: {
-                main(state) { return state },
-              },
-              actions: {
-                async setValue() {
-                  await TestState.set({
-                    firstName: 'Jane',
-                    lastName: 'Clover',
-                    luckyNumber: 101,
-                  })
-                },
-                async setValueByFunction() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    luckyNumber: s.luckyNumber + 1,
-                  }))
-                },
-                async setSameValue() {
-                  await TestState.set((s) => s)
-                },
-                reset: TestState.reset,
-              },
-            }, cleanupManager)
-
-            // Check initial state
-            expect(Object.is(hookTester.get('main'), defaultState)).toBe(true)
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            })
-            expect(hookTester.renderCount).toBe(1)
-
-            // Set value normally
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValue')
-            } else {
-              hookTester.action('setValue')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value again and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setSameValue')
-            } else {
-              hookTester.action('setSameValue')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value by function
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValueByFunction')
-            } else {
-              hookTester.action('setValueByFunction')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 102,
-            })
-            expect(hookTester.renderCount).toBe(3)
-
-            // Reset
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('reset')
-            } else {
-              hookTester.action('reset')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            })
-            expect(hookTester.renderCount).toBe(4)
-
-          })
-
-          test('With equalityFn', async () => {
-
-            const defaultState: IUserState = {
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            }
-            const TestState = new StateManagerType(defaultState)
-            cleanupManager.append(TestState.dispose)
-
-            const hookTester = new HookTester({
-              useHook: () => useStateValue(TestState, null, objectIsShallowEqual),
-              values: {
-                main(state) { return state },
-              },
-              actions: {
-                async setValue() {
-                  await TestState.set({
-                    firstName: 'Jane',
-                    lastName: 'Clover',
-                    luckyNumber: 101,
-                  })
-                },
-                async setValueByFunction() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    luckyNumber: s.luckyNumber + 1,
-                  }))
-                },
-                async setSameValue() {
-                  await TestState.set((s) => s)
-                },
-                reset: TestState.reset,
-              },
-            }, cleanupManager)
-
-            // Check initial state
-            expect(Object.is(hookTester.get('main'), defaultState)).toBe(true)
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            })
-            expect(hookTester.renderCount).toBe(1)
-
-            // Set value normally
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValue')
-            } else {
-              hookTester.action('setValue')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value again and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setSameValue')
-            } else {
-              hookTester.action('setSameValue')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value by function
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValueByFunction')
-            } else {
-              hookTester.action('setValueByFunction')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 102,
-            })
-            expect(hookTester.renderCount).toBe(3)
-
-            // Reset
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('reset')
-            } else {
-              hookTester.action('reset')
-            }
-            expect(hookTester.get('main')).toStrictEqual({
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            })
-            expect(hookTester.renderCount).toBe(4)
-
-          })
-
-        })
-
-        test('Server-side', () => {
-          const defaultState: IUserState = {
+          // Check initial state
+          expect(result.current).toShareObjectReferenceWith(defaultState)
+          expect(result.current).toStrictEqual({
             firstName: 'John',
             lastName: 'Smith',
             luckyNumber: 42,
-          }
+          })
+          expect(meta.renderCount).toBe(1)
+
+          // Set value normally
+          await act(async () => {
+            await TestState.set({
+              firstName: 'Jane',
+              lastName: 'Clover',
+              luckyNumber: 101,
+            })
+          })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 101,
+          })
+          expect(meta.renderCount).toBe(2)
+
+          // Set value again and expect no re-renders
+          await act(async () => { await TestState.set((s) => s) })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 101,
+          })
+          expect(meta.renderCount).toBe(2)
+
+          // Set value by function
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              luckyNumber: s.luckyNumber + 1,
+            }))
+          })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 102,
+          })
+          expect(meta.renderCount).toBe(3)
+
+          // Reset
+          await act(async () => { await TestState.reset() })
+          expect(result.current).toStrictEqual({
+            firstName: 'John',
+            lastName: 'Smith',
+            luckyNumber: 42,
+          })
+          expect(meta.renderCount).toBe(4)
+
+        })
+
+        test('With equalityFn', async () => {
+
           const TestState = new StateManagerType(defaultState)
-          cleanupManager.append(TestState.dispose)
-          function TestComponent(): ReactNode {
-            const value = useStateValue(TestState)
-            return <span>Hello, {value.firstName} {value.lastName}!</span>
-          }
-          const output = renderToStaticMarkup(<TestComponent />)
-          expect(output).toBe('<span>Hello, John Smith!</span>')
+          collectForTeardown(TestState.dispose)
+
+          const hook = customRenderHook(() => useStateValue(TestState, null, objectIsShallowEqual))
+          const { result, meta } = hook
+          collectForTeardown(hook.unmount)
+
+          // Check initial state
+          expect(result.current).toShareObjectReferenceWith(defaultState)
+          expect(result.current).toStrictEqual({
+            firstName: 'John',
+            lastName: 'Smith',
+            luckyNumber: 42,
+          })
+          expect(meta.renderCount).toBe(1)
+
+          // Set value normally
+          await act(async () => {
+            await TestState.set({
+              firstName: 'Jane',
+              lastName: 'Clover',
+              luckyNumber: 101,
+            })
+          })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 101,
+          })
+          expect(meta.renderCount).toBe(2)
+
+          // Set value again and expect no re-renders
+          await act(async () => { await TestState.set((s) => s) })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 101,
+          })
+          expect(meta.renderCount).toBe(2)
+
+          // Set value by function
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              luckyNumber: s.luckyNumber + 1,
+            }))
+          })
+          expect(result.current).toStrictEqual({
+            firstName: 'Jane',
+            lastName: 'Clover',
+            luckyNumber: 102,
+          })
+          expect(meta.renderCount).toBe(3)
+
+          // Reset
+          await act(async () => { await TestState.reset() })
+          expect(result.current).toStrictEqual({
+            firstName: 'John',
+            lastName: 'Smith',
+            luckyNumber: 42,
+          })
+          expect(meta.renderCount).toBe(4)
+
         })
 
       })
 
-      describe('With selector', () => {
+      test('Server-side', () => {
+        const TestState = new StateManagerType(defaultState)
+        function TestComponent(): ReactNode {
+          const value = useStateValue(TestState)
+          return <span>Hello, {value.firstName} {value.lastName}!</span>
+        }
+        const output = renderToStaticMarkup(<TestComponent />)
+        expect(output).toBe('<span>Hello, John Smith!</span>')
+      })
 
-        describe('Client-side', () => {
+    })
 
-          test('Without equalityFn', async () => {
+    describe('With selector', () => {
 
-            const defaultState: IUserState = {
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            }
-            const TestState = new StateManagerType(defaultState)
-            cleanupManager.append(TestState.dispose)
+      describe('Client-side', () => {
 
-            const hookTester = new HookTester({
-              useHook: () => useStateValue(TestState, (s) => s.luckyNumber),
-              values: {
-                main(state) { return state },
-              },
-              actions: {
-                async setValue() {
-                  await TestState.set({
-                    firstName: 'Jane',
-                    lastName: 'Clover',
-                    luckyNumber: 101,
-                  })
-                },
-                async setValueByFunction() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    luckyNumber: s.luckyNumber + 1,
-                  }))
-                },
-                async setSameValue() {
-                  await TestState.set((s) => s)
-                },
-                async setFirstName() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    firstName: 'David',
-                  }))
-                },
-                reset: TestState.reset,
-              },
-            }, cleanupManager)
+        test('Without equalityFn', async () => {
 
-            // Check initial state
-            expect(hookTester.get('main')).toBe(42)
-            expect(hookTester.renderCount).toBe(1)
+          const TestState = new StateManagerType(defaultState)
+          collectForTeardown(TestState.dispose)
 
-            // Set value normally
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValue')
-            } else {
-              hookTester.action('setValue')
-            }
-            expect(hookTester.get('main')).toBe(101)
-            expect(hookTester.renderCount).toBe(2)
+          const hook = customRenderHook(() => useStateValue(TestState, (s) => s.luckyNumber))
+          const { result, meta } = hook
+          collectForTeardown(hook.unmount)
 
-            // Set value again and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setSameValue')
-            } else {
-              hookTester.action('setSameValue')
-            }
-            expect(hookTester.get('main')).toBe(101)
-            expect(hookTester.renderCount).toBe(2)
+          // Check initial state
+          expect(result.current).toBe(42)
+          expect(meta.renderCount).toBe(1)
 
-            // Set value by function
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValueByFunction')
-            } else {
-              hookTester.action('setValueByFunction')
-            }
-            expect(hookTester.get('main')).toBe(102)
-            expect(hookTester.renderCount).toBe(3)
-
-            // Set value for property not included by selector and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setFirstName')
-            } else {
-              hookTester.action('setFirstName')
-            }
-            expect(hookTester.get('main')).toBe(102)
-            expect(hookTester.renderCount).toBe(3)
-
-            // Reset
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('reset')
-            } else {
-              hookTester.action('reset')
-            }
-            expect(hookTester.get('main')).toBe(42)
-            expect(hookTester.renderCount).toBe(4)
-
+          // Set value normally
+          await act(async () => {
+            await TestState.set({
+              firstName: 'Jane',
+              lastName: 'Clover',
+              luckyNumber: 101,
+            })
           })
+          expect(result.current).toBe(101)
+          expect(meta.renderCount).toBe(2)
 
-          test('With equalityFn', async () => {
+          // Set value again and expect no re-renders
+          await act(async () => { await TestState.set((s) => s) })
+          expect(result.current).toBe(101)
+          expect(meta.renderCount).toBe(2)
 
-            const defaultState: IUserState = {
-              firstName: 'John',
-              lastName: 'Smith',
-              luckyNumber: 42,
-            }
-            const TestState = new StateManagerType(defaultState)
-            cleanupManager.append(TestState.dispose)
-
-            const hookTester = new HookTester({
-              useHook: () => useStateValue(
-                TestState,
-                (s) => s.luckyNumber,
-                objectIsShallowEqual,
-              ),
-              values: {
-                main(state) { return state },
-              },
-              actions: {
-                async setValue() {
-                  await TestState.set({
-                    firstName: 'Jane',
-                    lastName: 'Clover',
-                    luckyNumber: 101,
-                  })
-                },
-                async setValueByFunction() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    luckyNumber: s.luckyNumber + 1,
-                  }))
-                },
-                async setSameValue() {
-                  await TestState.set((s) => s)
-                },
-                async setFirstName() {
-                  await TestState.set((s) => ({
-                    ...s,
-                    firstName: 'David',
-                  }))
-                },
-                reset: TestState.reset,
-              },
-            }, cleanupManager)
-
-            // Check initial state
-            expect(hookTester.get('main')).toBe(42)
-            expect(hookTester.renderCount).toBe(1)
-
-            // Set value normally
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValue')
-            } else {
-              hookTester.action('setValue')
-            }
-            expect(hookTester.get('main')).toBe(101)
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value again and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setSameValue')
-            } else {
-              hookTester.action('setSameValue')
-            }
-            expect(hookTester.get('main')).toBe(101)
-            expect(hookTester.renderCount).toBe(2)
-
-            // Set value by function
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setValueByFunction')
-            } else {
-              hookTester.action('setValueByFunction')
-            }
-            expect(hookTester.get('main')).toBe(102)
-            expect(hookTester.renderCount).toBe(3)
-
-            // Set value for property not included by selector and expect no re-renders
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('setFirstName')
-            } else {
-              hookTester.action('setFirstName')
-            }
-            expect(hookTester.get('main')).toBe(102)
-            expect(hookTester.renderCount).toBe(3)
-
-            // Reset
-            if (isAsyncStateManager) {
-              await hookTester.actionAsync('reset')
-            } else {
-              hookTester.action('reset')
-            }
-            expect(hookTester.get('main')).toBe(42)
-            expect(hookTester.renderCount).toBe(4)
-
+          // Set value by function
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              luckyNumber: s.luckyNumber + 1,
+            }))
           })
+          expect(result.current).toBe(102)
+          expect(meta.renderCount).toBe(3)
+
+          // Set value for property not included by selector and expect no re-renders
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              firstName: 'David',
+            }))
+          })
+          expect(result.current).toBe(102)
+          expect(meta.renderCount).toBe(3)
+
+          // Reset
+          await act(async () => { await TestState.reset() })
+          expect(result.current).toBe(42)
+          expect(meta.renderCount).toBe(4)
 
         })
 
-        test('Server-side', () => {
-          const defaultState: IUserState = {
-            firstName: 'John',
-            lastName: 'Smith',
-            luckyNumber: 42,
-          }
+        test('With equalityFn', async () => {
+
           const TestState = new StateManagerType(defaultState)
-          cleanupManager.append(TestState.dispose)
-          function TestComponent(): ReactNode {
-            const firstName = useStateValue(TestState, (s) => s.firstName)
-            return <span>Hello, {firstName}!</span>
-          }
-          const output = renderToStaticMarkup(<TestComponent />)
-          expect(output).toBe('<span>Hello, John!</span>')
+          collectForTeardown(TestState.dispose)
+
+          const hook = customRenderHook(() => useStateValue(
+            TestState,
+            (s) => s.luckyNumber,
+            objectIsShallowEqual,
+          ))
+          const { result, meta } = hook
+          collectForTeardown(hook.unmount)
+
+          // Check initial state
+          expect(result.current).toBe(42)
+          expect(meta.renderCount).toBe(1)
+
+          // Set value normally
+          await act(async () => {
+            await TestState.set({
+              firstName: 'Jane',
+              lastName: 'Clover',
+              luckyNumber: 101,
+            })
+          })
+          expect(result.current).toBe(101)
+          expect(meta.renderCount).toBe(2)
+
+          // Set value again and expect no re-renders
+          await act(async () => { await TestState.set((s) => s) })
+          expect(result.current).toBe(101)
+          expect(meta.renderCount).toBe(2)
+
+          // Set value by function
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              luckyNumber: s.luckyNumber + 1,
+            }))
+          })
+          expect(result.current).toBe(102)
+          expect(meta.renderCount).toBe(3)
+
+          // Set value for property not included by selector and expect no re-renders
+          await act(async () => {
+            await TestState.set((s) => ({
+              ...s,
+              firstName: 'David',
+            }))
+          })
+          expect(result.current).toBe(102)
+          expect(meta.renderCount).toBe(3)
+
+          // Reset
+          await act(async () => { await TestState.reset() })
+          expect(result.current).toBe(42)
+          expect(meta.renderCount).toBe(4)
+
         })
 
       })
 
-      describe('Miscellaneous', () => {
+      test('Server-side', () => {
+        const TestState = new StateManagerType(defaultState)
+        function TestComponent(): ReactNode {
+          const firstName = useStateValue(TestState, (s) => s.firstName)
+          return <span>Hello, {firstName}!</span>
+        }
+        const output = renderToStaticMarkup(<TestComponent />)
+        expect(output).toBe('<span>Hello, John!</span>')
+      })
 
-        const objectIs = Object.is
-        beforeEach(() => { Object.is = jest.fn(Object.is) })
-        afterEach(() => { Object.is = objectIs })
+    })
 
-        test('Equality should fallback to `Object.is` if is falsy value', async () => {
+    describe('Miscellaneous', () => {
 
-          const defaultState: IUserState = {
-            firstName: 'John',
-            lastName: 'Smith',
-            luckyNumber: 42,
-          }
-          const TestState = new StateManagerType(defaultState)
-          cleanupManager.append(TestState.dispose)
+      const objectIs = Object.is
+      beforeEach(() => { Object.is = jest.fn(Object.is) })
+      afterEach(() => { Object.is = objectIs })
 
-          const hookTester = new HookTester({
-            useHook: () => useStateValue(TestState, null, null),
-            values: {
-              main(state) { return state },
-            },
-            actions: {
-              setValue() {
-                TestState.set(defaultState)
-              },
-            },
-          }, cleanupManager)
+      test('Equality should fallback to `Object.is` if is falsy value', async () => {
 
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('setValue')
-          } else {
-            hookTester.action('setValue')
-          }
-          expect(hookTester.renderCount).toBe(1)
-          expect(Object.is).toHaveBeenCalledWith(defaultState, defaultState)
+        const TestState = new StateManagerType(defaultState)
 
-        })
+        const hook = customRenderHook(() => useStateValue(TestState, null, null))
+        const { meta } = hook
+        collectForTeardown(hook.unmount)
+
+        await act(async () => { await TestState.set(defaultState) })
+        expect(meta.renderCount).toBe(1)
+        expect(Object.is).toHaveBeenCalledWith(defaultState, defaultState)
 
       })
 
     })
 
-  }
+  })
 
-})
+}

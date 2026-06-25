@@ -1,152 +1,102 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { HookTester } from '@glyph-cat/react-test-utils'
-import { useState } from 'react'
-import { TestConfig, wrapper } from '../../../test-wrapper'
+import { SimpleStateManager } from 'cotton-box'
+import { useSimpleStateValue } from 'cotton-box-react'
+import { act, customRenderHook, CustomRenderHookResult } from 'custom-react-hook-tester'
 
-wrapper(({
-  Lib: { SimpleStateManager },
-  ReactLib: { useSimpleStateValue },
-}: TestConfig) => {
+let TestState: SimpleStateManager<number>
+beforeEach(() => { TestState = new SimpleStateManager(42) })
+afterEach(() => { TestState?.dispose() })
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+type HookProps = { active: boolean }
+let hook: CustomRenderHookResult<HookProps, string>
+afterEach(() => { hook?.unmount() })
 
-  describe('Only test initial value', () => {
+describe('Only test initial value', () => {
 
-    const flagScenarioHooks = [
-      [
-        'active=(default)',
-        (TestState: any) => useSimpleStateValue(TestState, (s: number) => s.toString()),
-      ],
-      [
-        'active=true',
-        (TestState: any) => useSimpleStateValue(TestState, (s: number) => s.toString(), true),
-      ],
-      [
-        'active=false',
-        (TestState: any) => useSimpleStateValue(TestState, (s: number) => s.toString(), false),
-      ],
-    ] as const
+  test('active=(default)', () => {
+    hook = customRenderHook(() => useSimpleStateValue(TestState, (s: number) => s.toString()))
+    expect(hook.result.current).toBe('42')
+  })
 
-    for (const [flagScenario, useHook] of flagScenarioHooks) {
-      test(flagScenario, () => {
-        const TestState = new SimpleStateManager(42)
-        cleanupManager.append(TestState.dispose)
-        const hookTester = new HookTester({
-          useHook: () => useHook(TestState),
-          values: {
-            main(state) { return state },
-          },
-        }, cleanupManager)
-        expect(hookTester.get('main')).toBe('42')
-      })
-    }
+  test('active=true', () => {
+    hook = customRenderHook(() => useSimpleStateValue(TestState, (s: number) => s.toString(), true))
+    expect(hook.result.current).toBe('42')
+  })
+
+  test('active=false', () => {
+    hook = customRenderHook(() => useSimpleStateValue(TestState, (s: number) => s.toString(), false))
+    expect(hook.result.current).toBe('42')
+  })
+
+})
+
+describe('Test state changes', () => {
+
+  test('active = true -> false -> true', () => {
+
+    hook = customRenderHook(({ active }) => {
+      return useSimpleStateValue(TestState, (s) => s.toString(), active)
+    }, {
+      initialProps: {
+        active: true as boolean,
+      },
+    })
+    const { rerender, result, meta } = hook
+
+    // Check initial state
+    expect(result.current).toBe('42')
+    expect(meta.renderCount).toBe(1)
+
+    // Set active=false
+    rerender({ active: false })
+    expect(result.current).toBe('42')
+    expect(meta.renderCount).toBe(2)
+
+    // Perform state change
+    act(() => { TestState.set((s) => s + 1) })
+    expect(result.current).toBe('42')
+    expect(meta.renderCount).toBe(2)
+
+    // Set active=true
+    rerender({ active: true })
+    expect(result.current).toBe('43')
+    expect(meta.renderCount).toBe(3)
 
   })
 
-  describe('Test state changes', () => {
+  test('active = false -> true -> false', () => {
 
-    test('active = true -> false -> true', () => {
-
-      const TestState = new SimpleStateManager(42)
-      cleanupManager.append(TestState.dispose)
-
-      const hookTester = new HookTester({
-        useHook: () => {
-          const [active, setActiveState] = useState(true)
-          const state = useSimpleStateValue(TestState, (s) => s.toString(), active)
-          return { state, setActiveState }
-        },
-        values: {
-          main({ state }) { return state },
-        },
-        actions: {
-          increment() {
-            TestState.set((s) => s + 1)
-          },
-          setActiveTrue({ setActiveState }) {
-            setActiveState(true)
-          },
-          setActiveFalse({ setActiveState }) {
-            setActiveState(false)
-          },
-        }
-      }, cleanupManager)
-
-      // Check initial state
-      expect(hookTester.get('main')).toBe('42')
-      expect(hookTester.renderCount).toBe(1)
-
-      // Set active=false
-      hookTester.action('setActiveFalse')
-      expect(hookTester.get('main')).toBe('42')
-      expect(hookTester.renderCount).toBe(2)
-
-      // Perform state change
-      hookTester.action('increment')
-      expect(hookTester.get('main')).toBe('42')
-      expect(hookTester.renderCount).toBe(2)
-
-      // Set active=true
-      hookTester.action('setActiveTrue')
-      expect(hookTester.get('main')).toBe('43')
-      expect(hookTester.renderCount).toBe(3)
-
+    hook = customRenderHook(({ active }) => {
+      return useSimpleStateValue(TestState, (s) => s.toString(), active)
+    }, {
+      initialProps: {
+        active: false as boolean,
+      },
     })
+    const { rerender, result, meta } = hook
 
-    test('active = false -> true -> false', () => {
+    // Check initial state
+    expect(result.current).toBe('42')
+    expect(meta.renderCount).toBe(1)
 
-      const TestState = new SimpleStateManager(42)
-      cleanupManager.append(TestState.dispose)
+    // Perform state change
+    act(() => { TestState.set((s) => s + 1) })
+    expect(result.current).toBe('42')
+    expect(meta.renderCount).toBe(1)
 
-      const hookTester = new HookTester({
-        useHook: () => {
-          const [active, setActiveState] = useState(false)
-          const state = useSimpleStateValue(TestState, (s) => s.toString(), active)
-          return { state, setActiveState }
-        },
-        values: {
-          main({ state }) { return state },
-        },
-        actions: {
-          increment() {
-            TestState.set((s) => s + 1)
-          },
-          setActiveTrue({ setActiveState }) {
-            setActiveState(true)
-          },
-          setActiveFalse({ setActiveState }) {
-            setActiveState(false)
-          },
-        }
-      }, cleanupManager)
+    // Set active=true
+    rerender({ active: true })
+    expect(result.current).toBe('43')
+    expect(meta.renderCount).toBe(2)
 
-      // Check initial state
-      expect(hookTester.get('main')).toBe('42')
-      expect(hookTester.renderCount).toBe(1)
+    // Set active=false
+    rerender({ active: false })
+    expect(result.current).toBe('43')
+    expect(meta.renderCount).toBe(3)
 
-      // Perform state change
-      hookTester.action('increment')
-      expect(hookTester.get('main')).toBe('42')
-      expect(hookTester.renderCount).toBe(1)
-
-      // Set active=true
-      hookTester.action('setActiveTrue')
-      expect(hookTester.get('main')).toBe('43')
-      expect(hookTester.renderCount).toBe(2)
-
-      // Set active=false
-      hookTester.action('setActiveFalse')
-      expect(hookTester.get('main')).toBe('43')
-      expect(hookTester.renderCount).toBe(3)
-
-      // Perform state change again
-      hookTester.action('increment')
-      expect(hookTester.get('main')).toBe('43')
-      expect(hookTester.renderCount).toBe(3)
-
-    })
+    // Perform state change again
+    act(() => { TestState.set((s) => s + 1) })
+    expect(result.current).toBe('43')
+    expect(meta.renderCount).toBe(3)
 
   })
 

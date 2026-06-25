@@ -32,19 +32,19 @@ for (const StateManagerTypeKey in stateManagersToTestWith) {
 
     // Scenario where State Managers should start off with `isInitializing === false`
     // has already been tested when testing the instantiation process.
-    expect(TestState.isInitializing.get()).toBe(true)
+    expect(TestState.isInitializing.get()).toBeTrue()
 
     await TestUtils.delay(10)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing.get()).toBeFalse()
 
     TestState.init(async ({ commitNoop }) => {
       await TestUtils.delay(10)
       commitNoop()
     })
-    expect(TestState.isInitializing.get()).toBe(true)
+    expect(TestState.isInitializing.get()).toBeTrue()
 
     await TestUtils.delay(10)
-    expect(TestState.isInitializing.get()).toBe(false)
+    expect(TestState.isInitializing.get()).toBeFalse()
 
   })
 }

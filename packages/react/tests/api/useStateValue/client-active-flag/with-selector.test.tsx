@@ -1,191 +1,140 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { HookTester } from '@glyph-cat/react-test-utils'
-import { useState } from 'react'
-import { TestConfig, wrapper } from '../../../test-wrapper'
+import { Fn } from '@glyph-cat/foundation'
+import { AsyncStateManager, SimpleStateManager, StateManager } from 'cotton-box'
+import { useStateValue } from 'cotton-box-react'
+import { act, customRenderHook } from 'custom-react-hook-tester'
 
-wrapper(({
-  Lib: { AsyncStateManager, SimpleStateManager, StateManager },
-  ReactLib: { useStateValue },
-}: TestConfig) => {
+const stateManagersToTestWith = {
+  SimpleStateManager,
+  StateManager,
+  AsyncStateManager,
+} as const
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+type HookProps = { active: boolean }
 
-  const stateManagersToTestWith = {
-    SimpleStateManager,
-    StateManager,
-    AsyncStateManager,
-  } as const
+let teardownFunctions: Array<Fn>
+const collectForTeardown = (fn: Fn) => teardownFunctions.push(fn)
+beforeEach(() => { teardownFunctions = [] })
+afterEach(() => { teardownFunctions = null! })
 
-  type StateManagerType = typeof SimpleStateManager<number> | typeof StateManager<number> | typeof AsyncStateManager<number>
+for (const StateManagerTypeKey in stateManagersToTestWith) {
 
-  for (const StateManagerTypeKey in stateManagersToTestWith) {
+  const StateManagerType = stateManagersToTestWith[StateManagerTypeKey as keyof typeof stateManagersToTestWith]
+  const isAsyncStateManager = StateManagerTypeKey === 'AsyncStateManager'
 
-    const StateManagerType = stateManagersToTestWith[StateManagerTypeKey] as StateManagerType
-    const isAsyncStateManager = StateManagerTypeKey === 'AsyncStateManager'
+  describe(StateManagerTypeKey, () => {
 
-    describe(StateManagerTypeKey, () => {
+    describe('Only test initial value', () => {
 
-      describe('Only test initial value', () => {
+      test('active=(default)', () => {
+        const TestState = new StateManagerType(42)
+        collectForTeardown(TestState.dispose)
+        const hook = customRenderHook(() => useStateValue(TestState, (s) => s.toString()))
+        const { result } = hook
+        collectForTeardown(hook.unmount)
+        expect(result.current).toBe(42)
+      })
 
-        const flagScenarioHooks = [
-          ['active=(default)', (TestState) => useStateValue(TestState, (s) => s.toString())],
-          ['active=true', (TestState) => useStateValue(TestState, (s) => s.toString(), true)],
-          ['active=false', (TestState) => useStateValue(TestState, (s) => s.toString(), false)],
-        ] as const
+      test('active=true', () => {
+        const TestState = new StateManagerType(42)
+        collectForTeardown(TestState.dispose)
+        const hook = customRenderHook(() => useStateValue(TestState, (s) => s.toString(), true))
+        const { result } = hook
+        collectForTeardown(hook.unmount)
+        expect(result.current).toBe(42)
+      })
 
-        for (const [flagScenario, useHook] of flagScenarioHooks) {
-          test(flagScenario, () => {
-            const TestState = new StateManagerType(42)
-            cleanupManager.append(TestState.dispose)
-            const hookTester = new HookTester({
-              useHook: () => useHook(TestState),
-              values: {
-                main(state) { return state },
-              },
-            }, cleanupManager)
-            expect(hookTester.get('main')).toBe('42')
-          })
-        }
+      test('active=false', () => {
+        const TestState = new StateManagerType(42)
+        collectForTeardown(TestState.dispose)
+        const hook = customRenderHook(() => useStateValue(TestState, (s) => s.toString(), false))
+        const { result } = hook
+        collectForTeardown(hook.unmount)
+        expect(result.current).toBe(42)
+      })
+
+    })
+
+    describe('Test state changes', () => {
+
+      test('active = true -> false -> true', async () => {
+
+        const TestState = new StateManagerType(42)
+        collectForTeardown(TestState.dispose)
+
+        const hook = customRenderHook<HookProps, string>(({ active }) => {
+          return useStateValue(TestState, (s) => s.toString(), active)
+        }, {
+          initialProps: {
+            active: true,
+          },
+        })
+        const { rerender, result, meta } = hook
+        collectForTeardown(hook.unmount)
+
+        // Check initial state
+        expect(result.current).toBe('42')
+        expect(meta.renderCount).toBe(1)
+
+        // Set active=false
+        rerender({ active: false })
+        expect(result.current).toBe('42')
+        expect(meta.renderCount).toBe(2)
+
+        // Perform state change
+        await act(async () => { await TestState.set((s) => s + 1) })
+        expect(result.current).toBe('42')
+        expect(meta.renderCount).toBe(2)
+
+        // Set active=true
+        rerender({ active: true })
+        expect(result.current).toBe('43')
+        expect(meta.renderCount).toBe(3)
 
       })
 
-      describe('Test state changes', () => {
+      test('active = false -> true -> false', async () => {
 
-        test('active = true -> false -> true', async () => {
+        const TestState = new StateManagerType(42)
+        collectForTeardown(TestState.dispose)
 
-          const TestState = new StateManagerType(42)
-          cleanupManager.append(TestState.dispose)
-
-          const hookTester = new HookTester({
-            useHook: () => {
-              const [active, setActiveState] = useState(true)
-              const state = useStateValue(TestState, (s) => s.toString(), active)
-              return { state, setActiveState }
-            },
-            values: {
-              main({ state }) { return state },
-            },
-            actions: {
-              async increment() {
-                await TestState.set((s) => s + 1)
-              },
-              setActiveTrue({ setActiveState }) {
-                setActiveState(true)
-              },
-              setActiveFalse({ setActiveState }) {
-                setActiveState(false)
-              },
-            }
-          }, cleanupManager)
-
-          // Check initial state
-          expect(hookTester.get('main')).toBe('42')
-          expect(hookTester.renderCount).toBe(1)
-
-          // Set active=false
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('setActiveFalse')
-          } else {
-            hookTester.action('setActiveFalse')
-          }
-          expect(hookTester.get('main')).toBe('42')
-          expect(hookTester.renderCount).toBe(2)
-
-          // Perform state change
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('increment')
-          } else {
-            hookTester.action('increment')
-          }
-          expect(hookTester.get('main')).toBe('42')
-          expect(hookTester.renderCount).toBe(2)
-
-          // Set active=true
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('setActiveTrue')
-          } else {
-            hookTester.action('setActiveTrue')
-          }
-          expect(hookTester.get('main')).toBe('43')
-          expect(hookTester.renderCount).toBe(3)
-
+        const hook = customRenderHook<HookProps, string>(({ active }) => {
+          return useStateValue(TestState, (s) => s.toString(), active)
+        }, {
+          initialProps: {
+            active: false,
+          },
         })
+        const { rerender, result, meta } = hook
+        collectForTeardown(hook.unmount)
 
-        test('active = false -> true -> false', async () => {
+        // Check initial state
+        expect(result.current).toBe('42')
+        expect(meta.renderCount).toBe(1)
 
-          const TestState = new StateManagerType(42)
-          cleanupManager.append(TestState.dispose)
+        // Perform state change
+        await act(async () => { await TestState.set((s) => s + 1) })
+        expect(result.current).toBe('42')
+        expect(meta.renderCount).toBe(1)
 
-          const hookTester = new HookTester({
-            useHook: () => {
-              const [active, setActiveState] = useState(false)
-              const state = useStateValue(TestState, (s) => s.toString(), active)
-              return { state, setActiveState }
-            },
-            values: {
-              main({ state }) { return state },
-            },
-            actions: {
-              async increment() {
-                await TestState.set((s) => s + 1)
-              },
-              setActiveTrue({ setActiveState }) {
-                setActiveState(true)
-              },
-              setActiveFalse({ setActiveState }) {
-                setActiveState(false)
-              },
-            }
-          }, cleanupManager)
+        // Set active=true
+        rerender({ active: true })
+        expect(result.current).toBe('43')
+        expect(meta.renderCount).toBe(2)
 
-          // Check initial state
-          expect(hookTester.get('main')).toBe('42')
-          expect(hookTester.renderCount).toBe(1)
+        // Set active=false
+        rerender({ active: false })
+        expect(result.current).toBe('43')
+        expect(meta.renderCount).toBe(3)
 
-          // Perform state change
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('increment')
-          } else {
-            hookTester.action('increment')
-          }
-          expect(hookTester.get('main')).toBe('42')
-          expect(hookTester.renderCount).toBe(1)
-
-          // Set active=true
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('setActiveTrue')
-          } else {
-            hookTester.action('setActiveTrue')
-          }
-          expect(hookTester.get('main')).toBe('43')
-          expect(hookTester.renderCount).toBe(2)
-
-          // Set active=false
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('setActiveFalse')
-          } else {
-            hookTester.action('setActiveFalse')
-          }
-          expect(hookTester.get('main')).toBe('43')
-          expect(hookTester.renderCount).toBe(3)
-
-          // Perform state change again
-          if (isAsyncStateManager) {
-            await hookTester.actionAsync('increment')
-          } else {
-            hookTester.action('increment')
-          }
-          expect(hookTester.get('main')).toBe('43')
-          expect(hookTester.renderCount).toBe(3)
-
-        })
+        // Perform state change again
+        await act(async () => { await TestState.set((s) => s + 1) })
+        expect(result.current).toBe('43')
+        expect(meta.renderCount).toBe(3)
 
       })
 
     })
 
-  }
+  })
 
-})
+}

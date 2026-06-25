@@ -59,7 +59,7 @@ import { useResolveHydrationStateManager } from '../hydration/internals'
 export function useStateValue<State>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
-  active?: boolean,
+  active?: boolean | null,
 ): State
 
 /**
@@ -106,7 +106,7 @@ export function useStateValue<State>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: null,
   equalityFn?: EqualityFn<any>,
-  active?: boolean,
+  active?: boolean | null,
 ): State
 
 /**
@@ -151,7 +151,7 @@ export function useStateValue<State>(
 export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
-  active?: boolean,
+  active?: boolean | null,
 ): SelectedState
 
 /**
@@ -198,15 +198,15 @@ export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector?: StateSelector<State, SelectedState>,
   equalityFn?: EqualityFn<any>,
-  active?: boolean,
+  active?: boolean | null,
 ): SelectedState
 
 export function useStateValue<State, SelectedState>(
   stateManager: SimpleStateManager<State> | StateManager<State> | AsyncStateManager<State> | SimpleFiniteStateManager<State> | ReadOnlyStateManager<State>,
   selector: StateSelector<State, SelectedState> | null = null,
   ...optionalArgs: [
-    activeOrEqualityFn?: boolean | EqualityFn<State | SelectedState>,
-    $active?: boolean,
+    activeOrEqualityFn?: boolean | null | EqualityFn<State | SelectedState>,
+    $active?: boolean | null,
   ]
 ): State | SelectedState {
 
@@ -222,7 +222,7 @@ export function useStateValue<State, SelectedState>(
   useSuspenseWaiter(stateManager)
   useDebugName(stateManager)
 
-  let active: boolean
+  let active: boolean | null
   let isEqual: EqualityFn<State | SelectedState>
   if (optionalArgs.length >= 2) {
     isEqual = optionalArgs[0] as EqualityFn<State | SelectedState> ?? Object.is

@@ -1,15 +1,14 @@
 import { SimpleStateManager } from 'cotton-box'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: SimpleStateManager<IUserState>
 afterEach(() => { TestState?.dispose() })
 
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
+
 test('No additional options', () => {
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
   TestState = new SimpleStateManager(defaultState)
   expect(TestState.name).toBeUndefined()
   expect(TestState.get()).toShareObjectReferenceWith(defaultState)
@@ -27,11 +26,6 @@ test('No additional options', () => {
 })
 
 test('With additional options', () => {
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
   TestState = new SimpleStateManager(defaultState, {
     name: 'numbers',
   })

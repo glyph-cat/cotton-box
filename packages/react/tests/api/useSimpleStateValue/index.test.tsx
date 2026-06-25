@@ -1,251 +1,199 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { HookTester } from '@glyph-cat/react-test-utils'
-import { SimpleStateManager as $0 } from 'cotton-box'
+import { SimpleStateManager } from 'cotton-box'
+import { useSimpleStateValue } from 'cotton-box-react'
+import { act, customRenderHook, CustomRenderHookResult } from 'custom-react-hook-tester'
 import { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { IUserState } from '../../test-helpers'
-import { TestConfig, wrapper } from '../../test-wrapper'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
-wrapper(({
-  Lib: { SimpleStateManager },
-  ReactLib: { useSimpleStateValue },
-}: TestConfig) => {
+let TestState: SimpleStateManager<IUserState>
+afterEach(() => { TestState?.dispose() })
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
 
-  describe('Without selector', () => {
+describe('Without selector', () => {
 
-    test('Client-side', () => {
+  let hook: CustomRenderHookResult<unknown, IUserState>
+  afterEach(() => { hook?.unmount() })
 
-      const defaultState: IUserState = {
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      }
-      const TestState = new SimpleStateManager(defaultState)
-      cleanupManager.append(TestState.dispose)
+  test('Client-side', () => {
 
-      const hookTester = new HookTester({
-        useHook: () => useSimpleStateValue(TestState),
-        values: {
-          main(state) { return state },
-        },
-        actions: {
-          setValue() {
-            TestState.set({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-          },
-          setValueByFunction() {
-            TestState.set((s) => ({
-              ...s,
-              luckyNumber: s.luckyNumber + 1,
-            }))
-          },
-          setSameValue() {
-            TestState.set((s) => s)
-          },
-          reset: TestState.reset,
-        },
-      }, cleanupManager)
+    TestState = new SimpleStateManager(defaultState)
 
-      // Check initial state
-      expect(Object.is(hookTester.get('main'), defaultState)).toBe(true)
-      expect(hookTester.get('main')).toStrictEqual({
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      })
-      expect(hookTester.renderCount).toBe(1)
+    hook = customRenderHook(() => useSimpleStateValue(TestState))
+    const { result, meta } = hook
 
-      // Set value normally
-      hookTester.action('setValue')
-      expect(hookTester.get('main')).toStrictEqual({
+    // Check initial state
+    expect(result.current).toShareObjectReferenceWith(defaultState)
+    expect(result.current).toStrictEqual({
+      firstName: 'John',
+      lastName: 'Smith',
+      luckyNumber: 42,
+    })
+    expect(meta.renderCount).toBe(1)
+
+    // Set value normally
+    act(() => {
+      TestState.set({
         firstName: 'Jane',
         lastName: 'Clover',
         luckyNumber: 101,
       })
-      expect(hookTester.renderCount).toBe(2)
-
-      // Set value again and expect no re-renders
-      hookTester.action('setSameValue')
-      expect(hookTester.get('main')).toStrictEqual({
-        firstName: 'Jane',
-        lastName: 'Clover',
-        luckyNumber: 101,
-      })
-      expect(hookTester.renderCount).toBe(2)
-
-      // Set value by function
-      hookTester.action('setValueByFunction')
-      expect(hookTester.get('main')).toStrictEqual({
-        firstName: 'Jane',
-        lastName: 'Clover',
-        luckyNumber: 102,
-      })
-      expect(hookTester.renderCount).toBe(3)
-
-      // Reset
-      hookTester.action('reset')
-      expect(hookTester.get('main')).toStrictEqual({
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      })
-      expect(hookTester.renderCount).toBe(4)
-
     })
-
-    describe('Server-side', () => {
-
-      let TestState: $0<IUserState>
-      const defaultState: IUserState = {
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      }
-
-      const flagScenarios = [
-        ['active=(default)', (): ReactNode => {
-          const value = useSimpleStateValue(TestState)
-          return <span>Hello, {value.firstName} {value.lastName}!</span>
-        }],
-        ['active=true', (): ReactNode => {
-          const value = useSimpleStateValue(TestState, null, true)
-          return <span>Hello, {value.firstName} {value.lastName}!</span>
-        }],
-        ['active=false', (): ReactNode => {
-          const value = useSimpleStateValue(TestState, null, false)
-          return <span>Hello, {value.firstName} {value.lastName}!</span>
-        }],
-      ] as const
-
-      for (const [flagScenario, TestComponent] of flagScenarios) {
-        test(flagScenario, () => {
-          TestState = new SimpleStateManager(defaultState)
-          cleanupManager.append(TestState.dispose)
-          const output = renderToStaticMarkup(<TestComponent />)
-          expect(output).toBe('<span>Hello, John Smith!</span>')
-        })
-      }
-
+    expect(result.current).toStrictEqual({
+      firstName: 'Jane',
+      lastName: 'Clover',
+      luckyNumber: 101,
     })
+    expect(meta.renderCount).toBe(2)
+
+    // Set value again and expect no re-renders
+    act(() => { TestState.set((s) => s) })
+    expect(result.current).toStrictEqual({
+      firstName: 'Jane',
+      lastName: 'Clover',
+      luckyNumber: 101,
+    })
+    expect(meta.renderCount).toBe(2)
+
+    // Set value by function
+    act(() => {
+      TestState.set((s) => ({
+        ...s,
+        luckyNumber: s.luckyNumber + 1,
+      }))
+    })
+    expect(result.current).toStrictEqual({
+      firstName: 'Jane',
+      lastName: 'Clover',
+      luckyNumber: 102,
+    })
+    expect(meta.renderCount).toBe(3)
+
+    // Reset
+    act(() => { TestState.reset() })
+    expect(result.current).toStrictEqual({
+      firstName: 'John',
+      lastName: 'Smith',
+      luckyNumber: 42,
+    })
+    expect(meta.renderCount).toBe(4)
 
   })
 
-  describe('With selector', () => {
+  describe('Server-side', () => {
 
-    test('Client-side', () => {
+    const flagScenarios = [
+      ['active=(default)', (): ReactNode => {
+        const value = useSimpleStateValue(TestState)
+        return <span>Hello, {value.firstName} {value.lastName}!</span>
+      }],
+      ['active=true', (): ReactNode => {
+        const value = useSimpleStateValue(TestState, null, true)
+        return <span>Hello, {value.firstName} {value.lastName}!</span>
+      }],
+      ['active=false', (): ReactNode => {
+        const value = useSimpleStateValue(TestState, null, false)
+        return <span>Hello, {value.firstName} {value.lastName}!</span>
+      }],
+    ] as const
 
-      const defaultState: IUserState = {
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      }
-      const TestState = new SimpleStateManager(defaultState)
-      cleanupManager.append(TestState.dispose)
+    for (const [flagScenario, TestComponent] of flagScenarios) {
+      test(flagScenario, () => {
+        TestState = new SimpleStateManager(defaultState)
+        const output = renderToStaticMarkup(<TestComponent />)
+        expect(output).toBe('<span>Hello, John Smith!</span>')
+      })
+    }
 
-      const hookTester = new HookTester({
-        useHook: () => useSimpleStateValue(TestState, (s) => s.luckyNumber),
-        values: {
-          main(state) { return state },
-        },
-        actions: {
-          setValue() {
-            TestState.set({
-              firstName: 'Jane',
-              lastName: 'Clover',
-              luckyNumber: 101,
-            })
-          },
-          setValueByFunction() {
-            TestState.set((s) => ({
-              ...s,
-              luckyNumber: s.luckyNumber + 1,
-            }))
-          },
-          setSameValue() {
-            TestState.set((s) => s)
-          },
-          setFirstName() {
-            TestState.set((s) => ({
-              ...s,
-              firstName: 'David',
-            }))
-          },
-          reset: TestState.reset,
-        },
-      }, cleanupManager)
+  })
 
-      // Check initial state
-      expect(hookTester.get('main')).toBe(42)
-      expect(hookTester.renderCount).toBe(1)
+})
 
-      // Set value normally
-      hookTester.action('setValue')
-      expect(hookTester.get('main')).toBe(101)
-      expect(hookTester.renderCount).toBe(2)
+describe('With selector', () => {
 
-      // Set value again and expect no re-renders
-      hookTester.action('setSameValue')
-      expect(hookTester.get('main')).toBe(101)
-      expect(hookTester.renderCount).toBe(2)
+  let hook: CustomRenderHookResult<unknown, IUserState['luckyNumber']>
+  afterEach(() => { hook?.unmount() })
 
-      // Set value by function
-      hookTester.action('setValueByFunction')
-      expect(hookTester.get('main')).toBe(102)
-      expect(hookTester.renderCount).toBe(3)
+  test('Client-side', () => {
 
-      // Set value for property not included by selector and expect no re-renders
-      hookTester.action('setFirstName')
-      expect(hookTester.get('main')).toBe(102)
-      expect(hookTester.renderCount).toBe(3)
+    TestState = new SimpleStateManager(defaultState)
 
-      // Reset
-      hookTester.action('reset')
-      expect(hookTester.get('main')).toBe(42)
-      expect(hookTester.renderCount).toBe(4)
+    hook = customRenderHook(() => useSimpleStateValue(TestState, (s) => s.luckyNumber))
+    const { result, meta } = hook
 
+    // Check initial state
+    expect(result.current).toBe(42)
+    expect(meta.renderCount).toBe(1)
+
+    // Set value normally
+    act(() => {
+      TestState.set({
+        firstName: 'Jane',
+        lastName: 'Clover',
+        luckyNumber: 101,
+      })
     })
+    expect(result.current).toBe(101)
+    expect(meta.renderCount).toBe(2)
 
-    describe('Server-side', () => {
+    // Set value again and expect no re-renders
+    act(() => { TestState.set((s) => s) })
+    expect(result.current).toBe(101)
+    expect(meta.renderCount).toBe(2)
 
-      let TestState: $0<IUserState>
-      const defaultState: IUserState = {
-        firstName: 'John',
-        lastName: 'Smith',
-        luckyNumber: 42,
-      }
-
-      const flagScenarios = [
-        ['active=(default)', (): ReactNode => {
-          const firstName = useSimpleStateValue(TestState, (s) => s.firstName)
-          return <span>Hello, {firstName}!</span>
-        }],
-        ['active=true', (): ReactNode => {
-          const firstName = useSimpleStateValue(TestState, (s) => s.firstName, true)
-          return <span>Hello, {firstName}!</span>
-        }],
-        ['active=false', (): ReactNode => {
-          const firstName = useSimpleStateValue(TestState, (s) => s.firstName, false)
-          return <span>Hello, {firstName}!</span>
-        }],
-      ] as const
-
-      for (const [flagScenario, TestComponent] of flagScenarios) {
-        test(flagScenario, () => {
-          TestState = new SimpleStateManager(defaultState)
-          cleanupManager.append(TestState.dispose)
-          const output = renderToStaticMarkup(<TestComponent />)
-          expect(output).toBe('<span>Hello, John!</span>')
-        })
-      }
-
+    // Set value by function
+    act(() => {
+      TestState.set((s) => ({
+        ...s,
+        luckyNumber: s.luckyNumber + 1,
+      }))
     })
+    expect(result.current).toBe(102)
+    expect(meta.renderCount).toBe(3)
+
+    // Set value for property not included by selector and expect no re-renders
+    act(() => {
+      TestState.set((s) => ({
+        ...s,
+        firstName: 'David',
+      }))
+    })
+    expect(result.current).toBe(102)
+    expect(meta.renderCount).toBe(3)
+
+    // Reset
+    act(() => { TestState.reset() })
+    expect(result.current).toBe(42)
+    expect(meta.renderCount).toBe(4)
+
+  })
+
+  describe('Server-side', () => {
+
+    const flagScenarios = [
+      ['active=(default)', (): ReactNode => {
+        const firstName = useSimpleStateValue(TestState, (s) => s.firstName)
+        return <span>Hello, {firstName}!</span>
+      }],
+      ['active=true', (): ReactNode => {
+        const firstName = useSimpleStateValue(TestState, (s) => s.firstName, true)
+        return <span>Hello, {firstName}!</span>
+      }],
+      ['active=false', (): ReactNode => {
+        const firstName = useSimpleStateValue(TestState, (s) => s.firstName, false)
+        return <span>Hello, {firstName}!</span>
+      }],
+    ] as const
+
+    for (const [flagScenario, TestComponent] of flagScenarios) {
+      test(flagScenario, () => {
+        TestState = new SimpleStateManager(defaultState)
+        const output = renderToStaticMarkup(<TestComponent />)
+        expect(output).toBe('<span>Hello, John!</span>')
+      })
+    }
 
   })
 

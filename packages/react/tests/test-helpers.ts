@@ -1,4 +1,3 @@
-// /* eslint-disable no-console */
 import { type ICustomTestSpec } from 'cotton-box-repo-tools/test-abstractions'
 
 export const CurrentTestSpec: ICustomTestSpec = __CUSTOM_TEST_SPEC
@@ -9,6 +8,14 @@ export interface IUserState {
   luckyNumber: number
 }
 
+export function createDefaultUserState(): IUserState {
+  return Object.freeze({
+    firstName: 'John',
+    lastName: 'Smith',
+    luckyNumber: 42,
+  })
+}
+
 // eslint-disable-next-line @typescript-eslint/no-namespace
 export namespace TestUtils {
 
@@ -17,17 +24,6 @@ export namespace TestUtils {
       setTimeout(resolve, timeout)
     })
   }
-
-  // export function spyOnConsoleError(): void {
-  //   let consoleError: typeof console.error
-  //   beforeEach(() => {
-  //     consoleError = console.error
-  //     console.error = jest.fn(() => { /**/ })
-  //     // console.error = jest.fn(consoleError)
-  //     // ^ for ease of debug only, commented out when not in use
-  //   })
-  //   afterEach(() => { console.error = consoleError })
-  // }
 
   export function mockSelector<S>(s: S): S { return s }
 

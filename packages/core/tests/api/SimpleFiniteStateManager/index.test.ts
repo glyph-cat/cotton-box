@@ -99,8 +99,8 @@ test(SimpleFiniteStateManager.prototype.trySet.name, () => {
     },
   })
 
-  expect(TestState.trySet(DummyState.STARTED)).toBe(false)
-  expect(TestState.trySet(DummyState.STARTING)).toBe(true)
+  expect(TestState.trySet(DummyState.STARTED)).toBeFalse()
+  expect(TestState.trySet(DummyState.STARTING)).toBeTrue()
 
 })
 

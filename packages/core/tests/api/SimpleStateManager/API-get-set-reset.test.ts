@@ -1,17 +1,15 @@
 import { Nullable } from '@glyph-cat/foundation'
 import { SimpleStateManager } from 'cotton-box'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: SimpleStateManager<IUserState>
 afterEach(() => { TestState?.dispose() })
 
-test('Main', () => {
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
 
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
+test('Main', () => {
 
   TestState = new SimpleStateManager(defaultState)
 

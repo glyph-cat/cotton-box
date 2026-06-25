@@ -67,4 +67,14 @@
     ],
     "description": "Create new example"
   },
+  "Act": {
+    "scope": "javascript,javascriptreact,typescript,typescriptreact",
+    "prefix": "act(() => { })",
+    "body": "act(() => { $0 })",
+    "include": [
+      "**/*.test.tsx",
+      "**/*.test.ts",
+    ],
+    "description": "Create new example"
+  },
 }

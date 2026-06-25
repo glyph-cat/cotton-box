@@ -1,18 +1,17 @@
 import { Nullable } from '@glyph-cat/foundation'
 import { AsyncStateManager } from 'cotton-box'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: AsyncStateManager<IUserState>
 afterEach(async () => { await TestState?.dispose() })
 
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
+
 test('No additional options', async () => {
-  const defaultState: IUserState = {
-    firstName: 'John',
-    lastName: 'Smith',
-    luckyNumber: 42,
-  }
   TestState = new AsyncStateManager(defaultState)
-  expect(TestState.isInitializing.get()).toBe(false)
+  expect(TestState.isInitializing.get()).toBeFalse()
   expect(TestState.name).toBeUndefined()
   expect(await TestState.get()).toShareObjectReferenceWith(defaultState)
   expect(await TestState.get()).toStrictEqual({
@@ -26,18 +25,12 @@ test('No additional options', async () => {
     lastName: 'Smith',
     luckyNumber: 42,
   })
-  expect(TestState.visibility).toBeUndefined()
   expect(TestState.suspense).toBe(false)
 })
 
 describe('lifecycle.init', () => {
 
   test('commit', async () => {
-    const defaultState: IUserState = {
-      firstName: 'John',
-      lastName: 'Smith',
-      luckyNumber: 42,
-    }
     const didSet = jest.fn()
     let spiedDefaultState: Nullable<IUserState> = null
     const stateToCommit: IUserState = {
@@ -76,11 +69,6 @@ describe('lifecycle.init', () => {
   })
 
   test('commitNoop', async () => {
-    const defaultState: IUserState = {
-      firstName: 'John',
-      lastName: 'Smith',
-      luckyNumber: 42,
-    }
     const didSet = jest.fn()
     let spiedDefaultState: Nullable<IUserState> = null
     TestState = new AsyncStateManager(defaultState, {

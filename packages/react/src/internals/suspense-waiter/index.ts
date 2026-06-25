@@ -33,6 +33,7 @@ export function useSuspenseWaiter<T>(
 
 }
 
+// cspell:disable-next-line
 // Modified based from ovieokeh's `wrapPromise` method. Reference:
 // https://github.com/ovieokeh/suspense-data-fetching/blob/master/lib/api/wrapPromise.js
 

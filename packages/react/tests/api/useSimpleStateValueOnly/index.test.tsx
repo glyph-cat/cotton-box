@@ -3,19 +3,17 @@ import { useSimpleStateValueOnly } from 'cotton-box-react'
 import { act, customRenderHook, CustomRenderHookResult } from 'custom-react-hook-tester'
 import { ReactNode } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { IUserState } from '../../test-helpers'
+import { createDefaultUserState, IUserState } from '../../test-helpers'
 
 let TestState: SimpleStateManager<IUserState>
 afterEach(() => { TestState?.dispose() })
 
+let defaultState: IUserState = null!
+beforeEach(() => { defaultState = createDefaultUserState() })
+afterEach(() => { defaultState = null! })
+
 let hook: CustomRenderHookResult<unknown, IUserState>
 afterEach(() => { hook?.unmount() })
-
-const defaultState: IUserState = Object.freeze({
-  firstName: 'John',
-  lastName: 'Smith',
-  luckyNumber: 42,
-})
 
 test('Client-side', () => {
 

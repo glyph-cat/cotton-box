@@ -1,74 +1,66 @@
-import { CleanupManager } from '@glyph-cat/cleanup-manager'
-import { SuspenseTester } from '@glyph-cat/react-test-utils'
-import { act, ReactNode } from 'react'
+import { Fn } from '@glyph-cat/foundation'
+import { AsyncStateManager, StateManager } from 'cotton-box'
+import { useStateValue } from 'cotton-box-react'
+import { renderSuspenseTester } from 'custom-react-hook-tester'
+import { act } from 'react'
 import { TestUtils } from '../test-helpers'
-import { TestConfig, wrapper } from '../test-wrapper'
 
-wrapper(({
-  Lib: { StateManager, AsyncStateManager },
-  ReactLib: {
-    useStateValue,
-  },
-}: TestConfig) => {
+jest.useRealTimers()
 
-  jest.useRealTimers()
+let teardownFunctions: Array<Fn>
+const collectForTeardown = (fn: Fn) => teardownFunctions.push(fn)
+beforeEach(() => { teardownFunctions = [] })
+afterEach(() => { teardownFunctions = null! })
 
-  const hooksToTestWith = {
-    useStateValue,
-  } as const
+const hooksToTestWith = {
+  useStateValue,
+} as const
 
-  const stateManagersToTestWith = {
-    StateManager,
-    AsyncStateManager,
-  } as const
+const stateManagersToTestWith = {
+  StateManager,
+  AsyncStateManager,
+} as const
 
-  let cleanupManager: CleanupManager
-  beforeEach(() => { cleanupManager = new CleanupManager() })
-  afterEach(() => { cleanupManager.run() })
+for (const hookName in hooksToTestWith) {
+  describe(hookName, () => {
+    const useHook = hooksToTestWith[hookName as keyof typeof hooksToTestWith]
+    for (const StateManagerTypeKey in stateManagersToTestWith) {
+      const StateManagerType = stateManagersToTestWith[StateManagerTypeKey as keyof typeof stateManagersToTestWith]
+      test(StateManagerTypeKey, async () => {
 
-  for (const hookName in hooksToTestWith) {
-    describe(hookName, () => {
-      const useHook = hooksToTestWith[hookName]
-      for (const StateManagerTypeKey in stateManagersToTestWith) {
-        const StateManagerType = stateManagersToTestWith[StateManagerTypeKey]
-        test(StateManagerTypeKey, async () => {
-
-          const TestState = new StateManagerType(null, {
-            lifecycle: {
-              async init({ commitNoop }) {
-                await TestUtils.delay(10)
-                commitNoop()
-              },
-            },
-            suspense: true,
-          })
-          cleanupManager.append(TestState.dispose)
-
-          const suspenseTester = new SuspenseTester((): ReactNode => {
-            useHook(TestState, TestUtils.mockSelector)
-            return null
-          }, cleanupManager)
-
-          expect(suspenseTester.componentIsUnderSuspense).toBe(true)
-
-          await act(async () => { await TestUtils.delay(10) })
-          expect(suspenseTester.componentIsUnderSuspense).toBe(false)
-
-          act(() => {
-            TestState.init(async ({ commitNoop }) => {
+        const TestState = new StateManagerType(null, {
+          lifecycle: {
+            async init({ commitNoop }) {
               await TestUtils.delay(10)
               commitNoop()
-            })
-          })
-          expect(suspenseTester.componentIsUnderSuspense).toBe(true)
-
-          await act(async () => { await TestUtils.delay(10) })
-          expect(suspenseTester.componentIsUnderSuspense).toBe(false)
-
+            },
+          },
+          suspense: true,
         })
+        collectForTeardown(TestState.dispose)
 
-      }
-    })
-  }
+        const hook = renderSuspenseTester(() => useHook(TestState, TestUtils.mockSelector))
+        const { meta } = hook
+        collectForTeardown(hook.unmount)
 
-})
+        expect(meta.isSuspensed).toBeTrue()
+
+        await act(async () => { await TestUtils.delay(10) })
+        expect(meta.isSuspensed).toBeFalse()
+
+        act(() => {
+          TestState.init(async ({ commitNoop }) => {
+            await TestUtils.delay(10)
+            commitNoop()
+          })
+        })
+        expect(meta.isSuspensed).toBeTrue()
+
+        await act(async () => { await TestUtils.delay(10) })
+        expect(meta.isSuspensed).toBeFalse()
+
+      })
+
+    }
+  })
+}
