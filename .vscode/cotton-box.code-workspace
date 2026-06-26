@@ -28,10 +28,10 @@
       "name": "custom-react-hook-tester",
       "path": "../packages/custom-react-hook-tester"
     },
-    // {
-    //   "name": "Examples (web)",
-    //   "path": "../packages/playground-web"
-    // },
+    {
+      "name": "Examples (web)",
+      "path": "../packages/playground-web"
+    },
     // {
     //   "name": "Examples (Expo)",
     //   "path": "../packages/playground-expo"

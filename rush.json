@@ -191,14 +191,14 @@
       "tags": [
         "tools"
       ]
+    },
+    {
+      "packageName": "cotton-box-playground-web",
+      "projectFolder": "packages/playground-web",
+      "shouldPublish": false,
+      "tags": [
+        "playground"
+      ]
     }
-    // {
-    //   "packageName": "cotton-box-playground-web",
-    //   "projectFolder": "packages/playground-web",
-    //   "shouldPublish": false,
-    //   "tags": [
-    //     "playground"
-    //   ]
-    // }
   ]
 }

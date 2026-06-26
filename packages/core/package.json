@@ -20,7 +20,7 @@
     "build": "tsx ./scripts/run/build",
     "test": "cross-env SCOPE=\"bundled\" jest -c ./jest.config.ts",
     "prepack": "tsx ./scripts/run/sync-package",
-    "all": "rushx lint && rushx spellcheck && rushx debug && rushx build && rushx test && rush-pnpm pack"
+    "all": "rushx spellcheck && rushx lint && rushx debug && rushx build && rushx test && rush-pnpm pack"
   },
   "keywords": [
     "State management"
