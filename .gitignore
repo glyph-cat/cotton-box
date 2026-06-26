@@ -57,6 +57,12 @@ dist
 .eslintcache
 temp/
 
+# Rush
+common/deploy/
+common/temp/
+common/autoinstallers/*/.npmrc
+**/.rush/temp/
+
 # Special
 *.draft*
 *.old*

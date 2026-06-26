@@ -6,6 +6,7 @@
   ],
   "useGitignore": true,
   "words": [
+    "autoinstallers",
     "clsx",
     "codesandbox",
     "dispatchable",
@@ -25,10 +26,11 @@
     "subpackage",
     "tofix",
     "tsdoc",
+    "turbopack",
     "typecheck",
     "unrs",
     "unwatch",
     "vercel",
-    "zustand"
+    "zustand",
   ],
 }

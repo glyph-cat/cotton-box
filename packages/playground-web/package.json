@@ -12,9 +12,10 @@
   "dependencies": {
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
-    "next": "~16.2.9",
     "cotton-box": "workspace:*",
-    "cotton-box-react": "workspace:*"
+    "cotton-box-react": "workspace:*",
+    "next": "~16.2.9",
+    "query-string": "~9.4.0"
   },
   "devDependencies": {
     "@types/node": "~26.0.1",
