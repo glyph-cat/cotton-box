@@ -15,6 +15,7 @@
     "hookstate",
     "inspectable",
     "kofi",
+    "llms",
     "mintlify",
     "postlicense",
     "postversion",

@@ -1,6 +1,6 @@
 import { ColorMode, useColorMode } from '@docusaurus/theme-common'
+import { isFunction } from '@glyph-cat/type-checking'
 import { SiteSettingsState, UIAppearance } from '@site/src/services/site-settings'
-import { isFunction } from '@site/src/utils/type-check'
 import { useStateValue } from 'cotton-box-react'
 import { ReactNode, useEffect, useLayoutEffect, useReducer, useState } from 'react'
 
@@ -21,18 +21,18 @@ export function useMediaQuery(query: string): boolean {
     // effect's cleanup function runs. So a copy by value is made inside this
     // effect.
     if (IS_MEDIA_QUERY_SUPPORTED) {
-      if (isFunction(mediaQuery.addEventListener)) {
+      if (isFunction(mediaQuery?.addEventListener)) {
         // New API
         mediaQuery.addEventListener('change', forceUpdate)
         return () => { mediaQuery.removeEventListener('change', forceUpdate) }
-      } else if (isFunction(mediaQuery.addListener)) {
+      } else if (isFunction(mediaQuery?.addListener)) {
         // Deprecated API (fallback for old systems)
         mediaQuery.addListener(forceUpdate)
         return () => { mediaQuery.removeListener(forceUpdate) }
       }
     }
   }, [forceUpdate, mediaQuery])
-  return IS_MEDIA_QUERY_SUPPORTED ? mediaQuery.matches || false : false
+  return IS_MEDIA_QUERY_SUPPORTED ? mediaQuery?.matches || false : false
 }
 
 export function useDerivedColorMode(): ColorMode {

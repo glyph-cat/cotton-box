@@ -4,11 +4,12 @@ import { HomepageFeatures } from '@site/src/components/homepage-features'
 import particleOptions from '@site/src/constants/particles.json'
 import Heading from '@theme/Heading'
 import Layout from '@theme/Layout'
-import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { ISourceOptions } from '@tsparticles/engine'
+import { Particles, ParticlesProvider } from '@tsparticles/react'
 import { loadSlim } from '@tsparticles/slim'
 import clsx from 'clsx'
 import { motion } from 'motion/react'
-import { ReactNode, useCallback, useEffect, useLayoutEffect, useReducer } from 'react'
+import { ReactNode, useCallback, useLayoutEffect, useReducer } from 'react'
 import { SimpleWebPlayground } from '../components/live-playground'
 import styles from './index.module.css'
 
@@ -17,17 +18,6 @@ import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.tsx
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext()
-
-  const [areParticlesInitialized, onParticlesInitialized] = useReducer(() => true, false)
-  useEffect(() => {
-    initParticlesEngine(async (engine) => {
-      await loadSlim(engine)
-    }).then(() => {
-      onParticlesInitialized()
-    }).catch((e) => {
-      console.error(e)
-    })
-  }, [])
 
   const [areParticlesLoaded, onParticlesLoaded] = useReducer(() => true, false)
   const onParticlesLoadedAsync = useCallback(async () => onParticlesLoaded(), [])
@@ -51,18 +41,18 @@ function HomepageHeader() {
       className={clsx('hero hero--primary', styles.heroBanner)}
       style={{ margin: 0, padding: 0 }}
     >
-      {areParticlesInitialized && (
-        <div style={{
-          opacity: areParticlesLoaded ? 1 : 0,
-          transitionDuration: '3s',
-        }}>
+      <div style={{
+        opacity: areParticlesLoaded ? 1 : 0,
+        transitionDuration: '3s',
+      }}>
+        <ParticlesProvider init={loadSlim}>
           <Particles
             id={tsParticlesId}
             particlesLoaded={onParticlesLoadedAsync}
-            options={particleOptions}
+            options={particleOptions as unknown as ISourceOptions}
           />
-        </div>
-      )}
+        </ParticlesProvider>
+      </div>
       <div className={styles.heroContent}>
         <Heading
           as='h1'

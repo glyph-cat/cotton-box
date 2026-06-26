@@ -2,16 +2,13 @@
   // This file is not used in compilation. It is here just for a nice editor experience.
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    // "baseUrl": ".",
-    "rootDir": ".",
-    "types": [
-      "@docusaurus/preset-classic",
-    ],
+    "baseUrl": ".",
+    "ignoreDeprecations": "6.0",
+    "strict": true
   },
-  "include": [
-    "./custom.d.ts",
-  ],
   "exclude": [
+    ".docusaurus",
+    "build",
     "**/*.draft*",
     "**/*.old*",
     "**/*.scripted*",
