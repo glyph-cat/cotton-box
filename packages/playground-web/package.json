@@ -1,10 +1,20 @@
 {
   "name": "cotton-box-playground-web",
   "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
   "dependencies": {
     "react": "~19.2.7",
     "react-dom": "~19.2.7",
-    "next": "~16.2.9"
+    "next": "~16.2.9",
+    "cotton-box": "workspace:*",
+    "cotton-box-react": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "~26.0.1",

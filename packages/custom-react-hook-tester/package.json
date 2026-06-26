@@ -1,6 +1,8 @@
 {
   "name": "custom-react-hook-tester",
   "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
   "main": "src/index.ts",
   "devDependencies": {
     "@types/react": "~19.2.17"

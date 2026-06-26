@@ -2,6 +2,7 @@
   "name": "cotton-box-repo-tools",
   "version": "0.0.0",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "@types/node": "~26.0.1",
     "@glyph-cat/foundation": "~0.0.0-experimental.90",

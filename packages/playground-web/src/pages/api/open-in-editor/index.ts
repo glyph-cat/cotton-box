@@ -1,7 +1,7 @@
-import { execSync } from 'child_process'
-import { existsSync, statSync } from 'fs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import path from 'path'
+import { execSync } from 'node:child_process'
+import { existsSync, statSync } from 'node:fs'
+import path from 'node:path'
 import { SandboxUrlParam } from '~constants'
 
 // NOTE
