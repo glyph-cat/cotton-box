@@ -34,6 +34,7 @@
     "@tsparticles/slim": "^4.2.1",
     "clsx": "^2.1.1",
     "cotton-box": "workspace:*",
+    "cotton-box-doc-utils": "workspace:*",
     "cotton-box-react": "workspace:*",
     "docusaurus-plugin-llms": "^0.4.0",
     "motion": "^12.42.0",
@@ -41,8 +42,7 @@
     "raw-loader": "^4.0.2",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-markdown": "^10.1.0",
-    "cotton-box-doc-utils": "workspace:*"
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "@docusaurus/eslint-plugin": "~3.10.1",
