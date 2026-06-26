@@ -26,12 +26,9 @@
     "tofix",
     "tsdoc",
     "typecheck",
+    "unrs",
     "unwatch",
     "vercel",
     "zustand"
-  ]
-  // "flagWords": [],
-  // "enableFiletypes": [
-  //   "mdx"
-  // ]
+  ],
 }

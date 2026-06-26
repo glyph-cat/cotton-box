@@ -296,7 +296,8 @@
     "@tsparticles/engine": false,
     "core-js": false,
     "es5-ext": false,
+    "esbuild": false,
     "unrs-resolver": false,
-    "esbuild": false
+    "sharp": false
   }
 }
