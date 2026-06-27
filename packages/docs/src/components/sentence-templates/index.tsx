@@ -1,5 +1,5 @@
-import * as DocConstants from '@site/src/constants/doc'
 import CodeInline from '@theme/CodeInline'
+import { DocConstants } from 'cotton-box-doc-utils'
 import { ReactNode } from 'react'
 import { MarkdownWrapper } from '../markdown-wrapper'
 

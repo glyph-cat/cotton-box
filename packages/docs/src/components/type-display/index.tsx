@@ -1,4 +1,4 @@
-import * as DocConstants from '@site/src/constants/doc'
+import { DocConstants } from 'cotton-box-doc-utils'
 import { ElementType, ReactNode as React_ReactNode } from 'react'
 import { ApiLink } from '../api-link'
 import { LabeledItem } from '../labeled-item'

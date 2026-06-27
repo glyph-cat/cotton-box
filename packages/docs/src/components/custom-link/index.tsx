@@ -1,5 +1,5 @@
 import { useHistory } from '@docusaurus/router'
-import * as DocConstants from '@site/src/constants/doc'
+import { DocConstants } from 'cotton-box-doc-utils'
 import { AnchorHTMLAttributes, DetailedHTMLProps, MouseEvent, ReactNode, useCallback } from 'react'
 
 // Reference: https://docusaurus.io/docs/markdown-features/links
