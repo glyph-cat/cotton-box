@@ -86,7 +86,7 @@ export const TSDOC_PARAM_DESC_TO_STATE = 'The value of the state which is it cha
 export const TSDOC_PARAM_STATE_MANAGER_NAME = 'The display name of the state manager.'
 export const TSDOC_PARAM_DESC_ACTIVE = 'Controls whether the hook should watch for state changes and trigger component update.'
 export const TSDOC_PARAM_DESC_FULL_ACTIVE = `${TSDOC_PARAM_DESC_ACTIVE} Defaults to \`true\`.`
-export const TSDOC_PARAM_DESC_EQUALITY_FN_BASE = `A function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise. Some presets are available in the [\`Equality\`](${DOCS_API_CORE_URL}/Equality) object from \`${CORE_PACKAGE_NAME}\`.`
+export const TSDOC_PARAM_DESC_EQUALITY_FN_BASE = `A function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise. Some presets are available in [\`@glyph-cat/equality\`](https://www.npmjs.com/package/@glyph-cat/equality).`
 export const TSDOC_PARAM_DESC_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN_BASE} This function does not need to be declared outside of the component function body or wrapped in [\`useCallback\`](${API_REFERENCE_URL_USE_CALLBACK}).`
 export const TSDOC_PARAM_DESC_FULL_EQUALITY_FN = `${TSDOC_PARAM_DESC_EQUALITY_FN} Defaults to [\`Object.is\`](${API_REFERENCE_URL_OBJECT_IS}).`
 
@@ -119,7 +119,7 @@ export const RETURN_DESC_USE_INIT_STATE = '`true` if the State Manager is still 
 // MARK: Types & Interfaces
 export const TSDOC_TYPE_DESC_WAIT_EVALUATOR = `Type definition of the evaluator function that is used in the \`.wait\` method of all State Managers.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`
 export const TSDOC_TYPE_DESC_STATE_SELECTOR = `Type definition of the selector function that is used in the hooks provided by \`${REACT_PACKAGE_NAME}\`. \n\nIt is a function that accepts the state as an argument and returns a derived value.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).`
-export const TSDOC_TYPE_DESC_EQUALITY_FN = `Type definition of an equality checking function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).\n\nSome presets are available in the [\`Equality\`](${DOCS_API_CORE_URL}/Equality) object.`
+export const TSDOC_TYPE_DESC_EQUALITY_FN = `Type definition of an equality checking function that compares the previous state with the upcoming state and returns \`true\` if they are considered equal or \`false\` if otherwise.\n\nThis should be a [pure function](${WIKIPEDIA_URL_PURE_FUNCTION}).\n\Some presets are available in [\`@glyph-cat/equality\`](https://www.npmjs.com/package/@glyph-cat/equality).`
 export const TSDOC_TYPE_DESC_READONLY_STATE_MANAGER = 'A utility type for State Managers that allows [TypeScript](https://www.typescriptlang.org) to treat it as read-only.'
 export const TSDOC_TYPE_DESC_STATE_TRANSITION = 'The definition of a state change from one to another.'
 

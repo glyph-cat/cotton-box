@@ -204,10 +204,12 @@ export function SimpleConsolePlaygroundBase({
   const hasMounted = useMountedState()
   const codeEditorTheme = useCodeEditorTheme()
   const detectedDependencies = getDependenciesAutomatically(code)
-  console.log('Detected dependencies:', detectedDependencies)
+  // console.log('Detected dependencies:', detectedDependencies)
   // const { sandpack } = useSandpack()
   // const { logs } = useSandpackConsole()
-  const files: SandpackFiles = { [INDEX_TS]: code }
+  const files: SandpackFiles = {
+    [INDEX_TS]: extractExampleRegion(code),
+  }
   if (!hasMounted) {
     return <StaticPlaygroundFiles files={files} />
   }
@@ -216,7 +218,7 @@ export function SimpleConsolePlaygroundBase({
       {TEMP_READY_TO_USE_MONACO_EDITOR
         ? (
           <SandpackProvider
-            files={{ [INDEX_TS]: code }}
+            files={files}
             {...sharedProps}
             theme={codeEditorTheme}
             customSetup={{
@@ -240,7 +242,7 @@ export function SimpleConsolePlaygroundBase({
         )
         : (
           <Sandpack
-            files={{ [INDEX_TS]: code }}
+            files={files}
             {...sharedProps}
             theme={codeEditorTheme}
             customSetup={{
@@ -341,4 +343,14 @@ function useMountedState(): boolean {
   const [hasMounted, onMount] = useReducer(hasMountedReducer, false)
   useEffect(() => { onMount() }, [])
   return hasMounted
+}
+
+function extractExampleRegion(code: string): string {
+  const [imports] = code.split(/\n\n/)
+  const splitResult = code.split(/\/\/ #(?:end)?region example/g)
+  if (splitResult.length === 1) {
+    return imports + '\n\n' + splitResult[0].trim() + '\n'
+  } else {
+    return imports + '\n\n' + splitResult[1].trim() + '\n'
+  }
 }

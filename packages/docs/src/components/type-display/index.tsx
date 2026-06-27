@@ -106,7 +106,7 @@ const URLs: Record<DataType, string> = {
   [DataType.WaitEvaluator]: `${DocConstants.DOCS_API_CORE_URL}/WaitEvaluator`,
   [DataType.EqualityFn]: `${DocConstants.DOCS_API_CORE_URL}/EqualityFn`,
   [DataType.StateTransition]: `${DocConstants.DOCS_API_CORE_URL}/StateTransition`,
-  [DataType.BuildType]: `${DocConstants.DOCS_API_MISC_URL}/BuildType`,
+  [DataType.BuildType]: 'https://github.com/glyph-cat/swiss-army-knife/blob/main/packages/foundation/src/build/index.ts',
   [DataType.FunctionComponent]: 'https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/function_components',
   [DataType.ReactNode]: 'https://react.dev/learn/typescript#typing-children',
 }

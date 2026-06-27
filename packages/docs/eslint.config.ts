@@ -3,7 +3,7 @@ const { recommended: baseRecommended } = require('@glyph-cat/eslint-config/base'
 const { recommended: reactRecommended } = require('@glyph-cat/eslint-config/react')
 const docusaurusPlugin = require('@docusaurus/eslint-plugin')
 
-const baseIndexToModify = baseRecommended.findIndex((item) => {
+const baseIndexToModify = baseRecommended.findIndex((item: any) => {
   return item.name === '@glyph-cat/eslint-config (base)'
 })
 
@@ -36,7 +36,7 @@ baseRecommended[baseIndexToModify] = {
   },
 }
 
-const reactIndexToModify = reactRecommended.findIndex((item) => {
+const reactIndexToModify = reactRecommended.findIndex((item: any) => {
   return item.name === '@glyph-cat/eslint-config (react)'
 })
 
@@ -56,6 +56,15 @@ module.exports = [
   {
     plugins: {
       'docusaurus': docusaurusPlugin,
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: process.cwd(),
+      },
     },
   },
   {
