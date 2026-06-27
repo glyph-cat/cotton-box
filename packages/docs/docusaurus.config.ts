@@ -219,6 +219,9 @@ const config: Config = {
     prism: {
       theme: prismThemes.vsLight,
       darkTheme: prismThemes.vsDark,
+      additionalLanguages: [
+        'diff',
+      ],
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
