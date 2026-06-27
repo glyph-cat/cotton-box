@@ -1,18 +1,6 @@
 # SimpleFiniteStateManager
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { InheritedFrom } from '@site/src/components/inherited-from'
-import { LabeledItem } from '@site/src/components/labeled-item'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import {
-  DoesNotReturnAnything,
-  DoesNotTakeAnyParameters,
-  Returns,
-} from '@site/src/components/sentence-templates'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> {/* Construction formula for this article: Copy everything from SimpleStateManager, then add <InheritedFrom> based on StateManager. */}
 
 DoesNotReturnAnything,
   DoesNotTakeAnyParameters,
@@ -266,7 +254,7 @@ reset(): void
 ExampleState.reset()
 ```
 
-{/* ### tryReset
+### tryReset
 
 <MarkdownWrapper>{DocConstants.TSDOC_METHOD_DESC_TRY_RESET}</MarkdownWrapper>
 ```ts
@@ -282,7 +270,7 @@ tryReset(): boolean
 #### Example
 ```js
 ExampleState.tryReset()
-``` */}
+```
 
 ### watch
 

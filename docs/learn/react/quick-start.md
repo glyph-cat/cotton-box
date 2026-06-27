@@ -1,8 +1,10 @@
 # Quick Start
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/quick-start'
-import { ApiLink } from '@site/src/components/api-link'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> Let's begin by importing <ApiLink href='../../api/react/useStateValue'>useStateValue</ApiLink> from `'cotton-box-react'`.
+```js
+import { useStateValue } from '{:REACT_PACKAGE_NAME:}'
+```
+<br/>
 
 # Quick Start
 

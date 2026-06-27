@@ -1,11 +1,6 @@
 # useSimpleStateValueOnly
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useSimpleStateValueOnly/basic'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
+> <TypeDisplay>{DataType.Function}</TypeDisplay>
 
 # useSimpleStateValueOnly
 

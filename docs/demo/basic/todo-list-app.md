@@ -1,8 +1,6 @@
 # Todo List App
 
-> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/todo/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/todo/index.tsx'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> This is an example of a to-do list app that uses [Immer](https://immerjs.github.io/immer/) for immutability.
 
 # Todo List App
 

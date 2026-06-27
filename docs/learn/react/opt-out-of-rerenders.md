@@ -1,7 +1,6 @@
 # Opt Out of Re-renders Due To State Change
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> Sometimes, we might want to temporarily unsubscribe from state changes in a component. This can be done by passing a third parameter. If a selector is not needed, `null` can be passed as the second parameter.
 
 # Opt Out of Re-renders Due To State Change
 

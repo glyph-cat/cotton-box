@@ -1,10 +1,6 @@
 # Waiting For State Change
 
-> import CODE_EXAMPLE_EVALUATOR from '!!raw-loader!@site/src/examples/learn/tutorial/wait/evaluator'
-import CODE_EXAMPLE_VALUE from '!!raw-loader!@site/src/examples/learn/tutorial/wait/value'
-import { ApiLink } from '@site/src/components/api-link'
-import { SimpleConsolePlayground } from '@site/src/components/live-playground'
-import * as DocConstants from '@site/src/constants/doc'
+> Waiting is an observation strategy that utilizes `.watch` under the hood. It allows us to watch for state value changes until it matches a certain value or fulfils a certain condition then stops watching and returns a snapshot of that state.
 
 # Waiting For State Change
 

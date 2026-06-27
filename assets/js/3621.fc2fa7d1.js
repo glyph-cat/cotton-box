@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[3621],{63621(o,c,s){s.r(c)}}]);

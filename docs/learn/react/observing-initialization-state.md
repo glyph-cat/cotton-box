@@ -1,8 +1,6 @@
 # Observing Initialization State
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/observing-initialization-state'
-import { ApiLink } from '@site/src/components/api-link'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> To determine if a state is initializing, we can use the `.isInitializing` property. It is a  <ApiLink href='../../api/core/StateManagerInitArgs'>ReadOnlyStateManager</ApiLink> where only the `.get`, `.watch` and `.wait` methods are available.
 
 # Observing Initialization State
 

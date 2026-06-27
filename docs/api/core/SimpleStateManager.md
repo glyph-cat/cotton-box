@@ -1,15 +1,6 @@
 # SimpleStateManager
 
-> import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import {
-  DoesNotReturnAnything,
-  DoesNotTakeAnyParameters,
-  Returns,
-} from '@site/src/components/sentence-templates'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> <TypeDisplay>{DataType.class}</TypeDisplay>
 
 DoesNotReturnAnything,
   DoesNotTakeAnyParameters,

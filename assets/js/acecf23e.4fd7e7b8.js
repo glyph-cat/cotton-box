@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[1903],{1912(o){o.exports=JSON.parse('{"blogBasePath":"/cotton-box/blog","blogTitle":"Blog","authorsListPath":"/cotton-box/blog/authors"}')}}]);

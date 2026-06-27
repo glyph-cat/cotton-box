@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcotton_box_docs=self.webpackChunkcotton_box_docs||[]).push([[3201],{53201:(e,c,o)=>{o.d(c,{createPieServices:()=>s.f});var s=o(97761);o(6902)}}]);

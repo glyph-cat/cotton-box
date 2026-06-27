@@ -1,8 +1,6 @@
 # Disposal
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { TSCodeBlock } from '@site/src/components/ts-code-block'
-import * as DocConstants from '@site/src/constants/doc'
+> To dispose a State Manager, we use the `.dispose` method. This is important when the State Manager is not created/used globally.
 
 # Disposal
 

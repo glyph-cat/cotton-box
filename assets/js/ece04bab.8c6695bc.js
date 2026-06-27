@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[2375],{66863(t){t.exports=JSON.parse('{"authors":[{"name":"GlyphCat","url":"https://github.com/glyph-cat","imageURL":"https://github.com/glyph-cat.png","key":"glyphcat","page":null,"count":2}]}')}}]);

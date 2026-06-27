@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[1898],{41898(c,o,e){e.d(o,{createPacketServices:()=>s.$});var s=e(83954);e(48300)}}]);

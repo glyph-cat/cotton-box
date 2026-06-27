@@ -1,10 +1,6 @@
 # VERSION
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> <TypeDisplay>{DataType.string}</TypeDisplay>
 
 # VERSION
 

@@ -1,18 +1,6 @@
 # AsyncStateManager
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { InheritedFrom } from '@site/src/components/inherited-from'
-import { LabeledItem } from '@site/src/components/labeled-item'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import {
-  DoesNotReturnAnything,
-  DoesNotTakeAnyParameters,
-  Returns,
-} from '@site/src/components/sentence-templates'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> <TypeDisplay>{DataType.class}</TypeDisplay>
 
 DoesNotReturnAnything,
   DoesNotTakeAnyParameters,

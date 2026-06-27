@@ -1,8 +1,6 @@
 # Notes App
 
-> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/notes-app/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/notes-app/index.tsx'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> This is an example of a simple notes app that uses the spread operator (`...`) to set state.
 
 # Notes App
 

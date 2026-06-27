@@ -1,8 +1,6 @@
 # StateTransition
 
-> import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import * as DocConstants from '@site/src/constants/doc'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
+> <TypeDisplay>{DataType.type}</TypeDisplay>
 
 # StateTransition
 

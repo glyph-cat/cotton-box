@@ -1,8 +1,6 @@
 # Counter
 
-> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/counter/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/counter/index.tsx'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> In this example, a counter value is stored in a state manager.
 
 # Counter
 

@@ -1,18 +1,6 @@
 # StateManager
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { InheritedFrom } from '@site/src/components/inherited-from'
-import { LabeledItem } from '@site/src/components/labeled-item'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import {
-  DoesNotReturnAnything,
-  DoesNotTakeAnyParameters,
-  Returns,
-} from '@site/src/components/sentence-templates'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> {/* Construction formula for this article: Copy everything from SimpleStateManager, change signature, change `options` param for constructor, then add a section for `init` and mention which properties and methods are inherited */}
 
 DoesNotReturnAnything,
   DoesNotTakeAnyParameters,

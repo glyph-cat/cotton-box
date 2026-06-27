@@ -1,7 +1,6 @@
 # Watching For State Changes
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/tutorial/watch'
-import { SimpleConsolePlayground } from '@site/src/components/live-playground'
+> We can observe state changes with the `.watch` method.
 
 # Watching For State Changes
 

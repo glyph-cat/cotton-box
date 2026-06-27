@@ -1,7 +1,9 @@
 # Persisting State
 
-> import { ApiLink } from '@site/src/components/api-link'
-import * as DocConstants from '@site/src/constants/doc'
+> [`StateManager`](../../api/core/StateManager.mdx) and [`AsyncStateManager`](../../api/core/AsyncStateManager.mdx) provides three lifecycle hooks:
+- `init` — triggers when the State Manager is instantiated
+- `didSet` — triggers each time the state is changed with `.set`, even if the value remains the same
+- `didReset` — triggers each time `.reset` is called
 
 # Persisting State
 

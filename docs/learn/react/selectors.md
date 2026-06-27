@@ -1,8 +1,6 @@
 # Selectors
 
-> import CODE_EXAMPLE from '!!raw-loader!@site/src/examples/learn/react/selector'
-import { ApiLink } from '@site/src/components/api-link'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> Sometimes, our state might be an object and we only need to the value of certain properties from that object, but when any property is changed, the entire object changes, resulting in components to re-render. This is when selectors can help us overcome this problem.
 
 # Selectors
 

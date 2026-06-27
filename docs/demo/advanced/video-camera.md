@@ -1,8 +1,6 @@
 # Video Camera
 
-> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/video-camera/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/video-camera/index.tsx'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> This is an adapted implementation of [`VideoCamera`](https://github.com/glyph-cat/swiss-army-knife/blob/main/src/packages/core/src/media/video-camera/index.ts) from `@glyph-cat/swiss-army-knife`.
 
 # Video Camera
 

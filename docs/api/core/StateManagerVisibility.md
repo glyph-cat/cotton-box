@@ -1,10 +1,7 @@
 # StateManagerVisibility
 
-> import { ApiLink } from '@site/src/components/api-link'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { DevToolsPreview } from '@site/src/components/special/dev-tools-preview'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
+> :::danger[Deprecation notice]
+This is not a reliable way to hide sensitive values.
 
 # StateManagerVisibility
 
@@ -13,7 +10,7 @@ This is not a reliable way to hide sensitive values.
 
 While this works for React Dev Tools, the built-in memory inspector in most browsers will still be able to show the value anyway. Please consider storing sensitive information on the server and only expose what's absolutely necessary to the client instead.
 
-Starting from version `1.1.0`, this option will be completely ignored.
+Starting from version `2.0.0`, this option will be completely ignored.
 :::
 
 ## Overview

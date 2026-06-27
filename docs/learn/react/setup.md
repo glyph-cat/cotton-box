@@ -1,8 +1,8 @@
 # Setup
 
-> import { Link } from '@site/src/components/custom-link'
-import { PackageManagerCommand } from '@site/src/components/package-manager-command'
-import * as DocConstants from '@site/src/constants/doc'
+> :::info
+React **19** (or above) is required.
+:::
 
 # Setup
 
@@ -25,16 +25,16 @@ npm install {DocConstants.REACT_PACKAGE_NAME}
 
 #### For development
 ```html
-<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/dist/umd/index.js" crossorigin></script>
 <!-- highlight-next-line -->
-<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.js" crossorigin></script>
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/dist/umd/index.js" crossorigin></script>
 ```
 
 #### For production
 ```html
-<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+<script src="https://www.unpkg.com/{:CORE_PACKAGE_NAME:}@<VERSION>/dist/umd/index.min.js" crossorigin></script>
 <!-- highlight-next-line -->
-<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/lib/umd/index.min.js" crossorigin></script>
+<script src="https://www.unpkg.com/{:REACT_PACKAGE_NAME:}@<VERSION>/dist/umd/index.min.js" crossorigin></script>
 ```
 
 Then replace `<VERSION>` with the version that you need.

@@ -1,8 +1,6 @@
 # Tic Tac Toe
 
-> import DEMO_CSS from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.module.css'
-import DEMO_TSX from '!!raw-loader!@site/src/examples/demo/tic-tac-toe/index.tsx'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
+> This is a game of tic-tac-toe that uses a class to manage the game logic instead of writing it all with React Hooks.
 
 # Tic Tac Toe
 

@@ -1,14 +1,6 @@
 # useStateValue
 
-> import CODE_EXAMPLE_ACTIVE from '!!raw-loader!@site/src/examples/api/react/useStateValue/active'
-import CODE_EXAMPLE_BASIC from '!!raw-loader!@site/src/examples/api/react/useStateValue/basic'
-import CODE_EXAMPLE_EQUALITY from '!!raw-loader!@site/src/examples/api/react/useStateValue/equality'
-import CODE_EXAMPLE_SELECTOR from '!!raw-loader!@site/src/examples/api/react/useStateValue/selector'
-import { SimpleWebPlayground } from '@site/src/components/live-playground'
-import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { ObjectShapeDefinition } from '@site/src/components/object-shape-definition'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
+> <TypeDisplay>{DataType.Function}</TypeDisplay>
 
 # useStateValue
 

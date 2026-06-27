@@ -1,7 +1,8 @@
 # Migration From `react-relink`
 
-> import { PackageManagerCommand } from '@site/src/components/package-manager-command'
-import * as DocConstants from '@site/src/constants/doc'
+> :::info
+The usage of `.get`, `.set`, `.reset`, and `.dispose` remains the same.
+:::
 
 # Migration From `react-relink`
 {/* NOTE: sidebar position is not specified, this should be the last article in the sidebar. */}

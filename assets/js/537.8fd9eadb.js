@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[537],{60537(e,n,t){t.d(n,{ImagePreloaderInstance:()=>o});class o{#e;#n;constructor(e,n){this.#n=e,this.#e=n}destroy(){this.#n.images?.delete(this.#e)}}}}]);

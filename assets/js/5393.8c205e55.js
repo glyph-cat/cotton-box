@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[5393],{15393(o,c,e){e.d(c,{createWardleyServices:()=>s.J});var s=e(83619);e(48300)}}]);

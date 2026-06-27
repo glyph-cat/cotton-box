@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkcotton_box_docs=globalThis.webpackChunkcotton_box_docs||[]).push([[1919],{42317(o){o.exports=JSON.parse('{"tags":[{"label":"react","permalink":"/cotton-box/blog/tags/react","count":1},{"label":"react-relink","permalink":"/cotton-box/blog/tags/react-relink","count":1}]}')}}]);

@@ -1,8 +1,6 @@
 # EqualityFn
 
-> import { MarkdownWrapper } from '@site/src/components/markdown-wrapper'
-import { DataType, TypeDisplay } from '@site/src/components/type-display'
-import * as DocConstants from '@site/src/constants/doc'
+> <TypeDisplay>{DataType.Function}</TypeDisplay>
 
 # EqualityFn
 

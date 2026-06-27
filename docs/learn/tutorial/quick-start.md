@@ -1,9 +1,6 @@
 # Quick Start
 
-> import { SimpleWebPlayground } from '@site/src/components/live-playground'
-import { TSCodeBlock } from '@site/src/components/ts-code-block'
-import * as DocConstants from '@site/src/constants/doc'
-import CodeInline from '@theme/CodeInline'
+> First, import [`StateManager`](../../api/core/StateManager.mdx) from <CodeInline>{DocConstants.CORE_PACKAGE_NAME}</CodeInline>:
 
 # Quick Start
 
