@@ -3,6 +3,8 @@ import type { Config } from '@docusaurus/types'
 import { DocConstants } from 'cotton-box-doc-utils'
 import { themes as prismThemes } from 'prism-react-renderer'
 
+const THROW_IF_PRODUCTION = process.env.NODE_ENV === 'production' ? 'throw' : 'warn'
+
 const config: Config = {
   title: DocConstants.DISPLAY_PACKAGE_NAME,
   tagline: DocConstants.PACKAGE_DESCRIPTION,
@@ -21,6 +23,7 @@ const config: Config = {
   trailingSlash: false,
 
   onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
 
   // Even if you don't use internationalization, you can use this field to set
   // useful metadata like html lang. For example, if your site is Chinese, you
@@ -46,6 +49,9 @@ const config: Config = {
       },
       blog: {
         showReadingTime: true,
+        onInlineTags: THROW_IF_PRODUCTION,
+        onInlineAuthors: 'throw',
+        onUntruncatedBlogPosts: THROW_IF_PRODUCTION,
       },
       theme: {
         customCss: './src/css/custom.css',
@@ -71,7 +77,8 @@ const config: Config = {
 
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'warn',
+      onBrokenMarkdownLinks: 'throw',
+      onBrokenMarkdownImages: 'throw',
     },
     mermaid: true,
   },
