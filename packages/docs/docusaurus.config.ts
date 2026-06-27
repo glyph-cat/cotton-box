@@ -147,14 +147,20 @@ const config: Config = {
           label: 'Blog',
           position: 'left',
         },
+        // {
+        //   type: 'docsVersionDropdown',
+        //   position: 'left',
+        //   lastVersion: 'current',
+        //   versions: {
+        //     'current': { label: '2.X' },
+        //     '1.X': { label: '1.X' },
+        //   },
+        // },
         {
           href: DocConstants.GITHUB_REPO_URL,
           label: 'GitHub',
           position: 'right',
         },
-        // {
-        //   type: 'docsVersionDropdown',
-        // },
       ],
     },
     footer: {
