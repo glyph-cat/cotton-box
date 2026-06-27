@@ -1,6 +1,6 @@
 {
   "name": "cotton-box-docs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Docs site for Cotton Box.",
   "scripts": {
     "sync": "tsx ./scripts/run/sync",
